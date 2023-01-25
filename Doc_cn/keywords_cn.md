@@ -1,16 +1,44 @@
+{==+==}
 # Keywords
+{==+==}
+# 关键字
+{==+==}
 
+
+{==+==}
 Rust divides keywords into three categories:
+{==+==}
+Rust 关键字分为三类:
+{==+==}
 
+
+{==+==}
 * [strict](#strict-keywords)
 * [reserved](#reserved-keywords)
 * [weak](#weak-keywords)
+{==+==}
+* [严格字](#strict-keywords)
+* [保留字](#reserved-keywords)
+* [松散字](#weak-keywords)
+{==+==}
 
+
+{==+==}
 ## Strict keywords
+{==+==}
+## 严格字
+{==+==}
 
+
+{==+==}
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
+{==+==}
+这些关键字只能使用在正确的上下文。不能用作以下项的名称:
+{==+==}
 
+
+{==+==}
 * [Items]
 * [Variables] and function parameters
 * Fields and [variants]
@@ -19,7 +47,19 @@ be used as the names of:
 * [Macros] or [attributes]
 * [Macro placeholders]
 * [Crates]
+{==+==}
+* [Items]
+* [Variables] 和函数参数
+* 字段 和 [variants]
+* [Type parameters]
+* 生命周期参数 或 [loop labels]
+* [Macros] 或 [attributes]
+* [Macro placeholders]
+* [Crates]
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer:<sup>**\
 > KW_AS             : `as`\
 > KW_BREAK          : `break`\
@@ -56,21 +96,48 @@ be used as the names of:
 > KW_USE            : `use`\
 > KW_WHERE          : `where`\
 > KW_WHILE          : `while`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The following keywords were added beginning in the 2018 edition.
+{==+==}
+以下关键字从2018版开始添加。
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer 2018+</sup>**\
 > KW_ASYNC          : `async`\
 > KW_AWAIT          : `await`\
 > KW_DYN            : `dyn`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Reserved keywords
+{==+==}
+## 保留字
+{==+==}
 
+
+{==+==}
 These keywords aren't used yet, but they are reserved for future use. They have
 the same restrictions as strict keywords. The reasoning behind this is to make
 current programs forward compatible with future versions of Rust by forbidding
 them to use these keywords.
+{==+==}
+这些关键词还没有被使用，它们被保留下来供将来使用。
+它们和严格关键字有同样的限制。
+其原因是通过禁止当前程序使用这些关键字，以使其与未来版本的Rust向前兼容。
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer</sup>**\
 > KW_ABSTRACT       : `abstract`\
 > KW_BECOME         : `become`\
@@ -84,39 +151,93 @@ them to use these keywords.
 > KW_UNSIZED        : `unsized`\
 > KW_VIRTUAL        : `virtual`\
 > KW_YIELD          : `yield`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The following keywords are reserved beginning in the 2018 edition.
+{==+==}
+以下关键字从2018版本开始保留。
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer 2018+</sup>**\
 > KW_TRY   : `try`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Weak keywords
+{==+==}
+## 松散字
+{==+==}
 
+
+{==+==}
 These keywords have special meaning only in certain contexts. For example, it
 is possible to declare a variable or method with the name `union`.
+{==+==}
+这些关键字只在特定的情况下有特殊的意义。
+比如，可以用 `union` 这个名称来声明变量或方法。
+{==+==}
 
+
+{==+==}
 * `macro_rules` is used to create custom [macros].
 * `union` is used to declare a [union] and is only a keyword when used in a
   union declaration.
 * `'static` is used for the static lifetime and cannot be used as a [generic
   lifetime parameter] or [loop label]
+{==+==}
+* `macro_rules` 用于创建自定义 [macros] 。
+* `union` 用于声明 [union] ，只有在union声明使用时才是一个关键字。
+* `'static` 用于静态生命周期，不能作为[generic lifetime parameter] "通用寿命参数" 或 [loop label] "循环标签" 使用。
+{==+==}
 
+
+{==+==}
   ```compile_fail
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
+{==+==}
+
+{==+==}
+
+
+{==+==}
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
+{==+==}
+* 在2015版中，[`dyn`] 在类型位置上使用时是一个关键词，后面是不以 `::` 开头的路径。
+{==+==}
 
+
+{==+==}
   Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
+{==+==}
+  从2018版开始， `dyn` 已提升为严格关键词。
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer</sup>**\
 > KW_UNION          : `union`\
 > KW_STATICLIFETIME : `'static`
 >
 > **<sup>Lexer 2015</sup>**\
 > KW_DYN            : `dyn`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [items]: items.md
 [Variables]: variables.md
 [Type parameters]: types/parameters.md
@@ -130,3 +251,6 @@ is possible to declare a variable or method with the name `union`.
 [`dyn`]: types/trait-object.md
 [loop label]: expressions/loop-expr.md#loop-labels
 [generic lifetime parameter]: items/generics.md
+{==+==}
+
+{==+==}
