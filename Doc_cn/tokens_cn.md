@@ -27,7 +27,7 @@ Token是常规(非递归)语言描述语法的原始产物。Rust源码输入能
 * [Literals](#literals) 字面值
 * [Lifetimes](#lifetimes-and-loop-labels) 生命周期
 * [Punctuation](#punctuation) 标点符号
-* [Delimiters](#delimiters) 分割符号
+* [Delimiters](#delimiters) 定界符号
 {==+==}
 
 
@@ -1269,7 +1269,7 @@ usages and meanings are defined in the linked pages.
 {==+==}
 ## Delimiters
 {==+==}
-## 分割符号
+## 定界符号
 {==+==}
 
 
