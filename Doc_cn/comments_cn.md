@@ -1,5 +1,11 @@
+{==+==}
 # Comments
+{==+==}
+# 注释
+{==+==}
 
+
+{==+==}
 > **<sup>Lexer</sup>**\
 > LINE_COMMENT :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `//` (~\[`/` `!` `\n`] | `//`) ~`\n`<sup>\*</sup>\
@@ -31,36 +37,90 @@
 >
 > _IsolatedCR_ :\
 > &nbsp;&nbsp; _A `\r` not followed by a `\n`_
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Non-doc comments
+{==+==}
+## 非文档注释
+{==+==}
 
+
+{==+==}
 Comments follow the general C++ style of line (`//`) and
 block (`/* ... */`) comment forms. Nested block comments are supported.
+{==+==}
+注释遵循一般C++风格的行 (`//`) 和 (`/* ... */`) 块注释形式。支持嵌套的块注释。
+{==+==}
 
+
+{==+==}
 Non-doc comments are interpreted as a form of whitespace.
+{==+==}
+非文档注释被解释为空白的一种形式。
+{==+==}
 
+
+{==+==}
 ## Doc comments
+{==+==}
+## 文档注释
+{==+==}
 
+
+{==+==}
 Line doc comments beginning with exactly _three_ slashes (`///`), and block
 doc comments (`/** ... */`), both inner doc comments, are interpreted as a
 special syntax for [`doc` attributes]. That is, they are equivalent to writing
 `#[doc="..."]` around the body of the comment, i.e., `/// Foo` turns into
 `#[doc="Foo"]` and `/** Bar */` turns into `#[doc="Bar"]`.
+{==+==}
+以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` attributes] 的特殊语法。
+也就是说，它们相当于在注释主体的周围写上 `#[doc="..."]` ，即， `/// Foo` 转换成 `#[doc="Foo"]` ， `/** Bar */` 转换成 `#[doc="Bar"` 。
+{==+==}
 
+
+{==+==}
 Line comments beginning with `//!` and block comments `/*! ... */` are
 doc comments that apply to the parent of the comment, rather than the item
 that follows.  That is, they are equivalent to writing `#![doc="..."]` around
 the body of the comment. `//!` comments are usually used to document
 modules that occupy a source file.
+{==+==}
+以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于注释的父级，而不是之后条目。
+也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//！` 注释通常用于记录占有源文件的模块。
+{==+==}
 
+
+{==+==}
 Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc
 comments.
+{==+==}
+Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc comments.
+在文档注释中不允许孤立的 CRs (`\r`) ，即后面没有 LF (`\n`) 。
+{==+==}
 
+
+{==+==}
 ## Examples
+{==+==}
+## 示例
+{==+==}
 
+
+{==+==}
 ```rust
 //! A doc comment that applies to the implicit anonymous module of this crate
+{==+==}
+```rust
+//! 应用于这个crate的隐式匿名模块的文档注释
+{==+==}
 
+
+{==+==}
 pub mod outer_module {
 
     //!  - Inner line doc
@@ -76,7 +136,26 @@ pub mod outer_module {
     /*   - Only a comment */
     /**  - Outer block doc (exactly) 2 asterisks */
     /*** - Only a comment */
+{==+==}
+pub mod outer_module {
 
+    //!  - 内部行文档
+    //!! - 仍是内部行文档 (但开始有感叹号)
+
+    /*!  - 内部块文档 */
+    /*!! - 仍是内部块文档 (但开始有感叹号) */
+
+    //   - 仅是注释
+    ///  - 外部行文档 (正好3斜线)
+    //// - 仅是注释
+
+    /*   - 仅是注释 */
+    /**  - 外部块文档 (正好2星号) */
+    /*** - 仅是注释 */
+{==+==}
+
+
+{==+==}
     pub mod inner_module {}
 
     pub mod nested_comments {
@@ -90,7 +169,23 @@ pub mod outer_module {
         /**  /* */  /** */  /*! */  */
         pub mod dummy_item {}
     }
+{==+==}
+    pub mod inner_module {}
 
+    pub mod nested_comments {
+        /* 在 Rust /* 可以 /* 嵌套注释 */ */ */
+
+        // 所有三种类型的块注释都可以包含或嵌套任何其他类型的注释:
+
+        /*   /* */  /** */  /*! */  */
+        /*!  /* */  /** */  /*! */  */
+        /**  /* */  /** */  /*! */  */
+        pub mod dummy_item {}
+    }
+{==+==}
+
+
+{==+==}
     pub mod degenerate_cases {
         // empty inner line doc
         //!
@@ -113,7 +208,33 @@ pub mod outer_module {
         /***/
 
     }
+{==+==}
+    pub mod degenerate_cases {
+        // 空内部行文档
+        //!
 
+        // 空内部块文档
+        /*!*/
+
+        // 空行注释
+        //
+
+        // 空外部行文档
+        ///
+
+        // 空块注释
+        /**/
+
+        pub mod dummy_item {}
+
+        // 空的2星号块不是块文档，而是块注释。
+        /***/
+
+    }
+{==+==}
+
+
+{==+==}
     /* The next one isn't allowed because outer doc comments
        require an item that will receive the doc */
 
@@ -121,5 +242,19 @@ pub mod outer_module {
 #   mod boo {}
 }
 ```
+{==+==}
+    /* 下一个是不允许的，
+       外部文档注释需要一个条目来接收文档 */
 
+    /// 我的条目在哪里?
+#   mod boo {}
+}
+```
+{==+==}
+
+
+{==+==}
 [`doc` attributes]: ../rustdoc/the-doc-attribute.html
+{==+==}
+
+{==+==}
