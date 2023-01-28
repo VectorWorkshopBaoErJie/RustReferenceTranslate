@@ -484,7 +484,7 @@ Const 函数不允许是 [async](#async-functions) 。
 {==+==}
 ## Async functions
 {==+==}
-
+## 异步函数
 {==+==}
 
 
@@ -492,7 +492,7 @@ Const 函数不允许是 [async](#async-functions) 。
 Functions may be qualified as async, and this can also be combined with the
 `unsafe` qualifier:
 {==+==}
-
+函数可以用 async "异步" 限定 ，也可以与 `unsafe` 限定词结合。
 {==+==}
 
 
@@ -511,7 +511,9 @@ Async functions do no work when called: instead, they
 capture their arguments into a future. When polled, that future will
 execute the function's body.
 {==+==}
-
+在调用异步函数时不做任何工作: 而是它们将其参数捕获到一个 future 。
+当轮询时，此 future 将执行该函数体。
+(译注：future 是编译环节的类型)
 {==+==}
 
 
@@ -520,7 +522,7 @@ An async function is roughly equivalent to a function
 that returns [`impl Future`] and with an [`async move` block][async-blocks] as
 its body:
 {==+==}
-
+一个异步函数大致相当于一个返回 [`impl Future`] 并以 [`async move` block][async-blocks] 作为其主体的函数。
 {==+==}
 
 
@@ -539,7 +541,7 @@ async fn example(x: &str) -> usize {
 {==+==}
 is roughly equivalent to:
 {==+==}
-
+大致相当于:
 {==+==}
 
 
@@ -552,14 +554,20 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 }
 ```
 {==+==}
-
+```rust
+# use std::future::Future;
+// 去除语法糖
+fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
+    async move { x.len() }
+}
+```
 {==+==}
 
 
 {==+==}
 The actual desugaring is more complex:
 {==+==}
-
+实际的去除语法糖工作更加复杂:
 {==+==}
 
 
@@ -575,12 +583,15 @@ The actual desugaring is more complex:
   that the drop occurs when the returned future has been fully
   awaited.
 {==+==}
-
+- 脱糖时返回类型假定为捕获来自 `async fn` 声明的所有生命周期参数。
+  可以从上面脱糖的例子中看出，它明显的生命更长，因此捕获了 `'a` 。
+- 主体中的 [`async move` block][async-blocks] 捕获了所有的函数参数，包括那些未使用的、或者与 `_` 模式绑定的参数。
+  这确保了函数参数的丢弃(drop)顺序与函数非异步情况下相同，只是丢弃发生在返回的 future 彻底等待的时候。
 {==+==}
 
 
 {==+==}
-For more information on the effect of async, see [`async` blocks][async-blocks].
+关于 async 的更多信息, 参见 [`async` blocks][async-blocks] 。
 {==+==}
 
 {==+==}
@@ -598,14 +609,14 @@ For more information on the effect of async, see [`async` blocks][async-blocks].
 > **Edition differences**: Async functions are only available beginning with
 > Rust 2018.
 {==+==}
-
+> **版本差异**: 异步函数只从Rust 2018开始提供。
 {==+==}
 
 
 {==+==}
 ### Combining `async` and `unsafe`
 {==+==}
-
+### 组合 `async` 和 `unsafe`
 {==+==}
 
 
@@ -615,7 +626,9 @@ resulting function is unsafe to call and (like any async function)
 returns a future. This future is just an ordinary future and thus an
 `unsafe` context is not required to "await" it:
 {==+==}
-
+声明既是 async 且 unsafe 的函数是合规的。
+由此产生的函数在调用时是不安全的，并且 (像任何异步函数一样) 返回一个 future 。
+这个 future 只是一个普通的 future ，因此不需要一个 `unsafe` 的上下文来 "await" 它。
 {==+==}
 
 
@@ -640,7 +653,23 @@ async fn safe_example() {
 }
 ```
 {==+==}
+```rust
+// 返回一个 future ，当被等待时，解除对 `x` 的引用。
+//
+// 必要条件： `x` 必须是安全的，在产生的 future 完成之前，可以取消引用。
+async unsafe fn unsafe_example(x: *const i32) -> i32 {
+  *x
+}
 
+async fn safe_example() {
+    // 初始需要一个 `unsafe` 块来调用这个函数:
+    let p = 22;
+    let future = unsafe { unsafe_example(&p) };
+
+    // 但这里不需要 `unsafe` 块。这将读取 `p` 的值:
+    let q = future.await;
+}
+```
 {==+==}
 
 
@@ -650,7 +679,7 @@ function that returns an `impl Future` -- in this case, the function
 we desugar to is an `unsafe` function, but the return value remains
 the same.
 {==+==}
-
+请注意，这种行为是对一个返回 `impl Future` 的函数进行脱糖的结果 -- 在这种情况下，脱糖的函数是一个 `unsafe` 的函数，但返回值保持不变。
 {==+==}
 
 
@@ -665,14 +694,15 @@ dereferenced that pointer. This implies that `x` would have to be
 valid until the future is finished executing, and it is the caller's
 responsibility to ensure that.
 {==+==}
-
+Unsafe用于异步函数的方式与用于其他函数的方式完全相同: 表明确保函数的健全性，将由其调用者保障。
+和其他unsafe函数一样，初始条件很有可能延伸到调用本身之外 -- 例如，在上面的片段中， `unsafe_example` 函数接收了一个指针 `x` 作为参数，然后 (当等待时) 取消对该指针的引用。这意味着 `x` 必须在future执行完毕之前一直有效，而这一点需要调用者确保。
 {==+==}
 
 
 {==+==}
 ## Attributes on functions
 {==+==}
-
+## 函数的属性
 {==+==}
 
 
@@ -680,7 +710,7 @@ responsibility to ensure that.
 [Outer attributes][attributes] are allowed on functions. [Inner
 attributes][attributes] are allowed directly after the `{` inside its [block].
 {==+==}
-
+[Outer attributes][attributes] 函数允许 [Outer attributes][attributes] 。 [Inner attributes][attributes] 可以直接在其 [block] 内的 `{` 之后使用。
 {==+==}
 
 
@@ -688,7 +718,7 @@ attributes][attributes] are allowed directly after the `{` inside its [block].
 This example shows an inner attribute on a function. The function is documented
 with just the word "Example".
 {==+==}
-
+这个例子展示了函数中的内部属性。该函数的文档中只有 "Example" 二字。
 {==+==}
 
 
@@ -707,7 +737,7 @@ fn documented() {
 > Note: Except for lints, it is idiomatic to only use outer attributes on
 > function items.
 {==+==}
-
+> 注意: 除了 lints，仅在函数条目上使用外部属性是惯例。
 {==+==}
 
 
@@ -718,14 +748,14 @@ attributes], [`must_use`], [the procedural macro attributes], [the testing
 attributes], and [the optimization hint attributes]. Functions also accept
 attributes macros.
 {==+==}
-
+对函数有意义的属性是 [`cfg`] , [`cfg_attr`], [`deprecated`] , [`doc`], [`export_name`] , [`link_section`] , [`no_mangle`] , [the lint check attributes] , [`must_use`] , [the procedural macro attributes] , [the testing attributes] , 和 [the optimization hint attributes] 。函数也接受属性宏。
 {==+==}
 
 
 {==+==}
 ## Attributes on function parameters
 {==+==}
-
+## 函数参数的属性
 {==+==}
 
 
@@ -734,7 +764,7 @@ attributes macros.
 permitted [built-in attributes] are restricted to `cfg`, `cfg_attr`, `allow`,
 `warn`, `deny`, and `forbid`.
 {==+==}
-
+允许在函数参数上使用 [Outer attributes][attributes] ，允许的 [built-in attributes] 被限制为 `cfg` , `cfg_attr` , `allow` , `warn` , `deny` , 和 `forbid` 。
 {==+==}
 
 
@@ -756,7 +786,7 @@ fn len(
 Inert helper attributes used by procedural macro attributes applied to items are also
 allowed but be careful to not include these inert attributes in your final `TokenStream`.
 {==+==}
-
+也允许应用于条目的过程性宏属性所使用的惰性辅助属性，但要注意，不要在最终 `TokenStream` 中包含惰性属性。
 {==+==}
 
 
@@ -765,7 +795,8 @@ For example, the following code defines an inert `some_inert_attribute` attribut
 is not formally defined anywhere and the `some_proc_macro_attribute` procedural macro is
 responsible for detecting its presence and removing it from the output token stream.
 {==+==}
-
+例如，下面的代码定义了一个惰性的 `some_inert_attribute` 属性，它还没有在任何地方正式定义，
+`some_proc_macro_attribute` 过程性宏负责检测其存在并从输出标记流中删除它。
 {==+==}
 
 
