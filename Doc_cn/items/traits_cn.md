@@ -151,7 +151,7 @@ Object safe traits can be the base trait of a [trait object]. A trait is
 {==+==}
 ## 对象安全
 
-对象安全trait 可以是 [trait对象][trait object] 的基本trait 。
+对象安全trait 可以是 [trait对象][trait object] 的基trait 。
 如果trait具有以下特性，它就是 *对象安全的*  (在 [RFC 255] 中定义):
 {==+==}
 
