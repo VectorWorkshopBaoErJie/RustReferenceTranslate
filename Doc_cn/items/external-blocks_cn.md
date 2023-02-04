@@ -306,7 +306,10 @@ Specifying multiple `modifiers` arguments in a single `link` attribute,
 or multiple identical modifiers in the same `modifiers` argument is not currently supported. \
 Example: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")`.
 {==+==}
-
+可选的 `modifiers` "修饰符" 参数是一种为要链接的库指定链接修饰符的方法。
+修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀是 `+` 或 `-` ，分别表示启用或禁用该修饰符。
+目前不支持在单一 `link` 属性中指定多个 `modifiers` 参数，或者在同一个 `modifiers` 参数中指定多个相同的修饰符。
+例如：`#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")` 。
 {==+==}
 
 
@@ -316,7 +319,8 @@ name for the items within an `extern` block when importing symbols from the
 host environment. The default module name is `env` if `wasm_import_module` is
 not specified.
 {==+==}
-
+当从主机环境导入符号时，在 `extern` 块中的条目， `wasm_import_module` 键可以用来指定 [WebAssembly module] 的名称。
+如果没有指定 `wasm_import_module` ，默认的模块名称是 `env` 。
 {==+==}
 
 
@@ -349,14 +353,15 @@ this to satisfy the linking requirements of extern blocks elsewhere in your
 code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
-
+在空的extern块上添加 `link` 属性是有效的。
+你可以用它来满足代码中其他地方的extern块的链接要求 (包括上游crate) ，而不是在每个extern块上添加属性。
 {==+==}
 
 
 {==+==}
 #### Linking modifiers: `bundle`
 {==+==}
-
+#### 链接修饰符: `bundle`
 {==+==}
 
 
@@ -364,7 +369,7 @@ block.
 This modifier is only compatible with the `static` linking kind.
 Using any other kind will result in a compiler error.
 {==+==}
-
+这个修饰符只与 `static` 链接类型兼容。使用任何其他类型将导致编译器错误。
 {==+==}
 
 
@@ -373,7 +378,7 @@ When building a rlib or staticlib `+bundle` means that the native static library
 will be packed into the rlib or staticlib archive, and then retrieved from there
 during linking of the final binary.
 {==+==}
-
+当构建 rlib 或 staticlib 时， `+bundle` 意味着本地静态库将被打包到 rlib 或 staticlib 档案中，然后在最终二进制文件的链接过程中从那里获取。
 {==+==}
 
 
@@ -385,21 +390,23 @@ When building a staticlib `-bundle` means that the native static library is simp
 into the archive and some higher level build system will need to add it later during linking of
 the final binary.
 {==+==}
-
+当构建 rlib `-bundle` 时，意味着本地静态库 "按名称" 被注册为该rlib的依赖，并且仅在最终二进制文件的链接过程中包含其中的对象文件，
+在最终链接过程中也会按该名称进行文件搜索。
+当构建 staticlib `-bundle` 时，意味着本地静态库没有包含在归档文件中，一些更高级别的构建系统将需要在最终二进制文件的链接过程中添加它。
 {==+==}
 
 
 {==+==}
 This modifier has no effect when building other targets like executables or dynamic libraries.
 {==+==}
-
+在构建其他目标(如可执行文件或动态库)时，该修饰符没有影响。
 {==+==}
 
 
 {==+==}
 The default for this modifier is `+bundle`.
 {==+==}
-
+修饰符的默认值是 `+bundle` 。
 {==+==}
 
 
@@ -407,22 +414,14 @@ The default for this modifier is `+bundle`.
 More implementation details about this modifier can be found in
 [`bundle` documentation for rustc].
 {==+==}
-
+关于这个修饰符的更多实现细节可在 [`bundle` documentation for rustc] 找到 。
 {==+==}
 
 
 {==+==}
 #### Linking modifiers: `whole-archive`
 {==+==}
-
-{==+==}
-
-
-{==+==}
-This modifier is only compatible with the `static` linking kind.
-Using any other kind will result in a compiler error.
-{==+==}
-
+#### 链接修饰符: `whole-archive`
 {==+==}
 
 
@@ -430,14 +429,14 @@ Using any other kind will result in a compiler error.
 `+whole-archive` means that the static library is linked as a whole archive
 without throwing any object files away.
 {==+==}
-
+`+whole-archive` 意味着静态库作为完整的档案被链接，而不丢弃任何对象文件。
 {==+==}
 
 
 {==+==}
 The default for this modifier is `-whole-archive`.
 {==+==}
-
+这个修饰符的默认值是 `-whole-archive` 。
 {==+==}
 
 
@@ -445,21 +444,21 @@ The default for this modifier is `-whole-archive`.
 More implementation details about this modifier can be found in
 [`whole-archive` documentation for rustc].
 {==+==}
-
+关于这个修改器的更多实现细节可在 [`whole-archive` documentation for rustc] 中找到。
 {==+==}
 
 
 {==+==}
 ### Linking modifiers: `verbatim`
 {==+==}
-
+### 链接修饰符: `verbatim`
 {==+==}
 
 
 {==+==}
 This modifier is compatible with all linking kinds.
 {==+==}
-
+这个修饰符与所有的链接种类兼容。
 {==+==}
 
 
@@ -468,7 +467,7 @@ This modifier is compatible with all linking kinds.
 (like `lib` or `.a`) to the library name, and will try its best to ask for the same thing from the
 linker.
 {==+==}
-
+`+verbatim` 意味着rustc本身不会在库名中添加任何目标指定的库前缀或后缀(如 `lib` 或 `.a` ) ，并且会尽力向链接器要求同样的事物。
 {==+==}
 
 
@@ -476,14 +475,14 @@ linker.
 `-verbatim` means that rustc will either add a target-specific prefix and suffix to the library
 name before passing it to linker, or won't prevent linker from implicitly adding it.
 {==+==}
-
+`-verbatim` 意味着rustc在将库名传递给链接器之前，会在库名上添加目标特定的前缀和后缀，且不会阻止链接器隐式添加它。
 {==+==}
 
 
 {==+==}
 The default for this modifier is `-verbatim`.
 {==+==}
-
+这个修饰符的默认值是 `-verbatim` 。
 {==+==}
 
 
@@ -491,14 +490,14 @@ The default for this modifier is `-verbatim`.
 More implementation details about this modifier can be found in
 [`verbatim` documentation for rustc].
 {==+==}
-
+关于这个修饰符的更多实现细节可在 [`verbatim` documentation for rustc] 中找到。
 {==+==}
 
 
 {==+==}
 #### `dylib` versus `raw-dylib`
 {==+==}
-
+#### `dylib` 相比 `raw-dylib`
 {==+==}
 
 
@@ -508,7 +507,7 @@ is provided to the linker: this is a special static library that declares all
 of the symbols exported by the dynamic library in such a way that the linker
 knows that they have to be dynamically loaded at runtime.
 {==+==}
-
+在Windows上，针对动态库的链接需要向链接器提供一个导入库：这是一个特殊的静态库，它声明了动态库导出的所有符号，这种方式使链接器知道必须在运行时动态加载它们。
 {==+==}
 
 
@@ -519,7 +518,9 @@ resolution logic to find that import library. Alternatively, specifying
 `kind = "raw-dylib"` instructs the compiler to generate an import library
 during compilation and provide that to the linker instead.
 {==+==}
-
+指定 `kind = "dylib"` 指示Rust编译器根据 `name` 键来链接一个导入库。
+然后，链接器将使用其正常的库解析逻辑来找到该导入库。
+或者，指定 `kind = "raw-dylib"` 指示编译器在编译过程中生成一个导入库，并将其提供给链接器。
 {==+==}
 
 
@@ -528,14 +529,14 @@ during compilation and provide that to the linker instead.
 (`target_arch="x86"`). Using it when targeting other platforms or
 x86 on Windows will result in a compiler error.
 {==+==}
-
+`raw-dylib` 只支持Windows ，不支持32位x86(`target_arch="x86"`)。当在Windows上以其他平台或x86为目标时，使用它将导致一个编译器错误。
 {==+==}
 
 
 {==+==}
 ### The `link_name` attribute
 {==+==}
-
+### `link_name` 属性
 {==+==}
 
 
@@ -544,7 +545,8 @@ The *`link_name` attribute* may be specified on declarations inside an `extern`
 block to indicate the symbol to import for the given function or static. It
 uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
 {==+==}
-
+*`link_name` 属性* 可以在 `extern` 块内的声明中指定，以表明为给定的函数或static导入的符号。
+使用 [_MetaNameValueStr_] 语法来指定符号的名称。
 {==+==}
 
 
@@ -564,14 +566,14 @@ extern {
 Using this attribute with the `link_ordinal` attribute will result in a
 compiler error.
 {==+==}
-
+将此属性与 `link_ordinal` 属性一起使用会导致编译器错误。
 {==+==}
 
 
 {==+==}
 ### The `link_ordinal` attribute
 {==+==}
-
+### `link_ordinal` 属性
 {==+==}
 
 
@@ -582,14 +584,8 @@ to link against. An ordinal is a unique number per symbol exported by a dynamic
 library on Windows and can be used when the library is being loaded to find
 that symbol rather than having to look it up by name.
 {==+==}
-
-{==+==}
-
-
-{==+==}
-<div class="warning">
-{==+==}
-
+*`link_ordinal` 属性* 可以应用在 `extern` 块内的声明中，以指示在生成导入库时使用的数字序号来进行链接。
+序号是Windows上动态库输出的每个符号的唯一数字，可以在加载库时使用，以找到该符号，而不是通过名称来查找。
 {==+==}
 
 
@@ -599,14 +595,7 @@ symbol is known to be stable: if the ordinal of a symbol is not explicitly set
 when its containing binary is built then one will be automatically assigned to
 it, and that assigned ordinal may change between builds of the binary.
 {==+==}
-
-{==+==}
-
-
-{==+==}
-</div>
-{==+==}
-
+警告: `link_ordinal` 只应在已知符号的序数稳定的情况下使用: 如果一个符号的序数在其包含的二进制文件建立时没有明确设置，那么将自动分配一个序数给它，并且该分配的序数可能在二进制文件的建立之时发生变化。
 {==+==}
 
 
@@ -628,7 +617,7 @@ extern "stdcall" {
 This attribute is only used with the `raw-dylib` linking kind.
 Using any other kind will result in a compiler error.
 {==+==}
-
+这个属性仅用于 `raw-dylib` 链接类型。使用任何其他类型将导致编译器错误。
 {==+==}
 
 
@@ -636,14 +625,14 @@ Using any other kind will result in a compiler error.
 Using this attribute with the `link_name` attribute will result in a
 compiler error.
 {==+==}
-
+将此属性与 `link_name` 属性一起使用会导致编译器错误。
 {==+==}
 
 
 {==+==}
 ### Attributes on function parameters
 {==+==}
-
+### 函数参数的属性
 {==+==}
 
 
@@ -651,7 +640,7 @@ compiler error.
 Attributes on extern function parameters follow the same rules and
 restrictions as [regular function parameters].
 {==+==}
-
+外部函数参数的属性遵循与 [常规函数参数][regular function parameters] 相同的规则和限制。
 {==+==}
 
 
