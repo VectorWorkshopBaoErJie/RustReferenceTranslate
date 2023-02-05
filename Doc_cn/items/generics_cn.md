@@ -1,5 +1,11 @@
+{==+==}
 # Generic parameters
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _GenericParams_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `<` `>`\
@@ -16,16 +22,34 @@
 >
 > _ConstParam_:\
 > &nbsp;&nbsp; `const` [IDENTIFIER] `:` [_Type_] ( `=` _[Block][block]_ | [IDENTIFIER] | -<sup>?</sup>[LITERAL] )<sup>?</sup>
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [Functions], [type aliases], [structs], [enumerations], [unions], [traits], and
 [implementations] may be *parameterized* by types, constants, and lifetimes. These
 parameters are listed in angle <span class="parenthetical">brackets (`<...>`)</span>,
 usually immediately after the name of the item and before its definition. For
 implementations, which don't have a name, they come directly after `impl`.
 The order of generic parameters is restricted to lifetime parameters and then type and const parameters intermixed.
+{==+==}
+[Functions] 、 [type aliases] 、 [structs] 、 [enumerations] 、 [unions] 、 [traits] 和 [implementations] 可以通过类型、常量和生命周期 *参数化* 。
+这些参数被列在角 <span class="parenthetical"> 括号 (`<...>`)</span> 中，通常紧跟在条目名称之后和定义之前。
+对于没有名称的实现，直接放在 `impl` 之后。
+泛型参数的顺序被约束为生命周期参数，然后是类型和const参数的混合。
+{==+==}
 
+
+{==+==}
 Some examples of items with type, const, and lifetime parameters:
+{==+==}
+一些带有类型、常量和生命周期参数的条目的例子:
+{==+==}
 
+
+{==+==}
 ```rust
 fn foo<'a, T>() {}
 trait A<U> {}
@@ -33,32 +57,75 @@ struct Ref<'a, T> where T: 'a { r: &'a T }
 struct InnerArray<T, const N: usize>([T; N]);
 struct EitherOrderWorks<const N: bool, U>(U);
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Generic parameters are in scope within the item definition where they are
 declared. They are not in scope for items declared within the body of a
 function as described in [item declarations].
+{==+==}
+泛型参数在其被声明的条目定义的作用域内。
+对于在 [条目声明][item declarations] 中描述的在函数体中声明的条目不在作用域内。
+{==+==}
 
+
+{==+==}
 [References], [raw pointers], [arrays], [slices], [tuples], and
 [function pointers] have lifetime or type parameters as well, but are not
 referred to with path syntax.
+{==+==}
+[References] 、 [raw pointers] 、 [arrays] 、 [slices] 、 [tuples] ， 和 [function pointers] 也有生命周期或类型参数，但不是用路径语法来引用。
+{==+==}
 
+
+{==+==}
 ### Const generics
+{==+==}
+### 常量泛型
+{==+==}
 
+
+{==+==}
 *Const generic parameters* allow items to be generic over constant values. The
 const identifier introduces a name for the constant parameter, and all
 instances of the item must be instantiated with a value of the given type.
+{==+==}
+*常量泛型参数* 允许条目常量值的泛化。
+const标识符为常量参数引入了一个名称，条目的所有实例必须以给定类型的值进行实例化。
+{==+==}
 
+
+{==+==}
 <!-- TODO: update above to say "introduces a name in the [value namespace]"
     once namespaces are added. -->
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The only allowed types of const parameters are `u8`, `u16`, `u32`, `u64`, `u128`, `usize`,
 `i8`, `i16`, `i32`, `i64`, `i128`, `isize`, `char` and `bool`.
+{==+==}
+仅允许的常量参数类型是 `u8` 、 `u16` 、 `u32` 、 `u64` 、 `u128` 、 `usize` 、`i8` 、 `i16` 、 `i32` 、 `i64` 、 `i128` 、 `isize` 、 `char` 、 `bool`.
+{==+==}
 
+
+{==+==}
 Const parameters can be used anywhere a [const item] can be used, with the
 exception that when used in a [type] or [array repeat expression], it must be
 standalone (as described below). That is, they are allowed in the following
 places:
+{==+==}
+常量参数可以在任何可以使用 [常量条目][const item] 的地方使用，但在 [type] 或 [array repeat expression] 中使用时，必须是独立的(如下所述)。
+也就是说，在以下地方允许使用它们:
+{==+==}
 
+
+{==+==}
 1. As an applied const to any type which forms a part of the signature of the
    item in question.
 2. As part of a const expression used to define an [associated const], or as a
@@ -67,7 +134,16 @@ places:
    item.
 4. As a parameter to any type used in the body of any functions in the item.
 5. As a part of the type of any fields in the item.
+{==+==}
+1. 作为对任何类型应用const，构成有关条目签名的一部分。
+2. 作为用于定义 [关联常量][associated const] 的常量表达式的一部分，或者作为 [关联类型][associated type] 的参数。
+3. 作为条目中任何函数体的任何运行时表达式中的一个值。
+4. 作为条目中任何函数体中使用的任何类型的参数。
+5. 作为条目中任何字段的类型的一部分。
+{==+==}
 
+
+{==+==}
 ```rust
 // Examples where const generic parameters can be used.
 
@@ -96,7 +172,39 @@ impl<const N: usize> Trait for Foo<N> {
     type Output = [i32; N];
 }
 ```
+{==+==}
+```rust
+// 可以使用常量泛型参数的例子。
 
+// 用于条目本身签名。
+fn foo<const N: usize>(arr: [i32; N]) {
+    // 用作函数体中的类型。
+    let x: [i32; N];
+    // 用作表达式。
+    println!("{}", N * 2);
+}
+
+// 用作结构的字段。
+struct Foo<const N: usize>([i32; N]);
+
+impl<const N: usize> Foo<N> {
+    // 用作关联常量。
+    const CONST: usize = N * 4;
+}
+
+trait Trait {
+    type Output;
+}
+
+impl<const N: usize> Trait for Foo<N> {
+    // 用作关联类型。
+    type Output = [i32; N];
+}
+```
+{==+==}
+
+
+{==+==}
 ```rust,compile_fail
 // Examples where const generic parameters cannot be used.
 fn foo<const N: usize>() {
@@ -110,13 +218,36 @@ fn foo<const N: usize>() {
     struct BadStruct([usize; N]);
 }
 ```
+{==+==}
+```rust,compile_fail
+// 不能使用常量泛型参数的例子。
+fn foo<const N: usize>() {
+    // 不能在函数体中的条目定义上使用。
+    const BAD_CONST: [usize; N] = [1; N];
+    static BAD_STATIC: [usize; N] = [1; N];
+    fn inner(bad_arg: [usize; N]) {
+        let bad_value = N * 2;
+    }
+    type BadAlias = [usize; N];
+    struct BadStruct([usize; N]);
+}
+```
+{==+==}
 
+
+{==+==}
 As a further restriction, const parameters may only appear as a standalone
 argument inside of a [type] or [array repeat expression]. In those contexts,
 they may only be used as a single segment [path expression], possibly inside a
 [block] (such as `N` or `{N}`). That is, they cannot be combined with other
 expressions.
+{==+==}
+作为进一步的限制，常量参数只能作为一个独立的参数出现在 [type] 或 [array repeat expression] 中。
+在这些情况下，它们只能作为单独段的 [path 表达式][path expression] 使用，可能在一个 [block] (如 `N` 或 `{N}` ) 内。也就是说，不能与其他表达式组合。
+{==+==}
 
+
+{==+==}
 ```rust,compile_fail
 // Examples where const parameters may not be used.
 
@@ -127,16 +258,41 @@ fn bad_function<const N: usize>() -> [u8; {N + 1}] {
     [1; {N + 1}]
 }
 ```
+{==+==}
+```rust,compile_fail
+// 不可以使用常量参数的例子。
 
+// 不允许在其他类型的表达式中组合，比如这里的返回类型中的算术表达式。
+fn bad_function<const N: usize>() -> [u8; {N + 1}] {
+    // 同样不允许用于数组重复表达式。
+    [1; {N + 1}]
+}
+```
+{==+==}
+
+
+{==+==}
 A const argument in a [path] specifies the const value to use for that item.
 The argument must be a [const expression] of the type ascribed to the const
 parameter. The const expression must be a [block expression][block]
 (surrounded with braces) unless it is a single path segment (an [IDENTIFIER])
 or a [literal] (with a possibly leading `-` token).
+{==+==}
+ [path] 中的const参数指定了该条目要使用的const值。
+该参数必须是 [const表达式][const expression] ，其类型归因于 const 参数。
+const 表达式必须是 [块表达式][block] (用大括号包围) ，除非它是单一的路径段 (一个[IDENTIFIER]) 或一个 [字面值][literal] (可能有前置 `-` 标记)。
+{==+==}
 
+
+{==+==}
 > **Note**: This syntactic restriction is necessary to avoid requiring
 > infinite lookahead when parsing an expression inside of a type.
+{==+==}
+> **注意**: 这个语法限制是必要的，以避免在解析类型内的表达式时需要无限向前预测。
+{==+==}
 
+
+{==+==}
 ```rust
 fn double<const N: i32>() {
     println!("doubled: {}", N * 2);
@@ -153,15 +309,46 @@ fn example() {
     double::<{ SOME_CONST + 5 }>();
 }
 ```
+{==+==}
+```rust
+fn double<const N: i32>() {
+    println!("doubled: {}", N * 2);
+}
 
+const SOME_CONST: i32 = 12;
+
+fn example() {
+    // const参数的使用示例。
+    double::<9>();
+    double::<-123>();
+    double::<{7 + 8}>();
+    double::<SOME_CONST>();
+    double::<{ SOME_CONST + 5 }>();
+}
+```
+{==+==}
+
+
+{==+==}
 When there is ambiguity if a generic argument could be resolved as either a
 type or const argument, it is always resolved as a type. Placing the argument
 in a block expression can force it to be interpreted as a const argument.
+{==+==}
+当泛型参数是否可以解释为类型参数或常量参数存在歧义时，总是被解释为类型。
+将参数放在块表达式中可以强制解释为常量参数。
+{==+==}
 
+
+{==+==}
 <!-- TODO: Rewrite the paragraph above to be in terms of namespaces, once
     namespaces are introduced, and it is clear which namespace each parameter
     lives in. -->
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust,compile_fail
 type N = u32;
 struct Foo<const N: usize>;
@@ -171,11 +358,28 @@ fn foo<const N: usize>() -> Foo<N> { todo!() } // ERROR
 // const parameter:
 fn bar<const N: usize>() -> Foo<{ N }> { todo!() } // ok
 ```
+{==+==}
+```rust,compile_fail
+type N = u32;
+struct Foo<const N: usize>;
+// 以下是一个错误，因为 `N` 被解释为类型别名 `N` 。
+fn foo<const N: usize>() -> Foo<N> { todo!() } // ERROR
+// 可以用大括号包起来，强制解释为 `N` 常量参数。
+fn bar<const N: usize>() -> Foo<{ N }> { todo!() } // ok
+```
+{==+==}
 
+
+{==+==}
 Unlike type and lifetime parameters, const parameters can be declared without
 being used inside of a parameterized item, with the exception of
 implementations as described in [generic implementations]:
+{==+==}
+与类型和生命周期参数不同，const参数可以被声明而不在参数化条目中使用， [泛型实现][generic implementations] 中描述的实现除外。
+{==+==}
 
+
+{==+==}
 ```rust,compile_fail
 // ok
 struct Foo<const N: usize>;
@@ -187,13 +391,24 @@ struct Biz<'a>;
 struct Unconstrained;
 impl<const N: usize> Unconstrained {}
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 When resolving a trait bound obligation, the exhaustiveness of all
 implementations of const parameters is not considered when determining if the
 bound is satisfied. For example, in the following, even though all possible
 const values for the `bool` type are implemented, it is still an error that
 the trait bound is not satisfied:
+{==+==}
+当解析trait约束的职责时，在确定约束是否被满足时，不会考虑所有常量参数实现的穷尽性。
+例如，在下面的例子中，即使 `bool` 类型的所有可能的常量值都被实现了，仍然是一个错误，即未满足trait约束。
+{==+==}
 
+
+{==+==}
 ```rust,compile_fail
 struct Foo<const B: bool>;
 trait Bar {}
@@ -206,10 +421,30 @@ fn generic<const B: bool>() {
     needs_bar(v); // ERROR: trait bound `Foo<B>: Bar` is not satisfied
 }
 ```
+{==+==}
+```rust,compile_fail
+struct Foo<const B: bool>;
+trait Bar {}
+impl Bar for Foo<true> {}
+impl Bar for Foo<false> {}
+
+fn needs_bar(_: impl Bar) {}
+fn generic<const B: bool>() {
+    let v = Foo::<B>;
+    needs_bar(v); // ERROR: trait 约束 `Foo<B>: Bar` 不满足
+}
+```
+{==+==}
 
 
+{==+==}
 ## Where clauses
+{==+==}
+## Where 子句
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _WhereClause_ :\
 > &nbsp;&nbsp; `where` ( _WhereClauseItem_ `,` )<sup>\*</sup> _WhereClauseItem_ <sup>?</sup>
@@ -223,14 +458,30 @@ fn generic<const B: bool>() {
 >
 > _TypeBoundWhereClauseItem_ :\
 > &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
+{==+==}
 
+{==+==}
+
+
+{==+==}
 *Where clauses* provide another way to specify bounds on type and lifetime
 parameters as well as a way to specify bounds on types that aren't type
 parameters.
+{==+==}
+*Where 子句* 提供了另一种方法来指定类型和生命周期参数的界限，以及一种方法来指定不是类型参数的类型的界限。
+{==+==}
 
+
+{==+==}
 The `for` keyword can be used to introduce [higher-ranked lifetimes]. It only
 allows [_LifetimeParam_] parameters.
+{==+==}
+ `for` 关键字可以用来引入 [更高级别的生命周期][higher-ranked lifetimes] 。
+其只允许 [_LifetimeParam_] 参数。
+{==+==}
 
+
+{==+==}
 ```rust
 struct A<T>
 where
@@ -242,16 +493,47 @@ where
     f: T,
 }
 ```
+{==+==}
+```rust
+struct A<T>
+where
+    T: Iterator,            // 可以用 A<T: Iterator> 代替
+    T::Item: Copy,          // 绑定在一个关联类型上
+    String: PartialEq<T>,   // 绑定在 `String` 上，使用类型参数
+    i32: Default,           // 允许的，但没有用
+{
+    f: T,
+}
+```
+{==+==}
 
+
+{==+==}
 ## Attributes
+{==+==}
+## 属性
+{==+==}
 
+
+{==+==}
 Generic lifetime and type parameters allow [attributes] on them. There are no
 built-in attributes that do anything in this position, although custom derive
 attributes may give meaning to it.
+{==+==}
+泛型的生命期和类型参数允许对它们有 [属性][attributes] 。
+这里没有内置属性能做事情，尽管自定义派生属性。
+{==+==}
 
+
+{==+==}
 This example shows using a custom derive attribute to modify the meaning of a
 generic parameter.
+{==+==}
+这个例子展示了使用自定义的派生属性来修改通用参数的含义。
+{==+==}
 
+
+{==+==}
 <!-- ignore: requires proc macro derive -->
 ```rust,ignore
 // Assume that the derive for MyFlexibleClone declared `my_flexible_clone` as
@@ -261,10 +543,27 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
     a: *const H
 }
 ```
+{==+==}
+<!-- ignore: requires proc macro derive -->
+```rust,ignore
+// 假设 MyFlexibleClone 派生声明了 `my_flexible_clone` 作为它所理解的一个属性。
+#[derive(MyFlexibleClone)]
+struct Foo<#[my_flexible_clone(unbounded)] H> {
+    a: *const H
+}
+```
+{==+==}
 
+
+{==+==}
 [IDENTIFIER]: ../identifiers.md
 [LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_ForLifetimes_]: ../trait-bounds.md#higher-ranked-trait-bounds
 [_LifetimeParam_]: #generic-parameters
 [_LifetimeBounds_]: ../trait-bounds.md
@@ -272,7 +571,12 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [_OuterAttribute_]: ../attributes.md
 [_Type_]: ../types.md#type-expressions
 [_TypeParamBounds_]: ../trait-bounds.md
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [array repeat expression]: ../expressions/array-expr.md
 [arrays]: ../types/array.md
 [slices]: ../types/slice.md
@@ -303,3 +607,6 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [type]: ../types.md
 [unions]: unions.md
 [attributes]: ../attributes.md
+{==+==}
+
+{==+==}
