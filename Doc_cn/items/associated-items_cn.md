@@ -488,7 +488,7 @@ If a type `Item` has an associated type `Assoc` from a trait `Trait`, then
 associated type definition. Furthermore, if `Item` is a type parameter, then
 `Item::Assoc` can be used in type parameters.
 {==+==}
-
+如果类型 `Item` 有一个来自trait `Trait` 的关联类型 `Assoc` ，那么 `<Item as Trait>::Assoc` 是一个类型，是关联类型定义中指定的类型的别名。此外，如果 `Item` 是一个类型参数，那么 `Item::Assoc` 可被用于类型参数中。
 {==+==}
 
 
@@ -500,7 +500,9 @@ type can be named like `<Thing as Trait>::Item<'x>`, where `'x` is some lifetime
 in scope. In this case, `'x` will be used wherever `'a` appears in the associated
 type definitions on impls.
 {==+==}
-
+关联类型可以包含 [泛型参数][generic parameters] 和 [where 约束][where clauses] ，这些通常被称为 *泛型关联类型* ，或 *GATs* 。
+如果类型 `Thing` 有一个关联类型 `Item` ，来自一个具有泛型 `<'a>` 的trait，这个类型可以被命名为 `<Thing as Trait>::Item<'x>` ，
+其中 `'x` 是作用域内的某个生命周期。在这种情况下， `'x` 将在impl的相关类型定义中出现 `'a` 的地方被使用。
 {==+==}
 
 
@@ -532,14 +534,39 @@ fn main() {
 }
 ```
 {==+==}
+```rust
+trait AssociatedType {
+    // 关联类型声明
+    type Assoc;
+}
 
+struct Struct;
+
+struct OtherStruct;
+
+impl AssociatedType for Struct {
+    // 关联类型定义
+    type Assoc = OtherStruct;
+}
+
+impl OtherStruct {
+    fn new() -> OtherStruct {
+        OtherStruct
+    }
+}
+
+fn main() {
+    // 用关联类型来指代 OtherStruct 为 <Struct as AssociatedType>::Assoc
+    let _other_struct: OtherStruct = <Struct as AssociatedType>::Assoc::new();
+}
+```
 {==+==}
 
 
 {==+==}
 An example of associated types with generics and where clauses:
 {==+==}
-
+一个带有泛型和where子句的关联类型的例子。
 {==+==}
 
 
@@ -573,14 +600,41 @@ fn main() {
 }
 ```
 {==+==}
+```rust
+struct ArrayLender<'a, T>(&'a mut [T; 16]);
 
+trait Lend {
+    // 泛型关联类型声明
+    type Lender<'a> where Self: 'a;
+    fn lend<'a>(&'a mut self) -> Self::Lender<'a>;
+}
+
+impl<T> Lend for [T; 16] {
+    // 泛型关联类型定义
+    type Lender<'a> = ArrayLender<'a, T> where Self: 'a;
+
+    fn lend<'a>(&'a mut self) -> Self::Lender<'a> {
+        ArrayLender(self)
+    }
+}
+
+fn borrow<'a, T: Lend>(array: &'a mut T) -> <T as Lend>::Lender<'a> {
+    array.lend()
+}
+
+
+fn main() {
+    let mut array = [0usize; 16];
+    let lender = borrow(&mut array);
+}
+```
 {==+==}
 
 
 {==+==}
 ### Associated Types Container Example
 {==+==}
-
+### 关联类型容器实例
 {==+==}
 
 
@@ -588,7 +642,7 @@ fn main() {
 Consider the following example of a `Container` trait. Notice that the type is
 available for use in the method signatures:
 {==+==}
-
+探究下面这个 `Container` trait 的例子。注意，该类型可以在方法签名中使用。
 {==+==}
 
 
@@ -610,7 +664,8 @@ In order for a type to implement this trait, it must not only provide
 implementations for every method, but it must specify the type `E`. Here's an
 implementation of `Container` for the standard library type `Vec`:
 {==+==}
-
+为了让一个类型实现这个trait，它不仅必须为每个方法提供实现，而且必须指定类型 `E` 。
+下面是标准库类型 `Vec` 的 `Container` 的实现:
 {==+==}
 
 
@@ -635,7 +690,7 @@ impl<T> Container for Vec<T> {
 {==+==}
 ### Relationship between `Bounds` and `WhereBounds`
 {==+==}
-
+### `Bounds` 和 `WhereBounds` 之间的关系
 {==+==}
 
 
@@ -656,14 +711,14 @@ trait Example {
 {==+==}
 Given a reference to the associated type like `<X as Example>::Output<Y>`, the associated type itself must be `Ord`, and the type `Y` must be `Debug`.
 {==+==}
-
+给出一个对关联类型的引用，如 `<X as Example>::Output<Y>` ，关联类型本身必须是 `Ord` ，而 `Y` 的类型必须是 `Debug` 。
 {==+==}
 
 
 {==+==}
 ### Required where clauses on generic associated types
 {==+==}
-
+### 要求在泛型关联类型上的where约束
 {==+==}
 
 
@@ -673,7 +728,8 @@ where clauses, dependent on functions in the trait and how the GAT is used. Thes
 rules may be loosened in the future; updates can be found [on the generic
 associated types initiative repository](https://rust-lang.github.io/generic-associated-types-initiative/explainer/required_bounds.html).
 {==+==}
-
+trait上的泛型关联类型声明目前可能需要一个where约束列表，这取决于trait中的函数和GAT的使用方式。
+这些规则在未来可能会被放宽；可以在 [泛型关联类型提案库](https://rust-lang.github.io/generic-associated-types-initiative/explainer/required_bounds.html)上找到更新。
 {==+==}
 
 
@@ -683,7 +739,8 @@ definitions of the associated type in impls. To do this, any clauses that *can b
 proven to hold* on functions (using the parameters of the function or trait)
 where a GAT appears as an input or output must also be written on the GAT itself.
 {==+==}
-
+简而言之，这些where约束是必须的，以便在impl中最大限度地允许相关类型的定义。
+为了做到这一点，任何在GAT作为输入或输出出现的函数 (使用函数或trait的参数) 上 *能证明成立* 的约束也必须写在GAT本身上。
 {==+==}
 
 
@@ -704,7 +761,7 @@ In the above, on the `next` function, we can prove that `Self: 'a`, because of
 the implied bounds from `&'a mut self`; therefore, we must write the equivalent
 bound on the GAT itself: `where Self: 'x`.
 {==+==}
-
+在上面，关于 `next` 函数，我们可以证明 `Self: 'a` ，因为来自 `&'a mut self` 的隐式绑定；因此，我们必须写出GAT本身的等效绑定： `where Self: 'x` 。
 {==+==}
 
 
@@ -713,7 +770,7 @@ When there are multiple functions in a trait that use the GAT, then the
 *intersection* of the bounds from the different functions are used, rather than
 the union.
 {==+==}
-
+当一个特性中有多个函数使用GAT时，就会使用不同函数的 *交集* ，而不是联合。
 {==+==}
 
 
