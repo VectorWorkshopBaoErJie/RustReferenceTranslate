@@ -793,14 +793,16 @@ know that `T: 'a` on `create_checker`, we do not know that on `do_check`. Howeve
 if `do_check` was commented out, then the `where T: 'x` bound would be required
 on `Checker`.
 {==+==}
-
+在这个例子中，对 `type Checker<'a>;` 不需要约束。
+虽然知道 `T: 'a` 在 `create_checker` 上，不知道在 `do_check` 上。
+但是，如果注释掉 `do_check` ，那么将在 `Checker` 上要求 `where T: 'x` 约束。
 {==+==}
 
 
 {==+==}
 The bounds on associated types also propagate required where clauses.
 {==+==}
-
+关联类型的约束也会传播所需的 where 子句。
 {==+==}
 
 
@@ -822,7 +824,7 @@ Here, `where Self: 'a` is required on `Item` because of `iter`. However, `Item`
 is used in the bounds of `Iterator`, the `where Self: 'a` clause is also required
 there.
 {==+==}
-
+这里，因为 `iter` ，在 `Item` 上 `where Self: 'a` 是必须的。然而， `Item` 被用在 `Iterator` 的约束内，也需要 `where Self: 'a` 子句。
 {==+==}
 
 
@@ -830,7 +832,7 @@ there.
 Finally, any explicit uses of `'static` on GATs in the trait do not count towards
 the required bounds.
 {==+==}
-
+最后， trait 中对 GAT 的任何明确使用 `'static` 都不计入要求的约束。
 {==+==}
 
 
@@ -849,14 +851,14 @@ trait StaticReturn {
 {==+==}
 ## Associated Constants
 {==+==}
-
+## 关联常量
 {==+==}
 
 
 {==+==}
 *Associated constants* are [constants] associated with a type.
 {==+==}
-
+*关联常量* 是指与类型相关联的 [常量][constants] 。
 {==+==}
 
 
@@ -865,7 +867,8 @@ An *associated constant declaration* declares a signature for associated
 constant definitions. It is written as `const`, then an identifier,
 then `:`, then a type, finished by a `;`.
 {==+==}
-
+一个 *关联常量声明* 为关联常量定义声明了一个签名。
+书写格式为 `const` 之后为一个标识符， `:` 之后是类型，最后是 `;` 。
 {==+==}
 
 
@@ -873,7 +876,7 @@ then `:`, then a type, finished by a `;`.
 The identifier is the name of the constant used in the path. The type is the
 type that the definition has to implement.
 {==+==}
-
+常量的名称标识符用作路径。类型定义了必须实现的类型。
 {==+==}
 
 
@@ -881,7 +884,7 @@ type that the definition has to implement.
 An *associated constant definition* defines a constant associated with a
 type. It is written the same as a [constant item].
 {==+==}
-
+一个 *关联常量定义* 定义了一个与类型相关的常量。它的写法与 [常量条目][constant item] 相同。
 {==+==}
 
 
@@ -890,7 +893,8 @@ Associated constant definitions undergo [constant evaluation] only when
 referenced. Further, definitions that include [generic parameters] are
 evaluated after monomorphization.
 {==+==}
-
+关联常量定义只在被引用时进行 [常量评估][constant evaluation] 。
+此外，包含 [泛型参数][generic parameters] 的定义在单态化后被评估。
 {==+==}
 
 
@@ -923,14 +927,40 @@ fn main() {
 }
 ```
 {==+==}
+```rust,compile_fail
+struct Struct;
+struct GenericStruct<const ID: i32>;
 
+impl Struct {
+    // 定义没有立即评估
+    const PANIC: () = panic!("compile-time panic");
+}
+
+impl<const ID: i32> GenericStruct<ID> {
+    // 定义没有立即评估
+    const NON_ZERO: () = if ID == 0 {
+        panic!("contradiction")
+    };
+}
+
+fn main() {
+    // 引用 Struct::PANIC 会导致编译错误
+    let _ = Struct::PANIC;
+
+    // 可以, ID 不是 0
+    let _ = GenericStruct::<1>::NON_ZERO;
+
+    // 在 ID=0 的情况下评估 NON_ZERO 是编译错误
+    let _ = GenericStruct::<0>::NON_ZERO;
+}
+```
 {==+==}
 
 
 {==+==}
 ### Associated Constants Examples
 {==+==}
-
+### 关联常量实例
 {==+==}
 
 
