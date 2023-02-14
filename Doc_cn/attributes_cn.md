@@ -246,8 +246,8 @@ Expressions in meta items must macro-expand to literal expressions, which must n
 include integer or float type suffixes. Expressions which are not literal expressions
 will be syntactically accepted (and can be passed to proc-macros), but will be rejected after parsing.
 {==+==}
-元条目中的表达式必须宏展开为字面表达式，其中不能包含整数或浮点数类型的后缀。
-在语法上可以接受不是字面表达式的表达式 (并且可以被传递给过程宏)，但是在解析后会被拒绝。
+元条目中的表达式必须宏展开为字面值表达式，其中不能包含整数或浮点数类型的后缀。
+在语法上可以接受不是字面值表达式的表达式 (并且可以传递给过程宏)，但是在语法解析后会被拒绝。
 {==+==}
 
 
@@ -257,7 +257,8 @@ after that outer macro. For example, the following code will expand the
 `Serialize` proc-macro first, which must preserve the `include_str!` call in
 order for it to be expanded:
 {==+==}
-
+注意，如果该属性出现在另一个宏中，它将在该外部宏之后被展开。
+例如，下面的代码将首先展开 `Serialize` 过程宏，必须保留 `include_str!` 的调用，才能被展开:
 {==+==}
 
 
@@ -277,7 +278,7 @@ struct Foo {
 {==+==}
 Additionally, macros in attributes will be expanded only after all other attributes applied to the item:
 {==+==}
-
+此外，属性中的宏将只在应用于条目的所有其他属性之后展开。
 {==+==}
 
 
@@ -290,7 +291,13 @@ Additionally, macros in attributes will be expanded only after all other attribu
 fn foo() {}
 ```
 {==+==}
-
+```rust ignore
+#[macro_attr1] // 首先展开
+#[doc = mac!()] // `mac!` 第4展开
+#[macro_attr2] // 第二展开
+#[derive(MacroDerive1, MacroDerive2)] // 第三展开
+fn foo() {}
+```
 {==+==}
 
 
@@ -299,7 +306,7 @@ Various built-in attributes use different subsets of the meta item syntax to
 specify their inputs. The following grammar rules show some commonly used
 forms:
 {==+==}
-
+各种内置属性使用元条目语法的不同子集来指定它们的输入。下面的语法规则显示了一些常用的形式:
 {==+==}
 
 
@@ -327,7 +334,7 @@ forms:
 {==+==}
 Some examples of meta items are:
 {==+==}
-
+元条目的一些例子:
 {==+==}
 
 
@@ -347,7 +354,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 {==+==}
 ## Active and inert attributes
 {==+==}
-
+## 活动和惰性属性
 {==+==}
 
 
@@ -356,7 +363,7 @@ An attribute is either active or inert. During attribute processing, *active
 attributes* remove themselves from the thing they are on while *inert attributes*
 stay on.
 {==+==}
-
+一个属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性* 从它们所在的事物上移走， 而 *惰性属性* 保持不变。
 {==+==}
 
 
@@ -365,14 +372,15 @@ The [`cfg`] and [`cfg_attr`] attributes are active. The [`test`] attribute is
 inert when compiling for tests and active otherwise. [Attribute macros] are
 active. All other attributes are inert.
 {==+==}
-
+[`cfg`] 和 [`cfg_attr`] 属性是活动的。当测试编译时 [`test`] 属性是惰性的，否则是活动的。
+[Attribute macros] 是活动的。所有其他属性都是惰性的。
 {==+==}
 
 
 {==+==}
 ## Tool attributes
 {==+==}
-
+## 工具属性
 {==+==}
 
 
@@ -382,7 +390,8 @@ in its own namespace in the [tool prelude]. The first segment of the attribute
 path is the name of the tool, with one or more additional segments whose
 interpretation is up to the tool.
 {==+==}
-
+编译器可以允许外部工具属性，其中每个工具都驻留在 [工具预导入][tool prelude] 中自己的命名空间。
+属性路径的第一段是工具的名称，还有一个或多个附加段，其解释由工具决定。
 {==+==}
 
 
@@ -391,7 +400,8 @@ When a tool is not in use, the tool's attributes are accepted without a
 warning. When the tool is in use, the tool is responsible for processing and
 interpretation of its attributes.
 {==+==}
-
+当一个工具不使用时，允许工具属性，没有警告。
+当工具在使用时，工具负责处理和解释其属性。
 {==+==}
 
 
@@ -399,7 +409,7 @@ interpretation of its attributes.
 Tool attributes are not available if the [`no_implicit_prelude`] attribute is
 used.
 {==+==}
-
+如果使用了 [no_implicit_prelude`] 属性，则工具属性不可用。
 {==+==}
 
 
@@ -415,28 +425,37 @@ struct S {
 pub fn f() {}
 ```
 {==+==}
+```rust
+// 告知 rustfmt 工具不要格式化以下元素。
+#[rustfmt::skip]
+struct S {
+}
 
+// 控制 Clippy 工具的 "cyclomatic complexity" 阈值。
+#[clippy::cyclomatic_complexity = "100"]
+pub fn f() {}
+```
 {==+==}
 
 
 {==+==}
 > Note: `rustc` currently recognizes the tools "clippy" and "rustfmt".
 {==+==}
-
+> 注意: `rustc` 目前可以识别工具 "clippy" 和 "rustfmt" 。
 {==+==}
 
 
 {==+==}
 ## Built-in attributes index
 {==+==}
-
+## 内置属性索引
 {==+==}
 
 
 {==+==}
 The following is an index of all built-in attributes.
 {==+==}
-
+以下是所有内置属性的索引。
 {==+==}
 
 
@@ -445,7 +464,9 @@ The following is an index of all built-in attributes.
   - [`cfg`] — Controls conditional compilation.
   - [`cfg_attr`] — Conditionally includes attributes.
 {==+==}
-
+- 条件编译
+  - [`cfg`] — 控制条件编译
+  - [`cfg_attr`] — 条件包含属性
 {==+==}
 
 
@@ -455,7 +476,10 @@ The following is an index of all built-in attributes.
   - [`ignore`] — Disables a test function.
   - [`should_panic`] — Indicates a test should generate a panic.
 {==+==}
-
+- 测试
+  - [`test`] — 标记为测试函数
+  - [`ignore`] — 禁用测试函数
+  - [`should_panic`] — 表示测试应该产生恐慌。
 {==+==}
 
 
@@ -465,7 +489,9 @@ The following is an index of all built-in attributes.
   - [`automatically_derived`] — Marker for implementations created by
     `derive`.
 {==+==}
-
+- 派生
+  - [`derive`] — 自动 trait 实现
+  - [`automatically_derived`] — 由 `derive` 创建的实现的标记
 {==+==}
 
 
@@ -478,7 +504,12 @@ The following is an index of all built-in attributes.
   - [`proc_macro_derive`] — Defines a derive macro.
   - [`proc_macro_attribute`] — Defines an attribute macro.
 {==+==}
-
+- 宏
+  - [`macro_export`] — 导出一个 `macro_rules` 宏，用于跨 crate 使用。
+  - [`macro_use`] — 展开宏的可见性，或从其他 crate 导入宏。
+  - [`proc_macro`] — 定义类函数宏。
+  - [`proc_macro_derive`] — 定义派生宏。
+  - [`proc_macro_attribute`] — 定义属性宏。
 {==+==}
 
 
@@ -488,7 +519,10 @@ The following is an index of all built-in attributes.
   - [`deprecated`] — Generates deprecation notices.
   - [`must_use`] — Generates a lint for unused values.
 {==+==}
-
+- 诊断
+  - [`allow`], [`warn`], [`deny`], [`forbid`] — 改变默认的 lint 级别。
+  - [`deprecated`] — 生成弃用通知
+  - [`must_use`] — 生成未使用值的 lint 。
 {==+==}
 
 
@@ -512,7 +546,19 @@ The following is an index of all built-in attributes.
     object file.
   - [`crate_name`] — Specifies the crate name.
 {==+==}
-
+- ABI, linking, symbols, and FFI
+  - [`link`] — 指定本地库，与 `extern` 块链接。
+  - [`link_name`] — 指定 `extern` 块中的函数或静态的符号名称。
+  - [`link_ordinal`] — 指定 `extern` 块中的函数或静态符号的顺序。
+  - [`no_link`] — 防止链接外部 crate 。
+  - [`repr`] — Controls type layout.
+  - [`crate_type`] — 指定 crate 的类型 (库、可执行文件等) 。
+  - [`no_main`] — 禁止发送 `main` 符号。
+  - [`export_name`] — 指定函数或静态的导出符号名称。
+  - [`link_section`] — 指定一个对象文件的节，以用于函数或静态。
+  - [`no_mangle`] — 禁用符号名称编码。
+  - [`used`] — 强制编译器在输出对象文件中保留静态条目。
+  - [`crate_name`] — 指定 crate 名称。
 {==+==}
 
 
@@ -525,7 +571,13 @@ The following is an index of all built-in attributes.
   - [`track_caller`] - Pass the parent call location to `std::panic::Location::caller()`.
   - [`instruction_set`] - Specify the instruction set used to generate a functions code
 {==+==}
-
+- 代码生成
+  - [`inline`] — 提示内联代码。
+  - [`cold`] — 提示函数不太可能被调用。
+  - [`no_builtins`] — 禁止使用某些内置函数。
+  - [`target_feature`] — 配置特定平台的代码生成。
+  - [`track_caller`] - 将父级调用位置传递给 `std::panic::Location::caller()`。
+  - [`instruction_set`] - 指定用于生成函数代码的指令集
 {==+==}
 
 
@@ -534,7 +586,8 @@ The following is an index of all built-in attributes.
   - `doc` — Specifies documentation. See [The Rustdoc Book] for more
     information. [Doc comments] are transformed into `doc` attributes.
 {==+==}
-
+- 文档
+  - `doc` — 指定文档。更多信息见 [The Rustdoc Book] 。 [文档注释][Doc comments] 被转化为 `doc` 属性。
 {==+==}
 
 
@@ -543,7 +596,9 @@ The following is an index of all built-in attributes.
   - [`no_std`] — Removes std from the prelude.
   - [`no_implicit_prelude`] — Disables prelude lookups within a module.
 {==+==}
-
+- 预导入
+  - [`no_std`] — 从预导入中删除 std 。
+  - [`no_implicit_prelude`] — 禁用模块内的预导入查询。
 {==+==}
 
 
@@ -551,7 +606,8 @@ The following is an index of all built-in attributes.
 - Modules
   - [`path`] — Specifies the filename for a module.
 {==+==}
-
+- 模块
+  - [`path`] — 指定模块的文件名。
 {==+==}
 
 
@@ -561,7 +617,9 @@ The following is an index of all built-in attributes.
     compile-time operations.
   - [`type_length_limit`] — Sets the maximum size of a polymorphic type.
 {==+==}
-
+- 范围
+  - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
+  - [`type_length_limit`] — 设置多态类型的最大规模。
 {==+==}
 
 
@@ -571,7 +629,10 @@ The following is an index of all built-in attributes.
   - [`global_allocator`] — Sets the global memory allocator.
   - [`windows_subsystem`] — Specifies the windows subsystem to link with.
 {==+==}
-
+- 运行时
+  - [`panic_handler`] — 设定处理恐慌的函数。
+  - [`global_allocator`] — 设置全局内存分配器。
+  - [`windows_subsystem`] — 指定要链接的 windows 子系统。
 {==+==}
 
 
@@ -580,7 +641,8 @@ The following is an index of all built-in attributes.
   - `feature` — Used to enable unstable or experimental compiler features. See
     [The Unstable Book] for features implemented in `rustc`.
 {==+==}
-
+- 特性
+  - `feature` — 用于启用不稳定或实验性的编译器特性。参见 [The Unstable Book] 关于在 `rustc` 中实现的特性。
 {==+==}
 
 
@@ -589,7 +651,8 @@ The following is an index of all built-in attributes.
   - [`non_exhaustive`] — Indicate that a type will have more fields/variants
     added in future.
 {==+==}
-
+- 类型系统
+  - [`non_exhaustive`] — 表示类型在将来会有更多的字段/变体加入。
 {==+==}
 
 
