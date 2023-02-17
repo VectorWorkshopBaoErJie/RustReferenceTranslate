@@ -32,8 +32,8 @@
 > compiler, and the language has always been designed to be compiled. For these
 > reasons, this section assumes a compiler.
 {==+==}
-> 注意: 尽管Rust和其他语言一样，既可以由解释器实现，也可以由编译器实现，
-> 但现有的唯一实现是编译器，而且该语言一直被设计为编译性的。由此原因，本节假设为编译器。
+> 注意：尽管 Rust 和其他语言一样，可以被解释器实现，但是现有的唯一实现是编译器，
+> 并且这门语言一直被设计为编译型语言。因此，本节假设使用的是编译器。
 {==+==}
 
 
@@ -44,8 +44,8 @@ interpretation* govern the success or failure of compilation, while
 semantic rules that have a *dynamic interpretation* govern the behavior of the
 program at run-time.
 {==+==}
-Rust的语义遵守编译时和运行时间的 *phase distinction* 阶段区分。
-[^phase-distinction] 具有 *静态解释* 语义规则控制编译的成功或失败， *动态解释* 语义规则管理程序在运行时的行为。
+Rust 的语义遵循编译时和运行时之间的阶段区别。
+[^phase-distinction] 有一个 *静态解释* 的语义规则来决定编译的成功或失败，而有一个 *动态解释* 的语义规则来决定程序在运行时的行为。
 {==+==}
 
 
@@ -55,7 +55,8 @@ processes a single crate in source form, and if successful, produces a single
 crate in binary form: either an executable or some sort of
 library.[^cratesourcefile]
 {==+==}
-编译模型集中于 _crates_ 制品。每次编译都会处理源码形式的crate，如果成功的话，会产生二进制形式的crate: 可执行文件或某种库 。
+编译模型以名为 _crates_ 的构件为中心。
+每个编译过程处理单个源代码形式的 crate，并且如果成功，将生成单个二进制形式的 crate ：可以是可执行文件或某种类型的库。[^cratesourcefile]
 {==+==}
 
 
@@ -67,8 +68,9 @@ anonymous (from the point of view of paths within the module) and any item
 within a crate has a canonical [module path] denoting its location
 within the crate's module tree.
 {==+==}
-一个 _crate_ 是一个编译和链接的单元，也是版本管理、分发和运行时加载的单元。
-一个 crate 包含一个嵌套 [module] 作用域的 _树_ 。这棵树的顶层是一个匿名的模块(从模块内的路径来看) ，crate内的任何条目都有规范的 [module path] ，表示它在crate模块树中的位置。
+一个 _crate_ 是编译、链接、版本控制、分发和运行时加载的基本单位。
+一个 crate 包含了一个嵌套的 [模块][module] 作用域 _树_ 。
+这个树的最高层是一个匿名模块，任何 crate 中的条目都有一个规范的 [模块路径][module path] 来表示它在 crate 的模块树中的位置。
 {==+==}
 
 
@@ -78,8 +80,8 @@ always produces a single output crate. The processing of that source file may
 result in other source files being loaded as modules. Source files have the
 extension `.rs`.
 {==+==}
-Rust编译器调用总是以单个源文件作为输入，并且总是产生单一的输出crate。
-对该源文件的处理可能会导致其他源码文件被加载为模块。源码文件的扩展名为 `.rs` 。
+Rust 编译器总是使用单个源文件作为输入，并始终产生单个输出 crate 。
+处理该源文件可能会导致其他源文件作为模块被加载。源文件的扩展名为`.rs`。
 {==+==}
 
 
@@ -91,8 +93,8 @@ source file, or by the name of the crate itself. Every source file is a
 module, but not every module needs its own source file: [module
 definitions][module] can be nested within one file.
 {==+==}
-一个Rust源码文件描述了一个模块。其名称及位置&mdash; 在当前crate的模块树中&mdash; 由源码文件外部定义: 通过引用源码文件中明确的 [_Module_][module] 条目或者通过crate本身的名称。
-每个源码文件都是一个模块，但不是每个模块都需要有自己的源码文件。 [module definitions][module] 模块定义可以嵌套在一个文件中。
+一个 Rust 的源文件描述了一个模块，它的名称和位置是在源文件之外定义的，即通过引用源文件中的 [Module][module] 条目，或者通过 crate 自身的名称。
+每个源文件都是一个模块，但不是每个模块都需要自己的源文件：[模块定义][module] 可以在一个文件中嵌套。
 {==+==}
 
 
@@ -103,8 +105,8 @@ that apply to the containing module, most of which influence the behavior of
 the compiler. The anonymous crate module can have additional attributes that
 apply to the crate as a whole.
 {==+==}
-每个源码文件包含一个由零个或多个 [_Item_] 定义组成的序列，并且，以可选的任意数量的 [attributes] 开始，其大部分会影响编译器的行为。
-匿名crate模块可以有适用于整个crate的附加属性。
+每个源文件包含零个或多个 [条目][_Item_] 定义，可以选择地以任意数量的 [属性][attributes] 开头，这些属性适用于包含的模块，大多数属性都会影响编译器的行为。
+匿名的 crate 模块可以有适用于整个 crate 的附加属性。
 {==+==}
 
 
@@ -138,7 +140,7 @@ apply to the crate as a whole.
 {==+==}
 ## Byte order mark
 {==+==}
-## 字节指示标识
+## 字节顺序标记
 {==+==}
 
 
@@ -147,7 +149,7 @@ The optional [_UTF8 byte order mark_] (UTF8BOM production) indicates that the
 file is encoded in UTF8. It can only occur at the beginning of the file and
 is ignored by the compiler.
 {==+==}
-可选的 [_UTF8 byte order mark_] (UTF8BOM production) 表示文件是以UTF8编码的。它只能出现在文件的开头，并且被编译器忽略。
+可选的 [UTF8 字节顺序标记][_UTF8 byte order mark_] (UTF8BOM 产生式) 表示该文件使用 UTF8 编码。它只能出现在文件开头，并且被编译器忽略。
 {==+==}
 
 
@@ -165,9 +167,9 @@ essentially to treat the source file as an executable script. The shebang
 can only occur at the beginning of the file (but after the optional
 _UTF8BOM_). It is ignored by the compiler. For example:
 {==+==}
-源码文件可以有一个 [_shebang_] (SHEBANG production) ，它向操作系统表明用什么程序来执行这个文件。
-它的作用是把源码文件当作可执行脚本。
-执行注解(Shebang)只能出现在文件的开头 (但在可选的 _UTF8BOM_ 之后) 。它被编译器忽略。比如:
+源码文件可以包含 [_shebang_] (SHEBANG 产生式) ，它指示操作系统要使用哪个程序来执行此文件。
+它基本上将源文件视为可执行脚本。执行注解 (Shebang) 只能出现在文件开头 (但在可选的 _UTF8BOM_ 之后) 。
+它会被编译器忽略。例如:
 {==+==}
 
 
@@ -191,9 +193,9 @@ A restriction is imposed on the shebang syntax to avoid confusion with an
 intervening [comments] or [whitespace]. If this restriction fails, then it is
 not treated as a shebang, but instead as the start of an attribute.
 {==+==}
-执行注解语法有一个限制，以避免与 [attribute] 混淆。
-`#!` 字符后面不能有 `[` token，忽略中间的 [comments] 注释或 [whitespace] 空白。
-如果这个限制失效，那么就不会当成执行注解，而是作为属性的起始。
+对于 shebang 语法，存在限制以避免与 [属性][attribute] 混淆。
+ `#!` 字符后面不能跟着 `[` 标记，忽略其中的注释或 [空白][whitespace] 。
+ 如果此限制失败，则它不会被视为 shebang，而是被视为属性的开始。
 {==+==}
 
 
@@ -226,8 +228,8 @@ A crate that contains a `main` [function] can be compiled to an executable. If a
 [trait or lifetime bounds], must not have any [where clauses], and its return
 type must implement the [`Termination`] trait.
 {==+==}
-一个包含 `main` [function] 的crate可以被编译为可执行文件。
- `main` 函数不接受任何参数，不能声明任何 [trait or lifetime bounds] "trait 或生命周期边界"，不能有任何 [where clauses] ，其返回类型必须实现 [`Termination`] trait。
+如果一个 crate 包含一个 `main` [函数][function]，它可以被编译成可执行文件。
+如果存在一个 `main` 函数，则它不应接受任何参数，不应声明任何 [trait 或生命周期边界][trait or lifetime bounds]，也不应该有任何 `where` 子句，而且它的返回类型必须实现 [`Termination`] trait。
 {==+==}
 
 
@@ -289,8 +291,8 @@ The *`no_main` [attribute]* may be applied at the crate level to disable
 emitting the `main` symbol for an executable binary. This is useful when some
 other object being linked to defines `main`.
 {==+==}
- *`no_main` [attribute]* 可以应用在crate层级，以禁止为可执行二进制文件发送 `main` 符号。
-当其他被链接的对象定义了 `main` 时，这很有用。
+`no_main` 属性可以应用于 crate 级别，用于禁用可执行二进制文件的 `main` 符号的输出。
+这在被链接到某个定义了 `main` 的其他对象时非常有用。
 {==+==}
 
 
@@ -305,7 +307,7 @@ other object being linked to defines `main`.
 The *`crate_name` [attribute]* may be applied at the crate level to specify the
 name of the crate with the [_MetaNameValueStr_] syntax.
 {==+==}
- *`crate_name` [attribute]* 可以应用在crate层级，以 [_MetaNameValueStr_] 的语法指定crate的名称。
+`crate_name` 属性可以应用于 crate 层级，使用 [_MetaNameValueStr_] 语法指定 crate 名称。
 {==+==}
 
 
@@ -322,7 +324,7 @@ name of the crate with the [_MetaNameValueStr_] syntax.
 The crate name must not be empty, and must only contain [Unicode alphanumeric]
 or `_` (U+005F) characters.
 {==+==}
-crate名称不能为空，并且只能包含 [Unicode alphanumeric] 或 `_` (U+005F) 字符。
+crate 的名称不能为空，只能包含 [Unicode 字母数字][Unicode alphanumeric] 或 `_` (U+005F) 字符。
 {==+==}
 
 
@@ -331,8 +333,7 @@ crate名称不能为空，并且只能包含 [Unicode alphanumeric] 或 `_` (U+0
     Static checks like syntactic analysis, type checking, and lints should
     happen before the program is executed regardless of when it is executed.
 {==+==}
-[^phase-distinction]: 这种区别也会存在于解释器中。
-    语法分析、类型检查和lints等静态检查应该在程序执行之前进行，而不管它何时被执行。
+[^phase-distinction]: 在一个解释器中，这种区别也会存在。无论何时执行程序，静态检查，例如语法分析、类型检查和 lints 应该先发生，然后才执行程序。
 {==+==}
 
 
@@ -341,7 +342,7 @@ crate名称不能为空，并且只能包含 [Unicode alphanumeric] 或 `_` (U+0
     ECMA-335 CLI model, a *library* in the SML/NJ Compilation Manager, a *unit*
     in the Owens and Flatt module system, or a *configuration* in Mesa.
 {==+==}
-[^cratesourcefile]: crate 有点类似于ECMA-335 CLI模型中的 *assembly* ， SML/NJ 编译管理器中的 *library* ， Owens 和 Flatt 模块系统中的 *unit* ，或者 Mesa 中的 *configuration* 。
+[^cratesourcefile]: 一个 crate 在某种程度上类似于 ECMA-335 CLI 模型中的 *assembly* ， SML/NJ 编译管理器中的 *library* ，Owens 和 Flatt 模块系统中的 *unit*，或 Mesa 中的 *configuration* 。
 {==+==}
 
 
