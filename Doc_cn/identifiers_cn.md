@@ -27,7 +27,7 @@
 Identifiers follow the specification in [Unicode Standard Annex #31][UAX31] for Unicode version 15.0, with the additions described below. Some examples of identifiers:
 {==+==}
 <!-- 更新版本时，也要更新UAX链接。 -->
-标识符遵循 [Unicode Standard Annex #31][UAX31] 中针对 Unicode 15.0 版本的规范，并增加了以下内容。一些标识符的例子:
+标识符遵循 [Unicode 标准附录 #31][UAX31] 的规范，使用的是 Unicode 15.0 版本，此外还有下面的增强规则。以下是一些标识符的例子：
 {==+==}
 
 
@@ -45,7 +45,7 @@ Identifiers follow the specification in [Unicode Standard Annex #31][UAX31] for 
 {==+==}
 The profile used from UAX #31 is:
 {==+==}
-UAX #31使用的编译设置是:
+UAX #31 使用的编译设置是:
 {==+==}
 
 
@@ -63,14 +63,14 @@ UAX #31使用的编译设置是:
 {==+==}
 with the additional constraint that a single underscore character is not an identifier.
 {==+==}
-额外约束: 单下划线字符不是一个标识符。
+附加约束条件是，单个下划线字符不是标识符。
 {==+==}
 
 
 {==+==}
 > **Note**: Identifiers starting with an underscore are typically used to indicate an identifier that is intentionally unused, and will silence the unused warning in `rustc`.
 {==+==}
-> **注意**: 以下划线开头的标识符通常用于表示有意未使用的标识符，并将在 `rustc` 中静默未使用的警告。
+> **注意**: 以下划线开头的标识符通常用于指示故意未使用的标识符，并将消除 `rustc` 中的未使用警告。
 {==+==}
 
 
@@ -84,14 +84,14 @@ Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix 
 {==+==}
 Zero width non-joiner (ZWNJ U+200C) and zero width joiner (ZWJ U+200D) characters are not allowed in identifiers.
 {==+==}
-零宽度非连接符 (ZWNJ U+200C) 和零宽度连接符 (ZWJ U+200D) 不允许出现在标识符中。
+零宽度不连字符 (ZWNJ U+200C) 和零宽度连字符 (ZWJ U+200D) 字符不能出现在标识符中。
 {==+==}
 
 
 {==+==}
 Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Continue`] in the following situations:
 {==+==}
-在下列情况，标识符被限制在 [`XID_Start`] 和 [`XID_Continue`] 的ASCII子集。
+在以下情况下，标识符受到 ASCII 子集的 [XID_Start] 和 [XID_Continue] 的限制：
 {==+==}
 
 
@@ -105,8 +105,8 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 * [`extern crate`] 声明
 * 在 [path] 中引用的外部 crate 的名称
 * 从文件系统加载的没有 [`path` attribute] 的 [Module] 名称 。
-* [`no_mangle`] 所属项
-* [external blocks] 中项的名称
+* [`no_mangle`] 所属条目
+* [external blocks] 中条目的名称
 {==+==}
 
 
@@ -144,9 +144,9 @@ the `r#` prefix is not included as part of the actual identifier.)
 Unlike a normal identifier, a raw identifier may be any strict or reserved
 keyword except the ones listed above for `RAW_IDENTIFIER`.
 {==+==}
-原始标识符与普通标识符一样，但有 `r#` 前缀。
-(注意，`r#` 前缀不作为实际标识符的一部分。)
-与普通标识符不同，原始标识符可以是任何严格或保留关键字，除了上面所列出的 `RAW_IDENTIFIER` "原始标识符"。
+原始标识符类似于普通标识符，但是前缀为 `r#`。
+(注意，实际标识符不包括 `r#` 前缀。)
+与普通标识符不同，原始标识符可以是任何严格字或保留字，除了列在 `RAW_IDENTIFIER` 上的那些关键字。
 {==+==}
 
 

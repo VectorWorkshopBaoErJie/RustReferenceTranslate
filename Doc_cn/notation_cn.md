@@ -15,7 +15,7 @@
 {==+==}
 The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 {==+==}
-以下是 *Lexer* "词法分析" 和 *Syntax* "语法分析" 片段使用的符号。
+以下符号在 *Lexer* "词法" 和 *Syntax* "语法" 的语法代码段中使用：
 {==+==}
 
 
@@ -57,12 +57,8 @@ phase feeding the parser, driven by a <abbr title="Deterministic Finite
 Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
-语法中的一些规则 &mdash ; 特别是 [unary operators] "单目运算符"、 [binary operators] "二目运算法" 和 [keywords] "关键字" &mdash;
-是提供的简化的形式：是可打印字符串的列表。
-这些情况构成了相关 [token][tokens] 规则的一个子集,
-被认为是词法分析阶段向解析器提供的结果,
-由 <abbr title="Deterministic Finite Automaton">DFA</abbr> 驱动,
-对所有此类字符串表项进行解析操作。
+语法中的一些规则，特别是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，采用了简化形式，以可打印的字符串列表的形式给出。
+这些情况构成了与 [token][tokens] 规则相关的规则子集，假定它们是由驱动为确定性有限自动机（DFA）运行的语法分析器的词法分析阶段的结果，该 DFA 操作于所有这些字符串表的分支上。
 {==+==}
 
 
@@ -71,7 +67,7 @@ When such a string in `monospace` font occurs inside the grammar,
 it is an implicit reference to a single member of such a string table
 production. See [tokens] for more information.
 {==+==}
-当这种 `monospace` "等宽"字体的字符串在语法中出现时，其是对这种字符串表项的单个成员的隐式引用。更多信息见 [tokens] 。
+当在语法中看到用  `monospace` 等宽字体显示的字符串时，它隐式地引用了该字符串表生成式的一个成员。有关更多信息，请参见 [tokens]。
 {==+==}
 
 

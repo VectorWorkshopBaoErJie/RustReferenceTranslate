@@ -34,7 +34,7 @@ Rust 关键字分为三类:
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
 {==+==}
-这些关键字只能使用在正确的上下文。不能用作以下项的名称:
+这些关键字只能在它们正确的上下文中使用。它们不能用作以下内容的名称：
 {==+==}
 
 
@@ -131,9 +131,9 @@ the same restrictions as strict keywords. The reasoning behind this is to make
 current programs forward compatible with future versions of Rust by forbidding
 them to use these keywords.
 {==+==}
-这些关键词还没有被使用，它们被保留下来供将来使用。
-它们和严格关键字有同样的限制。
-其原因是通过禁止当前程序使用这些关键字，以使其与未来版本的Rust向前兼容。
+这些关键字目前还没有被使用，但是它们被保留以供将来使用。
+它们的使用规则与严格关键字相同。
+这样做的原因是通过禁止当前程序使用这些关键字，使其与 Rust 的将来版本保持向前兼容。
 {==+==}
 
 
@@ -182,8 +182,8 @@ The following keywords are reserved beginning in the 2018 edition.
 These keywords have special meaning only in certain contexts. For example, it
 is possible to declare a variable or method with the name `union`.
 {==+==}
-这些关键字只在特定的情况下有特殊的意义。
-比如，可以用 `union` 这个名称来声明变量或方法。
+这些关键字只有在特定上下文中才具有特殊意义。
+例如，可以使用名称 `union` 声明变量或方法。
 {==+==}
 
 
@@ -195,8 +195,8 @@ is possible to declare a variable or method with the name `union`.
   lifetime parameter] or [loop label]
 {==+==}
 * `macro_rules` 用于创建自定义 [macros] 。
-* `union` 用于声明 [union] ，只有在union声明使用时才是一个关键字。
-* `'static` 用于静态生命周期，不能作为[generic lifetime parameter] "通用寿命参数" 或 [loop label] "循环标签" 使用。
+* `union` 用于声明 [union] ，只有在使用 union 声明时才是一个关键字。
+* `'static` 用于静态生命周期，不能作为 [generic lifetime parameter] "泛型生命周期参数" 或 [loop label] "循环标签" 使用。
 {==+==}
 
 
@@ -214,7 +214,7 @@ is possible to declare a variable or method with the name `union`.
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
 {==+==}
-* 在2015版中，[`dyn`] 在类型位置上使用时是一个关键词，后面是不以 `::` 开头的路径。
+* 在2015版中，[`dyn`] 是一个关键字，当它用于类型位置且其后跟随的路径不以 `::` 开头时。
 {==+==}
 
 
