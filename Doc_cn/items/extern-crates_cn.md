@@ -28,10 +28,10 @@ crate` appears in the crate root, then the crate name is also added to the
 [extern prelude], making it automatically in scope in all modules. The `as`
 clause can be used to bind the imported crate to a different name.
 {==+==}
-一个 _`extern crate` 声明_ 指定了对外部crate的依赖。
-然后，外部crate被绑定到声明的作用域中，作为 `extern crate` 声明中提供的 [identifier]。
-此外，如果 `extern crate` 出现在crate root中，那么crate的名称也会被添加到 [extern prelude] 中，使其自动进入所有模块的作用域。
-`as` 子句可以用来将导入的crate绑定到一个不同的名称。
+一个 _`extern crate` 声明_ 指定了一个对外部 crate 的依赖。
+外部 crate 然后被绑定到 `extern crate` 声明中提供的标识符中。
+此外，如果 `extern crate` 出现在 crate 根中，则 crate 名称也会被添加到 [extern prelude] 中，在所有模块中自动处于作用域内。
+可以使用 `as` 子句将导入的 crate 绑定到不同的名称。
 {==+==}
 
 
@@ -44,9 +44,9 @@ the [`crate_name` attributes] that were declared on the external crate when it w
 compiled. If no `crate_name` is provided, a default `name` attribute is assumed,
 equal to the [identifier] given in the `extern crate` declaration.
 {==+==}
-外部crate在编译时解析为一个特定的 `soname` ，运行时给链接器传递对该 `soname` 的链接请求，以便在运行时加载。
-`soname` 在编译时通过扫描编译器的库路径来解析，并将提供的可选 `crate_name` 与编译时在外部crate上声明的 [`crate_name` attributes] 相匹配。
-如果没有提供 `crate_name` ，则假定有一个默认的 `name` 属性，等同于在 `extern crate` 声明中给出的 [identifier] 标识符。
+编译时，外部 crate 会被解析为一个特定的 `soname`，并且对于该 `soname` 的运行时链接需求会在编译时传递给链接器进行加载。
+编译时，编译器会扫描其库路径，并根据外部 crate 编译时声明的 [`crate_name` 属性][`crate_name` attributes] 与可选的 `crate_name` 进行匹配，以解析出 `soname`。
+如果没有提供 `crate_name`，则会假定一个默认的 `name` 属性，等于 `extern crate` 声明中给出的 [标识符][identifier]。
 {==+==}
 
 
@@ -54,8 +54,7 @@ equal to the [identifier] given in the `extern crate` declaration.
 The `self` crate may be imported which creates a binding to the current crate.
 In this case the `as` clause must be used to specify the name to bind it to.
 {==+==}
-``self` crate 可以被导入，从而创建一个与当前 crate 的绑定。
-在这种情况下，必须使用 `as` 子句来指定要绑定的名称。
+`self` 可以被导入作为当前 crate 的绑定，此时必须使用 `as` 子句来指定绑定的名称。
 {==+==}
 
 
@@ -93,8 +92,9 @@ make use of them. In such case, when `Cargo.toml` doesn't specify a crate name,
 Cargo will transparently replace `-` with `_` (Refer to [RFC 940] for more
 details).
 {==+==}
-当给 Rust crate命名时，不允许使用连字符。然而，Cargo包可以使用它们。
-在这种情况下，当 `Cargo.toml` 没有指定crate的名称时，Cargo 将明显的用 `_` 替换 `-` (更多细节参考[RFC 940]) 。
+在 Rust 中，crate 的命名不允许使用连字符。
+然而，Cargo 包允许使用连字符。
+如果在 `Cargo.toml` 中没有指定 crate 名称，则 Cargo 会自动将 `-` 替换为 `_`，这个行为详见 [RFC 940] 。
 {==+==}
 
 
@@ -149,8 +149,8 @@ by using an underscore with the form `extern crate foo as _`. This may be
 useful for crates that only need to be linked, but are never referenced, and
 will avoid being reported as unused.
 {==+==}
-可以通过使用下划线的形式 `extern crate foo as _` 来声明一个外部的crate依赖，而不用在作用域内绑定其名称。
-这对于那些只需要被链接，但从未被引用的crate可能很有用，而且可以避免报告未使用。
+使用 `extern crate foo as _` 的形式可以声明外部 crate 依赖，但不将其名称绑定到作用域中。
+这对于只需要链接而从未被引用的 crate 可能很有用，避免它们被报告为未使用。
 {==+==}
 
 
@@ -158,7 +158,7 @@ will avoid being reported as unused.
 The [`macro_use` attribute] works as usual and imports the macro names
 into the [`macro_use` prelude].
 {==+==}
-[`macro_use` attribute] 和常规一样生效，将宏名称导入到 [`macro_use` prelude] 。 
+[`macro_use` 属性][`macro_use` attribute] 按照惯例导入宏名到 [`macro_use` 预导入][`macro_use` prelude]。
 {==+==}
 
 
@@ -174,8 +174,8 @@ The *`no_link` attribute* may be specified on an `extern crate` item to
 prevent linking the crate into the output. This is commonly used to load a
 crate to access only its macros.
 {==+==}
-*`no_link` 属性* 可以被指定在一个 `extern crate` 条目上，以防止将crate链接到输出中。
-这通常用于加载crate，只访问其宏。
+*`no_link` 属性* 可在 `extern crate` 条目上指定，以防止将 crate 链接到输出中。
+这通常用于加载一个 crate 仅用于访问其宏。
 {==+==}
 
 

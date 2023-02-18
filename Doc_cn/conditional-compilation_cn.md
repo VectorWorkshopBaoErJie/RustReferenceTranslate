@@ -41,10 +41,10 @@ These conditions are based on the target architecture of the compiled crate,
 arbitrary values passed to the compiler, and a few other miscellaneous things
 further described below in detail.
 {==+==}
-*条件编译源代码* 是指根据某些条件有些部分被认为是源代码的一部分，而有些认为不是。
+*条件编译源代码* 是指根据某些条件来确定是否将其部分源代码视为源代码的一部分。
 <!-- This definition is sort of vacuous --> 
-源代码可以使用 [attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 进行条件编译。
-这些条件是指基于编译 crate 的目标架构、传递给编译器的任意值，以及其他内容，下面将进一步详细介绍。
+可以使用 [attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` 宏][`cfg` macro] 条件编译源代码。
+这些条件是基于编译的 crate 的目标架构、传递给编译器的任意值和其他一些细节进行确定的，下面将对其进行详细描述。
 {==+==}
 
 
@@ -52,7 +52,7 @@ further described below in detail.
 Each form of conditional compilation takes a _configuration predicate_ that
 evaluates to true or false. The predicate is one of the following:
 {==+==}
-每种形式的条件编译都需要有 _configuration predicate_ "配置述语"，评估其结果为真或假。该述语是以下之一:
+每种形式的条件编译都需要有配置谓词，该谓词评估为 true 或 false。谓词有以下几种形式：
 {==+==}
 
 
@@ -66,10 +66,10 @@ evaluates to true or false. The predicate is one of the following:
 * `not()` with a configuration predicate. It is true if its predicate is false
   and false if its predicate is true.
 {==+==}
-* 一个配置选项。如果该选项被设置，则为真，如果未被设置，则为假。
-* `all()` 用逗号分隔的配置述语列表。如果至少有一个述语为假，则为假。如果没有述语，则为真。
-* `any()` 与逗号分隔的配置述语列表。如果至少有一个述语为真，则为真。如果没有述语，则为假。
-* `not()` 有一个配置述语。如果该述语为假，则为真，如果该述语为真，则为假。
+* 配置选项。如果选项设置为 true ，则为真，否则为假。
+* `all()`，带有逗号分隔的配置谓词列表。如果至少有一个谓词为 false ，则结果为 false 。如果没有谓词，则为 true 。
+* `any()`，带有逗号分隔的配置谓词列表。如果至少有一个谓词为 true ，则结果为 true 。如果没有谓词，则为 false 。
+* `not()`，带有一个配置谓词。如果其谓词为 false ，则为 true ，如果其谓词为 true ，则为 false 。
 {==+==}
 
 
@@ -79,10 +79,10 @@ unset. Names are written as a single identifier such as, for example, `unix`.
 Key-value pairs are written as an identifier, `=`, and then a string. For
 example, `target_arch = "x86_64"` is a configuration option.
 {==+==}
-_配置选项_ 是名称和键值对，可以设置或不设置。
-名称写为一个标识符，例如， `unix` 。
-键值对写为一个标识符， `=` ，然后是一个字符串。
-比如， `target_arch = "x86_64"` 是一个配置选项。
+_配置选项_ 是一些名称和键值对，它们可以被设置或未设置。
+名称被写成单个标识符，例如 `unix` 。
+键值对被写成一个标识符，后跟一个字符串 。
+例如， `target_arch = "x86_64"` 就是一个配置选项。
 {==+==}
 
 
@@ -90,7 +90,7 @@ _配置选项_ 是名称和键值对，可以设置或不设置。
 > **Note**: Whitespace around the `=` is ignored. `foo="bar"` and `foo = "bar"`
 > are equivalent configuration options.
 {==+==}
-> **注意**: 忽略 `=` 周围空白。 `foo="bar"` 和 `foo = "bar"` 是等同的配置选项。
+> **注意**: 等号周围的空白将被忽略。 `foo="bar"` 和 `foo = "bar"` 是等价的配置选项。
 {==+==}
 
 
@@ -98,7 +98,7 @@ _配置选项_ 是名称和键值对，可以设置或不设置。
 Keys are not unique in the set of key-value configuration options. For example,
 both `feature = "std"` and `feature = "serde"` can be set at the same time.
 {==+==}
-在键值配置选项的集合中，键是不唯一的。例如，可以同时设置 `feature = "std"` 和 `feature = "serde"` 。
+键在键值配置选项的集合中不是唯一的。例如，同时可以设置 `feature = "std"` 和 `feature = "serde"` 。
 {==+==}
 
 
@@ -116,10 +116,9 @@ about the compilation. Other options are _arbitrarily-set_, set based on input
 passed to the compiler outside of the code. It is not possible to set a
 configuration option from within the source code of the crate being compiled.
 {==+==}
-设置哪些配置选项，是在编译crate的过程中静态确定的。
-某些选项是 _编译设置_ 基于编译相关数据。
-其他选项是 _任意设置_ 根据代码外传递给编译器的输入来设置。
-不能为正在编译的crate的源代码中设置配置选项。
+编译期间确定哪些配置选项被设置。某些选项是由编译数据设置的，称为编译器设置。
+其他选项是任意设置的，基于在代码之外传递给编译器的输入设置。
+无法从正在编译的 crate 的源代码中设置配置选项。
 {==+==}
 
 
@@ -127,7 +126,7 @@ configuration option from within the source code of the crate being compiled.
 > **Note**: For `rustc`, arbitrary-set configuration options are set using the
 > [`--cfg`] flag.
 {==+==}
-> **注意**: 对于 `rustc` 来说，任意设置的配置选项是使用 [--cfg`] 标志。
+> **注意**: 对于 `rustc`，任意设置的配置选项可以使用 [`--cfg`] 标志设置。
 {==+==}
 
 
@@ -136,7 +135,7 @@ configuration option from within the source code of the crate being compiled.
 > by [Cargo][cargo-feature] for specifying compile-time options and optional
 > dependencies.
 {==+==}
-> **注意**: 使用 [Cargo][cargo-feature] `feature` 键配置选项是一种惯例，用于指定编译时选项和可选的依赖。
+> **注意**: 键为 `feature` 的配置选项是 [Cargo][cargo-feature] 用于指定编译时选项和可选依赖的惯例。
 {==+==}
 
 
@@ -147,9 +146,9 @@ to do `rustc --cfg "unix" program.rs` while compiling to a Windows target, and
 have both `unix` and `windows` configuration options set at the same time. It
 is unwise to actually do this.
 {==+==}
-警告: 任意设置的配置选项有可能与编译器设置的配置选项具有相同的值。
-例如，有可能在编译到Windows目标时进行 `rustc --cfg "unix" program.rs` ，并同时设置 `unix` 和 `windows` 配置选项。
-但这样做是不明智的。
+警告：任意设置的配置选项可能与编译器设置的配置选项具有相同的值。
+例如，可能会在编译为 Windows 目标时执行 `rustc --cfg "unix" program.rs`，并同时设置 `unix` 和 `windows` 配置选项。
+实际上这样做是不明智的。
 {==+==}
 
 
@@ -165,7 +164,7 @@ Key-value option set once with the target's CPU architecture. The value is
 similar to the first element of the platform's target triple, but not
 identical.
 {==+==}
-用目标的CPU架构设置一次键值选项。该值与平台的目标三元组的第一个元素相似，但不完全相同。
+目标 CPU 架构与一组键值选项设置一起。该值类似于平台目标三元组的第一个元素，但并非完全相同。
 {==+==}
 
 
@@ -203,7 +202,7 @@ Example values:
 Key-value option set for each platform feature available for the current
 compilation target.
 {==+==}
-当前编译目标可用的每个平台特性的键值选项集合。
+为当前编译目标提供的每个平台特性设置键值选项。
 {==+==}
 
 
@@ -235,8 +234,8 @@ See the [`target_feature` attribute] for more details on the available
 features. An additional feature of `crt-static` is available to the
 `target_feature` option to indicate that a [static C runtime] is available.
 {==+==}
-参见 [`target_feature` attribute] 以了解更多关于可用特性的细节。
-`target_feature` 选项有一个额外的特性 `crt-static` ，以表明有一个 [static C runtime] 静态C运行时可用。
+详见 [`target_feature` attribute] 获取有关可用特性的更多详细信息。
+`target_feature` 选项的另一个特性是 `crt-static` ，它指示可用 [静态 C 运行时库][static C runtime] 。
 {==+==}
 
 
@@ -251,7 +250,7 @@ features. An additional feature of `crt-static` is available to the
 Key-value option set once with the target's operating system. This value is
 similar to the second and third element of the platform's target triple.
 {==+==}
-对于目标操作系统设置一次的键值选项。这个值类似于平台的目标三元组中的第二和第三要素。
+该选项是针对编译目标操作系统的键值选项，仅设定一次。该值类似于平台目标三元组的第二个和第三个元素。
 {==+==}
 
 
@@ -294,7 +293,7 @@ Key-value option providing a more generic description of a target, such as the f
 operating systems or architectures that the target generally falls into. Any number of
 `target_family` key-value pairs can be set.
 {==+==}
-键值选项提供了对目标的更通用的描述，例如目标通常属于的操作系统或架构的家族。可以设置任意数量的 `target_family` 键值对。
+`target_family` 是提供关于目标平台更一般描述的键值选项，例如目标平台通常属于的操作系统或体系结构系列。可以设置任意数量的 `target_family` 键值对。
 {==+==}
 
 
@@ -321,7 +320,7 @@ Example values:
 {==+==}
 ### `unix` 和 `windows`
 
-如果设置了 `target_family = "unix"` ，则设置 `unix` ；如果设置了 `target_family = "windows"` ，则设置 `windows` 。
+如果设置了 `target_family = "unix"`，则会设置 `unix` ，如果设置了 `target_family = "windows"`，则会设置 `windows` 。
 {==+==}
 
 
@@ -341,11 +340,10 @@ empty. This value is similar to the fourth element of the platform's target
 triple. One difference is that embedded ABIs such as `gnueabihf` will simply
 define `target_env` as `"gnu"`.
 {==+==}
-键值选项集合，包括目标平台的ABI或 `libc` 信息的进一步消除歧义。
-由于历史原因，这个值只在实际需要消除歧义时定义为非空字符串。
-因此，比如，在许多GNU平台上，这个值将是空的。
-该值类似于平台的目标三元组的第四个元素。
-一个区别是，嵌入式ABI，如 `gnueabihf` 会简单地将 `target_env` 定义为 `"gnu"` 。
+键值选项为目标平台提供进一步的区分信息，例如有关所使用的 ABI 或 `libc` 的信息。
+由于历史原因，只有在实际需要区分时，此值才会被定义为非空字符串。
+因此，例如，在许多 GNU 平台上，此值将为空。此值类似于平台目标三元组的第四个元素。
+一个不同之处是，像 `gnueabihf` 这样的嵌入式 ABI 将简单地将 `target_env` 定义为 `"gnu"`。
 {==+==}
 
 
@@ -379,7 +377,7 @@ Example values:
 Key-value option set once with either a value of "little" or "big" depending
 on the endianness of the target's CPU.
 {==+==}
-根据目标CPU的字节顺序，用 "little" 或 "big" 的值来设置一次键值选项。
+键值选项，用于描述目标的字节序，取值为 "little" 或 "big" ，根据目标机器的 CPU 决定。
 {==+==}
 
 
@@ -393,7 +391,7 @@ on the endianness of the target's CPU.
 {==+==}
 Key-value option set once with the target's pointer width in bits.
 {==+==}
-键值选项设置一次，以比特的目标指针宽度。
+键值选项只设置一次，其值为目标的指针宽度 (以位为单位) 。
 {==+==}
 
 
@@ -422,7 +420,7 @@ Example values:
 {==+==}
 Key-value option set once with the vendor of the target.
 {==+==}
-用目标的vendor设置一次键值选项。
+键值选项设置一次，其键是目标的供应商 (vendor) 。
 {==+==}
 
 
@@ -454,7 +452,7 @@ Example values:
 Key-value option set for each bit width that the target supports
 atomic loads, stores, and compare-and-swap operations.
 {==+==}
-为每个位宽设置的键值选项，目标支持原子加载、存储和比较与交换操作。
+每个比特宽度支持原子加载、存储和比较交换操作的目标都设置了一个键值选项。
 {==+==}
 
 
@@ -462,7 +460,7 @@ atomic loads, stores, and compare-and-swap operations.
 When this cfg is present, all of the stable [`core::sync::atomic`] APIs are available for
 the relevant atomic width.
 {==+==}
-当这个cfg出现时，所有稳定的 [`core::sync::atomic`] API都可以用于相应的原子宽度。
+当这个 cfg 存在时，所有适用于相关原子宽度的稳定的 [`core::sync::atomic`] API 可用。
 {==+==}
 
 
@@ -505,7 +503,8 @@ Possible values:
 Enabled when compiling the test harness. Done with `rustc` by using the
 [`--test`] flag. See [Testing] for more on testing support.
 {==+==}
-在编译测试控制启用时。通过使用 [`--test`] 标志，在 `rustc` 中完成。更多关于测试支持的信息，请参见 [Testing] 。
+该选项在编译测试套件时启用，可以通过在使用 `rustc` 时加上 [`--test`] 标志来实现。
+有关测试支持的更多信息，请参见 [Testing] 。
 {==+==}
 
 
@@ -522,9 +521,9 @@ This can be used to enable extra debugging code in development but not in
 production.  For example, it controls the behavior of the standard library's
 [`debug_assert!`] macro.
 {==+==}
-在没有优化的情况下进行编译时，默认启用。
-这可以用来在开发中启用额外的调试代码，但不能在生产中使用。
-比如，它可以控制标准库的 [`debug_assert!`] 宏的行为。
+在没有开启优化的情况下，默认启用。
+这可以在开发时启用额外的调试代码，但不用于生产。
+例如，它控制标准库中的 [`debug_assert!`] 宏的行为。
 {==+==}
 
 
@@ -539,7 +538,7 @@ production.  For example, it controls the behavior of the standard library's
 Set when the crate being compiled is being compiled with the `proc_macro`
 [crate type].
 {==+==}
-当被编译的crate正在用 `proc_macro` [crate type] 进行编译时设置。
+当编译的 crate 使用 `proc_macro` [crate type] 时被设置。
 {==+==}
 
 
@@ -553,7 +552,7 @@ Set when the crate being compiled is being compiled with the `proc_macro`
 {==+==}
 Key-value option set depending on the panic strategy. Note that more values may be added in the future.
 {==+==}
-根据恐慌策略设置的键值选项。注意，将来可能会增加更多的值。
+键值选项，根据 panic 策略设置而定。请注意，将来可能会添加更多值。
 {==+==}
 
 
@@ -604,14 +603,14 @@ Example values:
 The `cfg` [attribute] conditionally includes the thing it is attached to based
 on a configuration predicate.
 {==+==}
- `cfg` [attribute] 根据配置述语有条件地包含它所连接的内容。
+ `cfg` 属性是一个条件包含器，根据一系列配置判断来决定是否包含它所附着的目标。
 {==+==}
 
 
 {==+==}
 It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
 {==+==}
-它写成 `cfg` ， `(` ，配置述语，最后是 `)` 。
+它的语法是 `cfg` 、 `(` 、配置判断语句和 `)` 。
 {==+==}
 
 
@@ -619,7 +618,8 @@ It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
 If the predicate is true, the thing is rewritten to not have the `cfg` attribute
 on it. If the predicate is false, the thing is removed from the source code.
 {==+==}
-如果述语为真，该事物改写为没有 `cfg` 属性。如果述语为假，则该事物将从源代码中删除。
+如果谓词为 true，则将该条件附加到的条目重新编写，不再具有 `cfg` 属性。
+如果谓词为 false，则该条目将从源代码中删除。
 {==+==}
 
 
@@ -703,7 +703,7 @@ fn when_unwinding() {
 {==+==}
 The `cfg` attribute is allowed anywhere attributes are allowed.
 {==+==}
-在任何允许属性的地方都允许`cfg` 属性。
+`cfg` 属性允许在任何允许属性的位置使用。
 {==+==}
 
 
@@ -730,7 +730,7 @@ The `cfg` attribute is allowed anywhere attributes are allowed.
 The `cfg_attr` [attribute] conditionally includes [attributes] based on a
 configuration predicate.
 {==+==}
- `cfg_attr` [attribute] 有条件地包含基于配置述语的 [attributes] 。
+`cfg_attr` 属性会根据条件谓词来选择性地包含其他属性。
 {==+==}
 
 
@@ -739,8 +739,8 @@ When the configuration predicate is true, this attribute expands out to the
 attributes listed after the predicate. For example, the following module will
 either be found at `linux.rs` or `windows.rs` based on the target.
 {==+==}
-当配置述语为真时，该属性会展开为述语后面列出的属性。
-比如，根据目标，以下模块将在 `linux.rs` 或 `windows.rs` 中找到。
+当配置谓词为真时，此属性将展开为谓词后列出的属性。
+例如，以下模块将基于目标平台在 `linux.rs` 或 `windows.rs` 中找到：
 {==+==}
 
 
@@ -760,7 +760,7 @@ mod os;
 Zero, one, or more attributes may be listed. Multiple attributes will each be
 expanded into separate attributes. For example:
 {==+==}
-可以列出零个、一个或多个属性。多个属性将分别被展开为单独的属性。比如:
+可以列出零个、一个或多个属性。多个属性将会分别展开为单独的属性。比如:
 {==+==}
 
 
@@ -795,16 +795,16 @@ fn bewitched() {}
 > is valid. This example would be equivalent to
 > `#[cfg_attr(all(target_os = "linux", feature ="multithreaded"), some_other_attribute)]`.
 {==+==}
-> **注意**: `cfg_attr` 可以展开到另一个 `cfg_attr` 。
+> **注意**: `cfg_attr` 可以扩展为另一个 `cfg_attr` 。
 > 比如, `#[cfg_attr(target_os = "linux", cfg_attr(feature = "multithreaded", some_other_attribute))]` 是有效的。
-> 这个例子相当于 `#[cfg_attr(all(target_os = "linux", feature ="multithreaded"), some_other_attribute)]` 。
+> 这个例子等价于 `#[cfg_attr(all(target_os = "linux", feature ="multithreaded"), some_other_attribute)]` 。
 {==+==}
 
 
 {==+==}
 The `cfg_attr` attribute is allowed anywhere attributes are allowed.
 {==+==}
-在任何允许属性的地方都允许使用 `cfg_attr` 属性。
+`cfg_attr` 属性允许在任何允许其他属性的地方使用。
 {==+==}
 
 
@@ -820,7 +820,7 @@ The built-in `cfg` macro takes in a single configuration predicate and evaluates
 to the `true` literal when the predicate is true and the `false` literal when
 it is false.
 {==+==}
-内置的 `cfg` 宏接收一个配置述语，当述语为真时评估为 `true` 字面值，为假时评估为 `false` 字面值。
+内置的 `cfg` 宏接收一个配置谓词并在谓词为真时求值为 `true` 字面量，在谓词为假时求值为 `false` 字面量。
 {==+==}
 
 

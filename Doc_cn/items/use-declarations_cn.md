@@ -25,9 +25,9 @@ some other [path]. Usually a `use` declaration is used to shorten the path
 required to refer to a module item. These declarations may appear in [modules]
 and [blocks], usually at the top.
 {==+==}
-_use 声明_ 创建一个或多个与其他 [path] 同义的本地名称绑定。
-通常情况下， `use` 声明用来缩短引用模块条目所需的路径。
-这些声明可能出现在 [modules] 和 [blocks] 中，通常在顶部。
+_ `use` 声明_ 会创建一个或多个本地的名称绑定，和某个其他路径同义。
+通常，`use` 声明用于缩短引用模块条目所需的路径。
+这些声明通常出现在 [模块][modules] 和 [块][blocks] 中，通常在顶部。
 {==+==}
 
 
@@ -43,7 +43,7 @@ _use 声明_ 创建一个或多个与其他 [path] 同义的本地名称绑定�
 {==+==}
 Use declarations support a number of convenient shortcuts:
 {==+==}
-Use 声明支持一些简洁方式:
+Use 声明支持许多方便的快捷方式:
 {==+==}
 
 
@@ -60,18 +60,18 @@ Use 声明支持一些简洁方式:
 * Nesting groups of the previous features multiple times, such as
   `use a::b::{self as ab, c, d::{*, e::f}};`
 {==+==}
-* 同时绑定具有共同前缀的路径列表, 使用类似通配符的括号语法 `use a::b::{c, d, e::f, g::h::i};` 。
-* 同时绑定具有共同前缀的路径列表和它们共同的父模块, 使用 `self` 关键字, 比如 `use a::b::{self, c, d::e};` 。
-* 将目标名称重绑定为新本地名称, 使用语法 `use p::q::r as x;` ， 也可以用于后两个特性: `use a::b::{self as ab, c as abc}` 。
-* 绑定所有匹配给定前缀的路径, 使用 * 通配符语法 `use a::b::*;` 。
-* 多重嵌套前述特征的组合, 比如 `use a::b::{self as ab, c, d::{*, e::f}};` 。
+* 使用类似通配符的花括号语法同时绑定具有相同前缀的路径列表，例如 `use a::b::{c, d, e::f, g::h::i};` 。
+* 使用 `self` 关键字同时绑定具有相同前缀和共同父模块的路径列表，例如 `use a::b::{self, c, d::e};` 。
+* 重新将目标名称绑定为新的本地名称，使用语法 `use p::q::r as x;` 。这也可以与前两个功能一起使用: `use a::b::{self as ab, c as abc}` 。
+* 使用 星号通配符语法绑定与给定前缀匹配的所有路径，例如 `use a::b::*;` 。
+* 多次嵌套前面的功能组合，例如 `use a::b::{self as ab, c, d::{*, e::f}};` 。
 {==+==}
 
 
 {==+==}
 An example of `use` declarations:
 {==+==}
-一个关于 `use` 声明的例子:
+以下关于 `use` 声明的例子:
 {==+==}
 
 
@@ -135,11 +135,11 @@ different target definition: even a definition with a private canonical path,
 inside a different module. If a sequence of such redirections form a cycle or
 cannot be resolved unambiguously, they represent a compile-time error.
 {==+==}
-和条目一样， `use` 声明默认情况对于包含模块是私有的。
-和条目一样， `use` 声明也可以是公开的，可以用 `pub` 关键字来限定。
-这样的 `use` 声明的作用是 _重定向_ 输出名称。
-从而，一个公共的 `use` 声明可以将一些公共名称重定向到一个不同的目标定义：甚至是一个不同模块中的私有规范路径的定义。
-如果一组这样的重定向形成一个循环，或者不能明确解析，会是编译时错误。
+和条目一样，默认情况下， `use` 声明只在其所在的模块中可见。
+同样地，如果在 `use` 声明前加上 `pub` 关键字，那么 `use` 声明就是公共的。
+这样的 `use` 声明就可以用来 _重新导出_ 一个名称。
+因此，公共的 `use` 声明可以将某个公共名称重定向到一个不同的目标定义：甚至是定义在不同模块中的私有规范路径。
+如果这样的重定向序列形成了一个循环或无法消除歧义，那么就会导致编译时错误。
 {==+==}
 
 
@@ -174,7 +174,7 @@ fn main() {
 In this example, the module `quux` re-exports two public names defined in
 `foo`.
 {==+==}
-在这个例子中，模块 `quux` 重新导出了 `foo` 中定义的两个公共名称。
+在这个例子中，模块 `quux` 重新导出了在 `foo` 中定义的两个公共名称。
 {==+==}
 
 
@@ -196,7 +196,7 @@ In this example, the module `quux` re-exports two public names defined in
 Some examples of what will and will not work for `use` items:
 <!-- Note: This example works as-is in either 2015 or 2018. -->
 {==+==}
-一些关于 `use` 条目能和不能工作的例子。
+以下是一些关于 `use` 声明能够和不能够正常工作的例子：
 <!-- Note: This example works as-is in either 2015 or 2018. -->
 {==+==}
 
@@ -268,8 +268,7 @@ fn main() {}
 > `use` paths work in 2015 but not 2018:
 >
 {==+==}
-> **版次差异**: 在2015版中， `use` 路径允许访问 crate 根的条目。
-> 使用上面的例子，以下 `use` 路径在2015版有效，但在2018版无效:
+> **版次差异**: 在2015版本中， `use` 路径还允许访问 crate 根中的条目。使用上面的例子，以下 `use` 路径在2015版中可以使用但在2018版中无法使用:
 >
 {==+==}
 
@@ -298,9 +297,7 @@ fn main() {}
 > way `extern crate` can.
 >
 {==+==}
-> 2015 版不允许 use 声明引用 [extern prelude] 。
-> 因此，在 2015 版仍然需要 [`extern crate`] 声明，以便在 use 声明中引用外部 crate 。
-> 从 2018 版开始， use 声明可以像 `extern crate` 那样指定外部 crate 依赖。
+> 2015版不允许 `use` 声明引用 [extern prelude] 。因此，在2015中，仍需要使用 [`extern crate`] 声明来引用 `use` 声明中的外部 crate。从 2018 版开始， `use` 声明可以像 `extern crate` 一样指定一个外部 crate 依赖。
 >
 {==+==}
 
@@ -312,8 +309,7 @@ fn main() {}
 > potential future changes. <!-- uniform_paths future-proofing -->
 >
 {==+==}
-> 在2018版中，如果一个作用域内的条目与外部crate的名称相同，那么 `use` 该crate的名称需要前置 `::` 来明确地选择crate名称。
-> 这是为了保持与未来潜在变化的兼容性。
+> 在 2018 版本中，如果在作用域内存在与外部 crate 相同的名称，则使用该 crate 名称需要在前面加上 `::` 以明确选择 crate 名称。这是为了保留与未来潜在更改的兼容性。
 > <!-- uniform_paths future-proofing -->
 {==+==}
 
@@ -357,9 +353,9 @@ that its methods may be used without importing the trait's symbol, for example
 if the trait's symbol may conflict with another symbol. Another example is to
 link an external crate without importing its name.
 {==+==}
-通过使用下划线和 `use path as _` 的形式，可以导入条目而不绑定到名称。
-这对导入 trait 特别有用，这样就可以在不导入 trait 符号的情况下使用其方法，
-例如 trait 的符号可能与另一个符号冲突。另一个例子是链接外部 crate 而不导入其名称。
+条目可以通过在路径前加一个下划线的形式 `use path as _` 导入，而不必绑定到一个名字。
+这种方法特别适用于导入 trait ，以便可以使用它的方法而不必导入该 trait 的符号，例如，如果该 trait 的符号可能与另一个符号发生冲突。
+另一个例子是链接一个外部 crate ，而不必导入它的名字。
 {==+==}
 
 
@@ -367,7 +363,9 @@ link an external crate without importing its name.
 Asterisk glob imports will import items imported with `_` in their unnameable
 form.
 {==+==}
-星号通配符将导入以 `_` 形式的导入条目，这些条目不可命名。
+在Rust语言中，使用通配符 (`*`) 导入的内容将会包括使用下划线 (`_`) 导入但未被命名的内容。
+这些未命名的内容可以被视为一个占位符，它们存在于模块的作用域中，但没有一个明确的名称来引用它们。
+如果你在导入模块时使用了下划线来导入某些条目，这些条目将被视为 "无法命名的" 条目，只有使用通配符才能导入它们。
 {==+==}
 
 
@@ -415,8 +413,7 @@ The unique, unnameable symbols are created after macro expansion so that
 macros may safely emit multiple references to `_` imports. For example, the
 following should not produce an error:
 {==+==}
-这些独特的、不可命名的符号是在宏展开后创建的，这样宏就可以安全地发出对 `_` 导入的多次引用。
-例如，下面的内容将不产生错误:
+独特的、无法命名的符号是在宏展开后创建的，这样宏就可以安全地发出对 `_` 导入的多个引用。例如，下面的代码不应该出错:
 {==+==}
 
 

@@ -21,7 +21,7 @@
 {==+==}
 A module is a container for zero or more [items].
 {==+==}
-module "模块" 是容纳零个或多个 [items] "条目" 的容器。
+module "模块" 是包含零个或多个 [items] "条目" 的容器。
 {==+==}
 
 
@@ -30,8 +30,8 @@ A _module item_ is a module, surrounded in braces, named, and prefixed with the
 keyword `mod`. A module item introduces a new, named module into the tree of
 modules making up a crate. Modules can nest arbitrarily.
 {==+==}
-一个 _模块条目_ 是一个模块，用大括号包围，命名，并以关键字 `mod` 为前缀。
-一个模块条目将一个新的、命名的模块引入构成crate的模块树中。模块可以任意嵌套。
+一个 _模块条目_ 是一个用花括号括起来的、以 `mod` 关键字为前缀的、命名的模块。
+模块条目将一个新的命名模块引入到组成 crate 的模块树中。模块可以任意嵌套。
 {==+==}
 
 
@@ -72,8 +72,8 @@ struct, enumeration, union, type parameter or crate can't shadow the name of a
 module in scope, or vice versa. Items brought into scope with `use` also have
 this restriction.
 {==+==}
-模块和类型共享同一个命名空间。
-禁止声明与作用域中的模块同名的类型：也就是说，一个类型定义、trait、struct、enumeration、union、类型参数或crate无法隐藏作用域中的模块名称，反之亦然。用 `use` 引入作用域的条目也有这个限制。
+模块和类型共享相同的命名空间。
+在作用域中使用与模块同名的类型是被禁止的：也就是说，类型定义、trait、struct、enum、union、类型参数或 crate 不能隐藏作用域中模块的名称，反之亦然。使用 `use` 引入作用域的条目也有此限制。
 {==+==}
 
 
@@ -83,8 +83,8 @@ keyword, but it is rejected at a semantic level. This allows macros to consume
 the syntax and make use of the `unsafe` keyword, before removing it from the
 token stream.
 {==+==}
-语法上允许 `unsafe` 关键字出现在 `mod` 关键字之前，但在语义层面上被拒绝。
-这允许宏消耗句法(syntax)并使用 `unsafe` 关键字，然后再从token流中删除它。
+`unsafe` 关键字在 `mod` 关键字之前语法上是允许的，但在语义层面上被拒绝。
+这允许宏消耗语法并使用 `unsafe` 关键字，然后从 token 流中删除它。
 {==+==}
 
 
@@ -103,10 +103,10 @@ contents are in a file with the name of the module plus the `.rs` extension.
 For example, the following module structure can have this corresponding
 filesystem structure:
 {==+==}
-从外部文件加载一个没有主体的模块。
-当模块没有 `path` 属性时，文件的路径映射为逻辑上的 [module path]。
-父级的模块路径部分是目录，模块内容在一个文件中，文件名是模块名称加上 `.rs` 扩展名。
-比如，下面的模块结构可以有这种相应的文件系统结构:
+一个没有主体的模块将从外部文件加载。
+当模块没有 `path` 属性时，文件的路径与逻辑 [模块路径][module path] 相同。
+祖先模块路径组件是目录，而模块的内容在一个名为该模块加上 `.rs` 扩展名的文件中。
+例如，下面的模块结构可以有如下的文件系统结构：
 {==+==}
 
 
@@ -127,9 +127,9 @@ contents in a file named `mod.rs` within that directory. The above example can
 alternately be expressed with `crate::util`'s contents in a file named
 `util/mod.rs`. It is not allowed to have both `util.rs` and `util/mod.rs`.
 {==+==}
-模块文件名也可以作为一个目录的模块名称，其内容在该目录中名为 `mod.rs` 的文件中。
-上面的例子可以把 `crate::util` 的内容放在一个名为 `util/mod.rs` 的文件中。
-不允许同时拥有 `util.rs` 和 `util/mod.rs` 。
+模块文件名也可以是模块的名称作为目录，该目录中的内容在名为 `mod.rs` 的文件中。
+上面的例子也可以使用名称为 `util/mod.rs` 的文件来表达 `crate::util` 的内容。
+不允许同时存在 `util.rs` 和 `util/mod.rs`。
 {==+==}
 
 
@@ -139,8 +139,7 @@ alternately be expressed with `crate::util`'s contents in a file named
 > convention as it is more consistent, and avoids having many files named
 > `mod.rs` within a project.
 {==+==}
-> **注意**: 在 `rustc` 1.30 之前，使用 `mod.rs` 文件是加载一个有嵌套子模块的方法。
-> 鼓励使用新的命名规则，因为它更加一致，并避免在项目中出现许多名为 `mod.rs` 的文件。
+> **注意**: 注意：在 Rust 1.30 之前，使用 `mod.rs` 文件是一种加载具有嵌套子项模块的方法。推荐使用新的命名约定，因为它更一致，并避免在项目中有许多名为 `mod.rs` 的文件。
 {==+==}
 
 
@@ -155,7 +154,7 @@ alternately be expressed with `crate::util`'s contents in a file named
 The directories and files used for loading external file modules can be
 influenced with the `path` attribute.
 {==+==}
-可以用 `path` 属性来影响加载外部文件模块的目录和文件。
+`path` 属性可以影响加载外部文件模块时使用的目录和文件。
 {==+==}
 
 
@@ -164,8 +163,8 @@ For `path` attributes on modules not inside inline module blocks, the file
 path is relative to the directory the source file is located. For example, the
 following code snippet would use the paths shown based on where it is located:
 {==+==}
-对于不在内联模块块内的，模块的 `path` 属性，文件路径是相对于源文件所在的目录。
-比如，下面的代码片断将根据它的位置使用显示的路径。
+对于不在内联模块块中的模块上的 `path` 属性，文件路径相对于源文件所在的目录。
+例如，以下代码片段会使用根据其位置而显示的路径:
 {==+==}
 
 
@@ -202,11 +201,12 @@ it is the same except the path starts with a directory with the name of the
 non-mod-rs module. For example, the following code snippet would use the paths
 shown based on where it is located:
 {==+==}
-对于内联模块块内的 `path` 属性，文件路径的相对位置取决于 `path` 属性所在的源文件的种类。
-`mod.rs` 源文件是根模块 (如 `lib.rs` 或 `main.rs` ) 和文件名为 `mod.rs` 的模块。
-"non-mod-rs" 源文件是所有其他模块文件。在 mod-rs 文件中内联模块块内的 `path` 属性的路径是相对于 mod-rs 文件的目录，包括作为目录的内联模块组件。
-对于非 mod-rs 文件，除了路径以非mod-rs模块名称的目录开始，其他都是一样的。
-比如，下面的代码片断将根据它的位置使用所示的路径:
+对于嵌套在内联模块块中的 `path` 属性，文件路径的相对位置取决于 `path` 属性所在的源文件类型。
+"mod-rs" 源文件是根模块 (例如 `lib.rs` 或 `main.rs` ) 以及文件名为 `mod.rs` 的模块。
+"non-mod-rs" 源文件是所有其他模块文件。
+在 mod-rs 文件中的内联模块块的 `path` 属性的路径是相对于 mod-rs 文件的目录，包括内联模块作为目录的组件。
+对于非 mod-rs 文件，它是相同的，只是路径以非 mod-rs 模块的名称开头的目录。
+例如，以下代码片段将根据其位置使用所示路径:
 {==+==}
 
 
@@ -237,7 +237,7 @@ Source File    | `inner`'s File Location   | `inner`'s Module Path
 An example of combining the above rules of `path` attributes on inline modules
 and nested modules within (applies to both mod-rs and non-mod-rs files):
 {==+==}
-一个结合上述内联模块和嵌套模块的 `path` 属性规则的例子 (适用于mod-rs和非mod-rs文件):
+一个结合了内联模块以及其中嵌套模块的 `path` 属性的规则的示例 (适用于 mod-rs 和非 mod-rs 文件):
 {==+==}
 
 
@@ -277,8 +277,8 @@ Modules, like all items, accept outer attributes. They also accept inner
 attributes: either after `{` for a module with a body, or at the beginning of the
 source file, after the optional BOM and shebang.
 {==+==}
-模块，像所有条目一样，接受外部属性。
-也接受内部属性: 要么在有主体的模块的 `{` 之后，要么在源文件的开头，在可选的BOM和shebang "执行注解" 之后。
+模块和所有条目一样，可以接受外部属性 (outer attributes) ，同时也可以接受内部属性 (inner attributes) ，
+内部属性可以出现在模块主体的左括号 `{` 之后，也可以出现在源文件的开头，在可选的 BOM 和 shebang 之后。
 {==+==}
 
 
@@ -287,7 +287,7 @@ The built-in attributes that have meaning on a module are [`cfg`],
 [`deprecated`], [`doc`], [the lint check attributes], [`path`], and
 [`no_implicit_prelude`]. Modules also accept macro attributes.
 {==+==}
-对模块有意义的内置属性是 [`cfg`] , [`deprecated`] , [`doc`] , [the lint check attributes] , [`path`] , 和 [`no_implicit_prelude`] 。模块也接受宏属性。
+内置的对模块有意义的属性包括 [`cfg`] 、 [`deprecated`] 、 [`doc`] 、 [lint 检查属性][the lint check attributes] 、 [`path`] 和 [`no_implicit_prelude`] 。模块还接受宏属性。
 {==+==}
 
 
