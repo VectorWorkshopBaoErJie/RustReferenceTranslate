@@ -22,9 +22,8 @@ declared with the keyword `type`. Every value has a single, specific type, but
 may implement several different traits, or be compatible with several different
 type constraints.
 {==+==}
-_类型别名_ 为一个现有的 [type] 定义了一个新的名字。
-类型别名是用关键字 `type` 来声明的。
-每个值拥有单一的、特定的类型，但是可以实现几个不同的trait，或者与几个不同的类型约束共存。
+_类型别名_ 为现有 [类型][type] 定义了一个新的名称。类型别名使用关键字 `type` 进行声明。
+每个值都有一个特定的类型，但可以实现多个不同的 trait，或与多个不同的类型约束兼容。
 {==+==}
 
 
@@ -32,7 +31,7 @@ _类型别名_ 为一个现有的 [type] 定义了一个新的名字。
 For example, the following defines the type `Point` as a synonym for the type
 `(u8, u8)`, the type of pairs of unsigned 8 bit integers:
 {==+==}
-例如，下面定义了类型 `Point` 作为类型 `(u8, u8)` 的同义词，即无符号8位整数的类型。
+例如，以下代码将类型 `Point` 定义为类型 `(u8, u8)` 的同义词，即由两个无符号 8 位整数组成的对应类型：
 {==+==}
 
 
@@ -49,7 +48,7 @@ let p: Point = (41, 68);
 {==+==}
 A type alias to a tuple-struct or unit-struct cannot be used to qualify that type's constructor:
 {==+==}
-对元组结构或单元结构的类型别名不能用来限定该类型的构造函数。
+类型别名无法用于限定元组结构体或单元结构体的构造函数。
 {==+==}
 
 
@@ -72,7 +71,7 @@ let _ = TypeAlias(5); // Doesn't work
 A type alias, when not used as an associated type, must include a [_Type_] and
 may not include [_TypeParamBounds_].
 {==+==}
-当类型别名不作为关联类型使用时，必须包含一个 [_Type_] ，并且不能包含 [_TypeParamBounds_] 。
+当类型别名不作为关联类型使用时，必须包含一个 [_Type_] ，不能包含 [_TypeParamBounds_] 。
 {==+==}
 
 
@@ -80,7 +79,7 @@ may not include [_TypeParamBounds_].
 A type alias, when used as an [associated type] in a [trait], must not include a
 [_Type_] specification but may include [_TypeParamBounds_].
 {==+==}
-当类型别名作为[trait]中的[associated type]使用时，必须不包含 [_Type_] 说明，但可以包含 [_TypeParamBounds_] 。
+在 [trait] 中使用作为 [关联类型][associated type] 的类型别名，不应该包含类型本身的声明 [_Type_] ，但是可以包含类型参数约束声明 [_TypeParamBounds_] 。
 {==+==}
 
 
@@ -88,7 +87,7 @@ A type alias, when used as an [associated type] in a [trait], must not include a
 A type alias, when used as an [associated type] in a [trait impl], must include
 a [_Type_] specification and may not include [_TypeParamBounds_].
 {==+==}
-当类型别名作为 [trait impl] 中的 [associated type] 使用时，必须包含 [_Type_] 说明，并且不能包含 [_TypeParamBounds_] 。
+类型别名在 [trait impl] 中作为 [关联类型][associated type] 使用时，必须包括 [_Type_] ，但不能包括 [_TypeParamBounds_] 。
 {==+==}
 
 
@@ -97,8 +96,8 @@ Where clauses before the equals sign on a type alias in a [trait impl] (like
 `type TypeAlias<T> where T: Foo = Bar<T>`) are deprecated. Where clauses after
 the equals sign (like `type TypeAlias<T> = Bar<T> where T: Foo`) are preferred.
 {==+==}
-在 [trait impl] 中类型别名的等号之前的 where 子句被弃用 (如`type TypeAlias<T> where T: Foo = Bar<T>`) 。
-在等号之后的 where 子句是首选 (如 `type TypeAlias<T> = Bar<T> where T: Foo`) 。
+在 [trait impl] 中，位于类型别名等号之前的 where 从句 (例如 `type TypeAlias<T> where T: Foo = Bar<T>` ) 已经被弃用。
+位于等号之后的 where 从句 (例如 `type TypeAlias<T> = Bar<T> where T: Foo` ) 是首选的。
 {==+==}
 
 
