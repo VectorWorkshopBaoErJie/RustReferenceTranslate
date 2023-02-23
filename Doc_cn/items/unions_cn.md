@@ -19,7 +19,7 @@
 A union declaration uses the same syntax as a struct declaration, except with
 `union` in place of `struct`.
 {==+==}
-联合体与结构体声明语法相同，只是用 `union` 代替了 `struct` 。
+联合体与结构体声明使用相同的语法，只是将 `struct` 替换为 `union`。
 {==+==}
 
 
@@ -41,8 +41,8 @@ The key property of unions is that all fields of a union share common storage.
 As a result, writes to one field of a union can overwrite its other fields, and
 size of a union is determined by the size of its largest field.
 {==+==}
-联合体的关键属性是所有字段都共享共用的存储空间。
-对联合体一个字段的写入可以覆盖其他字段，其联合体的大小是由最大字段的大小决定的。
+联合体的关键特性是，所有的字段共享相同的存储空间。
+因此，对联合体的一个字段的写操作可能会覆盖其它字段的值，而联合的大小则由其最大字段的大小决定。
 {==+==}
 
 
@@ -53,7 +53,7 @@ Union field types are restricted to the following subset of types:
 - `ManuallyDrop<T>` (for arbitrary `T`)
 - Tuples and arrays containing only allowed union field types
 {==+==}
-联合字段类型限制在以下类型的子集:
+联合体字段类型限制为以下类型的子集:
 - `Copy` 类型
 - 引用 (`&T` 和 `&mut T` 为任意的 `T`)
 - `ManuallyDrop<T>` (为任意的 `T`)
@@ -66,8 +66,8 @@ This restriction ensures, in particular, that union fields never need to be
 dropped. Like for structs and enums, it is possible to `impl Drop` for a union
 to manually define what happens when it gets dropped.
 {==+==}
-这一限制确保，在特定情况下，联合体的字段决不需要丢弃。
-与结构体和枚举相同，允许为联合体添加 `impl Drop` ，手动定义丢弃时的行为。
+这个限制确保了联合体字段不需要被丢弃。
+与结构体和枚举类似，也可以为联合体实现 `Drop` trait 来手动定义在释放时发生的行为。
 {==+==}
 
 
@@ -82,7 +82,7 @@ to manually define what happens when it gets dropped.
 A value of a union type can be created using the same syntax that is used for
 struct types, except that it must specify exactly one field:
 {==+==}
-联合体类型值的创建可使用与结构体类型相同的语法，但必须明确指定一个字段:
+联合体类型的值可以使用与结构体类型相同的语法创建，只不过必须指定一个字段:
 {==+==}
 
 
@@ -102,8 +102,8 @@ The expression above creates a value of type `MyUnion` and initializes the
 storage using field `f1`. The union can be accessed using the same syntax as
 struct fields:
 {==+==}
-上面的表达式创建了一个 `MyUnion` 类型的值，并使用字段 `f1`初始化了存储。
-可以使用与结构体字段相同的语法来访问联合体。
+这个表达式创建了一个类型为 `MyUnion` 的值，并使用字段 `f1` 初始化了存储。
+可以使用与结构体字段相同的语法来访问联合字段。
 {==+==}
 
 
@@ -139,19 +139,18 @@ writing to and then reading from a union with [the C representation] is
 analogous to a [`transmute`] from the type used for writing to the type used for
 reading.
 {==+==}
-联合体没有 "活动字段 "的概念。每个联合体的访问仅解释为当前访问的字段类型的存储。
-读取一个联合体字段时，按字段类型读取联合体位。
-字段可能有一个非零的偏移量 (除了在使用 [C表示法][the C representation] 时)；在这种情况，从字段偏移量开始的位读取。
-程序员有责任确保字段类型上的数据是有效的，否则，会导致 [undefined behavior] "未定义的行为"。
-比如，通过一个 [布尔类型][boolean type] 的字段读取值 `3` 是未定义的行为。
-实际上，用 [C表示法][the C representation] 向联合体写入然后从联合体中读出，将是从写入类型到读取类型的 [`transmute`] "质变"。
+联合体没有 "活动字段" 的概念。每次访问联合体时，只会解释用于访问的字段类型的存储。
+读取联合体字段按位读取字段类型。
+字段可能具有非零偏移量 (除非使用 [C表示法][the C representation]) ；在这种情况下，从字段偏移处开始读取位。程序员有责任确保数据在字段类型上是有效的。
+未能这样做会导致 [未定义行为][undefined behavior] 。例如，通过 [布尔类型][boolean type] 字段读取值 `3` 是未定义行为。
+实际上，使用 [C表示法][the C representation] 写入并然后读取联合体类似于从用于写入的类型到用于读取的类型的 [`transmute`]  "质变"。
 {==+==}
 
 
 {==+==}
 Consequently, all reads of union fields have to be placed in `unsafe` blocks:
 {==+==}
-因此，所有对联合字段的读取都必须放在 `unsafe` 块中:
+因此，所有对联合体字段的读取都必须放在 `unsafe` 块中:
 {==+==}
 
 
@@ -173,7 +172,7 @@ unsafe {
 Commonly, code using unions will provide safe wrappers around unsafe union
 field accesses.
 {==+==}
-通常，使用联合体的代码将为不安全的联合体字段访问提供安全包装。
+通常，使用联合体的代码会在不安全的联合体字段访问周围提供安全的包装器。
 {==+==}
 
 
@@ -183,8 +182,8 @@ arbitrary data, but cannot cause undefined behavior. (Note that union field
 types can never have drop glue, so a union field write will never implicitly
 drop anything.)
 {==+==}
-相比之下，对联合字段的写入是安全的，因为仅覆盖了数据，但不能引起未定义的行为。
-(请注意，联合体字段类型永远不能有粘联的丢弃，所以联合字段的写入将不会有隐式丢弃。)
+相比之下，写入联合体字段是安全的，因为它们只是覆盖任意数据，而不能导致未定义的行为。
+(请注意，联合体字段类型永远不会具有粘联的丢弃 ，因此联合体字段写入永远不会隐式丢弃任何内容。)
 {==+==}
 
 
@@ -201,9 +200,9 @@ on union fields uses the same syntax as struct patterns, except that the pattern
 must specify exactly one field. Since pattern matching is like reading the union
 with a particular field, it has to be placed in `unsafe` blocks as well.
 {==+==}
-另一种访问联合体字段的方法是使用模式匹配。
-联合体字段的模式匹配与结构体的模式语法相同，只是模式必须明确指定字段。
-由于模式匹配按特定字段读取联合体，必须放在 `unsafe` 块中。
+另一种访问联合体字段的方式是使用模式匹配。
+对于联合体字段的模式匹配与结构体模式匹配使用相同的语法，不同的是模式必须指定一个且仅一个字段。
+由于模式匹配类似于使用特定字段读取联合体，因此它也必须放在 `unsafe` 块中。
 {==+==}
 
 
@@ -230,8 +229,8 @@ Pattern matching may match a union as a field of a larger structure. In
 particular, when using a Rust union to implement a C tagged union via FFI, this
 allows matching on the tag and the corresponding field simultaneously:
 {==+==}
-模式匹配可以将联合体作为更大结构的一个字段来匹配。
-特别是，当通过 FFI 实现 C 标记的 Rust 联合体，允许同时对标记和相应的字段进行匹配:
+模式匹配可能将联合体作为更大结构体的字段进行匹配。
+特别是在使用 Rust 联合体通过 FFI 实现 C 标记联合时，这允许同时匹配标记和相应字段:
 {==+==}
 
 
@@ -270,7 +269,7 @@ fn is_zero(v: Value) -> bool {
 {==+==}
 ## References to union fields
 {==+==}
-## 联盟字段的引用
+## 联合体字段的引用
 {==+==}
 
 
@@ -281,8 +280,9 @@ have to be adjusted to account for this fact. As a result, if one field of a
 union is borrowed, all its remaining fields are borrowed as well for the same
 lifetime.
 {==+==}
-由于联合体字段共享存储空间，获得联合体某个字段的写入权限可以获得其余字段的写入权限。
-借用检查规则检测这一情况，如果联合体的某个字段被借用，其余字段也会被借用，而且是在同一生命周期内。  
+由于联合体字段共享存储空间，因此获得对联合体的一个字段的写访问权限可以给予对其所有其余字段的写访问权限。
+借用检查规则必须调整以考虑这一点。
+因此，如果联合体的一个字段被借用，则其所有其余字段在相同的生命周期内也被借用。
 {==+==}
 
 
@@ -331,8 +331,8 @@ aspects of Rust language (such as privacy, name resolution, type inference,
 generics, trait implementations, inherent implementations, coherence, pattern
 checking, etc etc etc).
 {==+==}
-正如你所看到的，在许多方面 (除了布局、安全性和所有权)，联合体的行为与结构体完全一样，主要是继承了结构体的语法。
-对于Rust语言中许多未被提及的方面也是如此 (比如私有性、名称解析、类型推理、泛型、trait实现、内部实现、一致性、模式检查等等)。
+你所看到的是，在很多方面 (除了布局、安全性和所有权) 上，联合体和结构体表现得非常相似，这是由于从结构体继承了语法形式。
+这在 Rust 语言的许多未提及方面也同样适用 (例如私有性、名称解析、类型推断、泛型、trait实现、内部实现、一致性、模式检查等等) 。
 {==+==}
 
 
