@@ -40,21 +40,21 @@ An *enumeration*, also referred to as an *enum*, is a simultaneous definition of
 nominal [enumerated type] as well as a set of *constructors*, that can be used
 to create or pattern-match values of the corresponding enumerated type.
 {==+==}
- *enumeration* "枚举" 也称 *enum* ，是对一个名义上的 [enumerated type] "枚举类型" 以及同时定义了一组 *constructors* "构造函数" 用来创建或模式匹配相应枚举类型的值。
+一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组构造器 *constructors* 的命名类型。这些构造器可以用来创建或者匹配相应枚举类型的值。
 {==+==}
 
 
 {==+==}
 Enumerations are declared with the keyword `enum`.
 {==+==}
-枚举用关键字 `enum` 声明。
+枚举类型使用关键字 `enum` 进行声明。
 {==+==}
 
 
 {==+==}
 An example of an `enum` item and its use:
 {==+==}
-一个 `enum` 条目的示例和用途:
+下面是一个 `enum` 的使用示例:
 {==+==}
 
 
@@ -76,7 +76,7 @@ a = Animal::Cat;
 {==+==}
 Enum constructors can have either named or unnamed fields:
 {==+==}
-枚举构造函数可以有命名或未命名的字段:
+枚举构造器可以拥有命名的字段或者没有命名的字段:
 {==+==}
 
 
@@ -99,7 +99,7 @@ a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 In this example, `Cat` is a _struct-like enum variant_, whereas `Dog` is simply
 called an enum variant.
 {==+==}
-在这个例子中， `Cat` 是一个 _类似结构枚举变量_ ，而 `Dog` 则被简单地称为枚举变量。
+在这个例子中， `Cat` 是一个 _类结构体枚举变体_ ，而 `Dog` 则仅称为枚举变体。
 {==+==}
 
 
@@ -107,8 +107,7 @@ called an enum variant.
 An enum where no constructors contain fields are called a
 *<span id="field-less-enum">field-less enum</span>*. For example, this is a fieldless enum:
 {==+==}
-一个没有构造函数包含字段的枚举被称为 *<span id="field-less-enum">field-less enum</span>* "无字段枚举" 。
-例如，这是一个无字段枚举:
+没有构造器包含字段的枚举称为 *<span id="field-less-enum">field-less enum</span>* "无字段枚举" 。例如，以下是一个无字段枚举:
 {==+==}
 
 
@@ -129,7 +128,7 @@ enum Fieldless {
 If a field-less enum only contains unit variants, the enum is called an
 *<span id="unit-only-enum">unit-only enum</span>*. For example:
 {==+==}
-如果无字段的枚举只包含单元变体，该枚举被称为 *<span id="unit-only-enum">unit-only enum</span>* "单元枚举" 。例如:
+如果一个不包含字段的枚举只包含单元枚举变体，则该枚举称为 *<span id="unit-only-enum">unit-only enum</span>* "单元枚举"。例如：
 {==+==}
 
 
@@ -151,7 +150,7 @@ enum Enum {
 ## Discriminants
 {==+==}
 <span id="custom-discriminant-values-for-fieldless-enumerations"></span>
-## 鉴别因子
+## 鉴别值
 {==+==}
 
 
@@ -159,7 +158,9 @@ enum Enum {
 Each enum instance has a _discriminant_: an integer logically associated to it
 that is used to determine which variant it holds.
 {==+==}
-每个枚举实例都有一个 _discriminant_ "鉴别因子"：一个逻辑上与之关联的整数，用来确定它持有的变体。
+每个枚举实例都有一个 鉴别值（discriminant）：一个与之相关联的整数，用于确定它持有的是哪个变量。
+
+每个枚举实例都有一个 _discriminant_ "鉴别值" ：一个逻辑上与之关联的整数，用来确定它持有的变体。
 {==+==}
 
 
@@ -168,22 +169,22 @@ Under the [default representation], the discriminant is interpreted as
 an `isize` value. However, the compiler is allowed to use a smaller type (or
 another means of distinguishing variants) in its actual memory layout.
 {==+==}
-在 [default representation] "默认表示法" 下，鉴别因子解释为一个 `isize` 值。
-然而，编译器允许在其实际的内存布局中使用更小的类型 (或其他区分变体的方法)  。
+在 [默认表示][default representation] 下，鉴别值解释为 `isize` 值。
+然而，编译器允许在实际内存布局中使用较小的类型 (或其他区分变体的方式) 。
 {==+==}
 
 
 {==+==}
 ### Assigning discriminant values
 {==+==}
-### 分配鉴别因子值
+### 分配鉴别值
 {==+==}
 
 
 {==+==}
 #### Explicit discriminants
 {==+==}
-#### 显式鉴别因子
+#### 显式鉴别值
 {==+==}
 
 
@@ -191,7 +192,7 @@ another means of distinguishing variants) in its actual memory layout.
 In two circumstances, the discriminant of a variant may be explicitly set by
 following the variant name with `=` and a [constant expression]:
 {==+==}
-在两种情况下，变体的鉴别因子可以通过在变体名称后面加上 `=` 和一个 [constant expression] "常量表达式" 来明确设置 :
+在两种情况下，可以通过在变体名称后跟 `=` 和 [常量表达式][constant expression] 来明确设置变体的判别式 :
 {==+==}
 
 
@@ -229,7 +230,7 @@ following the variant name with `=` and a [constant expression]:
 {==+==}
 #### Implicit discriminants
 {==+==}
-#### 隐式鉴别因子
+#### 隐式鉴别值
 {==+==}
 
 
@@ -239,8 +240,7 @@ than the discriminant of the previous variant in the declaration. If the
 discriminant of the first variant in the declaration is unspecified, then
 it is set to zero.
 {==+==}
-如果没有指定变体的鉴别因子，那么将设置为比声明的前一个加1。
-如果声明中的第一个未指定，将设置为零。
+如果枚举变体的鉴别值没有指定，则它被设置为在声明中前一个变体的鉴别值加1。如果第一个变体的鉴别值未指定，则设置为零。
 {==+==}
 
 
@@ -280,7 +280,7 @@ assert_eq!(baz_discriminant, 123);
 {==+==}
 It is an error when two variants share the same discriminant.
 {==+==}
-当两个变体鉴别因子相同时，是一个错误。
+当两个变体鉴别值相同时，是一个错误。
 {==+==}
 
 
@@ -306,7 +306,7 @@ enum SharedDiscriminantError2 {
 It is also an error to have an unspecified discriminant where the previous
 discriminant is the maximum value for the size of the discriminant.
 {==+==}
-在前一个鉴别因子是鉴别因子大小的最大值的情况下，有一个未指定的鉴别因子也是一个错误。
+如果先前枚举的鉴别值达到了其类型能够表示的最大值，那么下一个没有指定鉴别值的项将导致错误。
 {==+==}
 
 
@@ -346,7 +346,7 @@ enum OverflowingDiscriminantError2 {
 {==+==}
 ### Accessing discriminant
 {==+==}
-### 访问鉴别因子
+### 访问鉴别值
 {==+==}
 
 
@@ -362,8 +362,7 @@ enum OverflowingDiscriminantError2 {
 an enum value which can be compared. This cannot be used to get the value
 of the discriminant.
 {==+==}
-[`mem::discriminant`] 返回一个不透明的引用，指向可以比较的枚举值的鉴别因子。
-不能用来获取鉴别因子的值。
+[`mem::discriminant`] 返回一个不透明的引用，指向枚举值的鉴别值，可以进行比较。但不能用于获取鉴别值。
 {==+==}
 
 
@@ -378,7 +377,7 @@ of the discriminant.
 If an enumeration is [unit-only] (with no tuple and struct variants), then its
 discriminant can be directly accessed with a [numeric cast]; e.g.:
 {==+==}
-如果一个枚举是 [unit-only] (没有元组和结构的变体) ,那么它的鉴别因子可以用 [numeric cast] "数字转换" 直接访问。比如:
+如果一个枚举类型是 [unit-only]  (没有元组和结构的变体) ，那么它的鉴别值可以通过 [数字强制转换][numeric cast] 直接访问；比如:
 {==+==}
 
 
@@ -402,7 +401,7 @@ assert_eq!(2, Enum::Baz as isize);
 {==+==}
 [Field-less enums] can be casted if they do not have explicit discriminants, or where only unit variants are explicit.
 {==+==}
-[Field-less enums] "无字段枚举" 如果没有明确的鉴别因子，或者只有单元变体是明确的，就可以被转换。
+[无成员的枚举][Field-less enums] 可以被强制类型转换，如果它们没有显式的鉴别值，或者只有单元变体是显式的。
 {==+==}
 
 
@@ -449,7 +448,7 @@ assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
 If the enumeration specifies a [primitive representation], then the
 discriminant may be reliably accessed via unsafe pointer casting:
 {==+==}
-如果枚举指定了 [primitive representation] "原始表示" ，那么可以通过不安全的指针转换可靠地访问鉴别因子:
+如果枚举指定了 [原始表示][primitive representation] ，那么可以通过不安全的指针转换来可靠地访问鉴别值:
 {==+==}
 
 
@@ -492,7 +491,7 @@ assert_eq!(2, struct_like.discriminant());
 Enums with zero variants are known as *zero-variant enums*. As they have
 no valid values, they cannot be instantiated.
 {==+==}
-具有零变体的枚举被称为 *零变体枚举* , 由于没有有效的值，所以不能实例化。
+没有变体的枚举被称为 *零变体枚举* 。由于它们没有有效值，因此不能实例化。
 {==+==}
 
 
@@ -509,7 +508,7 @@ enum ZeroVariants {}
 Zero-variant enums are equivalent to the [never type], but they cannot be
 coerced into other types.
 {==+==}
-零变体枚举等同于 [never type] ，但是不能强转为其他类型。
+零变体枚举被认为是 [never 类型][never type] 的等效形式，但是它们不能被强制转换为其他类型。
 {==+==}
 
 
@@ -540,8 +539,8 @@ Enum variants syntactically allow a [_Visibility_] annotation, but this is
 rejected when the enum is validated. This allows items to be parsed with a
 unified syntax across different contexts where they are used.
 {==+==}
-枚举变体在语法上允许 [_Visibility_] "可见性" 注解，但在验证枚举时，会被拒绝。
-这允许条目在不同的上下文中以统一的语法进行解析。
+枚举变体在语法上允许使用 [_Visibility_] 注释，但在验证枚举时，会被拒绝。
+这使得可以在使用它们的不同上下文中使用统一的语法来解析条目。
 {==+==}
 
 
