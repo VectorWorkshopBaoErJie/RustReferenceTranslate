@@ -35,8 +35,8 @@ Implementations are defined with the keyword `impl` and contain functions
 that belong to an instance of the type that is being implemented or to the
 type statically.
 {==+==}
-一个 _implementation_ "实现" 是条目，与一个 _实现类型_ 关联。
-实现用关键字 "impl" 定义，包含被实现类型的所属实例或静态类型的函数。
+一个 _实现_ 是将条目与 _实现类型_ 相关联的一个条目。
+实现是使用关键字 `impl` 定义的，并包含属于正在被实现的类型实例或静态类型的函数。
 {==+==}
 
 
@@ -68,7 +68,7 @@ An inherent implementation is defined as the sequence of the `impl` keyword,
 generic type declarations, a path to a nominal type, a where clause, and a
 bracketed set of associable items.
 {==+==}
-内部实现定义是 `impl` 关键字、泛型类型声明、指向具名类型的路径、where子句和括号内的可关联条目的集合。
+一份内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向命名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
 {==+==}
 
 
@@ -76,7 +76,7 @@ bracketed set of associable items.
 The nominal type is called the _implementing type_ and the associable items are
 the _associated items_ to the implementing type.
 {==+==}
-具名类型被称为 _实现类型_ ，关联条目是实现类型的 _关联条目_ 。
+命名类型被称为 _实现类型_ ，可关联的条目是实现类型的 _关联条目_ 。
 {==+==}
 
 
@@ -86,9 +86,7 @@ implementing type.  Inherent implementations can contain [associated
 functions] (including [methods]) and [associated constants]. They cannot
 contain associated type aliases.
 {==+==}
-内部实现将包含的条目与实现类型关联起来。
-内部实现能够包含 [关联函数][associated functions] (包括 [methods] ) 和 [关联常量][associated constants]。
-不能包含关联类型的别名。
+内部实现将包含的条目与实现类型关联。内部实现可以包含关联函数(包括[方法][methods])和[关联常量][associated constants]。它们不能包含关联类型别名。
 {==+==}
 
 
@@ -97,7 +95,7 @@ The [path] to an associated item is any path to the implementing type,
 followed by the associated item's identifier as the final path
 component.
 {==+==}
-关联条目的 [path] "路径" 是实现类型的路径连接关联条目的标识符。
+到关联条目的[路径][path]是指到实现类型的任何路径，后面跟着关联条目的标识符作为最终路径组件。
 {==+==}
 
 
@@ -105,7 +103,7 @@ component.
 A type can also have multiple inherent implementations. An implementing type
 must be defined within the same crate as the original type definition.
 {==+==}
-类型能够有多个内部实现。实现类型与原始类型必须定义在同一crate内。
+一个类型也可以有多个内部实现。一个实现类型必须在与原始类型定义相同的 crate 中被定义。
 {==+==}
 
 
@@ -180,7 +178,7 @@ A _trait implementation_ is defined like an inherent implementation except that
 the optional generic type declarations are followed by a [trait], followed
 by the keyword `for`, followed by a path to a nominal type.
 {==+==}
- _trait 实现_ 定义很像内部实现，除了可选的泛型类型声明后面是 [trait] ，紧随关键字 `for` 和泛型具名类型的路径。
+ _trait实现_ 和内部实现类似，只是可选的泛型类型声明后面是 [trait] ，再跟着 `for` 关键字，最后是指向命名类型的路径。
 {==+==}
 
 
@@ -195,7 +193,7 @@ by the keyword `for`, followed by a path to a nominal type.
 The trait is known as the _implemented trait_. The implementing type
 implements the implemented trait.
 {==+==}
-由实现类型具体实现该 trait ，被称为 _实现 trait_ 。
+该 trait 被称为 _实现trait_ 。实现类型实现了实现 trait 。
 {==+==}
 
 
@@ -204,7 +202,7 @@ A trait implementation must define all non-default associated items declared
 by the implemented trait, may redefine default associated items defined by the
 implemented trait, and cannot define any other items.
 {==+==}
-trait 实现必须定义所有被实现的 trait 所声明的非默认关联条目，可以重新定义被实现的 trait 所定义的默认关联条目，并且不能定义任何其他条目。
+一个 trait 的实现必须定义实现的 trait 声明的所有非默认关联条目，可以重新定义实现的 trait 定义的默认关联条目，但不能定义任何其他条目。
 {==+==}
 
 
@@ -213,7 +211,7 @@ The path to the associated items is `<` followed by a path to the implementing
 type followed by `as` followed by a path to the trait followed by `>` as a path
 component followed by the associated item's path component.
 {==+==}
-关联条目的路径是 `<` 后面是实现类型的路径，之后 `as` ，之后 trait 的路径，之后 `>` 作为路径，之后是关联条目的路径部分。
+与实现类型相关联的关联条目的路径是 `<`，后跟到实现类型的路径，然后是 `as`，后跟到 trait 的路径，之后 `>` 作为路径组件，然后是关联条目的路径组件。
 {==+==}
 
 
@@ -221,7 +219,7 @@ component followed by the associated item's path component.
 [Unsafe traits] require the trait implementation to begin with the `unsafe`
 keyword.
 {==+==}
-[Unsafe traits] 要求 trait 实现以 `unsafe` 的关键字开头。
+[Unsafe traits] 指的是需要在 trait 实现中使用 `unsafe` 关键字的 trait 。
 {==+==}
 
 
@@ -273,7 +271,7 @@ impl Shape for Circle {
 A trait implementation is considered incoherent if either the orphan rules check fails
 or there are overlapping implementation instances.
 {==+==}
-如果唯一性规则检查失败，存在重复的实现实例，则认为 Trait 实现不符合逻辑。
+如果孤儿规则检查失败，存在重复的实现实例，则认为 Trait 实现不连贯的。
 {==+==}
 
 
@@ -283,7 +281,7 @@ traits the implementation is for, the implementations can be instantiated with
 the same type. <!-- This is probably wrong? Source: No two implementations can
 be instantiable with the same set of types for the input type parameters. -->
 {==+==}
-实现可以用相同的类型进行实例化，当两个trait的实现有一个非空的交集时，两个trait的实现就会重叠。
+两个 trait 实现重叠当且仅当它们的 trait 集合存在非空交集，并且这两个 trait 实现都可以实例化为同一类型。
 <!-- This is probably wrong? Source: No two implementations can be instantiable with the same set of types for the input type parameters. -->
 {==+==}
 
@@ -324,8 +322,8 @@ Note that for the purposes of coherence, [fundamental types] are
 special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>`
 is considered local.
 {==+==}
-只有 *未覆盖* 类型参数的出现受到限制。
-注意，为了一致性，[基本类型][fundamental types] 是特殊的。 `Box<T>` 中的 `T` 不被覆盖， `Box<LocalType>` 被认为是局部的。
+仅出现 *未覆盖* 类型参数是受限制的。需要注意的是，在一致性的目的下， [基本类型][fundamental types] 是特殊的。
+ `Box<T>` 中的 `T` 不被视为被覆盖，而 `Box<LocalType>` 则被视为是局部类型。
 {==+==}
 
 
@@ -341,7 +339,7 @@ An implementation can take [generic parameters], which can be used in the rest
 of the implementation. Implementation parameters are written directly after the
 `impl` keyword.
 {==+==}
-实现能够获得 [通用参数][generic parameters] ，这些参数可以在实现的其他部分使用。实现参数直接写在 `impl` 关键字的后面。
+一个实现可以带有[泛型参数][generic parameters]，这些参数可以在实现的其余部分中使用。实现参数直接写在 `impl` 关键字之后。
 {==+==}
 
 
@@ -372,7 +370,7 @@ impl Seq<bool> for u32 {
 Generic parameters *constrain* an implementation if the parameter appears at
 least once in one of:
 {==+==}
-泛型参数 *约束* 一种实现，当该参数至少出现之一:
+如果泛型参数至少在一种类型的关联条目中出现，则该泛型参数 *约束* 了实现:
 {==+==}
 
 
@@ -382,9 +380,9 @@ least once in one of:
 * As an [associated type] in the [bounds] of a type that contains another
   parameter that constrains the implementation
 {==+==}
-* 已实现的trait，如果有其一
-* 实施类型
-* 作为一个 [关联类型][associated type] 的 [绑定][bounds] ，该类型包含约束实现的另一个参数
+* 已实现的 trait ，如果有其一
+* 实现类型
+* 作为一个 [关联类型][associated type] 的 [约束][bounds] ，该类型包含约束实现的另一个参数
 {==+==}
 
 
@@ -392,7 +390,7 @@ least once in one of:
 Type and const parameters must always constrain the implementation. Lifetimes
 must constrain the implementation if the lifetime is used in an associated type.
 {==+==}
-类型和常量参数必须总是约束着实现。如果生命周期被用于相关的类型中，生命周期必须约束实现。
+类型和常量参数必须始终约束实现。如果在关联类型中使用生命周期，则生命周期必须约束实现。
 {==+==}
 
 
@@ -563,8 +561,8 @@ attributes must come before any associated items. The attributes that have
 meaning here are [`cfg`], [`deprecated`], [`doc`], and [the lint check
 attributes].
 {==+==}
-实现可以在 `impl` 关键字之前包含外部 [属性][attributes] ，在括号内包含关联条目的内部 [属性][attributes] 。
-内部属性必须在任何关联条目之前。这里有意义的属性是 [`cfg`] , [`deprecated`] , [`doc`] , 和 [lint check attributes] 。
+实现可以在 `impl` 关键字之前包含外部 [属性][attributes] ，在包含关联条目的括号内部包含内部 [属性][attributes] 。
+内部属性必须在任何关联条目之前。在这里有意义的属性是 [`cfg`] ， [`deprecated`] ， [`doc`] 和 [检查属性][lint check attributes] 。
 {==+==}
 
 

@@ -24,7 +24,7 @@
 A _trait_ describes an abstract interface that types can implement. This
 interface consists of [associated items], which come in three varieties:
 {==+==}
-_trait_ 定义一个类型可以实现的抽象接口，由 [关联条目][associated items] 组成，有三种:
+一个 _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目] 组成，包括以下三种类型：
 {==+==}
 
 
@@ -45,15 +45,15 @@ that is implementing this interface". Traits may also contain additional type
 parameters. These type parameters, including `Self`, may be constrained by
 other traits and so forth [as usual][generics].
 {==+==}
-所有 trait 都定义了一个隐式的类型参数 `Self` ，指向 "实现此接口的类型" 。
-trait 可以包含附加的类型参数。这些类型参数，包括 `Self` ， 像通常 [泛型][generics] 一样可以受到其他trait的约束。
+所有 trait 都定义了一个隐式类型参数 `Self` ，它指代 "正在实现此接口的类型" 。
+Trait 还可以包含其他类型参数。这些类型参数，包括 `Self` ， 像通常 [泛型][generics] 一样可以受到其他 trait 的约束。
 {==+==}
 
 
 {==+==}
 Traits are implemented for specific types through separate [implementations].
 {==+==}
-对于特定类型的 Trait 通过单独的 [implementations] 实现。
+Trait 通过单独的 [实现][implementations] 与具体的类型关联。
 {==+==}
 
 
@@ -66,10 +66,10 @@ omit the equals sign and expression to indicate implementations must define
 the constant value. Associated types must never define the type, the type may
 only be specified in an implementation.
 {==+==}
-Trait 函数可以省略函数体，用分号来代替。表明具体实现必须定义该函数。
-如果Trait函数定义了函数体，这个定义将是未覆盖时的默认实现。
-同样地，Trait 常量可以省略等号和表达式，表明实现时必须定义常量值。
-关联类型决不能定义类型，类型只能在实现中指定。
+Trait 函数可以省略函数体，用分号代替。这表示实现必须定义该函数。
+如果 trait 函数定义了函数体，则该定义作为任何未覆盖它的实现的默认值。
+类似地，关联常量可以省略等号和表达式，以表示实现必须定义常量值。
+关联类型绝不能定义类型，类型只能在实现中指定。
 {==+==}
 
 
@@ -113,7 +113,7 @@ Generic items may use traits as [bounds] on their type parameters.
 {==+==}
 ## Trait 绑定
 
-泛型条目可以使用trait作为其类型参数的 [绑定][bounds] 。
+泛型条目可以使用 trait 作为其类型参数的 [绑定][bounds] 。
 {==+==}
 
 
@@ -125,8 +125,8 @@ after the trait name, using the same syntax used in [generic functions].
 {==+==}
 ## 泛型 Trait
 
-可以为 trait 指定类型参数，使其成为泛型。
-这些参数出现在 trait 名称之后，使用与 [泛型函数][generic functions] 相同的语法。
+为了使 Trait 可以泛化，可以在 Trait 名称后指定类型参数。
+这些参数使用与 [泛型函数][generic functions] 相同的语法表示。
 {==+==}
 
 
@@ -151,8 +151,8 @@ Object safe traits can be the base trait of a [trait object]. A trait is
 {==+==}
 ## 对象安全
 
-对象安全trait 可以是 [trait对象][trait object] 的基trait 。
-如果trait具有以下特性，它就是 *对象安全的*  (在 [RFC 255] 中定义):
+对象安全的 trait 可以是一个 [trait对象][trait object] 的基础 trait 。
+一个 trait 是 *对象安全* 的，如果它具有以下 trait (在[RFC 255]中定义):
 {==+==}
 
 
@@ -180,7 +180,7 @@ Object safe traits can be the base trait of a [trait object]. A trait is
 * `Sized` 不能是 [supertrait][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
 * 不能有任何关联常量。
 * 不能有任何泛型关联类型。
-* 所有关联函数必须是可从trait对象中可派发的，或者是明确不可派发的。
+* 所有关联函数必须是可从 trait 对象中可派发的，或者是明确不可派发的。
     * 可派发函数要求:
         * 没有任何类型参数 (允许生命周期参数),
         * 是除接收者类型，不使用 `Self` 的 [method] 。
@@ -265,7 +265,7 @@ obj.typed(1);  // ERROR: cannot call with generic type
 ```
 {==+==}
 ```rust,compile_fail
-// 这个trait是对象安全的，但这些方法不能在trait对象上派发。
+// 这个trait是对象安全的，但这些方法不能在 trait 对象上派发。
 trait NonDispatchable {
     // 非方法，不能被派发。
     fn foo() where Self: Sized {}
@@ -311,11 +311,11 @@ let obj: Box<dyn NotObjectSafe> = Box::new(S); // ERROR
 {==+==}
 ```rust,compile_fail
 # use std::rc::Rc;
-// 非对象安全trait的示例。
+// 非对象安全 trait 的示例。
 trait NotObjectSafe {
     const CONST: i32 = 1;  // ERROR: 不能有关联 const
 
-    fn foo() {}  // ERROR: 关联函数没有Sized
+    fn foo() {}  // ERROR: 关联函数没有 Sized
     fn returns(&self) -> Self; // ERROR: Self 在返回类型
     fn typed<T>(&self, x: T) {} // ERROR: 有泛型类型参数
     fn nested(self: Rc<Box<Self>>) {} // ERROR: 尚不支持嵌套的接收器
@@ -388,9 +388,8 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object]
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
-**Supertraits** are traits that are required to be implemented for a type to implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object] is bounded by a trait, it has access to the associated items of its supertraits.
-**Supertraits** 是一个类型实现一个特定trait所需要实现的trait。
-此外，在 [泛型][generics] 或 [trait对象][trait object] 被 trait 约束的位置，它可以访问其 Supertraits 的相关条目。
+**Supertraits** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
+此外，在泛型或 trait 对象受到一个 trait 限定时，它可以访问其超级 trait 的关联条目。
 {==+==}
 
 
@@ -399,22 +398,21 @@ Supertraits are declared by trait bounds on the `Self` type of a trait and
 transitively the supertraits of the traits declared in those trait bounds. It is
 an error for a trait to be its own supertrait.
 {==+==}
-Supertraits 由 trait 的 `Self` 类型的 trait 绑定声明，并且是这些 trait 绑定中声明的 trait 的 Supertraits 。
-如果 trait 是它自己的 Supertraits ，是一个错误。
+超级 trait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而超级 trait 的 trait 约束将在其内部声明的 trait 的超级 trait 中传递。trait 不能是自己的超级 trait，这是一个错误。
 {==+==}
 
 
 {==+==}
 The trait with a supertrait is called a **subtrait** of its supertrait.
 {==+==}
-具有 supertrait 的 trait 被称为其 supertrait 的 **subtrait** 。
+具有超级 trait 的 trait 被称为其超级 trait 的 **subtrait** 子 trait 。
 {==+==}
 
 
 {==+==}
 The following is an example of declaring `Shape` to be a supertrait of `Circle`.
 {==+==}
-下面是一个声明 `Shape` 是 `Circle` 很形象的示例。
+以下是将 `Shape` 声明为 `Circle` 的超级 trait 的示例。
 {==+==}
 
 
@@ -431,7 +429,7 @@ trait Circle : Shape { fn radius(&self) -> f64; }
 {==+==}
 And the following is the same example, except using [where clauses].
 {==+==}
-而下面是同一个例子，除了使用 [where 子句][where clauses] 。
+以下是相同的示例， 但使用 [where 子句][where clauses] 。
 {==+==}
 
 
@@ -449,7 +447,7 @@ trait Circle where Self: Shape { fn radius(&self) -> f64; }
 This next example gives `radius` a default implementation using the `area`
 function from `Shape`.
 {==+==}
-接下来的例子，给于 `radius` 一个默认的实现，使用 `Shape` 的 `area` 函数。
+下面的例子使用 `Shape` 中的 `area` 函数为 `radius` 提供了一个默认的实现。
 {==+==}
 
 
@@ -473,7 +471,7 @@ trait Circle where Self: Shape {
 {==+==}
 This next example calls a supertrait method on a generic parameter.
 {==+==}
-接下来的示例，是在泛型参数上调用 supertrait 方法。
+这个例子展示了在一个泛型参数上调用 supertrait 方法。
 {==+==}
 
 
@@ -503,7 +501,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 {==+==}
 Similarly, here is an example of calling supertrait methods on trait objects.
 {==+==}
-以下是一个在 trait 对象上调用 supertrait 方法的例子。
+类似地，以下是在 trait 对象上调用 supertrait 方法的示例。
 {==+==}
 
 
@@ -535,15 +533,15 @@ Traits items that begin with the `unsafe` keyword indicate that *implementing* t
 trait may be [unsafe]. It is safe to use a correctly implemented unsafe trait.
 The [trait implementation] must also begin with the `unsafe` keyword.
 {==+==}
-以 `unsafe` 关键字开头的 Trait 条目表明，*实现* 该特性可能是 [unsafe] 。使用正确实现的 unsafe trait 是安全的。
-[trait 实现][trait implementation] 也必须以 `unsafe` 关键字开头。
+Trait 中以 `unsafe` 关键字开头的条目表示实现该 trait 可能是不安全的。
+使用正确实现的不安全 trait 是安全的。相应的 [trait 实现][trait implementation] 也必须以 `unsafe` 关键字开头。
 {==+==}
 
 
 {==+==}
 [`Sync`] and [`Send`] are examples of unsafe traits.
 {==+==}
-[`Sync`] 和 [`Send`] 是 unsafe trait 的例子。
+[`Sync`] 和 [`Send`] 是 unsafe trait 的示例。
 {==+==}
 
 
@@ -560,8 +558,8 @@ Function or method declarations without a body only allow [IDENTIFIER] or
 allowed, but it is deprecated and will become a hard error in the future.
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 {==+==}
-没有主体的函数或方法声明只允许 [IDENTIFIER] 或 `_` [wild card][WildcardPattern] 模式。
- `mut` [IDENTIFIER] 目前是允许的，但已废弃，可能会成为未来的错误。
+未设置函数或方法的实现体只允许使用 [IDENTIFIER] 或者 `_` [通配符模式][WildcardPattern]。
+目前允许使用 `mut` [IDENTIFIER]，但是这种方式已经被弃用，并且将来会变成一个严格的错误。
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 {==+==}
 
@@ -594,7 +592,7 @@ trait T {
 {==+==}
 The kinds of patterns for parameters is limited to one of the following:
 {==+==}
-参数的模式类型仅限于以下类型之一:
+函数或方法的参数模式种类被限制为以下之一:
 {==+==}
 
 
@@ -615,8 +613,8 @@ longer optional. Also, all irrefutable patterns are allowed as long as there
 is a body. Without a body, the limitations listed above are still in effect.
 {==+==}
 从2018版开始，函数或方法参数模式不再是可选的。
-此外，只要有主体，所有不可驳斥的模式都是允许的。
-如果没有主体，上述的限制仍然有效。
+此外，只要有函数体，所有不可反驳模式(irrefutable pattern)都是允许的。
+如果没有函数体，则仍然受到上述限制。
 {==+==}
 
 
@@ -651,9 +649,9 @@ unified syntax across different contexts where they are used. As an example,
 an empty `vis` macro fragment specifier can be used for trait items, where the
 macro rule may be used in other situations where visibility is allowed.
 {==+==}
-Trait 条目在语法上允许 [_Visibility_] 注解，但当 Trait 被验证时，将拒绝。
-这允许条目在不同的上下文中以统一的语法进行解析。
-作为例子，一个空的 `vis` 宏片段 specifier "指定器" 可以用于 trait 条目，在其他允许可见性的情况下可以使用宏规则。
+Trait中的条目在语法上允许添加 [_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
+这使得在使用这些条目的不同上下文中，可以使用统一的语法进行解析。
+例如，可以使用一个空的 `vis` 宏片段指示符来表示 trait 条目，在其他允许使用可见性的情况下使用该宏规则。
 {==+==}
 
 
