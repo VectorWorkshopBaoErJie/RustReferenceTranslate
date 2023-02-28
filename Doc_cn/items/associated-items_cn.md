@@ -44,8 +44,8 @@ Associated items are useful when the associated item logically is related to the
 associating item. For example, the `is_some` method on `Option` is intrinsically
 related to Options, so should be associated.
 {==+==}
-当关联条目与关联条目逻辑上相关时，才是有用的。
-例如， `Option` 上的 `is_some` 方法与 Options 本质上相关，因此应该是关联的。
+关联条目在关联类型中定义，通常是与关联类型有逻辑关系。
+例如， `is_some` 方法与 `Option` 类型本身有密切的关系，因此应该定义为关联条目。
 {==+==}
 
 
@@ -54,7 +54,7 @@ Every associated item kind comes in two varieties: definitions that contain the
 actual implementation and declarations that declare signatures for
 definitions.
 {==+==}
-每种关联条目都有两种形式: 包含实际实现的定义和声明定义签名的声明。
+每个关联条目都有两种类型：定义和声明。定义包含实际的实现，而声明只声明定义的签名。
 {==+==}
 
 
@@ -62,7 +62,7 @@ definitions.
 It is the declarations that make up the contract of traits and what is available
 on generic types.
 {==+==}
-正是声明构成了 trait 的约定，以及泛型类型上可用的内容。
+正是声明构成了 trait 和泛型类型的契约以及可用性。
 {==+==}
 
 
@@ -85,7 +85,7 @@ An *associated function declaration* declares a signature for an associated
 function definition. It is written as a function item, except the
 function body is replaced with a `;`.
 {==+==}
-*关联函数声明* 声明了关联函数定义的签名。它写成一个函数条目，只是将函数体替换为 `;` 。
+*关联函数声明* 是关联函数定义的签名声明。它的形式与函数定义相同，只是函数体用 `;` 代替。
 {==+==}
 
 
