@@ -28,8 +28,7 @@ External blocks provide _declarations_ of items that are not _defined_ in the
 current crate and are the basis of Rust's foreign function interface. These are
 akin to unchecked imports.
 {==+==}
-外部块提供了在当前crate中未定义条目的 _声明_ ，是Rust外部函数接口的主要部分。
-类似于未检查的导入。
+外部块提供了当前 crate 中未定义的条目 _声明_ ，是 rust 外部函数接口的基础。这些类似于未经检查的导入。
 {==+==}
 
 
@@ -38,8 +37,8 @@ Two kinds of item _declarations_ are allowed in external blocks: [functions] and
 [statics]. Calling functions or accessing statics that are declared in external
 blocks is only allowed in an `unsafe` context.
 {==+==}
-在外部块中允许两种条目 _声明_ : [functions] 和 [statics] 。
-只有在 `unsafe` 的上下中，才允许调用外部块中声明的函数或访问静态变量。
+在外部块中允许两种条目声明： [函数][functions] 和 [静态变量][statics] 。
+仅在 `unsafe` 上下文中才允许调用外部块中声明的函数或访问静态变量。
 {==+==}
 
 
@@ -49,8 +48,8 @@ keyword, but it is rejected at a semantic level. This allows macros to consume
 the syntax and make use of the `unsafe` keyword, before removing it from the
 token stream.
 {==+==}
-语法上允许 `unsafe` 关键字出现在 `extern` 关键字之前，但在语义层面上排斥。
-这允许宏消耗并使用 `unsafe` 关键字，之后从 token 流中删除。
+语法上允许在 `extern` 关键字之前使用 `unsafe` 关键字，但在语义层面会被拒绝。
+这允许宏使用该语法并利用 `unsafe` 关键字，然后从令牌流中移除它。
 {==+==}
 
 
@@ -68,9 +67,9 @@ terminated by a semicolon. Patterns are not allowed in parameters, only
 [IDENTIFIER] or `_` may be used. Function qualifiers (`const`, `async`,
 `unsafe`, and `extern`) are not allowed.
 {==+==}
-外部块中的函数与其他Rust函数的声明方式相同，但是不能有函数体，而以分号结束。
-参数中不允许使用模式，只能使用 [IDENTIFIER] 或 `_` 。
-不允许使用函数限定符 ( `const` , `async` , `unsafe` , 和 `extern` ) 。
+外部块中的函数声明方式与其他 rust 函数类似，但是不能有函数体，而以分号结束。
+参数中不允许使用模式，只能使用 [标识符][IDENTIFIER] 或 `_` 。
+不允许使用函数限定符 ( `const` , `async` , `unsafe` 和 `extern` )。
 {==+==}
 
 
@@ -79,8 +78,8 @@ Functions within external blocks may be called by Rust code, just like
 functions defined in Rust. The Rust compiler automatically translates between
 the Rust ABI and the foreign ABI.
 {==+==}
-Rust代码可以调用外部块中的函数，就像在Rust中定义的函数一样。
-Rust编译器会自动在Rust ABI和外部ABI之间进行翻译。
+外部块中的函数可以像 rust 中定义的函数一样被 rust 代码调用。
+Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。
 {==+==}
 
 
@@ -91,9 +90,9 @@ extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`, where `'l1`, ... `'lm`
 are its lifetime parameters, `A1`, ..., `An` are the declared types of its
 parameters and `R` is the declared return type.
 {==+==}
-在外部块中声明的函数隐含 `unsafe` 。
-当持有到函数指针时，在外部块中声明的函数的类型是 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R` ，
-其中 `'l1` , ... `'lm` 是其生命周期参数，`A1` , ... , `An` 是其参数的声明类型， `R` 是声明的返回类型。
+在外部块中声明的函数隐式地被认为是 `unsafe` 的。
+当将其强转为函数指针时，外部块中声明的函数类型为 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，
+其中 `'l1`, ... `'lm` 为它的生命周期参数，`A1`, ..., `An` 为它参数的声明类型，而 `R` 为它返回值的声明类型。
 {==+==}
 
 
@@ -112,8 +111,8 @@ not it's mutable, because there is nothing guaranteeing that the bit pattern at 
 memory is valid for the type it is declared with, since some arbitrary (e.g. C) code is in charge
 of initializing the static.
 {==+==}
-外部块中的静态的声明方式与外部块外的 [statics] 相同，只是没有初始化表达式。
-访问在外部块中声明的静态是 `unsafe` 的，无论它是否是可变的，因为无法保证静态内存的位模式对它所声明的类型有效，比如一些不确定的 (例如C) 代码对静态初始化。
+在外部块中声明的静态变量的方式与 [静态变量][statics] 在外部块之外声明的方式相同，但它们没有表达式来初始化其值。
+访问在外部块中声明的静态条目是不安全的，无论它是否可变，因为无法保证静态内存中的位模式是否有效，因为一些不确定的 (例如 C 语言) 代码负责初始化该静态。
 {==+==}
 
 
@@ -122,8 +121,8 @@ Extern statics can be either immutable or mutable just like [statics] outside of
 An immutable static *must* be initialized before any Rust code is executed. It is not enough for
 the static to be initialized before Rust code reads from it.
 {==+==}
-外部静态可以是不可变的，也可以是可变的，就像外部块外的 [statics] 一样。
-一个不可变的静态必须在任何Rust代码执行之前被初始化。仅仅在Rust代码读取之前初始化静态是不够的。
+就像 [静态变量][statics] 在外部块之外声明一样，外部静态变量可以是不可变的也可以是可变的。
+在执行任何 Rust 代码之前， *必须* 先初始化不可变的静态。仅在 Rust 代码读取它之前，将其初始化是不够的。
 {==+==}
 
 
@@ -139,8 +138,8 @@ By default external blocks assume that the library they are calling uses the
 standard C ABI on the specific platform. Other ABIs may be specified using an
 `abi` string, as shown here:
 {==+==}
-默认情况下，外部区假定它们所调用的库使用特定平台上的标准C ABI。
-其他ABI可以使用 `abi` 字符串来指定，如下所示:
+默认情况下，外部块假设它们正在调用的库在特定平台上使用标准 C ABI。
+可以使用 `abi` 字符串指定其他 ABI，如下所示:
 {==+==}
 
 
@@ -161,7 +160,7 @@ extern "stdcall" { }
 There are three ABI strings which are cross-platform, and which all compilers
 are guaranteed to support:
 {==+==}
-有三种ABI字符串是跨平台的，而且所有的编译器都保证支持它们:
+三个跨平台的 ABI 字符串，所有编译器都保证支持:
 {==+==}
 
 
@@ -174,16 +173,16 @@ are guaranteed to support:
   which case it's `"stdcall"`, or what you should use to link to the Windows
   API itself
 {==+==}
-* `extern "Rust"` -- 在Rust代码中书写的普通 `fn foo()` 时，默认的ABI。
-* `extern "C"` -- 这与 `extern fn foo()` 相同；不管你的C编译器支持什么默认值。
-* `extern "system"` -- 通常与 `extern "C"` 相同，除了在Win32上，这时，它是 `"stdcall"` ，你可以用它来链接Windows API。
+* `extern "Rust"` -- 在任何 Rust 代码中写一个普通的 `fn foo()` 时的默认 ABI。
+* `extern "C"` -- 这与 `extern fn foo()` 相同；无论您的 C 编译器支持什么默认值。
+* `extern "system"` -- 通常与 `extern "C"` 相同，但在 Win32 上不同，在这种情况下它是 `"stdcall"`，或者您应该使用它来链接到 Windows API 本身。
 {==+==}
 
 
 {==+==}
 There are also some platform-specific ABI strings:
 {==+==}
-一些特定平台的ABI字符串:
+此外，还有一些特定于平台的 ABI 字符串:
 {==+==}
 
 
@@ -198,13 +197,13 @@ There are also some platform-specific ABI strings:
 * `extern "vectorcall"` -- The `vectorcall` ABI -- corresponds to MSVC's
   `__vectorcall` and clang's `__attribute__((vectorcall))`
 {==+==}
-* `extern "cdecl"` -- x86\_32 C代码的默认值。
-* `extern "stdcall"` -- x86/32 上的 Win32 API 的默认值。
-* `extern "win64"` -- 在 x86/64 Windows 上，C代码的默认值。
-* `extern "sysv64"` -- 在非 Windows x86/64 上的C代码的默认值。
-* `extern "aapcs"` -- ARM的默认值。
-* `extern "fastcall"` -- `fastcall` ABI -- 类似于MSVC的 `__fastcall` 和GCC及clang的 `__attribute__((fastcall))` 。
-* `extern "vectorcall"` -- `vectorcall` ABI -- 类似于MSVC的 `__vectorcall` 和clang的 `__attribute__((vectorcall))` 。
+* `extern "cdecl"` -- x86_32 C 代码的默认 ABI。
+* `extern "stdcall"` -- x86_32 上 Win32 API 的默认 ABI。
+* `extern "win64"` -- x86_64 Windows 上 C 代码的默认 ABI。
+* `extern "sysv64"` -- 非 Windows x86_64 上 C 代码的默认 ABI。
+* `extern "aapcs"` -- ARM 的默认 ABI。
+* `extern "fastcall"` -- `fastcall` ABI，对应于 MSVC 的 `__fastcall` 和 GCC 和 clang 的 `__attribute__((fastcall))` 。
+* `extern "vectorcall"`-- `vectorcall` ABI，对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))` 。
 {==+==}
 
 
@@ -221,8 +220,8 @@ last argument. There must be at least one parameter before the variadic
 parameter. The variadic parameter may optionally be specified with an
 identifier.
 {==+==}
-外部块中的函数可以通过指定 `...` 作为最后一个参数而成为可变的。
-在可变参数之前必须至少有一个参数。变量参数可以选择指定一个标识符。
+在外部块中的函数可以通过将 `...` 指定最后一个参数为变参。
+在变参之前必须至少有一个参数。可以使用标识符选择性地指定变量参数。
 {==+==}
 
 
@@ -266,9 +265,9 @@ compiler should link with for the items within an `extern` block. It uses the
 name of the native library to link. The `kind` key is an optional value which
 specifies the kind of library with the following possible values:
 {==+==}
- *`link` 属性* 指定了一个本地库的名称，编译器应该将 `extern` 块中的条目与之链接。
+*`link` 属性* 指定编译器为 `extern` 块中的条目链接的本地库的名称。
 它使用 [_MetaListNameValueStr_] 语法来指定其输入。
- `name` 键是要链接的本地库的名称。 `kind` 键是一个可选的值，用于指定库的种类，可选值如下:
+`name` 键是要链接的本地库的名称。`kind` 键是可选值，用于指定以下可能值的库类型:
 {==+==}
 
 
@@ -282,10 +281,10 @@ specifies the kind of library with the following possible values:
   an import library to link against (see [`dylib` versus `raw-dylib`] below
   for details). This is only valid for Windows targets.
 {==+==}
-- `dylib` — 表示为动态库。如果没有指定 `kind` ，这是默认。
-- `static` — 表示为静态库。
-- `framework` — 表示为macOS框架。这只对macOS目标有效。
-- `raw-dylib` — 表示为动态库，编译器将生成一个导入库来进行链接 (详见下文[ `dylib` 与 `raw-dylib` ])。这只对Windows目标有效。
+- `dylib` - 表示动态库。如果未指定 `kind` ，则为默认值。
+- `static` - 表示静态库。
+- `framework` - 表示 macOS 框架。仅适用于 macOS 目标。
+- `raw-dylib` - 表示动态库，其中编译器将生成要链接的导入库 (详情请参见 [`dylib` versus `raw-dylib`] )。仅适用于 Windows 目标。
 {==+==}
 
 
@@ -306,10 +305,10 @@ Specifying multiple `modifiers` arguments in a single `link` attribute,
 or multiple identical modifiers in the same `modifiers` argument is not currently supported. \
 Example: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")`.
 {==+==}
-可选的 `modifiers` "修饰符" 参数是一种为要链接的库指定链接修饰符的方法。
-修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀是 `+` 或 `-` ，分别表示启用或禁用该修饰符。
-目前不支持在单一 `link` 属性中指定多个 `modifiers` 参数，或者在同一个 `modifiers` 参数中指定多个相同的修饰符。
-例如：`#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")` 。
+可选的 `modifiers` 参数是指定要链接的库的链接修饰符的一种方法。
+修饰符以逗号分隔的字符串形式指定，每个修饰符前有 `+` 或 `-` 前缀，以表明该修饰符已启用或已禁用。
+目前不支持在单个 `link` 属性中指定多个 `modifiers` 参数，或在同一 `modifiers` 参数中指定多个相同的修饰符。
+例如: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")]` 。 
 {==+==}
 
 
@@ -319,8 +318,8 @@ name for the items within an `extern` block when importing symbols from the
 host environment. The default module name is `env` if `wasm_import_module` is
 not specified.
 {==+==}
-当从主机环境导入符号时，在 `extern` 块中的条目， `wasm_import_module` 键可以用来指定 [WebAssembly module] 的名称。
-如果没有指定 `wasm_import_module` ，默认的模块名称是 `env` 。
+当从主机环境导入符号时，可以使用 `wasm_import_module` 键来指定 `extern` 块中条目的 [WebAssembly 模块][WebAssembly module] 名称。
+如果未指定 `wasm_import_module` ，则默认模块名为 `env` 。
 {==+==}
 
 
@@ -353,8 +352,8 @@ this to satisfy the linking requirements of extern blocks elsewhere in your
 code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
-在空的extern块上添加 `link` 属性是有效的。
-你可以用它来满足代码中其他地方的extern块的链接要求 (包括上游crate) ，而不是在每个extern块上添加属性。
+可以在空的 extern 块上添加 `link` 属性。
+你可以使用它来满足代码中其他位置 (包括上游 crates) extern 块的链接要求，而不是为每个 extern 块都添加属性。
 {==+==}
 
 
@@ -369,7 +368,7 @@ block.
 This modifier is only compatible with the `static` linking kind.
 Using any other kind will result in a compiler error.
 {==+==}
-这个修饰符只与 `static` 链接类型兼容。使用任何其他类型将导致编译器错误。
+此修饰符仅与 `static` 链接类型兼容。使用任何其他类型都会导致编译器错误。
 {==+==}
 
 
@@ -378,7 +377,7 @@ When building a rlib or staticlib `+bundle` means that the native static library
 will be packed into the rlib or staticlib archive, and then retrieved from there
 during linking of the final binary.
 {==+==}
-当构建 rlib 或 staticlib 时， `+bundle` 意味着本地静态库将被打包到 rlib 或 staticlib 档案中，然后在最终二进制文件的链接过程中从那里获取。
+在构建 rlib 或 staticlib 时， `+bundle` 表示本地静态库将被打包到 rlib 或 staticlib 归档中，然后在链接最终二进制文件时从其中检索出来。
 {==+==}
 
 
@@ -390,16 +389,15 @@ When building a staticlib `-bundle` means that the native static library is simp
 into the archive and some higher level build system will need to add it later during linking of
 the final binary.
 {==+==}
-当构建 rlib `-bundle` 时，意味着本地静态库 "按名称" 被注册为该rlib的依赖，并且仅在最终二进制文件的链接过程中包含其中的对象文件，
-在最终链接过程中也会按该名称进行文件搜索。
-当构建 staticlib `-bundle` 时，意味着本地静态库没有包含在归档文件中，一些更高级别的构建系统将需要在最终二进制文件的链接过程中添加它。
+在构建 rlib 时， `-bundle` 表示本地静态库以名称的方式注册为该 rlib 的依赖项，并且只有在链接最终二进制文件时才包含来自它的对象文件，此名称的文件搜索也会在最终链接时执行。
+当构建 staticlib 时， `-bundle` 表示不会将本机静态库包含到归档中，而是由一些更高层的构建系统在链接最终二进制文件时添加它。
 {==+==}
 
 
 {==+==}
 This modifier has no effect when building other targets like executables or dynamic libraries.
 {==+==}
-在构建其他目标(如可执行文件或动态库)时，该修饰符没有影响。
+当构建其他目标(如可执行文件或动态库)时，此修饰符不起作用。
 {==+==}
 
 
@@ -429,7 +427,7 @@ More implementation details about this modifier can be found in
 `+whole-archive` means that the static library is linked as a whole archive
 without throwing any object files away.
 {==+==}
-`+whole-archive` 意味着静态库作为完整的档案被链接，而不丢弃任何对象文件。
+`+whole-archive` 表示静态库作为整个归档进行链接，而不会丢弃任何对象文件。
 {==+==}
 
 
@@ -458,7 +456,7 @@ More implementation details about this modifier can be found in
 {==+==}
 This modifier is compatible with all linking kinds.
 {==+==}
-这个修饰符与所有的链接种类兼容。
+此修饰符与所有链接类型兼容。
 {==+==}
 
 
@@ -467,7 +465,7 @@ This modifier is compatible with all linking kinds.
 (like `lib` or `.a`) to the library name, and will try its best to ask for the same thing from the
 linker.
 {==+==}
-`+verbatim` 意味着rustc本身不会在库名中添加任何目标指定的库前缀或后缀(如 `lib` 或 `.a` ) ，并且会尽力向链接器要求同样的事物。
+`+verbatim` 表示 rustc 本身不会为库名称添加任何目标指定的库前缀或后缀 (如 `lib` 或 `.a` ) ，并尝试尽可能要求链接器也是如此。
 {==+==}
 
 
@@ -475,7 +473,7 @@ linker.
 `-verbatim` means that rustc will either add a target-specific prefix and suffix to the library
 name before passing it to linker, or won't prevent linker from implicitly adding it.
 {==+==}
-`-verbatim` 意味着rustc在将库名传递给链接器之前，会在库名上添加目标特定的前缀和后缀，且不会阻止链接器隐式添加它。
+`-verbatim` 表示 rustc 将在将库名称传递给链接器之前添加特定目标的前缀和后缀，且不会阻止链接器隐式添加它。
 {==+==}
 
 
@@ -507,7 +505,7 @@ is provided to the linker: this is a special static library that declares all
 of the symbols exported by the dynamic library in such a way that the linker
 knows that they have to be dynamically loaded at runtime.
 {==+==}
-在Windows上，针对动态库的链接需要向链接器提供一个导入库：这是一个特殊的静态库，它声明了动态库导出的所有符号，这种方式使链接器知道必须在运行时动态加载它们。
+在 Windows 上，链接动态库需要向链接器提供导入库：这是一个特殊的静态库，以这样一种方式声明动态库导出的所有符号，使得链接器知道它们必须在运行时动态加载。
 {==+==}
 
 
@@ -518,9 +516,8 @@ resolution logic to find that import library. Alternatively, specifying
 `kind = "raw-dylib"` instructs the compiler to generate an import library
 during compilation and provide that to the linker instead.
 {==+==}
-指定 `kind = "dylib"` 指示Rust编译器根据 `name` 键来链接一个导入库。
-然后，链接器将使用其正常的库解析逻辑来找到该导入库。
-或者，指定 `kind = "raw-dylib"` 指示编译器在编译过程中生成一个导入库，并将其提供给链接器。
+指定 `kind = "dylib"` 会指示 Rust 编译器基于 `name` 键链接导入库。
+然后，链接器将使用其正常的库解析逻辑来找到该导入库。另外，指定 `kind = "raw-dylib"` 会指示编译器在编译期间生成一个导入库，并提供给链接器。
 {==+==}
 
 
@@ -529,7 +526,7 @@ during compilation and provide that to the linker instead.
 (`target_arch="x86"`). Using it when targeting other platforms or
 x86 on Windows will result in a compiler error.
 {==+==}
-`raw-dylib` 只支持Windows ，不支持32位x86(`target_arch="x86"`)。当在Windows上以其他平台或x86为目标时，使用它将导致一个编译器错误。
+只有在 Windows 上才支持 `raw-dylib`，不支持 32 位 x86 (`target_arch="x86"`) 。将其用于针对其他平台或 Windows 上的 x86 时将导致编译器错误。
 {==+==}
 
 
@@ -545,7 +542,7 @@ The *`link_name` attribute* may be specified on declarations inside an `extern`
 block to indicate the symbol to import for the given function or static. It
 uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
 {==+==}
-*`link_name` 属性* 可以在 `extern` 块内的声明中指定，以表明为给定的函数或static导入的符号。
+在 `extern` 块内的声明上可以指定 *`link_name` 属性*，以指示要为给定函数或静态导入的符号。
 使用 [_MetaNameValueStr_] 语法来指定符号的名称。
 {==+==}
 
@@ -584,8 +581,8 @@ to link against. An ordinal is a unique number per symbol exported by a dynamic
 library on Windows and can be used when the library is being loaded to find
 that symbol rather than having to look it up by name.
 {==+==}
-*`link_ordinal` 属性* 可以应用在 `extern` 块内的声明中，以指示在生成导入库时使用的数字序号来进行链接。
-序号是Windows上动态库输出的每个符号的唯一数字，可以在加载库时使用，以找到该符号，而不是通过名称来查找。
+在 `extern` 块内的声明上可以应用 *`link_ordinal` 属性* ，以指示在生成要链接的导入库时使用的数字序号。
+在 Windows 上，每个动态库导出的符号都有一个唯一的数字序号，并且在加载该库时可以使用它来找到该符号，而不必通过名称来查找。
 {==+==}
 
 
@@ -595,7 +592,7 @@ symbol is known to be stable: if the ordinal of a symbol is not explicitly set
 when its containing binary is built then one will be automatically assigned to
 it, and that assigned ordinal may change between builds of the binary.
 {==+==}
-警告: `link_ordinal` 只应在已知符号的序数稳定的情况下使用: 如果一个符号的序数在其包含的二进制文件建立时没有明确设置，那么将自动分配一个序数给它，并且该分配的序数可能在二进制文件的建立之时发生变化。
+警告： 只有在符号的序号已知是稳定的情况下才应使用 `link_ordinal` ：如果在构建其包含二进制文件时没有明确设置符号的序号，则会自动为其分配一个序号，并且该分配的序号在构建二进制文件时可能会更改。
 {==+==}
 
 
@@ -617,7 +614,7 @@ extern "stdcall" {
 This attribute is only used with the `raw-dylib` linking kind.
 Using any other kind will result in a compiler error.
 {==+==}
-这个属性仅用于 `raw-dylib` 链接类型。使用任何其他类型将导致编译器错误。
+此属性仅与 `raw-dylib` 链接类型一起使用。使用任何其他类型都会导致编译器错误。
 {==+==}
 
 
@@ -625,7 +622,7 @@ Using any other kind will result in a compiler error.
 Using this attribute with the `link_name` attribute will result in a
 compiler error.
 {==+==}
-将此属性与 `link_name` 属性一起使用会导致编译器错误。
+将此属性与 `link_name` 属性一起使用将导致编译器错误。
 {==+==}
 
 

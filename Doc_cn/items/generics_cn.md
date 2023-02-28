@@ -36,9 +36,8 @@ implementations, which don't have a name, they come directly after `impl`.
 The order of generic parameters is restricted to lifetime parameters and then type and const parameters intermixed.
 {==+==}
 [Functions] 、 [type aliases] 、 [structs] 、 [enumerations] 、 [unions] 、 [traits] 和 [implementations] 可以通过类型、常量和生命周期 *参数化* 。
-这些参数被列在角 <span class="parenthetical"> 括号 (`<...>`)</span> 中，通常紧跟在条目名称之后和定义之前。
-对于没有名称的实现，直接放在 `impl` 之后。
-泛型参数的顺序被约束为生命周期参数，然后是类型和const参数的混合。
+这些参数列在尖括号 <span class="parenthetical"> (`<...>`) </span>中，通常是在条目名字之后和它的定义之前。
+对于没有名字的实现，它们直接出现在 `impl` 之后。泛型参数的顺序被约束为生命周期参数然后是混合的类型和常量参数。
 {==+==}
 
 
@@ -67,8 +66,7 @@ Generic parameters are in scope within the item definition where they are
 declared. They are not in scope for items declared within the body of a
 function as described in [item declarations].
 {==+==}
-泛型参数在其被声明的条目定义的作用域内。
-对于在 [条目声明][item declarations] 中描述的在函数体中声明的条目不在作用域内。
+泛型参数在它们声明的条目定义中是有效的。根据 [条目声明][item declarations] 所述，它们不在函数体中声明的条目作用域内。
 {==+==}
 
 
@@ -93,8 +91,8 @@ referred to with path syntax.
 const identifier introduces a name for the constant parameter, and all
 instances of the item must be instantiated with a value of the given type.
 {==+==}
-*常量泛型参数* 允许条目常量值的泛化。
-const标识符为常量参数引入了一个名称，条目的所有实例必须以给定类型的值进行实例化。
+*常量泛型参数* 允许条目对常量值进行泛型。
+const 标识符引入了常量参数的名称，并且必须使用给定类型的值来实例化所有条目实例。
 {==+==}
 
 
@@ -120,8 +118,7 @@ exception that when used in a [type] or [array repeat expression], it must be
 standalone (as described below). That is, they are allowed in the following
 places:
 {==+==}
-常量参数可以在任何可以使用 [常量条目][const item] 的地方使用，但在 [type] 或 [array repeat expression] 中使用时，必须是独立的(如下所述)。
-也就是说，在以下地方允许使用它们:
+常量参数可以在任何 [常量条目][const item] 可用的地方使用，但是当它们用于 [类型][type] 或 [数组重复表达式][array repeat expression] 时，必须是独立的 (如下所述) 。也就是说，它们允许出现在以下位置:
 {==+==}
 
 
@@ -135,11 +132,11 @@ places:
 4. As a parameter to any type used in the body of any functions in the item.
 5. As a part of the type of any fields in the item.
 {==+==}
-1. 作为对任何类型应用const，构成有关条目签名的一部分。
-2. 作为用于定义 [关联常量][associated const] 的常量表达式的一部分，或者作为 [关联类型][associated type] 的参数。
-3. 作为条目中任何函数体的任何运行时表达式中的一个值。
+1. 作为有关条目签名的一部分的任何类型应用 const 。
+2. 作为定义 [关联常量][associated const] 或作为 [关联类型][associated type] 参数的常量表达式的一部分。
+3. 作为条目中任何函数体中运行时表达式中的值。
 4. 作为条目中任何函数体中使用的任何类型的参数。
-5. 作为条目中任何字段的类型的一部分。
+5. 作为条目字段类型的一部分。
 {==+==}
 
 
@@ -242,8 +239,8 @@ they may only be used as a single segment [path expression], possibly inside a
 [block] (such as `N` or `{N}`). That is, they cannot be combined with other
 expressions.
 {==+==}
-作为进一步的限制，常量参数只能作为一个独立的参数出现在 [type] 或 [array repeat expression] 中。
-在这些情况下，它们只能作为单独段的 [path 表达式][path expression] 使用，可能在一个 [block] (如 `N` 或 `{N}` ) 内。也就是说，不能与其他表达式组合。
+作为进一步的限制，常量参数只能出现在 [类型][type] 或 [数组重复表达式][array repeat expression] 内部作为独立的参数。
+在这些上下文中，它们只能用作单个段 [路径表达式][path expression] ，可能包含在 [块][block] 中 (如 `N` 或 `{N}` ) 。也就是说，它们不能与其他表达式结合使用。
 {==+==}
 
 
@@ -278,9 +275,9 @@ parameter. The const expression must be a [block expression][block]
 (surrounded with braces) unless it is a single path segment (an [IDENTIFIER])
 or a [literal] (with a possibly leading `-` token).
 {==+==}
- [path] 中的const参数指定了该条目要使用的const值。
-该参数必须是 [const表达式][const expression] ，其类型归因于 const 参数。
-const 表达式必须是 [块表达式][block] (用大括号包围) ，除非它是单一的路径段 (一个[IDENTIFIER]) 或一个 [字面值][literal] (可能有前置 `-` 标记)。
+[路径][path] 中的常量参数指定用于该条目的常量值。
+参数必须是为常量参数指定的类型的 [常量表达式][const expression] 。
+除非它是单个路径段 ([标识符][IDENTIFIER]) 或 [字面值][literal] (可能以 `-` 令牌开头) ，否则常量表达式必须是 [块表达式][block] (用大括号括起来) 。
 {==+==}
 
 
@@ -288,7 +285,7 @@ const 表达式必须是 [块表达式][block] (用大括号包围) ，除非它
 > **Note**: This syntactic restriction is necessary to avoid requiring
 > infinite lookahead when parsing an expression inside of a type.
 {==+==}
-> **注意**: 这个语法限制是必要的，以避免在解析类型内的表达式时需要无限向前预测。
+> **注意**: 这种句法限制是必要的，以避免在解析类型内的表达式时需要无限前瞻。
 {==+==}
 
 
@@ -334,8 +331,8 @@ When there is ambiguity if a generic argument could be resolved as either a
 type or const argument, it is always resolved as a type. Placing the argument
 in a block expression can force it to be interpreted as a const argument.
 {==+==}
-当泛型参数是否可以解释为类型参数或常量参数存在歧义时，总是被解释为类型。
-将参数放在块表达式中可以强制解释为常量参数。
+当泛型参数无法确定是作为类型参数还是常量参数解析时，它总是被解析为类型参数。
+将参数放入块表达式中可以强制将其解释为常量参数。
 {==+==}
 
 
@@ -375,7 +372,7 @@ Unlike type and lifetime parameters, const parameters can be declared without
 being used inside of a parameterized item, with the exception of
 implementations as described in [generic implementations]:
 {==+==}
-与类型和生命周期参数不同，const参数可以被声明而不在参数化条目中使用， [泛型实现][generic implementations] 中描述的实现除外。
+与类型和生命周期参数不同，常量参数可以在未使用参数化条目内声明， [泛型实现][generic implementations] 中描述的实现是例外。
 {==+==}
 
 
@@ -403,8 +400,8 @@ bound is satisfied. For example, in the following, even though all possible
 const values for the `bool` type are implemented, it is still an error that
 the trait bound is not satisfied:
 {==+==}
-当解析trait约束的职责时，在确定约束是否被满足时，不会考虑所有常量参数实现的穷尽性。
-例如，在下面的例子中，即使 `bool` 类型的所有可能的常量值都被实现了，仍然是一个错误，即未满足trait约束。
+在解析 trait 约束职责时，在确定约束是否满足时，不考虑所有常量参数的实现是否穷尽。
+例如，即使为 `bool` 类型实现了所有可能的常量值，但仍然会出错，因为 trait 约束未满足:
 {==+==}
 
 
@@ -468,7 +465,7 @@ fn generic<const B: bool>() {
 parameters as well as a way to specify bounds on types that aren't type
 parameters.
 {==+==}
-*Where 子句* 提供了另一种方法来指定类型和生命周期参数的界限，以及一种方法来指定不是类型参数的类型的界限。
+*where 子句* 提供了另一种方法来指定类型和生存期参数的约束，以及指定非类型参数的类型约束的方法。
 {==+==}
 
 
@@ -476,8 +473,7 @@ parameters.
 The `for` keyword can be used to introduce [higher-ranked lifetimes]. It only
 allows [_LifetimeParam_] parameters.
 {==+==}
- `for` 关键字可以用来引入 [更高级别的生命周期][higher-ranked lifetimes] 。
-其只允许 [_LifetimeParam_] 参数。
+ `for` 关键字可用于引入 [更高级的生命周期][higher-ranked lifetimes] 。它仅允许 [_LifetimeParam_] 参数。
 {==+==}
 
 
@@ -520,8 +516,7 @@ Generic lifetime and type parameters allow [attributes] on them. There are no
 built-in attributes that do anything in this position, although custom derive
 attributes may give meaning to it.
 {==+==}
-泛型的生命期和类型参数允许对它们有 [属性][attributes] 。
-这里没有内置属性能做事情，尽管自定义派生属性。
+泛型生命周期和类型参数允许 [属性][attributes] 。在这个位置，没有内置的属性可以做任何事情，尽管自定义派生属性可能会给它赋予意义。
 {==+==}
 
 
@@ -529,7 +524,7 @@ attributes may give meaning to it.
 This example shows using a custom derive attribute to modify the meaning of a
 generic parameter.
 {==+==}
-这个例子展示了使用自定义的派生属性来修改通用参数的含义。
+此示例展示使用自定义派生属性来修改泛型参数的含义。
 {==+==}
 
 
