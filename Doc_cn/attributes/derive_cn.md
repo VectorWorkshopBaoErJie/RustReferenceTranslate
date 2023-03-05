@@ -1,7 +1,7 @@
 {==+==}
 # Derive
 {==+==}
-# 派生
+# 衍生
 {==+==}
 
 
@@ -10,8 +10,8 @@ The *`derive` attribute* allows new [items] to be automatically generated for
 data structures. It uses the [_MetaListPaths_] syntax to specify a list of
 traits to implement or paths to [derive macros] to process.
 {==+==}
-*` derive` 属性* 允许为数据结构自动生成新的 [条目][items] 。
-它使用 [_MetaListPaths_] 语法来指定要实现的 trait 列表或要处理的 [派生宏][derive macros] 路径。
+*` derive` 属性* 允许自动生成数据结构的新 [条目][items] 。
+它使用 [_MetaListPaths_] 语法来指定要实现的一组 trait 或要处理的 [衍生宏][derive macros] 的路径。
 {==+==}
 
 
@@ -20,8 +20,8 @@ For example, the following will create an [`impl` item] for the
 [`PartialEq`] and [`Clone`] traits for `Foo`, and the type parameter `T` will be
 given the `PartialEq` or `Clone` constraints for the appropriate `impl`:
 {==+==}
-例如，下面将为 `Foo` 的 [`PartialEq`] 和 [`Clone`] trait 创建一个 [`impl` 条目][`impl` item] ，
-类型参数 `T` 将被赋予适用的 `impl` 的 `PartialEq` 或 `Clone` 约束。
+例如，以下代码将为 `Foo` 创建一个 [`impl` 条目][`impl` item] ，实现 [`PartialEq`] 和 [`Clone`] 两个 trait ，
+而类型参数 `T` 将被赋予相应 `impl` 中的 `PartialEq` 或 `Clone` 约束。
 {==+==}
 
 
@@ -79,8 +79,7 @@ The *`automatically_derived` attribute* is automatically added to
 has no direct effect, but it may be used by tools and diagnostic lints to
 detect these automatically generated implementations.
 {==+==}
- *`automatically_derived` 属性* 被自动添加到由 `derive` 属性为内置 trait 创建的 [实现][implementations] 中。
-它没有直接作用，但可以被工具和诊断 lint 用来检测这些自动生成的实现。
+自动生成的实现由 `derive` 属性自动添加了 `automatically_derived` 属性，它本身没有直接作用，但是可以被工具和诊断lint用来检测这些自动生成的实现。
 {==+==}
 
 

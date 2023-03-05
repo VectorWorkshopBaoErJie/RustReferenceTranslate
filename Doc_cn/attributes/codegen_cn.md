@@ -1,7 +1,18 @@
+{==+==}
 # Code generation attributes
+{==+==}
+# 代码生成属性
+{==+==}
 
+
+{==+==}
 The following [attributes] are used for controlling code generation.
+{==+==}
+下面的 [属性][attributes] 用于控制代码生成。
+{==+==}
 
+
+{==+==}
 ## Optimization hints
 
 The `cold` and `inline` [attributes] give suggestions to generate code in a
@@ -12,7 +23,19 @@ Both attributes can be used on [functions]. When applied to a function in a
 [trait], they apply only to that function when used as a default function for
 a trait implementation and not to all trait implementations. The attributes
 have no effect on a trait function without a body.
+{==+==}
+## 优化提示
 
+ `cold` 和 `inline` [属性][attributes] 给出一些建议，以便生成比没有提示更快的代码。
+这些属性仅是提示，可能会被忽略。
+
+这两个属性可以用于 [函数][functions] 。
+当应用于 [trait] 中的函数时，它们仅适用于该函数作为默认函数用于 trait 实现时，而不是所有 trait 实现。
+这些属性对于没有函数体的 trait 函数没有影响。
+{==+==}
+
+
+{==+==}
 ### The `inline` attribute
 
 The *`inline` [attribute]* suggests that a copy of the attributed function
@@ -24,7 +47,18 @@ function where it is defined.
 > slower, so this attribute should be used with care.
 
 There are three ways to use the inline attribute:
+{==+==}
+### `inline` 属性
 
+* `inline` 属性* 建议将带有该属性的函数的副本放置在调用者中，而不是在定义的地方生成调用该函数的代码。
+
+> ***注意***: `rustc` 编译器基于内部启发式算法自动内联函数。不正确地内联函数可能会使程序变慢，因此应谨慎使用此属性。
+
+有三种使用 `inline` 属性的方法:
+{==+==}
+
+
+{==+==}
 * `#[inline]` *suggests* performing an inline expansion.
 * `#[inline(always)]` *suggests* that an inline expansion should always be
   performed.
@@ -33,31 +67,67 @@ There are three ways to use the inline attribute:
 
 > ***Note***: `#[inline]` in every form is a hint, with no *requirements*
 > on the language to place a copy of the attributed function in the caller.
+{==+==}
+* `#[inline]` *建议* 进行内联展开。
+* `#[inline(always)]` *建议* 总是进行内联展开。
+* `#[inline(never)]` *建议* 永远不进行内联展开。
 
+> ***注意***: 无论形式如何， `#[inline]` 都是一个提示，对于将带有该属性的函数的副本放置在调用者中没有任何 *强制* 。
+{==+==}
+
+
+{==+==}
 ### The `cold` attribute
 
 The *`cold` [attribute]* suggests that the attributed function is unlikely to
 be called.
+{==+==}
+### `cold` 属性
 
+ *`cold` 属性* 表示带有该属性的函数不太可能被调用。
+{==+==}
+
+
+{==+==}
 ## The `no_builtins` attribute
 
 The *`no_builtins` [attribute]* may be applied at the crate level to disable
 optimizing certain code patterns to invocations of library functions that are
 assumed to exist.
+{==+==}
+## `no_builtins` 属性
 
+ `no_builtins` 属性可以用于禁用优化特定的代码模式以调用预期存在的库函数。该属性可以在 crate 级别应用。
+{==+==}
+
+
+{==+==}
 ## The `target_feature` attribute
 
 The *`target_feature` [attribute]* may be applied to a function to
 enable code generation of that function for specific platform architecture
 features. It uses the [_MetaListNameValueStr_] syntax with a single key of
 `enable` whose value is a string of comma-separated feature names to enable.
+{==+==}
+## `target_feature` 属性
 
+ *`target_feature` 属性* 可以应用于函数，以启用为特定平台架构特性生成该函数的代码。
+它使用带有单个 `enable` 键的 [_MetaListNameValueStr_] 语法，其值是逗号分隔的要启用的特性名称字符串。
+{==+==}
+
+
+{==+==}
 ```rust
 # #[cfg(target_feature = "avx2")]
 #[target_feature(enable = "avx2")]
 unsafe fn foo_avx2() {}
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Each [target architecture] has a set of features that may be enabled. It is an
 error to specify a feature for a target architecture that the crate is not
 being compiled for.
@@ -69,17 +139,43 @@ if the platform explicitly documents this to be safe.
 Functions marked with `target_feature` are not inlined into a context that
 does not support the given features. The `#[inline(always)]` attribute may not
 be used with a `target_feature` attribute.
+{==+==}
+每个 [目标架构][target architecture] 都有一组可启用的特性。
+对于正在编译的 crate，如果指定了未被支持的目标架构的特性，则会出现错误。
 
+对于使用不被当前平台支持的特性进行编译的函数进行调用是 [未定义行为][undefined behavior] ，除非平台明确说明这是安全的。
+
+使用 `target_feature` 标注的函数不会被内联到不支持所给定特性的上下文中。
+ `#[inline(always)]` 属性不能与 `target_feature` 属性一起使用。
+{==+==}
+
+
+{==+==}
 ### Available features
 
 The following is a list of the available feature names.
+{==+==}
+### 可用特性
 
+以下是可用的特性名称列表。
+{==+==}
+
+
+{==+==}
 #### `x86` or `x86_64`
 
 Executing code with unsupported features is undefined behavior on this platform.
 Hence this platform requires that `#[target_feature]` is only applied to [`unsafe`
 functions][unsafe function].
+{==+==}
+####  `x86` 或 `x86_64`
 
+在此平台上执行不支持的特性是未定义的行为。
+因此，该平台要求 `#[target_feature]` 仅应用于 [`unsafe` 函数][unsafe function] 。
+{==+==}
+
+
+{==+==}
 Feature     | Implicitly Enables | Description
 ------------|--------------------|-------------------
 `adx`       |          | [ADX] — Multi-Precision Add-Carry Instruction Extensions
@@ -106,9 +202,19 @@ Feature     | Implicitly Enables | Description
 `xsavec`    |          | [`xsavec`] — Save processor extended states with compaction
 `xsaveopt`  |          | [`xsaveopt`] — Save processor extended states optimized
 `xsaves`    |          | [`xsaves`] — Save processor extended states supervisor
+{==+==}
 
+{==+==}
+
+
+{==+==}
 <!-- Keep links near each table to make it easier to move and update. -->
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [ADX]: https://en.wikipedia.org/wiki/Intel_ADX
 [AES]: https://en.wikipedia.org/wiki/AES_instruction_set
 [AVX]: https://en.wikipedia.org/wiki/Advanced_Vector_Extensions
@@ -134,7 +240,12 @@ Feature     | Implicitly Enables | Description
 [`xsavec`]: https://www.felixcloutier.com/x86/xsavec
 [`xsaveopt`]: https://www.felixcloutier.com/x86/xsaveopt
 [`xsaves`]: https://www.felixcloutier.com/x86/xsaves
+{==+==}
 
+{==+==}
+
+
+{==+==}
 #### `aarch64`
 
 This platform requires that `#[target_feature]` is only applied to [`unsafe`
@@ -149,8 +260,19 @@ Reference Manual], or elsewhere on [developer.arm.com].
 > ***Note***: The following pairs of features should both be marked as enabled
 > or disabled together if used:
 > - `paca` and `pacg`, which LLVM currently implements as one feature.
+{==+==}
+#### `aarch64`
+
+这个平台要求 `#[target_feature]` 仅能应用于 [`unsafe`函数][unsafe function] 。
+
+更多关于这些特性的文档可以在 [ARM架构参考手册][ARM Architecture Reference Manual] 或 [developer.arm.com] 中找到。
+
+> ***注意***: 如果使用以下特性对，应该一起标记为已启用或已禁用:
+> `paca` 和 `pacg` ，LLVM 当前将它们实现为一个特性。
+{==+==}
 
 
+{==+==}
 Feature        | Implicitly Enables | Feature Name
 ---------------|--------------------|-------------------
 `aes`          | `neon`         | FEAT_AES - Advanced <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES instructions
@@ -197,7 +319,12 @@ Feature        | Implicitly Enables | Feature Name
 `sve2-bitperm` | `sve2`         | FEAT_SVE_BitPerm - SVE Bit Permute
 `tme`          |                | FEAT_TME - Transactional Memory Extension
 `vh`           |                | FEAT_VHE - Virtualization Host Extensions
+{==+==}
 
+{==+==}
+
+
+{==+==}
 #### `wasm32` or `wasm64`
 
 `#[target_feature]` may be used with both safe and
@@ -206,13 +333,26 @@ cause undefined behavior via the `#[target_feature]` attribute because
 attempting to use instructions unsupported by the Wasm engine will fail at load
 time without the risk of being interpreted in a way different from what the
 compiler expected.
+{==+==}
+#### `wasm32` 或 `wasm64`
 
+ `#[target_feature]` 可以在 Wasm 平台上用于安全函数和 [`不安全函数`][unsafe function] 。
+在 Wasm 引擎不支持的指令下，尝试使用 `#[target_feature]` 属性将在加载时失败，不会有与编译器预期不同的解释风险，因此不可能引起未定义行为。
+{==+==}
+
+
+{==+==}
 Feature     | Description
 ------------|-------------------
 `simd128`   | [WebAssembly simd proposal][simd128]
 
 [simd128]: https://github.com/webassembly/simd
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ### Additional information
 
 See the [`target_feature` conditional compilation option] for selectively
@@ -227,7 +367,20 @@ in the standard library for runtime feature detection on these platforms.
 > The CPU may be chosen with the [`-C target-cpu`] flag. Individual features
 > may be enabled or disabled for an entire crate with the
 > [`-C target-feature`] flag.
+{==+==}
+### 附加信息
 
+[`target_feature` 条件编译选项][`target_feature` conditional compilation option] 可用于根据编译时设置选择性地启用或禁用代码的编译。
+请注意，该选项不受 `target_feature` 属性的影响，仅受整个 crate 启用的特性的驱动。
+
+标准库中的 [`is_x86_feature_detected`] 或 [`is_aarch64_feature_detected`] 宏可用于在这些平台上进行运行时特性检测。
+
+> 注意: `rustc` 对于每个目标和 CPU 都有一组默认启用的特性。
+> 可以使用 [`-C target-cpu`] 标志选择 CPU 。可以使用 [`-C target-feature`] 标志为整个 crate 启用或禁用单个特性。
+{==+==}
+
+
+{==+==}
 ## The `track_caller` attribute
 
 The `track_caller` attribute may be applied to any function with [`"Rust"` ABI][rust-abi]
@@ -239,31 +392,69 @@ When applied to a function in an `extern` block the attribute must also be appli
 implementations, otherwise undefined behavior results. When applied to a function which is made
 available to an `extern` block, the declaration in the `extern` block must also have the attribute,
 otherwise undefined behavior results.
+{==+==}
+## `track_caller` 属性
 
+ `track_caller` 属性可以应用于任何使用 [`"Rust"` ABI][rust-abi] 的函数，除了入口点 `fn main` 。
+当应用于 trait 声明中的函数和方法时，该属性适用于所有实现。如果 trait 提供了带有该属性的默认实现，则该属性还适用于重写实现。
+
+当应用于 `extern` 块中的函数时，该属性也必须应用于任何链接的实现，否则将导致未定义的行为。
+当应用于提供给 `extern` 块的函数时，`extern` 块中的声明也必须具有该属性，否则将导致未定义的行为。
+{==+==}
+
+
+{==+==}
 ### Behavior
 
 Applying the attribute to a function `f` allows code within `f` to get a hint of the [`Location`] of
 the "topmost" tracked call that led to `f`'s invocation. At the point of observation, an
 implementation behaves as if it walks up the stack from `f`'s frame to find the nearest frame of an
 *unattributed* function `outer`, and it returns the [`Location`] of the tracked call in `outer`.
+{==+==}
+### 行为
 
+将此属性应用于函数 `f` ，允许 `f` 中的代码获取一个提示，即导致 `f` 调用的 "顶级" 跟踪调用的 [`Location`] 。
+在观察点，实现行为就好像它从 `f` 的帧向上遍历栈，查找 *未归属* 函数 `outer` 的最近帧，并返回 `outer` 中跟踪调用的 [`Location`]。
+{==+==}
+
+
+{==+==}
 ```rust
 #[track_caller]
 fn f() {
     println!("{}", std::panic::Location::caller());
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > Note: `core` provides [`core::panic::Location::caller`] for observing caller locations. It wraps
 > the [`core::intrinsics::caller_location`] intrinsic implemented by `rustc`.
 
 > Note: because the resulting `Location` is a hint, an implementation may halt its walk up the stack
 > early. See [Limitations](#limitations) for important caveats.
+{==+==}
+> 注意: `core` 提供 [`core::panic::Location::caller`] 用于获取调用位置。它包装了 `rustc` 实现的 [`core::intrinsics::caller_location`] 内置函数。
 
+> 注意: 由于产生的 `Location` 只是一个提示，实现可能会在遍历堆栈时提前停止。请参阅 [限制](#limitations) 以获取重要的注意事项。
+{==+==}
+
+
+{==+==}
 #### Examples
 
 When `f` is called directly by `calls_f`, code in `f` observes its callsite within `calls_f`:
+{==+==}
+#### 示例
 
+当 `f` 直接被 `calls_f` 调用时，`f` 中的代码会观察到它在 `calls_f` 中被调用的地方:
+{==+==}
+
+
+{==+==}
 ```rust
 # #[track_caller]
 # fn f() {
@@ -273,10 +464,20 @@ fn calls_f() {
     f(); // <-- f() prints this location
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 When `f` is called by another attributed function `g` which is in turn called by `calls_g`, code in
 both `f` and `g` observes `g`'s callsite within `calls_g`:
+{==+==}
+当函数 `f` 被另一个带有 `track_caller` 属性的函数 `g` 直接调用，而 `g` 又被 `calls_g` 调用时， `f` 和 `g` 中的代码都可以观察到 `calls_g` 中调用 `g` 的位置:
+{==+==}
 
+
+{==+==}
 ```rust
 # #[track_caller]
 # fn f() {
@@ -292,10 +493,21 @@ fn calls_g() {
     g(); // <-- g() prints this location twice, once itself and once from f()
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 When `g` is called by another attributed function `h` which is in turn called by `calls_h`, all code
 in `f`, `g`, and `h` observes `h`'s callsite within `calls_h`:
+{==+==}
+当函数 `g` 被另一个有 `track_caller` 属性的函数 `h` 直接或间接调用时 (例如 `h` 被 `calls_h` 调用) ，则 `f` 、 `g` 和 `h` 中的代码都会观察到 `calls_h` 中 `h` 的调用位置。
+也就是说，调用链中最深的有 `track_caller` 属性的函数的调用位置会传递到所有下层函数:
+{==+==}
 
+
+{==+==}
 ```rust
 # #[track_caller]
 # fn f() {
@@ -316,9 +528,19 @@ fn calls_h() {
     h(); // <-- prints this location three times, once itself, once from g(), once from f()
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 And so on.
+{==+==}
+以次类推。
+{==+==}
 
+
+{==+==}
 ### Limitations
 
 This information is a hint and implementations are not required to preserve it.
@@ -334,7 +556,20 @@ trait object whose methods are attributed.
 > type and a given function pointer type may or may not refer to a function with the attribute. The
 > creation of a shim hides the implicit parameter from callers of the function pointer, preserving
 > soundness.
+{==+==}
+### 限制
 
+该信息是一个提示，实现不需要保留它。
+
+特别地，将一个带有 `#[track_caller]` 的函数转换为函数指针会创建一个外壳函数，对于观察者来说，该外壳函数似乎是在函数定义的位置被调用的，从而在虚拟调用之间丢失了实际的调用者信息。
+这种转换的常见例子是创建一个具有方法的 trait 对象，并将其进行标注。
+
+> 注意: 函数指针的上述外壳函数是必要的，因为 `rustc` 在代码生成上实现 `track_caller` 通过将一个隐式参数附加到函数 ABI 上，但是这对于间接调用是不安全的，
+> 因为该参数不是函数类型的一部分，给定的函数指针类型可能引用一个没有该属性的函数或具有该属性的函数。创建外壳函数隐藏了函数指针调用者的隐式参数，从而保持了安全性。
+{==+==}
+
+
+{==+==}
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: ../../rustc/codegen-options/index.html#target-cpu
 [`-C target-feature`]: ../../rustc/codegen-options/index.html#target-feature
@@ -352,7 +587,12 @@ trait object whose methods are attributed.
 [`core::intrinsics::caller_location`]: ../../core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: ../../core/panic/struct.Location.html#method.caller
 [`Location`]: ../../core/panic/struct.Location.html
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## The `instruction_set` attribute
 
 The *`instruction_set` attribute* may be applied to a function to enable code generation for a specific
@@ -361,10 +601,25 @@ comprised of the architecture and instruction set to specify how to generate the
 architectures where a single program may utilize multiple instruction sets.
 
 The following values are available on targets for the `ARMv4` and `ARMv5te` architectures:
+{==+==}
+## `instruction_set` 属性
 
+可以将 `instruction_set` 属性应用于函数，以启用针对目标体系结构支持的特定指令集的代码生成。
+它使用 [_MetaListPath_] 语法和一个由架构和指令集组成的路径，指定如何为在单个程序中使用多个指令集的体系结构生成代码。
+
+对于 `ARMv4` 和 `ARMv5te` 架构的目标，以下值可用:
+{==+==}
+
+
+{==+==}
 * `arm::a32` - Uses ARM code.
 * `arm::t32` - Uses Thumb code.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 <!-- ignore: arm-only -->
 ```rust,ignore
 #[instruction_set(arm::a32)]
@@ -373,5 +628,13 @@ fn foo_arm_code() {}
 #[instruction_set(arm::t32)]
 fn bar_thumb_code() {}
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_MetaListPath_]: ../attributes.md#meta-item-attribute-syntax
+{==+==}
+
+{==+==}

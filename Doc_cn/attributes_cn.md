@@ -53,8 +53,8 @@ Attributes other than macro attributes also allow the input to be an equals
 sign (`=`) followed by an expression. See the [meta item
 syntax](#meta-item-attribute-syntax) below for more details.
 {==+==}
-属性由一个指向该属性的路径组成，后面是一个可选择的分隔 token 树，其解释由该属性定义。
-除宏属性外，其他属性也允许输入为等号 (`=`) ，后面跟一个表达式。更多细节见下面的 [meta item syntax](#meta-item-attribute-syntax) "元条目语法" 。
+属性由一个路径和一个可选的被定界的令牌树组成，该令牌树的解释由属性定义。
+除宏属性之外的属性还允许输入是一个等号 (`=`) 后跟一个表达式。更多细节请参见下面的 [元条目语法](meta item attribute syntax) 。
 {==+==}
 
 
@@ -81,7 +81,7 @@ Attributes can be classified into the following kinds:
 {==+==}
 Attributes may be applied to many things in the language:
 {==+==}
-属性可以应用于语言中的许多事物:
+属性可以应用于语言中的许多东西:
 {==+==}
 
 
@@ -106,7 +106,7 @@ Attributes may be applied to many things in the language:
   the outer expression of an [expression statement] or the final expression of
   another block expression.
 {==+==}
-* [块表达式][Block expressions] 接受外部和内部属性，但只有当它们是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时才接受。
+* [块表达式][Block expressions] 可以接受外部和内部属性，但是只有当它们是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时才能接受。
 {==+==}
 
 
@@ -134,7 +134,7 @@ Attributes may be applied to many things in the language:
   parameters accept outer attributes. This includes attributes on variadic parameters
   denoted with `...` in function pointers and [external blocks][variadic functions].
 {==+==}
-* [功能][functions] 、 [闭包][closure] 和 [函数指针][function pointer] 参数接受外部属性。这包括在函数指针和 [外部块][variadic functions] 中用 `...` 表示的变量参数的属性。
+* [函数][functions] 、 [闭包][closure] 和 [函数指针][function pointer] 参数接受外部属性。这包括在函数指针和 [外部块][variadic functions] 中用 `...` 表示的变量参数的属性。
 {==+==}
 
 
@@ -219,7 +219,7 @@ fn some_unused_variables() {
 A "meta item" is the syntax used for the _Attr_ rule by most [built-in
 attributes]. It has the following grammar:
 {==+==}
- "元条目" 是大多数 [内置属性][built-in attributes] 对 _Attr_ 规则所使用的语法。它有以下的语法:
+ "元条目" 是大多数 [内置属性][built-in attributes] 中用于 _Attr_ 规则的语法，具体语法如下：
 {==+==}
 
 
@@ -246,8 +246,8 @@ Expressions in meta items must macro-expand to literal expressions, which must n
 include integer or float type suffixes. Expressions which are not literal expressions
 will be syntactically accepted (and can be passed to proc-macros), but will be rejected after parsing.
 {==+==}
-元条目中的表达式必须宏展开为字面值表达式，其中不能包含整数或浮点数类型的后缀。
-在语法上可以接受不是字面值表达式的表达式 (并且可以传递给过程宏)，但是在语法解析后会被拒绝。
+元条目中的表达式必须宏展开为字面表达式，不得包含整数或浮点类型后缀。
+不是字面值表达式的表达式将在语法分析后被拒绝，但可以传递给过程宏 (proc-macros) 。
 {==+==}
 
 
@@ -257,8 +257,8 @@ after that outer macro. For example, the following code will expand the
 `Serialize` proc-macro first, which must preserve the `include_str!` call in
 order for it to be expanded:
 {==+==}
-注意，如果该属性出现在另一个宏中，它将在该外部宏之后被展开。
-例如，下面的代码将首先展开 `Serialize` 过程宏，必须保留 `include_str!` 的调用，才能被展开:
+请注意，如果属性出现在另一个宏中，它将在该外部宏之后扩展。
+例如，以下代码将首先扩展 `Serialize` 过程宏，该宏必须保留 `include_str!` 调用，以便它能够被扩展:
 {==+==}
 
 
@@ -278,7 +278,7 @@ struct Foo {
 {==+==}
 Additionally, macros in attributes will be expanded only after all other attributes applied to the item:
 {==+==}
-此外，属性中的宏将只在应用于条目的所有其他属性之后展开。
+此外，在应用于条目的所有其他属性之后，属性中的宏才会被展开:
 {==+==}
 
 
@@ -306,7 +306,7 @@ Various built-in attributes use different subsets of the meta item syntax to
 specify their inputs. The following grammar rules show some commonly used
 forms:
 {==+==}
-各种内置属性使用元条目语法的不同子集来指定它们的输入。下面的语法规则显示了一些常用的形式:
+各种内置属性使用不同的元条目语法子集来指定其输入。以下语法规则展示了一些常用形式:
 {==+==}
 
 
@@ -363,7 +363,7 @@ An attribute is either active or inert. During attribute processing, *active
 attributes* remove themselves from the thing they are on while *inert attributes*
 stay on.
 {==+==}
-一个属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性* 从它们所在的事物上移走， 而 *惰性属性* 保持不变。
+一个属性可以是活动的 (active) 或惰性的 (inert) 。在属性处理过程中， *活动属性* 会从它们所在的元素中移除，而 *惰性属性* 则会保留。
 {==+==}
 
 
@@ -372,8 +372,7 @@ The [`cfg`] and [`cfg_attr`] attributes are active. The [`test`] attribute is
 inert when compiling for tests and active otherwise. [Attribute macros] are
 active. All other attributes are inert.
 {==+==}
-[`cfg`] 和 [`cfg_attr`] 属性是活动的。当测试编译时 [`test`] 属性是惰性的，否则是活动的。
-[Attribute macros] 是活动的。所有其他属性都是惰性的。
+ [`cfg`] 和 [`cfg_attr`] 属性是活动属性。 [`test`] 属性在测试编译时是惰性的，而在其他情况下是活动的。 [属性宏][Attribute macros] 是活动属性。所有其他属性都是惰性的。
 {==+==}
 
 
@@ -390,8 +389,8 @@ in its own namespace in the [tool prelude]. The first segment of the attribute
 path is the name of the tool, with one or more additional segments whose
 interpretation is up to the tool.
 {==+==}
-编译器可以允许外部工具属性，其中每个工具都驻留在 [工具预导入][tool prelude] 中自己的命名空间。
-属性路径的第一段是工具的名称，还有一个或多个附加段，其解释由工具决定。
+编译器可以允许外部工具的属性，其中每个工具在自己的命名空间中。
+属性路径的第一个部分是工具的名称，后面可能有一个或多个其他部分，其解释取决于工具本身。
 {==+==}
 
 
@@ -400,8 +399,8 @@ When a tool is not in use, the tool's attributes are accepted without a
 warning. When the tool is in use, the tool is responsible for processing and
 interpretation of its attributes.
 {==+==}
-当一个工具不使用时，允许工具属性，没有警告。
-当工具在使用时，工具负责处理和解释其属性。
+当一个工具没有被使用时，该工具的属性会被接受而不会产生警告。
+当该工具正在使用时，该工具需要负责处理和解释其属性。
 {==+==}
 
 
@@ -409,7 +408,7 @@ interpretation of its attributes.
 Tool attributes are not available if the [`no_implicit_prelude`] attribute is
 used.
 {==+==}
-如果使用了 [no_implicit_prelude`] 属性，则工具属性不可用。
+工具属性在使用 [`no_implicit_prelude`] 属性时不可用。
 {==+==}
 
 
@@ -479,7 +478,7 @@ The following is an index of all built-in attributes.
 - 测试
   - [`test`] — 标记为测试函数
   - [`ignore`] — 禁用测试函数
-  - [`should_panic`] — 表示测试应该产生恐慌。
+  - [`should_panic`] — 表示测试应产生恐慌
 {==+==}
 
 
@@ -551,7 +550,7 @@ The following is an index of all built-in attributes.
   - [`link_name`] — 指定 `extern` 块中的函数或静态的符号名称。
   - [`link_ordinal`] — 指定 `extern` 块中的函数或静态符号的顺序。
   - [`no_link`] — 防止链接外部 crate 。
-  - [`repr`] — Controls type layout.
+  - [`repr`] — 控制类型布局方式。
   - [`crate_type`] — 指定 crate 的类型 (库、可执行文件等) 。
   - [`no_main`] — 禁止发送 `main` 符号。
   - [`export_name`] — 指定函数或静态的导出符号名称。
@@ -587,7 +586,7 @@ The following is an index of all built-in attributes.
     information. [Doc comments] are transformed into `doc` attributes.
 {==+==}
 - 文档
-  - `doc` — 指定文档。更多信息见 [The Rustdoc Book] 。 [文档注释][Doc comments] 被转化为 `doc` 属性。
+  - `doc` — 用于指定文档。请参见 [Rustdoc文档][The Rustdoc Book] 获取更多信息。 [文档注释][Doc comments] 会被转换为 `doc` 属性。
 {==+==}
 
 
@@ -642,7 +641,7 @@ The following is an index of all built-in attributes.
     [The Unstable Book] for features implemented in `rustc`.
 {==+==}
 - 特性
-  - `feature` — 用于启用不稳定或实验性的编译器特性。参见 [The Unstable Book] 关于在 `rustc` 中实现的特性。
+  - `feature` — 用于启用不稳定或实验性的编译器特性。有关 `rustc` 实现的特性，请参见 [The Unstable Book] 。
 {==+==}
 
 
@@ -652,7 +651,7 @@ The following is an index of all built-in attributes.
     added in future.
 {==+==}
 - 类型系统
-  - [`non_exhaustive`] — 表示类型在将来会有更多的字段/变体加入。
+  - [`non_exhaustive`] — 表示该类型在未来可能会添加更多的字段/变体。
 {==+==}
 
 
