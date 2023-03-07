@@ -1,3 +1,4 @@
+{==+==}
 # Statements
 
 > **<sup>Syntax</sup>**\
@@ -7,19 +8,40 @@
 > &nbsp;&nbsp; | [_LetStatement_]\
 > &nbsp;&nbsp; | [_ExpressionStatement_]\
 > &nbsp;&nbsp; | [_MacroInvocationSemi_]
+{==+==}
+
+{==+==}
 
 
+{==+==}
 A *statement* is a component of a [block], which is in turn a component of an outer [expression] or [function].
 
 Rust has two kinds of statement: [declaration statements](#declaration-statements) and [expression statements](#expression-statements).
+{==+==}
+ *语句(statement)* 是 [块][block] 的组成部分，而块又是之外 [表达式][expression] 或 [函数][function] 的组成部分。
 
+Rust 有两种语句：[声明语句](#declaration-statements) 和 [表达式语句](expression statements) 。
+{==+==}
+
+
+{==+==}
 ## Declaration statements
 
 A *declaration statement* is one that introduces one or more *names* into the enclosing statement block.
 The declared names may denote new variables or new [items][item].
 
 The two kinds of declaration statements are item declarations and `let` statements.
+{==+==}
+## 声明语句
 
+*声明语句* 引入一个或多个 *名称* 到闭合语句块中。
+声明的名称可能表示新变量或新 [条目][item] 。
+
+声明语句有两种类型: `let` 语句和条目声明。
+{==+==}
+
+
+{==+==}
 ### Item declarations
 
 An *item declaration statement* has a syntactic form identical to an [item declaration][item] within a [module].
@@ -30,7 +52,21 @@ It is otherwise identical in meaning to declaring the item inside a module.
 
 There is no implicit capture of the containing function's generic parameters, parameters, and local variables.
 For example, `inner` may not access `outer_var`.
+{==+==}
+### 条目声明
 
+*条目声明语句* 的语法形式与 [模块][module] 中的 [条目声明][item] 相同。
+在语句块中声明一个条目，将其作用域限制为包含该语句的块。
+该条目不会被赋予 [规范路径][canonical path] ，也不会声明任何子条目。
+唯一的例外是通过 [实现][implementations] 定义的关联条目，只要该条目和 (如果适用) trait 可访问，它们仍然可以在外部作用域中访问。
+否则，它与在模块中声明该条目的含义相同。
+
+不会隐式捕获包含函数的泛型参数、参数和局部变量。
+例如， `inner` 无法访问 `outer_var` 。
+{==+==}
+
+
+{==+==}
 ```rust
 fn outer() {
   let outer_var = true;
@@ -40,9 +76,27 @@ fn outer() {
   inner();
 }
 ```
+{==+==}
+```rust
+fn outer() {
+  let outer_var = true;
 
+  fn inner() { /* outer_var 在这里不在作用域内。 */ }
+
+  inner();
+}
+```
+{==+==}
+
+
+{==+==}
 ### `let` statements
+{==+==}
+### `let` 语句
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _LetStatement_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_PatternNoTopAlt_]
@@ -51,7 +105,18 @@ fn outer() {
 >
 > <span id="let-else-restriction">† When an `else` block is specified, the
 > _Expression_ must not be a [_LazyBooleanExpression_], or end with a `}`.</span>
+{==+==}
+> **<sup>Syntax</sup>**\
+> _LetStatement_ :\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_PatternNoTopAlt_]
+>     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] [†](#let-else-restriction)
+>     ( `else` [_BlockExpression_]) <sup>?</sup> ) <sup>?</sup> `;`
+>
+> <span id="let-else-restriction">† 当指定了 `else` 块时，表达式不能是 [_LazyBooleanExpression_] ，也不能以 `}` 结尾。</span>
+{==+==}
 
+
+{==+==}
 A *`let` statement* introduces a new set of [variables], given by a [pattern].
 The pattern is followed optionally by a type annotation and then either ends, or is followed by an initializer expression plus an optional `else` block.
 When no type annotation is given, the compiler will infer the type, or signal an error if insufficient type information is available for definite inference.
@@ -61,7 +126,22 @@ If an `else` block is not present, the pattern must be irrefutable.
 If an `else` block is present, the pattern may be refutable.
 If the pattern does not match (this requires it to be refutable), the `else` block is executed.
 The `else` block must always diverge (evaluate to the [never type]).
+{==+==}
+`let` 语句引入了一组由 [模式][pattern] 给定的新 [变量][variables] 。模式可选地后跟一个类型注释，然后以初始化表达式结束，或者跟随可选的 `else` 块。
+当没有给出类型注释时，编译器将推断类型，如果没有足够的类型信息进行明确推断，则会发出错误信号。
+任何由变量声明引入的变量在声明点到包含块范围的结尾之间都可见，除非它们被另一个变量声明隐藏。
 
+如果不存在 `else` 块，则模式必须是不可反驳的。
+如果存在 `else` 块，则模式可以是可反驳的。
+如果模式不匹配 (这需要它是可反驳的) ，则执行 `else` 块。
+`else` 块必须始终发散 (求值为 [never 类型][never type] )。
+
+译注："反驳"（refutable）和 "不可反驳"（irrefutable）表示模式是否能够在任何情况下都成功匹配。
+"发散"（diverge）指的是一个表达式无法正常终止并返回值的情况。
+{==+==}
+
+
+{==+==}
 ```rust
 let (mut v, w) = (vec![1, 2, 3], 42); // The bindings may be mut or const
 let Some(t) = v.pop() else { // Refutable patterns require an else block
@@ -72,7 +152,20 @@ let [u, v] = [v[0], v[1]] else { // This pattern is irrefutable, so the compiler
     panic!();
 };
 ```
+{==+==}
+```rust
+let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是可变或常量
+let Some(t) = v.pop() else { // 可反驳的模式需要一个 else 块
+    panic!(); // else 块必须发散
+};
+let [u, v] = [v[0], v[1]] else { // 这个模式是不可反驳的，所以编译器会作为 else 块是冗余的进行 Lint 检查
+    panic!();
+};
+```
+{==+==}
 
+
+{==+==}
 ## Expression statements
 
 > **<sup>Syntax</sup>**\
@@ -87,7 +180,25 @@ An expression that consists of only a [block expression][block] or control flow 
 This can cause an ambiguity between it being parsed as a standalone statement and as a part of another expression;
 in this case, it is parsed as a statement.
 The type of [_ExpressionWithBlock_][expression] expressions when used as statements must be the unit type.
+{==+==}
+## 表达式语句
 
+> **<sup>Syntax</sup>**\
+> _ExpressionStatement_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_ExpressionWithoutBlock_][expression] `;`\
+> &nbsp;&nbsp; | [_ExpressionWithBlock_][expression] `;`<sup>?</sup>
+
+An *expression statement* is one that evaluates an [expression] and ignores its result.
+As a rule, an expression statement's purpose is to trigger the effects of evaluating its expression.
+
+An expression that consists of only a [block expression][block] or control flow expression, if used in a context where a statement is permitted, can omit the trailing semicolon.
+This can cause an ambiguity between it being parsed as a standalone statement and as a part of another expression;
+in this case, it is parsed as a statement.
+The type of [_ExpressionWithBlock_][expression] expressions when used as statements must be the unit type.
+{==+==}
+
+
+{==+==}
 ```rust
 # let mut v = vec![1, 2, 3];
 v.pop();          // Ignore the element returned from pop
@@ -98,9 +209,19 @@ if v.is_empty() {
 }                 // Semicolon can be omitted.
 [1];              // Separate expression statement, not an indexing expression.
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 When the trailing semicolon is omitted, the result must be type `()`.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 // bad: the block's type is i32, not ()
 // Error: expected `()` because of default return type
@@ -115,12 +236,22 @@ if true {
   2
 };
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Attributes on Statements
 
 Statements accept [outer attributes].
 The attributes that have meaning on a statement are [`cfg`], and [the lint check attributes].
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [block]: expressions/block-expr.md
 [expression]: expressions.md
 [function]: items/functions.md
@@ -144,3 +275,6 @@ The attributes that have meaning on a statement are [`cfg`], and [the lint check
 [_OuterAttribute_]: attributes.md
 [_PatternNoTopAlt_]: patterns.md
 [_Type_]: types.md
+{==+==}
+
+{==+==}
