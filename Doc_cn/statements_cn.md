@@ -188,13 +188,11 @@ The type of [_ExpressionWithBlock_][expression] expressions when used as stateme
 > &nbsp;&nbsp; &nbsp;&nbsp; [_ExpressionWithoutBlock_][expression] `;`\
 > &nbsp;&nbsp; | [_ExpressionWithBlock_][expression] `;`<sup>?</sup>
 
-An *expression statement* is one that evaluates an [expression] and ignores its result.
-As a rule, an expression statement's purpose is to trigger the effects of evaluating its expression.
+一个表达式语句是指执行一个表达式并忽略其结果的语句。通常，表达式语句的目的是触发其表达式的副作用。
 
-An expression that consists of only a [block expression][block] or control flow expression, if used in a context where a statement is permitted, can omit the trailing semicolon.
-This can cause an ambiguity between it being parsed as a standalone statement and as a part of another expression;
-in this case, it is parsed as a statement.
-The type of [_ExpressionWithBlock_][expression] expressions when used as statements must be the unit type.
+如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中使用，它可以省略尾随的分号。
+这会导致在将其解析为独立语句和作为另一个表达式的一部分之间产生歧义。在这种情况下，它会被解析为语句。
+当作为语句使用时，[_ExpressionWithBlock_][expression] 表达式的类型必须是 unit 类型。
 {==+==}
 
 
@@ -210,14 +208,23 @@ if v.is_empty() {
 [1];              // Separate expression statement, not an indexing expression.
 ```
 {==+==}
-
+```rust
+let mut v = vec![1, 2, 3];
+v.pop();          // 忽略 pop 返回的元素
+if v.is_empty() {
+    v.push(5);
+} else {
+    v.remove(0);
+}                 // 分号可以省略。
+[1];              // 独立的表达式语句，不是索引表达式。
+```
 {==+==}
 
 
 {==+==}
 When the trailing semicolon is omitted, the result must be type `()`.
 {==+==}
-
+当省略了语句结尾的分号时，其结果必须是类型为 `()`。
 {==+==}
 
 
@@ -237,7 +244,20 @@ if true {
 };
 ```
 {==+==}
+```rust
+// 错误: 块表达式类型是 i32, 不是 ()
+// Error: expected `()` because of default return type
+// if true {
+//   1
+// }
 
+// 成功: 块表达式类型是 i32
+if true {
+  1
+} else {
+  2
+};
+```
 {==+==}
 
 
@@ -247,7 +267,10 @@ if true {
 Statements accept [outer attributes].
 The attributes that have meaning on a statement are [`cfg`], and [the lint check attributes].
 {==+==}
+## 语句上的属性
 
+语句可以接受 [外部属性][outer attributes] 。
+在语句上具有意义的属性包括 [`cfg`] 和 [lint检查属性][the lint check attributes] 。
 {==+==}
 
 
