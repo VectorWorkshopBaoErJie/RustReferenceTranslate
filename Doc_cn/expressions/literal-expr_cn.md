@@ -1,5 +1,11 @@
+{==+==}
 # Literal expressions
+{==+==}
+# 字面值表达式
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _LiteralExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [CHAR_LITERAL]\
@@ -11,19 +17,40 @@
 > &nbsp;&nbsp; | [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | `true` | `false`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A _literal expression_ is an expression consisting of a single token, rather than a sequence of tokens, that immediately and directly denotes the value it evaluates to, rather than referring to it by name or some other evaluation rule.
 
 A literal is a form of [constant expression], so is evaluated (primarily) at compile time.
 
 Each of the lexical [literal][literal tokens] forms described earlier can make up a literal expression, as can the keywords `true` and `false`.
+{==+==}
+字面值表达式，由一个单独的标记组成，而不是一系列标记，它直接指示其计算结果的值，而不是通过名称或其他计算规则引用它。
+字面值是 [常量表达式] 的一种形式，因此主要在编译时计算。
+每个先前描述的词法 [字面值][literal tokens] 形式都可以组成一个字面表达式，关键字 `true` 和 `false` 也可以。
+{==+==}
 
+
+{==+==}
 ```rust
 "hello";   // string type
 '5';       // character type
 5;         // integer type
 ```
+{==+==}
+```rust
+"hello";   // 字符串类型
+'5';       // 字符类型
+5;         // 整数类型
+```
+{==+==}
 
+
+{==+==}
 ## Character literal expressions
 
 A character literal expression consists of a single [CHAR_LITERAL] token.
@@ -47,7 +74,34 @@ A byte literal expression consists of a single [BYTE_LITERAL] token.
 A string literal expression consists of a single [BYTE_STRING_LITERAL] or [RAW_BYTE_STRING_LITERAL] token.
 
 > **Note**: This section is incomplete.
+{==+==}
+## 字符字面量表达式
 
+字符字面量表达式由一个 [CHAR_LITERAL] 令牌构成。
+
+> **注意**: 此部分内容不完整。
+
+## 字符串字面量表达式
+
+字符串字面量表达式由一个 [STRING_LITERAL] 或 [RAW_STRING_LITERAL] 令牌构成。
+
+> **注意**: 此部分内容不完整。
+
+## 字节字面量表达式
+
+字节字面量表达式由一个 [BYTE_LITERAL] 令牌构成。
+
+> **注意**: 此部分内容不完整。
+
+## 字节字符串字面量表达式
+
+字节字符串字面量表达式由一个 [BYTE_STRING_LITERAL] 或 [RAW_BYTE_STRING_LITERAL] 令牌构成。
+
+> **注意**: 此部分内容不完整。
+{==+==}
+
+
+{==+==}
 ## Integer literal expressions
 
 An integer literal expression consists of a single [INTEGER_LITERAL] token.
@@ -63,7 +117,26 @@ If the token has no suffix, the expression's type is determined by type inferenc
 * If the program context over-constrains the type, it is considered a static type error.
 
 Examples of integer literal expressions:
+{==+==}
+## 整型字面值表达式
 
+整型字面值表达式由一个 [INTEGER_LITERAL] 令牌组成。
+
+如果令牌有 [后缀][suffix] ，则后缀必须是 [基本整数类型][numeric types] 中的一个名称： `u8` 、 `i8` 、 `u16` 、 `i16` 、 `u32` 、 `i32` 、 `u64` 、 `i64` 、 `u128` 、 `i128` 、 `usize` 或 `isize` ，并且表达式具有该类型。
+
+如果令牌没有后缀，则该表达式的类型由类型推断确定：
+
+* 如果整型类型可以从周围的程序上下文中确定，则表达式具有该类型。
+
+* 如果程序上下文中的整型类型不足以确定类型，则默认为有符号的 32 位整型 `i32`。
+
+* 如果程序上下文中的整型类型过多，则被视为静态类型错误。
+
+整型字面量表达式的例子：
+{==+==}
+
+
+{==+==}
 ```rust
 123;                               // type i32
 123i32;                            // type i32
@@ -82,7 +155,12 @@ let a: u64 = 123;                  // type u64
 
 0usize;                            // type usize
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The value of the expression is determined from the string representation of the token as follows:
 
 * An integer radix is chosen by inspecting the first two characters of the string, as follows:
@@ -108,7 +186,33 @@ If the value does not fit in `u128`, it is a compiler error.
 
 > **Note**: `-1i8`, for example, is an application of the [negation operator] to the literal expression `1i8`, not a single integer literal expression.
 > See [Overflow] for notes on representing the most negative value for a signed type.
+{==+==}
+该表达式的值根据令牌的字符串表示如下确定：
 
+* 通过检查字符串的前两个字符，选择整数基数，如下：
+
+    * `0b` 表示基数为 2。
+    * `0o` 表示基数为 8。
+    * `0x` 表示基数为 16。
+    * 否则，基数为 10。
+
+* 如果基数不是 10，则从字符串中删除前两个字符。
+
+* 从字符串中删除任何后缀。
+
+* 从字符串中删除任何下划线。
+
+* 将字符串转换为 `u128` 值，就像通过 [`u128::from_str_radix`] 选择的基数一样。如果值不适合 `u128`，则会出现编译器错误。
+
+* 通过 [数字类型转换][numeric cast] 将 `u128` 值转换为表达式的类型。
+
+> **注意**: 如果该字面值的值超出了该类型的表示范围，最终转换将截断该字面值。 `rustc` 包括一个名为 `overflowing_literals` 的 [lint check] ，默认为 `deny`，拒绝其中出现的表达式。
+
+> **注意**: 例如， `-1i8` 是对字面值表达式 `1i8` 应用了 [取反运算符][negation operator] ，而不是一个整数字面值表达式。有关表示有符号类型的最负值的注释，请参见 [Overflow] 。
+{==+==}
+
+
+{==+==}
 ## Floating-point literal expressions
 
 A floating-point literal expression has one of two forms:
@@ -126,7 +230,29 @@ If the token has no suffix, the expression's type is determined by type inferenc
 * If the program context over-constrains the type, it is considered a static type error.
 
 Examples of floating-point literal expressions:
+{==+==}
+## 浮点数字面值表达式
 
+浮点数字面值表达式具有以下两种形式:
+
+ * 单个 [FLOAT_LITERAL] 标记
+ * 单个 [INTEGER_LITERAL] 标记，该标记具有后缀但没有基数指示符
+
+如果标记具有 [后缀] ，则后缀必须是 [原始浮点类型][floating-point types] 之一的名称： `f32` 或 `f64` ，并且表达式具有该类型。
+
+如果标记没有后缀，则表达式的类型由类型推断确定：
+
+* 如果可以从周围的程序上下文中 _唯一_ 确定浮点类型，则表达式具有该类型。
+
+* 如果程序上下文不够确定类型，则默认为 `f64` 。
+
+* 如果程序上下文过度约束类型，则被视为静态类型错误。
+
+浮点数字面值表达式的示例:
+{==+==}
+
+
+{==+==}
 ```rust
 123.0f64;        // type f64
 0.1f64;          // type f64
@@ -135,7 +261,12 @@ Examples of floating-point literal expressions:
 5f32;            // type f32
 let x: f64 = 2.; // type f64
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The value of the expression is determined from the string representation of the token as follows:
 
 * Any suffix is removed from the string.
@@ -149,7 +280,22 @@ The value of the expression is determined from the string representation of the 
 > **Note**: `inf` and `NaN` are not literal tokens.
 > The [`f32::INFINITY`], [`f64::INFINITY`], [`f32::NAN`], and [`f64::NAN`] constants can be used instead of literal expressions.
 > In `rustc`, a literal large enough to be evaluated as infinite will trigger the `overflowing_literals` lint check.
+{==+==}
+表达式的值根据令牌的字符串表示形式确定，具体如下:
 
+* 从字符串中删除任何后缀。
+* 从字符串中删除任何下划线。
+* 将字符串转换为表达式的类型，如同通过 [`f32::from_str`] 或 [`f64::from_str`] 。
+
+> **注意**: 例如， `-1.0` 是对字面表达式 `1.0` 应用 [取反运算符][negation operator] ，而不是单个浮点字面值表达式。
+
+> **注意**: `inf` 和 `NaN` 不是字面值令牌。
+> 可以使用 [`f32::INFINITY`] 、 [`f64::INFINITY`] 、 [`f32::NAN`] 和 [`f64::NAN`] 常量来代替字面值表达式。
+> 在 `rustc` 中，被评估为无限大的字面值将触发 `overflowing_literals` lint 检查。
+{==+==}
+
+
+{==+==}
 ## Boolean literal expressions
 
 A boolean literal expression consists of one of the keywords `true` or `false`.
@@ -157,8 +303,18 @@ A boolean literal expression consists of one of the keywords `true` or `false`.
 The expression's type is the primitive [boolean type], and its value is:
  * true if the keyword is `true`
  * false if the keyword is `false`
+{==+==}
+## 布尔字面值表达式
+
+一个布尔字面值表达式由 `true` 或 `false` 中的一个关键字组成。
+
+该表达式的类型为原始的[布尔类型]，其值是:
+ * 如果关键字是 `true`，则为真
+ * 如果关键字是 `false`，则为假
+{==+==}
 
 
+{==+==}
 [boolean type]: ../types/boolean.md
 [constant expression]: ../const_eval.md#constant-expressions
 [floating-point types]: ../types/numeric.md#floating-point-types
@@ -184,3 +340,6 @@ The expression's type is the primitive [boolean type], and its value is:
 [RAW_BYTE_STRING_LITERAL]: ../tokens.md#raw-byte-string-literals
 [INTEGER_LITERAL]: ../tokens.md#integer-literals
 [FLOAT_LITERAL]: ../tokens.md#floating-point-literals
+{==+==}
+
+{==+==}

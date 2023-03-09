@@ -361,9 +361,9 @@ The following expressions can be mutable place expression contexts:
 ### Mutability
 
 要将一个占位表达式赋值、进行可变借用、进行隐式可变借用或绑定到包含 `ref mut` 的模式中，它必须是可变的。
-我们称这些为可变位置表达式。相反，其他位置表达式被称为不可变位置表达式。
+我们称这些为可变占位表达式。相反，其他占位表达式被称为不可变占位表达式。
 
-下面的表达式可以是可变位置表达式上下文：
+下面的表达式可以是可变占位表达式上下文：
 {==+==}
 
 
@@ -380,7 +380,14 @@ The following expressions can be mutable place expression contexts:
 * [Array indexing] of a type that implements `IndexMut`:
   this then evaluates the value being indexed, but not the index, in mutable place expression context.
 {==+==}
-
+* 当前没有被借用的可变 [变量][variables] 。
+* [可变 `static` 条目][Mutable `static` items] 。
+* [临时值][Temporary values] 。
+* [字段][field]: 这将在可变占位表达式上下文中求出子表达式。
+* `*mut T` 指针的解引用 [dereference][deref] 。
+* 类型为 `&mut T `的变量或变量字段的解引用。注意：这是对下一条规则的例外情况。
+* 实现 `DerefMut` 的类型的解引用: 这要求被解引用的值在可变占位表达式上下文中求值。
+* 实现 `IndexMut` 的类型的 [数组索引][Array indexing]: 这将在可变占位表达式上下文中求出被索引的值，但不包括索引。
 {==+==}
 
 
@@ -391,7 +398,11 @@ When using a value expression in most place expression contexts, a temporary unn
 The expression evaluates to that location instead, except if [promoted] to a `static`.
 The [drop scope] of the temporary is usually the end of the enclosing statement.
 {==+==}
+### 临时值
 
+在大多数占位表达式上下文中使用值表达式时，会创建一个临时的无名内存位置，并将其初始化为该值。
+表达式评估为该位置，除非它被 [提升][promoted] 为 `static` 静态的。
+临时值的 [丢弃作用域][drop scope] 通常是封闭语句的末尾。
 {==+==}
 
 
@@ -401,7 +412,10 @@ The [drop scope] of the temporary is usually the end of the enclosing statement.
 Certain expressions will treat an expression as a place expression by implicitly borrowing it.
 For example, it is possible to compare two unsized [slices][slice] for equality directly, because the `==` operator implicitly borrows its operands:
 {==+==}
+### 隐式借用
 
+某些表达式将会通过隐式借用将一个表达式视为一个占位表达式。
+例如，可以直接比较两个非固定大小的 [slices][slice] 是否相等，因为 `==` 运算符会隐式地借用它的操作数:
 {==+==}
 
 
@@ -419,7 +433,18 @@ let b: &[i32];
 ::std::cmp::PartialEq::eq(&*a, &*b);
 ```
 {==+==}
-
+```rust
+# let c = [1, 2, 3];
+# let d = vec![1, 2, 3];
+let a: &[i32];
+let b: &[i32];
+# a = &c;
+# b = &d;
+// ...
+*a == *b;
+// 等价形式:
+::std::cmp::PartialEq::eq(&*a, &*b);
+```
 {==+==}
 
 
@@ -434,7 +459,15 @@ Implicit borrows may be taken in the following expressions:
 * Operands of [comparison].
 * Left operands of the [compound assignment].
 {==+==}
+隐式借用可以出现在以下表达式中:
 
+* [方法调用][method-call] 表达式中的左操作数。
+* [字段][field] 表达式中的左操作数。
+* [函数调用][call expressions] 表达式中的左操作数。
+* [数组索引][array indexing] 表达式中的左操作数。
+* [解引用操作符][deref] (`*`)的操作数。
+* [比较][comparison] 的操作数。
+* [复合赋值][compound assignment] 的左操作数。
 {==+==}
 
 
@@ -445,6 +478,9 @@ Many of the following operators and expressions can also be overloaded for other
 These traits also exist in `core::ops` and `core::cmp` with the same names.
 {==+==}
 
+## trait 重载
+
+许多以下的运算符和表达式可以使用 `std::ops` 或 `std::cmp` 中的 trait 重载为其他类型所用。这些 trait 在 `core::ops` 和 `core::cmp` 中也有相同的名称。
 {==+==}
 
 
@@ -461,9 +497,19 @@ These traits also exist in `core::ops` and `core::cmp` with the same names.
 They are never allowed before:
 * [Range][_RangeExpression_] expressions.
 * Binary operator expressions ([_ArithmeticOrLogicalExpression_], [_ComparisonExpression_], [_LazyBooleanExpression_], [_TypeCastExpression_], [_AssignmentExpression_], [_CompoundAssignmentExpression_]).
-
 {==+==}
+## 表达式属性
 
+在表达式前面的 [外部属性][OuterAttribute] 只允许在以下几种情况下使用：
+
+* 用作 [语句][statement] 的表达式之前。
+* [数组表达式][array expressions]，[元组表达式][tuple expressions]，[调用表达式][call expressions]和元组风格的 [结构体][struct] 表达式的元素。
+* [块表达式][block expressions] 的尾部表达式。
+<!-- Keep list in sync with block-expr.md -->
+
+它们不允许在以下情况下使用:
+* [范围][Range] 表达式。
+* 二元运算符表达式 ([算术或逻辑表达式][_ArithmeticOrLogicalExpression_]，[比较表达式][_ComparisonExpression_]，[懒惰布尔表达式][_LazyBooleanExpression_]，[类型转换表达式][_TypeCastExpression_]，[赋值表达式][_AssignmentExpression_]，[复合赋值表达式][CompoundAssignmentExpression]) 。
 {==+==}
 
 
@@ -492,7 +538,12 @@ They are never allowed before:
 
 [destructors]:          destructors.md
 [drop scope]:           destructors.md#drop-scopes
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [`Box<T>`]:             ../std/boxed/struct.Box.html
 [`Copy`]:               special-types-and-traits.md#copy
 [`Drop`]:               special-types-and-traits.md#drop
@@ -509,7 +560,12 @@ They are never allowed before:
 [static variables]:     items/static-items.md
 [Temporary values]:     #temporaries
 [Variables]:            variables.md
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_ArithmeticOrLogicalExpression_]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [_ArrayExpression_]:              expressions/array-expr.md
 [_AsyncBlockExpression_]:         expressions/block-expr.md#async-blocks
