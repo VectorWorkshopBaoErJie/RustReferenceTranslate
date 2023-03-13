@@ -1,5 +1,11 @@
+{==+==}
 # Range expressions
+{==+==}
+# 范围表达式
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _RangeExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _RangeExpr_\
@@ -26,9 +32,19 @@
 >
 > _RangeToInclusiveExpr_ :\
 > &nbsp;&nbsp; `..=` [_Expression_]
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The `..` and `..=` operators will construct an object of one of the `std::ops::Range` (or `core::ops::Range`) variants, according to the following table:
+{==+==}
+`..` 和 `..=` 运算符会根据下面的表格构造出一个 `std::ops::Range` (或 `core::ops::Range` ) 的变体:
+{==+==}
 
+
+{==+==}
 | Production             | Syntax        | Type                         | Range                 |
 |------------------------|---------------|------------------------------|-----------------------|
 | _RangeExpr_            | start`..`end  | [std::ops::Range]            | start &le; x &lt; end |
@@ -37,7 +53,12 @@ The `..` and `..=` operators will construct an object of one of the `std::ops::R
 | _RangeFullExpr_        | `..`          | [std::ops::RangeFull]        |            -          |
 | _RangeInclusiveExpr_   | start`..=`end | [std::ops::RangeInclusive]   | start &le; x &le; end |
 | _RangeToInclusiveExpr_ | `..=`end      | [std::ops::RangeToInclusive] |            x &le; end |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Examples:
 
 ```rust
@@ -48,24 +69,58 @@ Examples:
 5..=6;  // std::ops::RangeInclusive
 ..=7;   // std::ops::RangeToInclusive
 ```
+{==+==}
+示例:
 
+```rust
+1..2;   // std::ops::Range
+3..;    // std::ops::RangeFrom
+..4;    // std::ops::RangeTo
+..;     // std::ops::RangeFull
+5..=6;  // std::ops::RangeInclusive
+..=7;   // std::ops::RangeToInclusive
+```
+{==+==}
+
+
+{==+==}
 The following expressions are equivalent.
+{==+==}
+以下表达式是等价的。
+{==+==}
 
+
+{==+==}
 ```rust
 let x = std::ops::Range {start: 0, end: 10};
 let y = 0..10;
 
 assert_eq!(x, y);
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Ranges can be used in `for` loops:
+{==+==}
+Ranges可以在 `for` 循环中使用:
+{==+==}
 
+
+{==+==}
 ```rust
 for i in 1..11 {
     println!("{}", i);
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_Expression_]: ../expressions.md
 
 [std::ops::Range]: https://doc.rust-lang.org/std/ops/struct.Range.html
@@ -74,3 +129,6 @@ for i in 1..11 {
 [std::ops::RangeFull]: https://doc.rust-lang.org/std/ops/struct.RangeFull.html
 [std::ops::RangeInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeInclusive.html
 [std::ops::RangeToInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html
+{==+==}
+
+{==+==}

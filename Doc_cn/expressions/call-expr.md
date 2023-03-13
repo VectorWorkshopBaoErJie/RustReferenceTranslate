@@ -1,12 +1,23 @@
+{==+==}
 # Call expressions
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _CallExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `(` _CallParams_<sup>?</sup> `)`
 >
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A *call expression* calls a function.
 The syntax of a call expression is an expression, called the *function operand*, followed by a parenthesized comma-separated list of expression, called the *argument operands*.
 If the function eventually returns, then the expression completes.
@@ -15,13 +26,23 @@ An automatic borrow will be taken if needed.
 The function operand will also be [automatically dereferenced] as required.
 
 Some examples of call expressions:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 # fn add(x: i32, y: i32) -> i32 { 0 }
 let three: i32 = add(1i32, 2i32);
 let name: &'static str = (|| "Rust")();
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Disambiguating Function Calls
 
 All function calls are sugar for a more explicit [fully-qualified syntax].
@@ -41,7 +62,12 @@ These situations may include:
 To resolve the ambiguity, the programmer may refer to their desired method or function using more specific paths, types, or traits.
 
 For example,
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 trait Pretty {
     fn print(&self);
@@ -82,7 +108,12 @@ fn main() {
     <Bar as Pretty>::print(&b);
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Refer to [RFC 132] for further details and motivations.
 
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
@@ -95,3 +126,6 @@ Refer to [RFC 132] for further details and motivations.
 [automatically dereferenced]: field-expr.md#automatic-dereferencing
 [fully-qualified syntax]: ../paths.md#qualified-paths
 [non-function types]: ../types/function-item.md
+{==+==}
+
+{==+==}
