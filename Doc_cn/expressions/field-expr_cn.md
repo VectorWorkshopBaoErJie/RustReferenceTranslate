@@ -88,7 +88,10 @@ foo().x;
 If the type of the container operand implements [`Deref`] or [`DerefMut`][`Deref`] depending on whether the operand is [mutable], it is *automatically dereferenced* as many times as necessary to make the field access possible.
 This process is also called *autoderef* for short.
 {==+==}
+## 自动解引用
 
+如果容器操作数的类型实现了 [`Deref`] 或 [`DerefMut`][`Deref`] (取决于操作数是否 [可变][mutable] )，
+则会进行 *自动解引用* ，直到使字段访问成为可能为止。
 {==+==}
 
 
@@ -99,7 +102,11 @@ The fields of a struct or a reference to a struct are treated as separate entiti
 If the struct does not implement [`Drop`] and is stored in a local variable, this also applies to moving out of each of its fields.
 This also does not apply if automatic dereferencing is done though user-defined types other than [`Box`].
 {==+==}
+## 借用
 
+在借用过程中，结构体的字段或结构体的引用被视为独立的实体。
+如果结构体没有实现 [`Drop`] 并且存储在局部变量中，则移动其每个字段时也适用于此规则。
+但如果除了 [`Box`] 之外的用户定义类型进行自动解引用，则不适用此规则。
 {==+==}
 
 
@@ -118,7 +125,19 @@ let c: &String = &x.f2;         // Can borrow again
 let d: String = x.f3;           // Move out of x.f3
 ```
 {==+==}
-
+```rust
+struct A { f1: String, f2: String, f3: String }
+let mut x: A;
+# x = A {
+#     f1: "f1".to_string(),
+#     f2: "f2".to_string(),
+#     f3: "f3".to_string()
+# };
+let a: &mut String = &mut x.f1; // 可变地借用 x.f1
+let b: &String = &x.f2;         // 不可变地借用 x.f2
+let c: &String = &x.f2;         // 可以再次借用
+let d: String = x.f3;           // 从 x.f3 中移动值
+```
 {==+==}
 
 

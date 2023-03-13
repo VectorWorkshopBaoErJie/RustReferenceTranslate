@@ -279,7 +279,7 @@ The following contexts are *place expression* contexts:
 * 数组索引表达式的索引操作数。
 * 任何 [隐式借用][implicit borrow] 的操作数。
 * [let 语句][let statement] 的初始化器。
-* [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配者][scrutinee] 。
+* [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配][scrutinee] 。
 * [结构体函数式更新][functional update]表达式的基础。
 
 > 注意: 从历史上看，占位表达式称为左值，值表达式称为右值。

@@ -1,5 +1,11 @@
+{==+==}
 # `match` expressions
+{==+==}
+# `match` 表达式
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _MatchExpression_ :\
 > &nbsp;&nbsp; `match` _Scrutinee_ `{`\
@@ -22,22 +28,48 @@
 >
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A *`match` expression* branches on a pattern.
 The exact form of matching that occurs depends on the [pattern].
 A `match` expression has a *[scrutinee] expression*, which is the value to compare to the patterns.
 The scrutinee expression and the patterns must have the same type.
+{==+==}
+一个 *`match` 表达式* 会根据一个模式进行分支。匹配所发生的确切形式取决于 [模式][pattern] 。
+一个 `match` 表达式有一个 *[被匹配][scrutinee] 表达式*，它是要与模式进行比较的值。被匹配表达式和模式必须具有相同的类型。
+{==+==}
 
+
+{==+==}
 A `match` behaves differently depending on whether or not the scrutinee expression is a [place expression or value expression][place expression].
 If the scrutinee expression is a [value expression], it is first evaluated into a temporary location, and the resulting value is sequentially compared to the patterns in the arms until a match is found.
 The first arm with a matching pattern is chosen as the branch target of the `match`, any variables bound by the pattern are assigned to local variables in the arm's block, and control enters the block.
+{==+==}
+`match` 的行为取决于被匹配表达式是一个 [占位表达式还是值表达式][place expression]。
+如果被匹配表达式是一个 [值表达式]，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
+第一个具有匹配模式的分支被选择作为 `match` 的分支目标，任何由模式绑定的变量都分配到分支的块中的本地变量中，并且控制进入块中。
+{==+==}
 
+
+{==+==}
 When the scrutinee expression is a [place expression], the match does not allocate a temporary location;
 however, a by-value binding may copy or move from the memory location.
 When possible, it is preferable to match on place expressions, as the lifetime of these matches inherits the lifetime of the place expression rather than being restricted to the inside of the match.
 
 An example of a `match` expression:
+{==+==}
+当被匹配表达式是一个 [占位表达式] 时，`match` 不会分配临时位置；但是，按值绑定可能会从内存位置复制或移动。
+如果可能的话，最好匹配占位表达式，因为这些匹配的生命周期继承了占位表达式的生命周期，而不是被限制在 `match` 内部。
 
+下面是一个 `match` 表达式的示例：
+{==+==}
+
+
+{==+==}
 ```rust
 let x = 1;
 
@@ -50,13 +82,25 @@ match x {
     _ => println!("something else"),
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Variables bound within the pattern are scoped to the match guard and the arm's expression.
 The [binding mode] (move, copy, or reference) depends on the pattern.
 
 Multiple match patterns may be joined with the `|` operator.
 Each pattern will be tested in left-to-right sequence until a successful match is found.
+{==+==}
+在模式中绑定的变量的作用域限定在 `match` 守卫及分支表达式中。[绑定模式][binding mode] (移动、复制或引用) 取决于模式。
 
+多个匹配模式可以用 `|` 运算符连接起来。每个模式将按照从左到右的顺序进行测试，直到找到成功匹配的模式为止。
+{==+==}
+
+
+{==+==}
 ```rust
 let x = 9;
 let message = match x {
@@ -75,13 +119,42 @@ match S(1, 2) {
     _ => panic!(),
 }
 ```
+{==+==}
+```rust
+let x = 9;
+let message = match x {
+    0 | 1  => "not many",     // 如果 x 是 0 或 1，将 "not many" 赋值给 message
+    2 ..= 9 => "a few",       // 如果 x 在 2 到 9 之间（包括 2 和 9），将 "a few" 赋值给 message
+    _      => "lots"         // 否则将 "lots" 赋值给 message
+};
 
+assert_eq!(message, "a few");
+
+// 演示模式匹配的顺序。
+struct S(i32, i32);
+
+match S(1, 2) {
+    S(z @ 1, _) | S(_, z @ 2) => assert_eq!(z, 1),  // 如果 S 的第一个元素是 1 或者第二个元素是 2，则将 z 绑定为 1，并且通过断言来检查 z 的值。
+    _ => panic!(),                                 // 否则发生错误
+}
+```
+{==+==}
+
+
+{==+==}
 > Note: The `2..=9` is a [Range Pattern], not a [Range Expression].
 > Thus, only those types of ranges supported by range patterns can be used in match arms.
 
 Every binding in each `|` separated pattern must appear in all of the patterns in the arm.
 Every binding of the same name must have the same type, and have the same binding mode.
+{==+==}
+> 注意: `2..=9` 是 [区间模式][Range Pattern] ，不是 [区间表达式][Range Expression] 。因此，在匹配分支中只能使用由区间模式支持的这些类型的范围。
 
+每个 `|` 分隔的模式中的所有绑定都必须出现在分支的所有模式中。每个同名绑定必须具有相同的类型，并且具有相同的绑定模式。
+{==+==}
+
+
+{==+==}
 ## Match guards
 
 Match arms can accept _match guards_ to further refine the criteria for matching a case.
@@ -90,7 +163,18 @@ Pattern guards appear after the pattern and consist of a `bool`-typed expression
 When the pattern matches successfully, the pattern guard expression is executed.
 If the expression evaluates to true, the pattern is successfully matched against.
 Otherwise, the next pattern, including other matches with the `|` operator in the same arm, is tested.
+{==+==}
+## 匹配守卫
 
+`match` 分支可以接受 _匹配守卫_ 来进一步细化匹配条件。
+模式守卫出现在模式之后，由 `if` 关键字后面的 `bool` 类型表达式组成。
+
+当模式成功匹配时，模式守卫表达式会被执行。如果表达式的结果为 true，则模式成功匹配。
+否则，将测试下一个模式，包括同一分支中使用 `|` 运算符的其他匹配。
+{==+==}
+
+
+{==+==}
 ```rust
 # let maybe_digit = Some(0);
 # fn process_digit(i: i32) { }
@@ -101,10 +185,20 @@ let message = match maybe_digit {
     None => panic!(),
 };
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > Note: Multiple matches using the `|` operator can cause the pattern guard and the side effects it has to execute multiple times.
 > For example:
->
+{==+==}
+
+{==+==}
+
+
+{==+==}
 > ```rust
 > # use std::cell::Cell;
 > let i : Cell<i32> = Cell::new(0);
@@ -114,21 +208,36 @@ let message = match maybe_digit {
 > }
 > assert_eq!(i.get(), 2);
 > ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A pattern guard may refer to the variables bound within the pattern they follow.
 Before evaluating the guard, a shared reference is taken to the part of the scrutinee the variable matches on.
 While evaluating the guard, this shared reference is then used when accessing the variable.
 Only when the guard evaluates to true is the value moved, or copied, from the scrutinee into the variable.
 This allows shared borrows to be used inside guards without moving out of the scrutinee in case guard fails to match.
 Moreover, by holding a shared reference while evaluating the guard, mutation inside guards is also prevented.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Attributes on match arms
 
 Outer attributes are allowed on match arms.
 The only attributes that have meaning on match arms are [`cfg`] and the [lint check attributes].
 
 [Inner attributes] are allowed directly after the opening brace of the match expression in the same expression contexts as [attributes on block expressions].
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_Expression_]: ../expressions.md
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
@@ -145,3 +254,6 @@ The only attributes that have meaning on match arms are [`cfg`] and the [lint ch
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [binding mode]: ../patterns.md#binding-modes
 [scrutinee]: ../glossary.md#scrutinee
+{==+==}
+
+{==+==}
