@@ -194,7 +194,8 @@ let message = match maybe_digit {
 > Note: Multiple matches using the `|` operator can cause the pattern guard and the side effects it has to execute multiple times.
 > For example:
 {==+==}
-
+> 注意：使用 `|` 操作符的多个匹配项可能导致模式守卫及其所产生的副作用执行多次。
+> 例如：
 {==+==}
 
 
@@ -221,7 +222,12 @@ Only when the guard evaluates to true is the value moved, or copied, from the sc
 This allows shared borrows to be used inside guards without moving out of the scrutinee in case guard fails to match.
 Moreover, by holding a shared reference while evaluating the guard, mutation inside guards is also prevented.
 {==+==}
-
+模式守卫可以引用其所跟随的模式中绑定的变量。
+在评估模式守卫之前，会对匹配变量的部分获取共享引用。
+在评估模式守卫时，这个共享引用被用于访问该变量。
+只有当模式守卫计算结果为 true 时，才会将值从待匹配项移动或复制到该变量中。
+这允许在守卫中使用共享借用，如果守卫不匹配，则不会移出待匹配项。
+此外，通过在评估守卫时保持共享引用，还可以防止在守卫内进行修改。
 {==+==}
 
 
@@ -233,7 +239,11 @@ The only attributes that have meaning on match arms are [`cfg`] and the [lint ch
 
 [Inner attributes] are allowed directly after the opening brace of the match expression in the same expression contexts as [attributes on block expressions].
 {==+==}
+## 匹配分支上的属性
 
+可以在匹配分支上使用外部属性。
+在匹配分支上具有意义的属性只有 [`cfg`] 和 [lint 检查属性][lint check attributes] 。
+[内部属性][Inner attributes] 可以直接放置在匹配表达式的左括号后面，在与 [块表达式上的属性][attributes on block expressions] 相同的表达式上下文中。
 {==+==}
 
 
