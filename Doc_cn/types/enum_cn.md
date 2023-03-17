@@ -1,3 +1,4 @@
+{==+==}
 # Enumerated types
 
 An *enumerated type* is a nominal, heterogeneous disjoint union type, denoted
@@ -17,6 +18,14 @@ named reference to an [`enum` item].
 
 [^enumtype]: The `enum` type is analogous to a `data` constructor declaration in
              ML, or a *pick ADT* in Limbo.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [`enum` item]: ../items/enumerations.md
 [struct expression]: ../expressions/struct-expr.md
+{==+==}
+
+{==+==}

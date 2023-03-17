@@ -1,12 +1,23 @@
+{==+==}
 # Trait objects
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _TraitObjectType_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TypeParamBounds_]
 >
 > _TraitObjectTypeOneBound_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TraitBound_]
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A *trait object* is an opaque value of another type that implements a set of
 traits. The set of traits is made up of an [object safe] *base trait* plus any
 number of [auto traits].
@@ -21,7 +32,12 @@ lifetime, and opt-out bounds (e.g. `?Sized`) are not allowed. Furthermore,
 paths to traits may be parenthesized.
 
 For example, given a trait `Trait`, the following are all trait objects:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 * `dyn Trait`
 * `dyn Trait + Send`
 * `dyn Trait + Send + Sync`
@@ -30,7 +46,12 @@ For example, given a trait `Trait`, the following are all trait objects:
 * `dyn Trait +`
 * `dyn 'static + Trait`.
 * `dyn (Trait)`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **Edition Differences**: Before the 2021 edition, the `dyn` keyword may be
 > omitted.
 >
@@ -45,7 +66,12 @@ For example, given a trait `Trait`, the following are all trait objects:
 >
 > Beginning in the 2018 edition, `dyn` is a true keyword and is not allowed in
 > paths, so the parentheses are not necessary.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Two trait object types alias each other if the base traits alias each other and
 if the sets of auto traits are the same and the lifetime bounds are the same.
 For example, `dyn Trait + Send + UnwindSafe` is the same as
@@ -61,7 +87,12 @@ behind some type of pointer; for example `&dyn SomeTrait` or
  - a _virtual method table_, often just called a _vtable_, which contains, for
    each method of `SomeTrait` and its [supertraits] that `T` implements, a
    pointer to `T`'s implementation (i.e. a function pointer).
+{==+==}
 
+{==+==}
+
+
+{==+==}
 The purpose of trait objects is to permit "late binding" of methods. Calling a
 method on a trait object results in virtual dispatch at runtime: that is, a
 function pointer is loaded from the trait object vtable and invoked indirectly.
@@ -69,7 +100,12 @@ The actual implementation for each vtable entry can vary on an object-by-object
 basis.
 
 An example of a trait object:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 trait Printable {
     fn stringify(&self) -> String;
@@ -87,17 +123,32 @@ fn main() {
     print(Box::new(10) as Box<dyn Printable>);
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 In this example, the trait `Printable` occurs as a trait object in both the
 type signature of `print`, and the cast expression in `main`.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Trait Object Lifetime Bounds
 
 Since a trait object can contain references, the lifetimes of those references
 need to be expressed as part of the trait object. This lifetime is written as
 `Trait + 'a`. There are [defaults] that allow this lifetime to usually be
 inferred with a sensible choice.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_TraitBound_]: ../trait-bounds.md
 [_TypeParamBounds_]: ../trait-bounds.md
 [auto traits]: ../special-types-and-traits.md#auto-traits
@@ -105,3 +156,6 @@ inferred with a sensible choice.
 [dynamically sized types]: ../dynamically-sized-types.md
 [object safe]: ../items/traits.md#object-safety
 [supertraits]: ../items/traits.md#supertraits
+{==+==}
+
+{==+==}

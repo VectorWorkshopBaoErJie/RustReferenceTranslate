@@ -1,8 +1,19 @@
+{==+==}
 # Type parameters
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Within the body of an item that has type parameter declarations, the names of
 its type parameters are types:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 fn to_vec<A: Clone>(xs: &[A]) -> Vec<A> {
     if xs.is_empty() {
@@ -14,6 +25,14 @@ fn to_vec<A: Clone>(xs: &[A]) -> Vec<A> {
     rest
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Here, `first` has type `A`, referring to `to_vec`'s `A` type parameter; and
 `rest` has type `Vec<A>`, a vector with element type `A`.
+{==+==}
+
+{==+==}

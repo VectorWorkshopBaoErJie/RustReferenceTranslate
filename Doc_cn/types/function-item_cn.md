@@ -1,3 +1,4 @@
+{==+==}
 # Function item types
 
 When referred to, a function item, or the constructor of a tuple-like struct or
@@ -15,19 +16,34 @@ error messages.
 Because the function item type explicitly identifies the function, the item
 types of different functions - different items, or the same item with different
 generics - are distinct, and mixing them will create a type error:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust,compile_fail,E0308
 fn foo<T>() { }
 let x = &mut foo::<i32>;
 *x = foo::<u32>; //~ ERROR mismatched types
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 However, there is a [coercion] from function items to [function pointers] with
 the same signature, which is triggered not only when a function item is used
 when a function pointer is directly expected, but also when different function
 item types with the same signature meet in different arms of the same `if` or
 `match`:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 # let want_i32 = false;
 # fn foo<T>() { }
@@ -42,10 +58,20 @@ let foo_ptr_2 = if want_i32 {
     foo::<u32>
 };
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 All function items implement [`Fn`], [`FnMut`], [`FnOnce`], [`Copy`],
 [`Clone`], [`Send`], and [`Sync`].
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
 [`FnMut`]: ../../std/ops/trait.FnMut.html
@@ -55,3 +81,6 @@ All function items implement [`Fn`], [`FnMut`], [`FnOnce`], [`Copy`],
 [`Sync`]: ../special-types-and-traits.md#sync
 [coercion]: ../type-coercions.md
 [function pointers]: function-pointer.md
+{==+==}
+
+{==+==}

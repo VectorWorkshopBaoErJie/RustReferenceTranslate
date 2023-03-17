@@ -1,10 +1,21 @@
+{==+==}
 # Closure types
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A [closure expression] produces a closure value with a unique, anonymous type
 that cannot be written out. A closure type is approximately equivalent to a
 struct which contains the captured variables. For instance, the following
 closure:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 fn f<F : FnOnce() -> String> (g: F) {
     println!("{}", g());
@@ -19,9 +30,19 @@ f(|| {
 });
 // Prints "foobar".
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 generates a closure type roughly like the following:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 <!-- ignore: simplified, requires unboxed_closures, fn_traits -->
 ```rust,ignore
 struct Closure<'a> {
@@ -37,14 +58,29 @@ impl<'a> FnOnce<()> for Closure<'a> {
     }
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 so that the call to `f` works as if it were:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 <!-- ignore: continuation of above -->
 ```rust,ignore
 f(Closure{s: s, t: &t});
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Capture modes
 
 The compiler prefers to capture a closed-over variable by immutable borrow,
@@ -62,7 +98,12 @@ closure is being returned or used to spawn a new thread.
 Composite types such as structs, tuples, and enums are always captured entirely,
 not by individual fields. It may be necessary to borrow into a local variable in
 order to capture a single field:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 # use std::collections::HashSet;
 #
@@ -80,18 +121,33 @@ impl SetVec {
     }
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 If, instead, the closure were to use `self.vec` directly, then it would attempt
 to capture `self` by mutable reference. But since `self.set` is already
 borrowed to iterate over, the code would not compile.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Unique immutable borrows in captures
 
 Captures can occur by a special kind of borrow called a _unique immutable
 borrow_, which cannot be used anywhere else in the language and cannot be
 written out explicitly. It occurs when modifying the referent of a mutable
 reference, as in the following example:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 let mut b = false;
 let x = &mut b;
@@ -103,7 +159,12 @@ let x = &mut b;
 }
 let z = &x;
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 In this case, borrowing `x` mutably is not possible, because `x` is not `mut`.
 But at the same time, borrowing `x` immutably would make the assignment illegal,
 because a `& &mut` reference might not be unique, so it cannot safely be used to
@@ -112,13 +173,23 @@ but like a mutable borrow, it must be unique. In the above example, uncommenting
 the declaration of `y` will produce an error because it would violate the
 uniqueness of the closure's borrow of `x`; the declaration of z is valid because
 the closure's lifetime has expired at the end of the block, releasing the borrow.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Call traits and coercions
 
 Closure types all implement [`FnOnce`], indicating that they can be called once
 by consuming ownership of the closure. Additionally, some closures implement
 more specific call traits:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 * A closure which does not move out of any captured variables implements
   [`FnMut`], indicating that it can be called by mutable reference.
 
@@ -133,7 +204,12 @@ more specific call traits:
 *Non-capturing closures* are closures that don't capture anything from their
 environment. They can be coerced to function pointers (e.g., `fn()`)
 with the matching signature.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 let add = |x, y| x + y;
 
@@ -143,12 +219,22 @@ type Binop = fn(i32, i32) -> i32;
 let bo: Binop = add;
 x = bo(5,7);
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Other traits
 
 All closure types implement [`Sized`]. Additionally, closure types implement the
 following traits if allowed to do so by the types of the captures it stores:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 * [`Clone`]
 * [`Copy`]
 * [`Sync`]
@@ -167,7 +253,12 @@ Because captures are often by reference, the following general rules arise:
 * A closure is [`Clone`] or [`Copy`] if it does not capture any values by
   unique immutable or mutable reference, and if all values it captures by copy
   or move are [`Clone`] or [`Copy`], respectively.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
 [`FnMut`]: ../../std/ops/trait.FnMut.html
@@ -178,3 +269,6 @@ Because captures are often by reference, the following general rules arise:
 [`Sync`]: ../special-types-and-traits.md#sync
 [closure expression]: ../expressions/closure-expr.md
 [derived]: ../attributes/derive.md
+{==+==}
+
+{==+==}

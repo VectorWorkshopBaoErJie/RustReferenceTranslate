@@ -1,6 +1,13 @@
+{==+==}
 {{#include types-redirect.html}}
 # Types
+{==+==}
+{{#include types-redirect.html}}
+# 类型
+{==+==}
 
+
+{==+==}
 Every variable, item, and value in a Rust program has a type. The _type_ of a
 *value* defines the interpretation of the memory holding it and the operations
 that may be performed on the value.
@@ -10,7 +17,16 @@ that are not possible to emulate in user-defined types. User-defined types have
 limited capabilities.
 
 The list of types is:
+{==+==}
+在 Rust 程序中，每个变量、条目和值都有一个类型。一个 *值* 的 _类型_ 定义了其存储的内存的解释方式和可对该值执行的操作。
 
+内置类型与语言紧密集成，以一种用户定义类型无法模拟的非平凡方式实现。用户定义类型具有有限的功能。
+
+Rust 的类型列表包括：
+{==+==}
+
+
+{==+==}
 * Primitive types:
     * [Boolean] — `bool`
     * [Numeric] — integer and float
@@ -34,9 +50,41 @@ The list of types is:
 * Trait types:
     * [Trait objects]
     * [Impl trait]
+{==+==}
+* 原始类型:
+    * [布尔类型][Boolean] — `bool`
+    * [数值类型][Numeric] — 整数和浮点数
+    * [文本类型][Textual] — char 和 str
+    * [空类型][Never] — `!` — 没有值的类型
+* 序列类型:
+    * [元组类型][Tuple]
+    * [数组类型][Array]
+    * [切片类型][Slice]
+* 用户定义类型:
+    * [结构体类型][Struct]
+    * [枚举类型][Enum]
+    * [联合类型][Union]
+* 函数类型：
+    * [函数类型][Functions]
+    * [闭包类型][Closures]
+* 指针类型:
+    * [引用类型][References]
+    * [原始指针类型][Raw pointers]
+    * [函数指针类型][Function pointers]
+* Trait 类型:
+    * [Trait objects]
+    * [Impl trait]
+{==+==}
 
+
+{==+==}
 ## Type expressions
+{==+==}
+## 类型表达式
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _Type_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _TypeNoBounds_\
@@ -58,7 +106,12 @@ The list of types is:
 > &nbsp;&nbsp; | [_QualifiedPathInType_]\
 > &nbsp;&nbsp; | [_BareFunctionType_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A _type expression_ as defined in the _Type_ grammar rule above is the syntax
 for referring to a type. It may refer to:
 
@@ -74,24 +127,64 @@ for referring to a type. It may refer to:
 * Trait types: [Trait objects] and [impl trait].
 * The [never] type.
 * [Macros] which expand to a type expression.
+{==+==}
+在上面的 _Type_ 语法规则中定义的 _type expression_ 是指引用类型的语法。它可以引用以下内容：
+ 
+* 序列类型 ( [tuple] ， [array] ， [slice] ) 。
+* [Type paths] 可以引用：
+    * 原始类型 ( [boolean] ， [numeric] ， [textual] ) 。
+    * 对 [item] 的引用 ( [struct] ， [enum] ， [union] ， [type alias] ， [trait] ) 。
+    * [Self path] ，其中 Self 是实现类型。
+    * 泛型 [type parameters] 。
+* 指针类型 ( [reference] ， [raw pointer] ， [function pointer] ) 。
+* [inferred type] ，请求编译器确定类型。
+* 用于消除歧义的 [Parentheses] 。
+* Trait 类型: [Trait objects] 和 [impl trait] 。
+* [never] 类型。
+* [Macros] ，它们展开为类型表达式。
+{==+==}
 
+
+{==+==}
 ### Parenthesized types
+{==+==}
+### 括号类型
+{==+==}
 
+
+{==+==}
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 In some situations the combination of types may be ambiguous. Use parentheses
 around a type to avoid ambiguity. For example, the `+` operator for [type
 boundaries] within a [reference type] is unclear where the
 boundary applies, so the use of parentheses is required. Grammar rules that
 require this disambiguation use the [_TypeNoBounds_] rule instead of
 [_Type_].
+{==+==}
+在某些情况下，类型的组合可能是不明确的。在类型周围加上括号以避免歧义。
+例如， [引用类型] 中的 [type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
+需要此消除歧义的语法使用 [_TypeNoBounds_] 规则，而不是 [_Type_] 。
+{==+==}
 
+
+{==+==}
 ```rust
 # use std::any::Any;
 type T<'a> = &'a (dyn Any + Send);
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Recursive types
 
 Nominal types &mdash; [structs], [enumerations], and [unions] &mdash; may be
@@ -106,7 +199,22 @@ itself. Such recursion has restrictions:
   fields of the type must be [pointer types].
 
 An example of a *recursive* type and its use:
+{==+==}
+## 递归类型
 
+名义类型 - [structs] 、 [enumerations] 和 [unions] - 可以是递归的。
+也就是说，每个 `enum` 变量或 `struct` 或 `union` 字段可以直接或间接地引用封闭的 `enum` 或 `struct` 类型本身。
+这种递归有限制:
+
+* 递归类型必须包含在递归中的名义类型 (不是仅仅是 [type aliases] ，或其他结构类型，例如 [arrays] 或 [tuples] ) 。因此， `type Rec = &'static [Rec]` 是不允许的。
+
+* 递归类型的大小必须是有限的；换句话说，类型的递归字段必须是 [pointer types] 。
+
+以下是 *recursive* 类型及其使用示例:
+{==+==}
+
+
+{==+==}
 ```rust
 enum List<T> {
     Nil,
@@ -115,7 +223,12 @@ enum List<T> {
 
 let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [_ArrayType_]: types/array.md
 [_BareFunctionType_]: types/function-pointer.md
 [_ImplTraitTypeOneBound_]: types/impl-trait.md
@@ -173,3 +286,6 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [type boundaries]: trait-bounds.md
 [type parameters]: types/parameters.md
 [unions]: types/union.md
+{==+==}
+
+{==+==}

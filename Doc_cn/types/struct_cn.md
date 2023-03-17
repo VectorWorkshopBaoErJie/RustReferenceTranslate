@@ -1,5 +1,11 @@
+{==+==}
 # Struct types
+{==+==}
 
+{==+==}
+
+
+{==+==}
 A `struct` *type* is a heterogeneous product of other types, called the
 *fields* of the type.[^structtype]
 
@@ -23,7 +29,15 @@ value that inhabits such a type.
 
 [^structtype]: `struct` types are analogous to `struct` types in C, the
     *record* types of the ML family, or the *struct* types of the Lisp family.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [`repr` attribute]: ../type-layout.md#representations
 [struct expression]: ../expressions/struct-expr.md
 [visibility modifiers]: ../visibility-and-privacy.md
+{==+==}
+
+{==+==}

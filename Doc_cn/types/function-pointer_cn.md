@@ -1,5 +1,11 @@
+{==+==}
 # Function pointer types
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _BareFunctionType_ :\
 > &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> _FunctionTypeQualifiers_ `fn`\
@@ -22,7 +28,12 @@
 >
 > _MaybeNamedFunctionParametersVariadic_ :\
 > &nbsp;&nbsp; ( _MaybeNamedParam_ `,` )<sup>\*</sup> _MaybeNamedParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Function pointer types, written using the `fn` keyword, refer to a function
 whose identity is not necessarily known at compile-time. They can be created
 via a coercion from both [function items] and non-capturing [closures].
@@ -34,7 +45,12 @@ Variadic parameters can only be specified with [`extern`] function types with
 the `"C"` or `"cdecl"` calling convention.
 
 An example where `Binop` is defined as a function pointer type:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 fn add(x: i32, y: i32) -> i32 {
     x + y
@@ -46,12 +62,22 @@ type Binop = fn(i32, i32) -> i32;
 let bo: Binop = add;
 x = bo(5,7);
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Attributes on function pointer parameters
 
 Attributes on function pointer parameters follow the same rules and
 restrictions as [regular function parameters].
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [IDENTIFIER]: ../identifiers.md
 [_Abi_]: ../items/functions.md
 [_ForLifetimes_]: ../trait-bounds.md#higher-ranked-trait-bounds
@@ -64,3 +90,6 @@ restrictions as [regular function parameters].
 [function items]: function-item.md
 [unsafe function]: ../unsafe-keyword.md
 [regular function parameters]: ../items/functions.md#attributes-on-function-parameters
+{==+==}
+
+{==+==}

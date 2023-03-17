@@ -1,14 +1,30 @@
+{==+==}
 # Impl trait
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **<sup>Syntax</sup>**\
 > _ImplTraitType_ : `impl` [_TypeParamBounds_]
 >
 > _ImplTraitTypeOneBound_ : `impl` [_TraitBound_]
+{==+==}
 
+{==+==}
+
+
+{==+==}
 `impl Trait` provides ways to specify unnamed but concrete types that
 implement a specific trait.
 It can appear in two sorts of places: argument position (where it can act as an anonymous type parameter to functions), and return position (where it can act as an abstract return type).
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 trait Trait {}
 # impl Trait for () {}
@@ -21,6 +37,12 @@ fn foo(arg: impl Trait) {
 fn bar() -> impl Trait {
 }
 ```
+{==+==}
+
+{==+==}
+
+
+{==+==}
 ## Anonymous type parameters
 
 > Note: This is often called "impl Trait in argument position".
@@ -30,7 +52,12 @@ Functions can use `impl` followed by a set of trait bounds to declare a paramete
 The caller must provide a type that satisfies the bounds declared by the anonymous type parameter, and the function can only use the methods available through the trait bounds of the anonymous type parameter.
 
 For example, these two forms are almost equivalent:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust,ignore
 trait Trait {}
 
@@ -42,7 +69,12 @@ fn foo<T: Trait>(arg: T) {
 fn foo(arg: impl Trait) {
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 That is, `impl Trait` in argument position is syntactic sugar for a generic type parameter like `<T: Trait>`, except that the type is anonymous and doesn't appear in the [_GenericParams_] list.
 
 > **Note:**
@@ -52,7 +84,12 @@ That is, `impl Trait` in argument position is syntactic sugar for a generic type
 This includes generic arguments for the return type or any const generics.
 >
 > Therefore, changing the function signature from either one to the other can constitute a breaking change for the callers of a function.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Abstract return types
 
 > Note: This is often called "impl Trait in return position".
@@ -65,29 +102,54 @@ Each possible return value from the function must resolve to the same concrete t
 This is particularly useful with [closures] and iterators.
 For example, closures have a unique, un-writable type.
 Previously, the only way to return a closure from a function was to use a [trait object]:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
     Box::new(|x| x + 1)
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 This could incur performance penalties from heap allocation and dynamic dispatch.
 It wasn't possible to fully specify the type of the closure, only to use the `Fn` trait.
 That means that the trait object is necessary.
 However, with `impl Trait`, it is possible to write this more simply:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust
 fn returns_closure() -> impl Fn(i32) -> i32 {
     |x| x + 1
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 which also avoids the drawbacks of using a boxed trait object.
 
 Similarly, the concrete types of iterators could become very complex, incorporating the types of all previous iterators in a chain.
 Returning `impl Iterator` means that a function only exposes the `Iterator` trait as a bound on its return type, instead of explicitly specifying all of the other iterator types involved.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ### Differences between generics and `impl Trait` in return position
 
 In argument position, `impl Trait` is very similar in semantics to a generic type parameter.
@@ -95,19 +157,39 @@ However, there are significant differences between the two in return position.
 With `impl Trait`, unlike with a generic type parameter, the function chooses the return type, and the caller cannot choose the return type.
 
 The function:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust,ignore
 fn foo<T: Trait>() -> T {
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 allows the caller to determine the return type, `T`, and the function returns that type.
 
 The function:
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ```rust,ignore
 fn foo() -> impl Trait {
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 doesn't allow the caller to determine the return type.
 Instead, the function chooses the return type, but only promises that it will implement `Trait`.
 
@@ -115,10 +197,18 @@ Instead, the function chooses the return type, but only promises that it will im
 
 `impl Trait` can only appear as a parameter or return type of a free or inherent function.
 It cannot appear inside implementations of traits, nor can it be the type of a let binding or appear inside a type alias.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [closures]: closure.md
 [_GenericArgs_]: ../paths.md#paths-in-expressions
 [_GenericParams_]: ../items/generics.md
 [_TraitBound_]: ../trait-bounds.md
 [trait object]: trait-object.md
 [_TypeParamBounds_]: ../trait-bounds.md
+{==+==}
+
+{==+==}
