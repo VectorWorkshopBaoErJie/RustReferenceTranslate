@@ -20,7 +20,8 @@
 implement a specific trait.
 It can appear in two sorts of places: argument position (where it can act as an anonymous type parameter to functions), and return position (where it can act as an abstract return type).
 {==+==}
-
+`impl Trait` 提供了一种方式来指定未命名但具体实现了特定 trait 的类型。
+它可以出现在两种位置: 参数位置 (在这里它可以作为函数的匿名类型参数) ，以及返回位置 (在这里它可以作为抽象的返回类型) 。
 {==+==}
 
 
@@ -38,7 +39,18 @@ fn bar() -> impl Trait {
 }
 ```
 {==+==}
+```rust
+trait Trait {}
+# impl Trait for () {}
 
+// 参数位置: 匿名类型参数
+fn foo(arg: impl Trait) {
+}
+
+// 返回值位置: 抽象返回类型
+fn bar() -> impl Trait {
+}
+```
 {==+==}
 
 
@@ -53,7 +65,13 @@ The caller must provide a type that satisfies the bounds declared by the anonymo
 
 For example, these two forms are almost equivalent:
 {==+==}
+## 匿名类型参数
 
+> 注意: 这经常被称为 "参数位置的impl Trait"。 (这里更准确的术语是 "参数"，但 "参数位置的impl Trait" 是这个特性开发期间使用的措辞，而且它仍然在实现的某些部分中保留着。)
+
+函数可以使用 `impl` ，后面跟一组 trait bound，来声明一个参数为匿名类型。调用方必须提供一个满足匿名类型参数所声明的 trait bound 的类型，而函数只能使用匿名类型参数的 trait bound 可用的方法。
+
+例如，以下这两种形式几乎是等价的:
 {==+==}
 
 
@@ -70,7 +88,17 @@ fn foo(arg: impl Trait) {
 }
 ```
 {==+==}
+```rust,ignore
+trait Trait {}
 
+// 泛型类型参数
+fn foo<T: Trait>(arg: T) {
+}
+
+// impl Trait 作为函数参数的匿名类型参数
+fn foo(arg: impl Trait) {
+}
+```
 {==+==}
 
 
@@ -85,7 +113,15 @@ This includes generic arguments for the return type or any const generics.
 >
 > Therefore, changing the function signature from either one to the other can constitute a breaking change for the callers of a function.
 {==+==}
+换句话说， `impl Trait` 作为函数参数是一种语法糖，用于泛型类型参数 `<T: Trait>` ，只不过该类型是匿名的并且不出现在 [_GenericParams_] 列表中。
 
+> **注意：**
+> 对于函数参数而言，泛型类型参数和 `impl Trait` 并不完全等效。
+> 对于泛型参数如 `<T: Trait>` ，调用方可以在调用时使用 [_GenericArgs_] 显式指定 `T` 的泛型参数，例如 `foo::<usize>(1)` 。
+> 如果 `impl Trait` 是 *任何* 函数参数的类型，那么调用方在调用该函数时永远不能提供任何泛型参数。
+> 这包括返回类型或任何常量泛型参数。
+>
+> 因此，从其中一个函数签名更改到另一个函数签名可能会对函数的调用方构成破坏性更改。
 {==+==}
 
 
@@ -103,7 +139,15 @@ This is particularly useful with [closures] and iterators.
 For example, closures have a unique, un-writable type.
 Previously, the only way to return a closure from a function was to use a [trait object]:
 {==+==}
+## 抽象返回类型
 
+> 注意: 这通常被称为 "返回位置的 impl Trait" 。
+
+函数可以使用 `impl Trait` 返回一个抽象返回类型。这些类型可以代表另一个具体类型，其中调用者只能使用指定 `Trait` 声明的方法。
+函数的每个可能的返回值必须解析为相同的具体类型。返回位置的 `impl Trait` 允许函数返回未装箱的抽象类型。
+这在处理 [闭包][closures] 和 迭代器时特别有用。
+
+例如，闭包具有独特的、无法重写的类型。以前，从函数返回闭包的唯一方法是使用 [trait 对象][trait object] ：
 {==+==}
 
 
@@ -124,7 +168,10 @@ It wasn't possible to fully specify the type of the closure, only to use the `Fn
 That means that the trait object is necessary.
 However, with `impl Trait`, it is possible to write this more simply:
 {==+==}
-
+这可能会导致堆分配和动态分派的性能惩罚。
+无法完全指定闭包的类型，只能使用 `Fn` trait。
+这意味着 trait 对象是必需的。
+但是，使用 `impl Trait` 可以更简单地编写此代码:
 {==+==}
 
 
@@ -145,7 +192,10 @@ which also avoids the drawbacks of using a boxed trait object.
 Similarly, the concrete types of iterators could become very complex, incorporating the types of all previous iterators in a chain.
 Returning `impl Iterator` means that a function only exposes the `Iterator` trait as a bound on its return type, instead of explicitly specifying all of the other iterator types involved.
 {==+==}
+这也避免了使用装箱 trait 对象的缺点。
 
+同样，迭代器的具体类型可能变得非常复杂，包含了链中所有先前迭代器的类型。
+返回 `impl Iterator` 意味着函数只公开 `Iterator` trait 作为其返回类型的限制，而不是明确指定涉及的所有其他迭代器类型。
 {==+==}
 
 
@@ -158,7 +208,13 @@ With `impl Trait`, unlike with a generic type parameter, the function chooses th
 
 The function:
 {==+==}
+### 泛型和 `impl Trait` 在返回位置的差异
 
+在参数位置上， `impl Trait` 在语义上与泛型类型参数非常相似。
+然而，在返回位置上，两者之间存在显著的差异。
+使用 `impl Trait` ，与泛型类型参数不同，函数选择返回类型，调用者无法选择返回类型。
+
+该函数：
 {==+==}
 
 
@@ -176,7 +232,9 @@ allows the caller to determine the return type, `T`, and the function returns th
 
 The function:
 {==+==}
+允许调用者确定返回类型 `T` ，并且函数返回该类型。
 
+该函数：
 {==+==}
 
 
@@ -198,7 +256,11 @@ Instead, the function chooses the return type, but only promises that it will im
 `impl Trait` can only appear as a parameter or return type of a free or inherent function.
 It cannot appear inside implementations of traits, nor can it be the type of a let binding or appear inside a type alias.
 {==+==}
+不允许调用者确定返回类型。相反，函数选择返回类型，但只承诺它将实现 `Trait` 。
 
+## 限制
+
+`impl Trait` 只能出现在自由函数或固有函数的参数或返回类型中。它不能出现在 trait 的实现内部，也不能是 let 绑定的类型或出现在类型别名中。
 {==+==}
 
 
