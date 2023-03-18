@@ -1,7 +1,7 @@
 {==+==}
 # Textual types
 {==+==}
-
+# 文本类型
 {==+==}
 
 
@@ -23,7 +23,16 @@ is valid UTF-8. Calling a `str` method with a non-UTF-8 buffer can cause
 Since `str` is a [dynamically sized type], it can only be instantiated through a
 pointer type, such as `&str`.
 {==+==}
+类型 `char` 和 `str` 用于保存文本数据。
 
+`char` 类型的值是一个 [Unicode 标量值][Unicode scalar value] (即不是代理项的代码点) ，表示为 32 位无符号整数，它位于范围 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF。
+创建一个超出此范围的 `char` 是 [未定义行为][Undefined Behavior] 。 `[char]` 实际上是长度为 1 的 UCS-4 / UTF-32 字符串。
+
+`str` 类型的值与 `[u8]` 相同，它是 8 位无符号字节的切片。
+但是，Rust 标准库对 `str` 做了一些额外的假设: 在 `str` 上工作的方法假定并确保其中的数据是有效的 UTF-8 。
+使用非 UTF-8 缓冲区调用 `str` 方法可能导致 [未定义行为][Undefined Behavior] ，可能是现在，也可能是将来。
+
+由于 `str` 是 [动态大小类型][dynamically sized type] ，因此只能通过指针类型 (例如 `&str` ) 来实例化。
 {==+==}
 
 

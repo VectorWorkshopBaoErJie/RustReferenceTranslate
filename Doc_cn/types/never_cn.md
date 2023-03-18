@@ -1,7 +1,7 @@
 {==+==}
 # Never type
 {==+==}
-
+# Never 类型
 {==+==}
 
 
@@ -18,7 +18,8 @@ The never type `!` is a type with no values, representing the result of
 computations that never complete. Expressions of type `!` can be coerced into
 any other type.
 {==+==}
-
+Never 类型 `!` 是一种没有值的类型，代表永远不会完成计算的结果。
+类型为 `!` 的表达式可以强制转换为任何其他类型。
 {==+==}
 
 
@@ -30,7 +31,12 @@ let x: ! = panic!();
 let y: u32 = x;
 ```
 {==+==}
-
+<!-- ignore: unstable -->
+```rust,ignore
+let x: ! = panic!();
+// 可以强制转换为任何类型。
+let y: u32 = x;
+```
 {==+==}
 
 
@@ -42,5 +48,6 @@ types presently. See [the tracking
 issue](https://github.com/rust-lang/rust/issues/35121) for more
 details.
 {==+==}
-
+**注意:** 预计在 1.41 版本中稳定的 never 类型，但由于最后时间发现了一些回归问题，因此稳定性被暂时撤销。
+目前， `!` 类型只能出现在函数返回类型中。有关更多详细信息，请参见 [问题跟踪](https://github.com/rust-lang/rust/issues/35121) 。
 {==+==}
