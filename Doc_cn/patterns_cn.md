@@ -1416,14 +1416,17 @@ Struct and enum constants must have `#[derive(PartialEq, Eq)]` (not merely imple
 Path patterns are irrefutable when they refer to structs or an enum variant when the enum has only one variant or a constant whose type is irrefutable.
 They are refutable when they refer to refutable constants or enum variants for enums with multiple variants.
 {==+==}
-_Path patterns_ 是指引用常量值或没有字段的结构体或枚举变体的模式。未经修饰的路径模式可以引用：
+_路径模式_ 是指引用常量值或没有字段的结构体或枚举变体的模式。
+
+未经修饰的路径模式可以引用：
 
 * 枚举变体
 * 结构体
 * 常量
 * 关联常量
   
-修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有`#[derive(PartialEq, Eq)]`（而不是仅实现）。当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可反驳类型的常量时，路径模式是不可反驳的。当路径模式引用可反驳的常量或具有多个变体的枚举变体时，它们是可反驳的。
+修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` (而不是仅实现) 。
+当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可反驳类型的常量时，路径模式是不可反驳的。当路径模式引用可反驳的常量或具有多个变体的枚举变体时，它们是可反驳的。
 {==+==}
 
 
@@ -1434,7 +1437,10 @@ _Or-patterns_ are patterns that match on one of two or more sub-patterns (for ex
 They can nest arbitrarily.
 Syntactically, or-patterns are allowed in any of the places where other patterns are allowed (represented by the _Pattern_ production), with the exceptions of `let`-bindings and function and closure arguments (represented by the _PatternNoTopAlt_ production).
 {==+==}
+## 或模式
 
+_或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。它们可以任意嵌套。
+从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _Pattern_ 产生式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _PatternNoTopAlt_ 产生式表示) 。
 {==+==}
 
 
@@ -1462,7 +1468,21 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
    Note that by *"constructor"* we do not refer to tuple struct patterns, but rather we refer to a pattern for any product type.
    This includes enum variants, tuple structs, structs with named fields, arrays, tuples, and slices.
 {==+==}
+### 静态语义
 
+1. 对于任意的模式 `p | q` ，其中 `p` 和 `q` 是任意模式，如果:
+
+   + 推断出的 `p` 的类型不能与推断出的 `q` 的类型统一，或者
+   + 在 `p` 和 `q` 中没有引入相同的绑定，或者
+   + 在 `p` 和 `q` 中具有相同名称的绑定的类型或绑定模式不能相互统一，那么此模式将被视为非法。
+   
+   在上述所有情况中，类型统一都是确切的，且不应用隐式 [类型强制转换][type coercions] 。
+
+2. 在类型检查表达式 `match e_s { a_1 => e_1, ... a_n => e_n }` 时，对于每个包含形式为 `p_i | q_i` 的模式的匹配分支 `a_i` ，如果在其所处的深度 `d` 处，`e_s` 中的片段类型不能与 `p_i | q_i` 统一，则模式 `p_i | q_i` 被视为非法。
+
+3. 在考虑穷尽性时，将模式 `p | q` 视为同时匹配 `p` 和 `q` 。对于某个构造函数 `c(x, ..)`，分配律适用于 `c(p | q, ..rest)` 和 `c(p, ..rest) | c(q, ..rest)` 。递归应用此规则，直到不存在除顶层外的形式为 `p | q` 的嵌套模式为止。
+
+   请注意，*"构造函数"* 并不是指元组结构模式，而是指任何产品类型的模式。这包括枚举变体、元组结构、具有命名字段的结构体、数组、元组和切片。
 {==+==}
 
 
@@ -1474,7 +1494,9 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
    and `rest` is optionally any remaining potential factors in `c`,
    is defined as being the same as that of `c(p, ..rest) | c(q, ..rest)`.
 {==+==}
+### 动态语义
 
+1. 在深度为 `d` 处使用模式 `c(p | q, ..rest)` 匹配被匹配表达式 `e_s` 的动态语义，其中 `c` 是某个构造函数，`p` 和 `q` 是任意模式，`rest` 可选地包含 `c` 中的其他因子，其定义与 `c(p, ..rest) | c(q, ..rest)` 相同。
 {==+==}
 
 
@@ -1487,7 +1509,11 @@ This allows us to reserve syntactic space for a possible future type ascription 
 For example, `x @ A(..) | B(..)` will result in an error that `x` is not bound in all patterns.
 `&A(x) | B(x)` will result in a type mismatch between `x` in the different subpatterns.
 {==+==}
+### 与其他未限定模式的优先级
 
+正如本章的其他地方所示，有几种语法上未限定的模式，包括标识符模式、引用模式和或模式。或模式始终具有最低的优先级。
+这使我们可以为未来可能的类型注释功能保留语法空间，并减少歧义。
+例如，`x @ A(..) | B(..)` 将导致错误，即 `x` 在所有模式中都未绑定。`&A(x) | B(x)` 将导致在不同的子模式中 `x` 类型不匹配的错误。
 {==+==}
 
 
