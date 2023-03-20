@@ -83,7 +83,11 @@ sites are:
 
   For example, `&mut 42` is coerced to have type `&i8` in the following:
 {==+==}
+  在方法调用中，接收器 (`self` 参数) 只能利用 [非定长强制转换](#unsized-coercions) 。
 
+* 结构体、联合体或枚举变体字段的实例化
+
+  例如，在以下示例中， `&mut 42` 被强制转换为类型 `&i8` ：
 {==+==}
 
 
@@ -106,7 +110,9 @@ sites are:
 
   For example, `x` is coerced to have type `&dyn Display` in the following:
 {==+==}
+* 函数结果，可以是block块的最后一行，如果它不以分号结尾，或者是 `return` 语句中的任何表达式。
 
+  例如，在以下示例中， `x` 被强制转换为类型 `&dyn Display` ：
 {==+==}
 
 
@@ -146,7 +152,19 @@ it is not semicolon-terminated) is a coercion site to `U`. This includes
 blocks which are part of control flow statements, such as `if`/`else`, if
 the block has a known type.
 {==+==}
+如果在这些类型转换点之一的表达式是一个类型转换传播表达式，那么该表达式中的相关子表达式也是类型转换点。
+传播从这些新的类型转换点递归进行。传播表达式及其相关子表达式包括:
 
+* 数组字面值，数组类型为 `[U; n]` 。数组字面值中的每个子表达式都是类型强制转换到类型 `U` 的强制转换点。
+
+* 带有重复语法的数组字面值，数组类型为 `[U; n]` 。重复的子表达式是类型强制转换到类型 `U` 的强制转换点。
+
+* 元组，其中元组是类型强制转换到类型 `(U_0, U_1, ..., U_n)` 的强制转换点。每个子表达式都是相应类型的类型转换点，例如，第零个子表达式是类型强制转换到类型 `U_0` 的强制转换点。
+
+* 括号中的子表达式 (`(e)`) : 如果表达式的类型是 `U` ，那么子表达式就是类型强制转换到 `U` 的强制转换点。
+
+* 块: 如果块的类型是 `U` ，则块中的最后一个表达式 (如果它没有以分号结尾) 是类型强制转换到 `U` 的强制转换点。
+这包括控制流语句中的块，例如 `if`/`else` ，如果块具有已知类型的话。
 {==+==}
 
 
@@ -172,7 +190,25 @@ Coercion is allowed between the following types:
 
 * `&T` or `&mut T` to `&U` if `T` implements `Deref<Target = U>`. For example:
 {==+==}
+## 强制类型转换
 
+以下类型之间允许进行强制类型转换:
+
+* 如果 `T` 是 `U` 的 [子类型][subtype] ，则 `T` 可以强制转换为 `U` (*自反的情况*)
+
+* 当 `T_1` 转换为 `T_2` ， `T_2` 转换为 `T_3` 时，`T_1` 可以转换为 `T_3` (*可传递的情况*)
+
+    注意，这种情况目前尚未完全支持。
+
+* `&mut T` 可以强制转换为 `&T`
+
+* `*mut T` 可以强制转换为 `*const T`
+
+* `&T` 可以强制转换为 `*const T`
+
+* `&mut T` 可以强制转换为 `*mut T`
+
+* 如果 `T` 实现了 `Deref<Target = U>` ，则 `&T` 或 `&mut T` 可以强制转换为 `&U` 。例如:
 {==+==}
 
 
@@ -200,7 +236,28 @@ Coercion is allowed between the following types:
   }
   ```
 {==+==}
+  ```rust
+  use std::ops::Deref;
 
+  struct CharContainer {
+      value: char,
+  }
+
+  impl Deref for CharContainer {
+      type Target = char;
+
+      fn deref<'a>(&'a self) -> &'a char {
+          &self.value
+      }
+  }
+
+  fn foo(arg: &char) {}
+
+  fn main() {
+      let x = &mut CharContainer { value: 'y' };
+      foo(x); //&mut `CharContainer` 被强制转换为 &char 。
+  }
+  ```
 {==+==}
 
 
@@ -226,7 +283,26 @@ Coercion is allowed between the following types:
 
 * `!` to any `T`
 {==+==}
+* 如果 `T` 实现了 `DerefMut<Target = U>`，则 `&mut T` 可以强制转换为 `&mut U`。
 
+* TyCtor(`T`) 可以强制转换为 TyCtor(`U`) ，其中 TyCtor(`T`) 是以下之一：
+    - `&T`
+    - `&mut T`
+    - `*const T`
+    - `*mut T`
+    - `Box<T>`
+
+    而且 `U` 可以通过 [不可调整大小强制转换](#unsized-coercions) 从 `T` 中获得。
+
+    <!-- 在未来，coerce_inner 将递归地扩展到元组和结构体。
+    此外，将添加从子 trait 到超 trait 的强制转换。
+    有关更多详细信息，请参见 [RFC 401]。-->
+    
+* 函数项类型到 `fn` 指针
+
+* 非捕获闭包到 `fn` 指针
+
+* `!` 到任何 `T` 
 {==+==}
 
 
@@ -262,7 +338,26 @@ unsized coercion to `Foo<U>`.
 > has been stabilized, the traits themselves are not yet stable and therefore
 > can't be used directly in stable Rust.
 {==+==}
+### 不定大小的强制转换
 
+下列类型强制转换被称为 `不定大小的强制转换` ，因为它们涉及将有大小限制的类型转换为无大小限制的类型，并且在一些其他强制转换不允许的情况下被允许，如上所述。
+它们仍然可以发生在强制转换可以发生的任何地方。两个trait [`Unsize`] 和 [`CoerceUnsized`] 用于协助此过程并将其公开供库使用。
+下列强制转换是内置的，如果 `T` 可以通过其中之一转换为 `U` ，则将为 `T` 提供一个实现 `Unsize<U>` 的实现：
+
+* `[T; n]` 转换为 `[T]` 。
+
+* 当 `T` 实现 `U + Sized` 时， `T` 转换为 `dyn U` ，而 `U` 是 [对象安全][object safe] 的。
+
+* 当满足以下条件时， `Foo<..., T, ...>` 转换为 `Foo<..., U, ...>` ：
+    * `Foo` 是一个结构体。
+    * `T` 实现了 `Unsize<U>` 。
+    * `Foo` 的最后一个字段的类型涉及到了 `T` 。
+    * 如果该字段的类型为 `Bar<T>` ，则 `Bar<T>` 实现了 `Unsized<Bar<U>>` 。
+    * `T` 不是任何其他字段类型的一部分。
+
+此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这使它可以提供到 `Foo<U>` 的不定大小的强制转换。
+
+> 注意：尽管已经稳定化了不定大小的强制转换的定义及其实现，但这些特性本身尚未稳定，因此不能在稳定的 Rust 中直接使用它们。
 {==+==}
 
 
@@ -290,7 +385,23 @@ changed to `Ti`. (This check is also conditioned on whether all of the source
 expressions considered thus far have implicit coercions.)
 + If not, try to compute a mutual supertype of `T_t` and `Ti`, which will become the new target type.
 {==+==}
+## 最小上界强制转换
 
+在某些情况下，编译器必须将多个类型强制转换在一起，以尝试找到最通用的类型。
+这被称为 "最小上界强制转换" (Least Upper Bound coercion，简称LUB coercion) 。LUB coercion仅在以下情况下使用：
+
++ 为一系列 if 分支查找公共类型。
++ 为一系列 match 分支查找公共类型。
++ 为数组元素查找公共类型。
++ 为带有多个返回语句的闭包查找返回类型。
++ 检查带有多个返回语句的函数的返回类型。
+
+在每种情况下，存在一组要相互强制转换为某个目标类型 `T_t` 的类型 `T0..Tn` ，该目标类型最初是未知的。
+计算 LUB coercion 是通过迭代完成的。目标类型 `T_t` 开始是类型 `T0` 。对于每个新类型 `Ti` ，我们考虑以下内容：
+
++ 如果 `Ti` 可以强制转换为当前目标类型 `T_t` ，则不进行任何更改。
++ 否则，检查是否可以将 `T_t` 强制转换为 `Ti` ；如果可以，则将 `T_t` 更改为 `Ti` 。 (此检查还取决于迄今为止考虑的所有源表达式是否具有隐式强制转换。)
++ 如果不行，则尝试计算 `T_t` 和 `Ti` 的共同超类，该超类将成为新的目标类型。
 {==+==}
 
 
@@ -341,7 +452,51 @@ fn foo() -> i32 {
 }
 ```
 {==+==}
+### 例如:
 
+```rust
+# let (a, b, c) = (0, 1, 2);
+// 用于 if 条件分支
+let bar = if true {
+    a
+} else if false {
+    b
+} else {
+    c
+};
+
+// 用于 match 匹配分支
+let baw = match 42 {
+    0 => a,
+    1 => b,
+    _ => c,
+};
+
+// 用于数组元素
+let bax = [a, b, c];
+
+// 用于多个返回语句的闭包
+let clo = || {
+    if true {
+        a
+    } else if false {
+        b
+    } else {
+        c
+    }
+};
+let baz = clo();
+
+// 用于多个返回语句的函数类型检查
+fn foo() -> i32 {
+    let (a, b, c) = (0, 1, 2);
+    match 42 {
+        0 => a,
+        1 => b,
+        _ => c,
+    }
+}
+```
 {==+==}
 
 
@@ -356,7 +511,11 @@ This description is obviously informal. Making it more precise is expected to
 proceed as part of a general effort to specify the Rust type checker more
 precisely.
 {==+==}
+在这些示例中， `ba*` 的类型是通过最小上界 LUB 强制转换来确定的。编译器在处理函数 `foo` 时检查 `a` ， `b` ， `c` 的 LUB 强制转换结果是否为 `i32` 。
 
+### 注意事项
+
+这个描述显然是非正式的。更精确的描述将作为规范 Rust 类型检查器的泛型尝试的一部分进行。
 {==+==}
 
 
