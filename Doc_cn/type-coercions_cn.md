@@ -1,3 +1,4 @@
+{==+==}
 # Type coercions
 
 **Type coercions** are implicit operations that change the type of a value.
@@ -8,7 +9,16 @@ Any conversions allowed by coercion can also be explicitly performed by the
 [type cast operator], `as`.
 
 Coercions are originally defined in [RFC 401] and expanded upon in [RFC 1558].
+{==+==}
+# 类型强制转换
 
+**类型强制转换** 是隐式操作，可以更改值的类型。它们在特定位置自动发生，并且高度限制实际强制转换的类型。
+由类型强制转换允许的任何转换也可以通过 [类型转换运算符][type cast operator] `as` 显式执行。
+强制转换最初在 [RFC 401] 中定义，并在 [RFC 1558] 中进行了扩展。
+{==+==}
+
+
+{==+==}
 ## Coercion sites
 
 A coercion can only occur at certain coercion sites in a program; these are
@@ -32,7 +42,27 @@ sites are:
   the type of the formal parameter.
 
   For example, `&mut 42` is coerced to have type `&i8` in the following:
+{==+==}
+## 强制转换位置
 
+强制转换只能发生在程序的某些强制转换位置；通常这些位置是期望的类型显式或可以从显式类型（不需要类型推断）中派生的地方。可能的强制转换位置包括：
+
+* `let` 语句中给出显式类型的位置。
+   例如，在以下代码中， `&mut 42` 被强制转换为类型 `&i8` :
+
+   ```rust
+   let _: &i8 = &mut 42;
+   ```
+* `static` 和 `const` 条目的声明 (类似于 `let` 语句) 。
+
+* 函数调用的参数
+  被强制转换的值是实际参数，并将其强制转换为形式参数的类型。
+
+  例如，在以下代码中，`&mut 42` 被强制转换为类型 `&i8` :
+{==+==}
+
+
+{==+==}
   ```rust
   fn bar(_: &i8) { }
 
@@ -40,14 +70,24 @@ sites are:
       bar(&mut 42);
   }
   ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
   For method calls, the receiver (`self` parameter) can only take advantage
   of [unsized coercions](#unsized-coercions).
 
 * Instantiations of struct, union, or enum variant fields
 
   For example, `&mut 42` is coerced to have type `&i8` in the following:
+{==+==}
 
+{==+==}
+
+
+{==+==}
   ```rust
   struct Foo<'a> { x: &'a i8 }
 
@@ -55,19 +95,34 @@ sites are:
       Foo { x: &mut 42 };
   }
   ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 * Function results&mdash;either the final line of a block if it is not
   semicolon-terminated or any expression in a `return` statement
 
   For example, `x` is coerced to have type `&dyn Display` in the following:
+{==+==}
 
+{==+==}
+
+
+{==+==}
   ```rust
   use std::fmt::Display;
   fn foo(x: &u32) -> &dyn Display {
       x
   }
   ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 If the expression in one of these coercion sites is a coercion-propagating
 expression, then the relevant sub-expressions in that expression are also
 coercion sites. Propagation recurses from these new coercion sites.
@@ -90,7 +145,12 @@ the sub-expression is a coercion site to `U`.
 it is not semicolon-terminated) is a coercion site to `U`. This includes
 blocks which are part of control flow statements, such as `if`/`else`, if
 the block has a known type.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Coercion types
 
 Coercion is allowed between the following types:
@@ -111,7 +171,12 @@ Coercion is allowed between the following types:
 * `&mut T` to `*mut T`
 
 * `&T` or `&mut T` to `&U` if `T` implements `Deref<Target = U>`. For example:
+{==+==}
 
+{==+==}
+
+
+{==+==}
   ```rust
   use std::ops::Deref;
 
@@ -134,7 +199,12 @@ Coercion is allowed between the following types:
       foo(x); //&mut CharContainer is coerced to &char.
   }
   ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 * `&mut T` to `&mut U` if `T` implements `DerefMut<Target = U>`.
 
 * TyCtor(`T`) to TyCtor(`U`), where TyCtor(`T`) is one of
@@ -155,7 +225,12 @@ Coercion is allowed between the following types:
 * Non capturing closures to `fn` pointers
 
 * `!` to any `T`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ### Unsized Coercions
 
 The following coercions are called `unsized coercions`, since they
@@ -186,7 +261,12 @@ unsized coercion to `Foo<U>`.
 > Note: While the definition of the unsized coercions and their implementation
 > has been stabilized, the traits themselves are not yet stable and therefore
 > can't be used directly in stable Rust.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ## Least upper bound coercions
 
 In some contexts, the compiler must coerce together multiple types to try and
@@ -209,7 +289,12 @@ For each new type `Ti`, we consider whether
 changed to `Ti`. (This check is also conditioned on whether all of the source
 expressions considered thus far have implicit coercions.)
 + If not, try to compute a mutual supertype of `T_t` and `Ti`, which will become the new target type.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 ### Examples:
 
 ```rust
@@ -255,7 +340,12 @@ fn foo() -> i32 {
     }
 }
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 In these examples, types of the `ba*` are found by LUB coercion. And the
 compiler checks whether LUB coercion result of `a`, `b`, `c` is `i32` in the
 processing of the function `foo`.
@@ -265,7 +355,12 @@ processing of the function `foo`.
 This description is obviously informal. Making it more precise is expected to
 proceed as part of a general effort to specify the Rust type checker more
 precisely.
+{==+==}
 
+{==+==}
+
+
+{==+==}
 [RFC 401]: https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md
 [RFC 1558]: https://github.com/rust-lang/rfcs/blob/master/text/1558-closure-to-fn-coercion.md
 [subtype]: subtyping.md
@@ -273,3 +368,6 @@ precisely.
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: ../std/marker/trait.Unsize.html
 [`CoerceUnsized`]: ../std/ops/trait.CoerceUnsized.html
+{==+==}
+
+{==+==}
