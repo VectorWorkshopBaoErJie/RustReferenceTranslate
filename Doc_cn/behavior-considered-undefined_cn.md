@@ -1,3 +1,4 @@
+{==+==}
 ## Behavior considered undefined
 
 Rust code is incorrect if it exhibits any of the behaviors in the following
@@ -21,7 +22,22 @@ sure is undefined behavior. Please read the [Rustonomicon] before writing unsafe
 code.
 
 </div>
+{==+==}
+## 未定义的行为
 
+如果 Rust 代码表现出以下列表中的任何行为，则它是不正确的。这包括 `unsafe` 块和 `unsafe` 函数中的代码。`unsafe` 只意味着避免未定义行为是由程序员负责；它并不改变 Rust 程序永远不应该导致未定义行为的事实。
+
+在编写 `unsafe` 代码时，程序员的责任是确保与 `unsafe` 代码交互的任何安全代码都不会触发这些行为。对于任何安全客户端都满足这个属性的 `unsafe` 代码被称为*健全的*；如果安全代码可以误用 `unsafe` 代码来表现出未定义的行为，那么它就是*不健全的*。
+
+<div class="warning">
+
+***警告:*** 以下列表不是穷尽的。 Rust 中不允许哪些操作和不允许的行为没有正式的模型，因此可能还有更多被视为不安全的行为。以下列表仅列出了我们知道的肯定是未定义行为的内容。请在编写不安全代码之前阅读 [Rustonomicon]。
+
+</div>
+{==+==}
+
+
+{==+==}
 * Data races.
 * Evaluating a [dereference expression] (`*expr`) on a raw pointer that is
   [dangling] or unaligned, even in [place expression context]
@@ -38,7 +54,17 @@ code.
   * When a reference (but not a `Box`!) is passed to a function, it is live at
     least as long as that function call, again except if the `&T` contains an
     [`UnsafeCell<U>`].
+{==+==}
+  * 数据竞争。
+  * 在原始指针上评估解引用表达式 (`*expr`) ，即使在 [place expression context] 上也是如此，该原始指针是 [dangling] 或不对齐的。(例如， `addr_of!(&*expr)` ).
+  * 破坏 [pointer aliasing rules]。`Box<T>`、`&mut T` 和 `&T` 遵循 LLVM 的作用域 [noalias] 模型，除非 `&T` 包含 [`UnsafeCell<U>`] 。当引用和 box 无效时，它们不能处于活动状态。确切的存活时间没有指定，但存在一些界限:
+    * 对于引用，存活时间的上界是借用检查器分配的语法生命周期；它不能活得比那个生命周期更长。
+    * 每次引用或 box 被传递给或从函数返回时，它都被视为处于活动状态。
+    * 当引用 (但不是 `Box`!) 被传递到函数时，它至少在那个函数调用期间是活动的，再次除非 `&T` 包含一个 [`UnsafeCell<U>`] 。
+{==+==}
 
+
+{==+==}
   All this also applies when values of these
   types are passed in a (nested) field of a compound type, but not behind
   pointer indirections.
@@ -69,7 +95,29 @@ code.
       (i.e., it must not be read from uninitialized memory).
   * Invalid values for a type with a custom definition of invalid values.
     In the standard library, this affects [`NonNull<T>`] and [`NonZero*`].
+{==+==}
+  以下内容也适用于这些类型的值作为复合类型的 (嵌套) 字段传递，但不适用于指针间接引用的情况。
+* 修改不可变数据。 [`const`] 中的所有数据都是不可变的。此外，通过共享引用访问的数据或由不可变绑定拥有的数据也是不可变的，除非该数据包含在 [`UnsafeCell<U>`] 中。
+* 通过编译器内部函数调用产生未定义行为。
+* 执行使用当前平台不支持的平台特性编译的代码 (请参阅 [`target_feature`]) ，*除非*该平台明确记录此操作是安全的。
+* 使用错误的调用 ABI 调用函数或从错误的取消 ABI 函数中回溯。
+* 在私有字段和局部变量中生成无效值。 "生成" 值是指将值分配给或从位置读取值、将值传递给函数/原始操作或从函数/原始操作返回值。
+  以下值是无效的 (在其各自的类型中) :
+  * 在 [`bool`] 中除了 `false` (`0`) 或 `true` (`1`) 之外的值。
+  * 枚举中的鉴别器不在类型定义中。
+  * 空的 `fn` 指针。
+  * `char` 中的值是代理或大于 `char::MAX`。
+  * `!` (所有值对于此类型都是无效的) 。
+  * 从 [未初始化的内存][undef] 中获取的整数 ( `i*`/`u*` ) 、浮点数 ( `f*` ) 或裸指针，或在 `str` 中使用未初始化的内存。
+  * 悬空引用或 `Box<T>` ，不对齐或指向无效值。
+  * 宽指针、 `Box<T>` 或裸指针中的无效元数据:
+    * 如果 `dyn Trait` 的元数据不是指向与指针或引用指向的实际动态特性相匹配的 `Trait` 的虚表的指针，则该元数据是无效的。
+    * 如果长度不是有效的 `usize` (即不能从未初始化的内存中读取) ，则切片元数据无效。
+  * 自定义无效值类型的无效值。在标准库中，这会影响 [`NonNull<T>`] 和 [`NonZero*`] 。
+{==+==}
 
+
+{==+==}
     > **Note**: `rustc` achieves this with the unstable
     > `rustc_layout_scalar_valid_range_*` attributes.
 * Incorrect use of inline assembly. For more details, refer to the [rules] to
@@ -85,7 +133,18 @@ reading uninitialized memory is permitted are inside `union`s and in "padding"
 > program contains undefined behaviour that can also affect the Rust code. And
 > vice versa, undefined behavior in Rust can cause adverse affects on code
 > executed by any FFI calls to other languages.
+{==+==}
+    > **注意**: `rustc` 使用不稳定的 `rustc_layout_scalar_valid_range_*` 属性来实现此功能。
 
+* 不正确使用内联汇编。有关更多详细信息，请参阅使用内联汇编编写代码时要遵循的 [规则][rules] 。
+  
+**注意:** 对于任何具有受限制的有效值集的类型，未初始化的内存也是隐式无效的。换句话说，读取未初始化的内存仅在 `union` 内部和在类型的字段/元素之间 "填充" (间隙)中是允许的。
+
+> **注意**: 未定义行为影响整个程序。例如，在C中调用表现出未定义行为的函数意味着你的整个程序包含未定义行为，这也可能影响Rust代码。反之，在Rust中发生未定义行为也会对调用其他语言的 FFI 调用执行的代码产生不利影响。
+{==+==}
+
+
+{==+==}
 ### Dangling pointers
 [dangling]: #dangling-pointers
 
@@ -102,7 +161,19 @@ Note that dynamically sized types (such as slices and strings) point to their
 entire range, so it is important that the length metadata is never too large. In
 particular, the dynamic size of a Rust value (as determined by `size_of_val`)
 must never exceed `isize::MAX`.
+{==+==}
+### 悬垂指针
+[dangling]: #dangling-pointers
 
+如果引用/指针为null，或者它所指向的字节不全属于同一个活跃分配 (因此特别注意它们必须全部属于*某个*分配) ，则该引用/指针是 "悬垂" 的。它所指向的字节跨度由指针值和指向类型的大小 (使用`size_of_val`) 确定。
+
+如果大小为0，则指针必须指向活动分配的内部 (包括指向分配的最后一个字节的后面) ，或者直接从非零整数文字构建而来。
+
+请注意，动态大小的类型 (例如切片和字符串) 指向它们的整个范围，因此重要的是长度元数据永远不要太大。特别是，Rust值的动态大小（由 `size_of_val` 确定) 不能超过`isize::MAX`。
+{==+==}
+
+
+{==+==}
 [`bool`]: types/boolean.md
 [`const`]: items/constant-items.md
 [noalias]: http://llvm.org/docs/LangRef.html#noalias
@@ -116,3 +187,6 @@ must never exceed `isize::MAX`.
 [dereference expression]: expressions/operator-expr.md#the-dereference-operator
 [place expression context]: expressions.md#place-expressions-and-value-expressions
 [rules]: inline-assembly.md#rules-for-inline-assembly
+{==+==}
+
+{==+==}
