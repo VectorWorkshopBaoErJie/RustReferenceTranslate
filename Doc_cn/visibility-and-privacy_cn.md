@@ -1,5 +1,11 @@
+{==+==}
 # Visibility and Privacy
+{==+==}
+# 可见性和私有性
+{==+==}
 
+
+{==+==}
 > **<sup>Syntax<sup>**\
 > _Visibility_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `pub`\
@@ -7,7 +13,12 @@
 > &nbsp;&nbsp; | `pub` `(` `self` `)`\
 > &nbsp;&nbsp; | `pub` `(` `super` `)`\
 > &nbsp;&nbsp; | `pub` `(` `in` [_SimplePath_] `)`
+{==+==}
 
+{==+==}
+
+
+{==+==}
 These two terms are often used interchangeably, and what they are attempting to
 convey is the answer to the question "Can this item be used at this location?"
 
@@ -26,7 +37,21 @@ By default, everything is *private*, with two exceptions: Associated
 items in a `pub` Trait are public by default; Enum variants
 in a `pub` enum are also public by default. When an item is declared as `pub`,
 it can be thought of as being accessible to the outside world. For example:
+{==+==}
+这两个术语经常被交替使用，它们试图表达 “此条目是否可在此位置使用？” 的答案。
 
+Rust 的名称解析是在全局层次结构的命名空间中运行的。层次结构中的每个级别都可以被视为某个条目。
+这些条目是上面提到的其中之一，但也包括外部 crate 。声明或定义新模块可以被视为在定义位置将一个新树插入层次结构中。
+
+为了控制接口是否可以跨模块使用， Rust 检查每个条目的使用情况，以确定是否允许使用。
+这就是产生隐私警告的地方，从而提示 “你使用了另一个模块的私有条目，但未被允许” 。
+
+默认情况下，所有内容都是 *私有的* ，有两个例外: 在 `pub` Trait 中的关联条目默认是公共的；在 `pub` 枚举中的枚举变量也默认是公共的。
+当一个条目被声明为 `pub` 时，可以将其视为对外界可访问的。例如:
+{==+==}
+
+
+{==+==}
 ```rust
 # fn main() {}
 // Declare a private struct
@@ -43,7 +68,27 @@ pub enum State {
     PubliclyAccessibleState2,
 }
 ```
+{==+==}
+```rust
+# fn main() {}
+// 声明一个私有结构体
+struct Foo;
 
+// 声明一个公共结构体，其中有一个私有字段
+pub struct Bar {
+    field: i32,
+}
+
+// 声明一个公共枚举类型，其中有两个公共变体
+pub enum State {
+    PubliclyAccessibleState,
+    PubliclyAccessibleState2,
+}
+```
+{==+==}
+
+
+{==+==}
 With the notion of an item being either public or private, Rust allows item
 accesses in two cases:
 
@@ -75,7 +120,21 @@ explain, here's a few use cases and what they would entail:
   could access any items of the parent module through the second case, meaning
   that internal implementation details could also be seamlessly tested from the
   child module.
+{==+==}
+在 Rust 中，通过将条目定义为公共或私有，允许在以下两种情况下访问条目：
 
+1. 如果条目是公共的，则可以从一些模块 `m` 外部访问它，如果您可以从 `m` 访问所有条目的祖先模块，则还可以通过重新导出的方式命名该条目。
+2. 如果条目是私有的，则当前模块及其后代可以访问它。
+
+这两种情况对于创建公开 API 的模块层次结构并隐藏内部实现细节非常有用。以下是一些用例及其含义：
+
+* 库开发人员需要向链接其库的 crate 公开功能。作为第一种情况的结果，这意味着任何可在外部使用的内容必须从根到目标条目都是 `pub` 的。链中的任何私有条目都将禁止外部访问。
+* 一个 crate 需要一个仅对自己可用的全局 “帮助模块” ，但它不想将该模块公开为公共 API 。为此，crate 层次结构的根将具有一个私有模块，该模块内部具有 “公共 API” 。由于整个 crate 是根的后代，因此整个本地 crate 可以通过第二种情况访问此私有模块。
+* 在为模块编写单元测试时，通常的惯用语法是让待测试的模块的直接子条目命名为 `mod test`。此模块可以通过第二种情况访问父模块的任何条目，从而可以轻松测试内部实现细节。
+{==+==}
+
+
+{==+==}
 In the second case, it mentions that a private item "can be accessed" by the
 current module and its descendants, but the exact meaning of accessing an item
 depends on what the item is. Accessing a module, for example, would mean
@@ -87,7 +146,16 @@ scope.
 
 Here's an example of a program which exemplifies the three cases outlined
 above:
+{==+==}
+在第二种情况中，它提到了私有条目可以被当前模块和其子孙模块 "访问" ，但是访问条目的确切含义取决于该条目是什么。
+例如，访问模块将意味着查看其中的内容（以导入更多条目）。另一方面，访问函数将意味着调用它。
+此外，路径表达式和导入语句被认为是访问条目，因为只有在目标在当前可见范围内时，导入/表达式才是有效的。
 
+下面是一个程序示例，说明了上述三种情况:
+{==+==}
+
+
+{==+==}
 ```rust
 // This module is private, meaning that no external crate can access this
 // module. Because it is private at the root of this current crate, however, any
@@ -137,7 +205,50 @@ pub mod submodule {
 
 # fn main() {}
 ```
+{==+==}
+```rust
+// 这个模块是私有的，意味着没有外部 crate 可以访问这个模块。然而，因为它在当前 crate 的根目录下是私有的，所以任何在 crate 中的模块都可以访问这个模块中任何公开可见的条目。
+mod crate_helper_module {
 
+    // 这个函数可以被当前 crate 中的任何东西使用
+    pub fn crate_helper() {}
+
+    // 这个函数 *不能* 被 crate 中的其他任何东西使用。它在 `crate_helper_module` 之外不可公开访问，因此只有这个当前模块及其子代可以访问它。
+    fn implementation_detail() {}
+}
+
+// 这个函数是 "对根可见的公共"，这意味着它可以在链接到这个 crate 的外部 crate 中使用。
+pub fn public_api() {}
+
+// 类似于 'public_api'，这个模块是公共的，因此外部 crate 可以查看其内部。
+pub mod submodule {
+    use crate::crate_helper_module;
+
+    pub fn my_method() {
+        // 通过上述两条规则的组合，本地 crate 中的任何条目都可以调用辅助模块的公共接口。
+        crate_helper_module::crate_helper();
+    }
+
+    // 这个函数对于不是 `submodule` 的子孙模块是隐藏的。
+    fn my_implementation() {}
+
+    #[cfg(test)]
+    mod test {
+
+        #[test]
+        fn test_my_implementation() {
+            // 因为这个模块是 `submodule` 的子孙模块，所以它允许访问 `submodule` 中的私有条目而不会违反隐私规定。
+            super::my_implementation();
+        }
+    }
+}
+
+# fn main() {}
+```
+{==+==}
+
+
+{==+==}
 For a Rust program to pass the privacy checking pass, all paths must be valid
 accesses given the two rules above. This includes all use statements,
 expressions, types, etc.
@@ -160,7 +271,24 @@ to `pub(in self)` or not using `pub` at all.
 > may also use paths starting with `::` or modules from the crate root.
 
 Here's an example:
+{==+==}
+为了使 Rust 程序通过隐私检查，所有路径必须根据上述两条规则进行有效访问。这包括所有的 use 语句、表达式、类型等。
 
+## `pub(in path)`, `pub(crate)`, `pub(super)`, 和 `pub(self)`
+
+除了 public 和 private 之外， Rust 还允许用户将一个条目声明为仅在给定范围内可见。 `pub` 限制的规则如下：
+- `pub(in path)` 使得一个条目在提供的 `path` 中可见。 `path` 必须是正在声明其可见性的条目的祖先模块。
+- `pub(crate)` 使得一个条目在当前 crate 内可见。
+- `pub(super)` 使得一个条目对其父模块可见。这等价于 `pub(in super)` 。
+- `pub(self)` 使得一个条目对当前模块可见。这等价于 `pub(in self)` 或者不使用 `pub` 。
+
+> **版本差异**: 从 2018 版开始， `pub(in path)` 的路径必须以 `crate` 、 `self` 或 `super` 开头。 2015 版也可以使用以 `::` 开头的路径或来自 crate 根的模块。
+
+这是一个例子：
+{==+==}
+
+
+{==+==}
 ```rust,edition2015
 pub mod outer_mod {
     pub mod inner_mod {
@@ -210,7 +338,60 @@ fn bar() {
 
 fn main() { bar() }
 ```
+{==+==}
+```rust,edition2015
+pub mod outer_mod {
+    pub mod inner_mod {
+        // 此函数在 `outer_mod` 中可见
+        pub(in crate::outer_mod) fn outer_mod_visible_fn() {}
+        // 与上面的相同，在 2015 版中仅适用。
+        pub(in outer_mod) fn outer_mod_visible_fn_2015() {}
 
+        // 此函数在整个 crate 中可见
+        pub(crate) fn crate_visible_fn() {}
+
+        // 此函数在 `super` 中可见
+        pub(super) fn super_mod_visible_fn() {
+            // 因为在同一 `mod` 中，所以此函数可见
+            inner_mod_visible_fn();
+        }
+
+        // 此函数仅在 `inner_mod` 中可见，
+        // 这等同于将其声明为 private。
+        pub(self) fn inner_mod_visible_fn() {}
+    }
+    pub fn foo() {
+        inner_mod::outer_mod_visible_fn();
+        inner_mod::crate_visible_fn();
+        inner_mod::super_mod_visible_fn();
+
+        // 由于已经在 `inner_mod` 的外部，因此此函数不再可见。
+        // 错误！ `inner_mod_visible_fn` 是私有的
+        //inner_mod::inner_mod_visible_fn();
+    }
+}
+
+fn bar() {
+    // 因为我们在同一 crate 中，所以此函数仍然可见。
+    outer_mod::inner_mod::crate_visible_fn();
+
+    // 由于我们在 `outer_mod` 的外部，因此此函数不再可见。
+    // 错误！ `super_mod_visible_fn` 是私有的
+    //outer_mod::inner_mod::super_mod_visible_fn();
+
+    // 由于我们在 `outer_mod` 的外部，因此此函数不再可见。
+    // 错误！ `outer_mod_visible_fn` 是私有的
+    //outer_mod::inner_mod::outer_mod_visible_fn();
+
+    outer_mod::foo();
+}
+
+fn main() { bar() }
+```
+{==+==}
+
+
+{==+==}
 > **Note:** This syntax only adds another restriction to the visibility of an
 > item. It does not guarantee that the item is visible within all parts of the
 > specified scope. To access an item, all of its parent items up to the
@@ -222,7 +403,18 @@ Rust allows publicly re-exporting items through a `pub use` directive. Because
 this is a public directive, this allows the item to be used in the current
 module through the rules above. It essentially allows public access into the
 re-exported item. For example, this program is valid:
+{==+==}
+> **注意:** 这种语法只是增加了一个对条目可见性的限制，它并不保证该条目在指定范围内的所有部分都可见。
+要访问一个条目，它的所有父级条目直到当前范围仍然必须可见。
 
+## 重新导出和可见性
+
+Rust 允许通过 `pub use` 指令公开重新导出条目。因为这是一个公共指令，这允许通过上面的规则在当前模块中使用该条目。
+这实际上允许了对重新导出的条目的公共访问。例如，这个程序是有效的：
+{==+==}
+
+
+{==+==}
 ```rust
 pub use self::implementation::api;
 
@@ -234,12 +426,27 @@ mod implementation {
 
 # fn main() {}
 ```
+{==+==}
 
+{==+==}
+
+
+{==+==}
 This means that any external crate referencing `implementation::api::f` would
 receive a privacy violation, while the path `api::f` would be allowed.
 
 When re-exporting a private item, it can be thought of as allowing the "privacy
 chain" being short-circuited through the reexport instead of passing through
 the namespace hierarchy as it normally would.
+{==+==}
+这意味着，任何引用 `implementation::api::f` 的外部 crate 都将遭受隐私侵犯，而路径 `api::f` 将被允许。
 
+当重新导出一个私有条目时，可以将其视为通过重新导出而允许 “隐私链” 短路，而不是像通常一样通过命名空间层次结构传递。
+{==+==}
+
+
+{==+==}
 [_SimplePath_]: paths.md#simple-paths
+{==+==}
+
+{==+==}

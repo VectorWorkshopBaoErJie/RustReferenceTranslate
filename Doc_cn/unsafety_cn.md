@@ -1,3 +1,4 @@
+{==+==}
 # Unsafety
 
 Unsafe operations are those that can potentially violate the memory-safety
@@ -11,9 +12,27 @@ Rust:
 - Accessing a field of a [`union`], other than to assign to it.
 - Calling an unsafe function (including an intrinsic or foreign function).
 - Implementing an [unsafe trait].
+{==+==}
+# 不安全性
 
+不安全操作是指那些可能违反 Rust 静态语义的内存安全保证的操作。
+
+以下语言级别的特性不能在 Rust 的安全子集中使用:
+
+- 解引用一个 [裸指针][raw pointer] 。
+- 读取或写入一个 [可变][mutable] 或 [外部][external] 静态变量。
+- 访问一个 [`union`] 的字段，除了为了给它赋值之外。
+- 调用一个不安全的函数（包括一个内部函数或外部函数）。
+- 实现一个 [不安全 trait][unsafe trait] 。
+{==+==}
+
+
+{==+==}
 [`union`]: items/unions.md
 [mutable]: items/static-items.md#mutable-statics
 [external]: items/external-blocks.md
 [raw pointer]: types/pointer.md
 [unsafe trait]: items/traits.md#unsafe-traits
+{==+==}
+
+{==+==}

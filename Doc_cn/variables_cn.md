@@ -1,3 +1,4 @@
+{==+==}
 # Variables
 
 A _variable_ is a component of a stack frame, either a named function parameter,
@@ -23,7 +24,26 @@ initialized through all reachable control flow paths.
 
 In this next example, `init_after_if` is initialized after the [`if` expression]
 while `uninit_after_if` is not because it is not initialized in the `else` case.
+{==+==}
+# 变量
 
+_变量_ 是栈帧的组成部分，可以是函数的具名参数、匿名的 [临时变量](expressions.md#temporaries) 或具名的局部变量。
+
+_局部变量_ （或称为 *堆栈本地* 分配）直接持有一个值，该值在栈的内存中分配。该值是栈帧的一部分。
+
+除非另有声明，否则局部变量是不可变的。例如：`let mut x = ...` 。
+
+函数参数是不可变的，除非声明为 `mut` 。 `mut` 关键字仅适用于其后面的参数。
+例如：`|mut x, y|` 和 `fn f(mut x: Box<i32>, y: Box<i32>)` 声明了一个可变变量 `x` 和一个不可变变量 `y`。
+
+局部变量在分配时不会被初始化。相反，在进入栈帧时，局部变量的整个框架被以未初始化状态分配。
+函数中的后续语句可以或不可以初始化局部变量。只有在经过所有可达的控制流路径初始化局部变量后才能使用局部变量。
+
+在下面的示例中，`init_after_if` 在 [`if` 表达式][`if` expression] 后被初始化，而 `uninit_after_if` 不会被初始化，因为它在 `else` 中没有初始化。
+{==+==}
+
+
+{==+==}
 ```rust
 # fn random_bool() -> bool { true }
 fn initialization_example() {
@@ -41,5 +61,29 @@ fn initialization_example() {
     // uninit_after_if; // err: use of possibly uninitialized `uninit_after_if`
 }
 ```
+{==+==}
+```rust
+# fn random_bool() -> bool { true }
+fn initialization_example() {
+    let init_after_if: ();
+    let uninit_after_if: ();
 
+    if random_bool() {
+        init_after_if = ();
+        uninit_after_if = ();
+    } else {
+        init_after_if = ();
+    }
+
+    init_after_if; // ok
+    // uninit_after_if; // err: 使用可能未初始化 `uninit_after_if`
+}
+```
+{==+==}
+
+
+{==+==}
 [`if` expression]: expressions/if-expr.md#if-expressions
+{==+==}
+
+{==+==}
