@@ -1,3 +1,4 @@
+{==+==}
 # Inline assembly
 
 Support for inline assembly is provided via the [`asm!`] and [`global_asm!`] macros.
@@ -13,7 +14,25 @@ Support for inline assembly is stable on the following architectures:
 - RISC-V
 
 The compiler will emit an error if `asm!` is used on an unsupported target.
+{==+==}
+# 内联汇编
 
+通过 [`asm!`] 和 [`global_asm!`] 宏提供对内联汇编的支持。可以使用它来嵌入手写汇编到编译器生成的汇编输出中。
+
+[`asm!`]: ../core/arch/macro.asm.html
+[`global_asm!`]: ../core/arch/macro.global_asm.html
+
+以下体系结构上的内联汇编支持已经稳定：
+- x86 和 x86-64
+- ARM
+- AArch64
+- RISC-V
+
+如果在不支持的目标上使用 `asm!`，编译器会发出错误。
+{==+==}
+
+
+{==+==}
 ## Example
 
 ```rust
@@ -33,7 +52,30 @@ unsafe {
 }
 assert_eq!(x, 4 * 6);
 ```
+{==+==}
+## 示例
 
+```rust
+use std::arch::asm;
+
+// 使用移位和加法将 x 乘以 6
+let mut x: u64 = 4;
+unsafe {
+    asm!(
+        "mov {tmp}, {x}",
+        "shl {tmp}, 1",
+        "shl {x}, 2",
+        "add {x}, {tmp}",
+        x = inout(reg) x,
+        tmp = out(reg) _,
+    );
+}
+assert_eq!(x, 4 * 6);
+```
+{==+==}
+
+
+{==+==}
 ## Syntax
 
 The following ABNF specifies the general syntax:
@@ -51,8 +93,28 @@ options := "options(" option *("," option) [","] ")"
 asm := "asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," clobber_abi) *("," options) [","] ")"
 global_asm := "global_asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," options) [","] ")"
 ```
+{==+==}
+## 语法
+
+以下 ABNF 规定了通用语法：
+
+```text
+format_string := STRING_LITERAL / RAW_STRING_LITERAL
+dir_spec := "in" / "out" / "lateout" / "inout" / "inlateout"
+reg_spec := <register class> / "\"" <explicit register> "\""
+operand_expr := expr / "_" / expr "=>" expr / expr "=>" "_"
+reg_operand := dir_spec "(" reg_spec ")" operand_expr
+operand := reg_operand
+clobber_abi := "clobber_abi(" <abi> *("," <abi>) [","] ")"
+option := "pure" / "nomem" / "readonly" / "preserves_flags" / "noreturn" / "nostack" / "att_syntax" / "raw"
+options := "options(" option *("," option) [","] ")"
+asm := "asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," clobber_abi) *("," options) [","] ")"
+global_asm := "global_asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," options) [","] ")"
+```
+{==+==}
 
 
+{==+==}
 ## Scope
 
 Inline assembly can be used in one of two ways.
@@ -63,7 +125,18 @@ Note that in some cases the compiler may choose to emit the assembly code as a s
 
 With the `global_asm!` macro, the assembly code is emitted in a global scope, outside a function.
 This can be used to hand-write entire functions using assembly code, and generally provides much more freedom to use arbitrary registers and assembler directives.
+{==+==}
+## 范围
 
+内联汇编有两种使用方式。
+
+使用 `asm!` 宏时，汇编代码在函数作用域中生成，并集成到函数的编译器生成的汇编代码中。这些汇编代码必须遵守 [严格规则](#inline-assembly的规则) 以避免未定义行为。注意，在某些情况下，编译器可能会选择将汇编代码生成为一个单独的函数并生成对它的调用。
+
+使用 `global_asm!` 宏时，汇编代码在全局作用域中生成，不在函数内。这可以用于使用汇编代码手写整个函数，并且通常提供更多使用任意寄存器和汇编指令的自由。
+{==+==}
+
+
+{==+==}
 ## Template string arguments
 
 The assembler template uses the same syntax as [format strings][format-syntax] (i.e. placeholders are specified by curly braces).
@@ -91,7 +164,38 @@ Further constraints on the directives used by inline assembly are indicated by [
 
 [format-syntax]: ../std/fmt/index.html#syntax
 [rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
+{==+==}
+## 模板字符串参数
 
+汇编器模板使用与[格式字符串][format-syntax]相同的语法（即占位符由花括号指定）。
+相应的参数按顺序、索引或名称访问。
+但是，不支持隐式命名参数（由[RFC #2795][rfc-2795]引入）。
+
+`asm!` 调用可能有一个或多个模板字符串参数；具有多个模板字符串参数的 `asm!` 被视为所有字符串在它们之间使用 `\n` 连接。
+预期的用法是每个模板字符串参数对应于汇编代码的一行。
+所有模板字符串参数必须出现在任何其他参数之前。
+
+与格式字符串一样，命名参数必须出现在位置参数之后。
+显式的[寄存器操作数](#register-operands)必须出现在操作数列表的末尾，在任何命名参数之后。
+
+模板字符串中的占位符不能使用显式寄存器操作数。
+所有其他命名和位置操作数都必须至少在模板字符串中出现一次，否则将生成编译器错误。
+
+确切的汇编代码语法是特定于目标的，对编译器不透明，除了将操作数替换为模板字符串以形成传递给汇编器的代码的方式之外。
+
+目前，所有支持的目标都遵循 LLVM 内部汇编器使用的汇编代码语法，这通常对应于 GNU 汇编器（GAS）的语法。
+在 x86 上，默认使用 GAS 的 `.intel_syntax noprefix` 模式。
+在 ARM 上，使用 `.syntax unified` 模式。
+这些目标对汇编代码施加了一个额外的限制：任何汇编器状态（例如，可以使用 `.section` 改变的当前节）必须在 asm 字符串的末尾恢复到其原始值。
+不符合 GAS 语法的汇编代码将导致特定于汇编器的行为。
+有关内联汇编使用的指令的进一步限制在 [指令支持](#directives-support) 中指定。
+
+[format-syntax]: ../std/fmt/index.html#syntax
+[rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
+{==+==}
+
+
+{==+==}
 ## Operand type
 
 Several types of operands are supported:
@@ -110,6 +214,29 @@ Several types of operands are supported:
 * `lateout(<reg>) <expr>`
   - Identical to `out` except that the register allocator can reuse a register allocated to an `in`.
   - You should only write to the register after all inputs are read, otherwise you may clobber an input.
+{==+==}
+## 操作数类型
+
+支持几种操作数类型:
+
+* `in(<reg>) <expr>`
+  - `<reg>` 可以是寄存器类或显式寄存器。
+    分配的寄存器名称将替换为 asm 模板字符串中的名称。
+  - 分配的寄存器将在 asm 代码开始时包含 `<expr>` 的值。
+  - 在 asm 代码结束时，分配的寄存器必须包含相同的值（除非另一个 `lateout` 被分配到相同的寄存器）。
+* `out(<reg>) <expr>`
+  - `<reg>` 可以是寄存器类或显式寄存器。
+    分配的寄存器名称将替换为 asm 模板字符串中的名称。
+  - 分配的寄存器在 asm 代码开始时包含未定义的值。
+  - `<expr>` 必须是一个（可能未初始化的）place 表达式，分配的寄存器的内容在 asm 代码结束时写入该表达式。
+  - 可以使用下划线 (`_`) 代替表达式，在 asm 代码结束时会丢弃寄存器的内容（有效地作为 clobber）。
+* `lateout(<reg>) <expr>`
+  - 与 `out` 相同，但是寄存器分配器可以重新使用分配给 `in` 的寄存器。
+  - 应在读取所有输入之后再写入寄存器，否则可能破坏输入。
+{==+==}
+
+
+{==+==}
 * `inout(<reg>) <expr>`
   - `<reg>` can refer to a register class or an explicit register.
     The allocated register name is substituted into the asm template string.
@@ -128,13 +255,44 @@ Several types of operands are supported:
   - A mangled symbol name referring to the item is substituted into the asm template string.
   - The substituted string does not include any modifiers (e.g. GOT, PLT, relocations, etc).
   - `<path>` is allowed to point to a `#[thread_local]` static, in which case the asm code can combine the symbol with relocations (e.g. `@plt`, `@TPOFF`) to read from thread-local data.
+{==+==}
+* `inout(<reg>) <expr>`
+  - `<reg>`可以引用寄存器类或显式寄存器。
+    分配的寄存器名称将替换为汇编模板字符串中。
+  - 分配的寄存器将在汇编代码开始时包含 `<expr>` 的值。
+  - `<expr>`必须是一个可变的初始化地点表达式，分配的寄存器的内容将在汇编代码结束时写入该表达式。
+* `inout(<reg>) <in expr> => <out expr>`
+  - 与`inout`相同，但是寄存器的初始值取自`<in expr>`的值。
+  - `<out expr>`必须是一个（可能未初始化的）地点表达式，分配的寄存器的内容将在汇编代码结束时写入该表达式。
+  - 可以为`<out expr>`指定下划线（`_`），这将导致在汇编代码结束时丢弃寄存器的内容（实际上起到破坏作用）。
+  - `<in expr>`和`<out expr>`可能具有不同的类型。
+* `inlateout(<reg>) <expr>` / `inlateout(<reg>) <in expr> => <out expr>`
+  - 与`inout`相同，但是寄存器分配器可以重用分配给`in`的寄存器（如果编译器知道`in`具有与`inlateout`相同的初始值，则可能会发生这种情况）。
+  - 只有在读取所有输入后才应写入寄存器，否则可能会破坏输入。
+* `sym <path>`
+  - `<path>`必须引用`fn`或`static`。
+  - 指向该项的重命名符号名称将替换为汇编模板字符串中。
+  - 替换的字符串不包括任何修改器（例如GOT、PLT、重定位等）。
+  - `<path>`允许指向`#[thread_local]`静态变量，在这种情况下，汇编代码可以将符号与重定位（例如`@plt`、`@TPOFF`）组合以从线程本地数据读取。
+{==+==}
 
+
+{==+==}
 Operand expressions are evaluated from left to right, just like function call arguments.
 After the `asm!` has executed, outputs are written to in left to right order.
 This is significant if two outputs point to the same place: that place will contain the value of the rightmost output.
 
 Since `global_asm!` exists outside a function, it can only use `sym` operands.
+{==+==}
+操作数表达式从左到右依次评估，就像函数调用参数一样。
+在 `asm!` 执行完成后，输出按照从左到右的顺序进行写入。
+如果两个输出指向同一个位置，则该位置将包含最右边输出的值。
 
+由于 `global_asm!` 存在于函数外部，因此它只能使用 `sym` 操作数。
+{==+==}
+
+
+{==+==}
 ## Register operands
 
 Input and output operands can be specified either as an explicit register or as a register class from which the register allocator can select a register.
@@ -153,7 +311,28 @@ Only the following types are allowed as operands for inline assembly:
 This includes architecture-specific vector types defined in `std::arch` such as `__m128` (x86) or `int8x16_t` (ARM).
 
 Here is the list of currently supported register classes:
+{==+==}
+## 寄存器操作数
 
+输入和输出操作数可以被指定为显式寄存器或者是寄存器类，从中寄存器分配器可以选择一个寄存器。
+显式寄存器以字符串字面量表示（例如`"eax"`），而寄存器类则以标识符表示（例如`reg`）。
+
+需要注意的是，显式寄存器将寄存器别名（例如 ARM 上的 `r14` vs `lr`）和寄存器的较小视图（例如`eax` vs `rax`）视为等效于基础寄存器。
+在两个输入操作数或两个输出操作数中使用相同的显式寄存器是编译时错误。
+此外，在输入操作数或输出操作数中使用重叠的寄存器（例如 ARM VFP）也是编译时错误。
+
+只有以下类型的操作数被允许用于内联汇编：
+- 整数（有符号和无符号）
+- 浮点数
+- 指针（仅限thin）
+- 函数指针
+- SIMD 向量（用 `#[repr(simd)]` 定义的结构体，并且实现了 `Copy`）。其中包括在 `std::arch` 中定义的架构特定的向量类型，例如 `__m128`（x86）或 `int8x16_t`（ARM）。
+
+以下是当前支持的寄存器类的列表：
+{==+==}
+
+
+{==+==}
 | Architecture | Register class | Registers | LLVM constraint code |
 | ------------ | -------------- | --------- | -------------------- |
 | x86 | `reg` | `ax`, `bx`, `cx`, `dx`, `si`, `di`, `bp`, `r[8-15]` (x86-64 only) | `r` |
@@ -185,7 +364,12 @@ Here is the list of currently supported register classes:
 | RISC-V | `reg` | `x1`, `x[5-7]`, `x[9-15]`, `x[16-31]` (non-RV32E) | `r` |
 | RISC-V | `freg` | `f[0-31]` | `f` |
 | RISC-V | `vreg` | `v[0-31]` | Only clobbers |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **Notes**:
 > - On x86 we treat `reg_byte` differently from `reg` because the compiler can allocate `al` and `ah` separately whereas `reg` reserves the whole register.
 >
@@ -197,7 +381,22 @@ Each register class has constraints on which value types they can be used with.
 This is necessary because the way a value is loaded into a register depends on its type.
 For example, on big-endian systems, loading a `i32x4` and a `i8x16` into a SIMD register may result in different register contents even if the byte-wise memory representation of both values is identical.
 The availability of supported types for a particular register class may depend on what target features are currently enabled.
+{==+==}
+> **注**：
+> - 在 x86 上，我们将 `reg_byte` 与 `reg` 区别对待，因为编译器可以分别分配 `al` 和 `ah`，而 `reg` 保留整个寄存器。
+>
+> - 在 x86-64 上，高字节寄存器（例如 `ah`）不可用于 `reg_byte` 寄存器类。
+>
+> - 一些寄存器类被标记为“仅占用”，这意味着这些类中的寄存器不能用作输入或输出，只能用作类似 `out(<explicit register>) _` 或 `lateout(<explicit register>) _` 的占用。
 
+每个寄存器类对可以与其一起使用的值类型有约束。
+这是必要的，因为将值加载到寄存器中的方式取决于其类型。
+例如，在大端系统上，将 `i32x4` 和 `i8x16` 加载到 SIMD 寄存器中可能会导致不同的寄存器内容，即使这两个值的按字节的内存表示相同。
+支持特定寄存器类的类型的可用性可能取决于当前启用的目标特性。
+{==+==}
+
+
+{==+==}
 | Architecture | Register class | Target feature | Allowed types |
 | ------------ | -------------- | -------------- | ------------- |
 | x86-32 | `reg` | None | `i16`, `i32`, `f32` |
@@ -223,7 +422,12 @@ The availability of supported types for a particular register class may depend o
 | RISC-V | `freg` | `f` | `f32` |
 | RISC-V | `freg` | `d` | `f64` |
 | RISC-V | `vreg` | N/A | Only clobbers |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **Note**: For the purposes of the above table pointers, function pointers and `isize`/`usize` are treated as the equivalent integer type (`i16`/`i32`/`i64` depending on the target).
 
 If a value is of a smaller size than the register it is allocated in then the upper bits of that register will have an undefined value for inputs and will be ignored for outputs.
@@ -232,13 +436,32 @@ The only exception is the `freg` register class on RISC-V where `f32` values are
 When separate input and output expressions are specified for an `inout` operand, both expressions must have the same type.
 The only exception is if both operands are pointers or integers, in which case they are only required to have the same size.
 This restriction exists because the register allocators in LLVM and GCC sometimes cannot handle tied operands with different types.
+{==+==}
+> **注意**：为了上表的目的，指针、函数指针和`isize`/`usize`被视为相应整数类型的等效类型（取决于目标的`i16`/`i32`/`i64`）。
 
+如果一个值的大小比分配给它的寄存器小，那么对于输入，该寄存器的高位将具有未定义的值，对于输出，将被忽略。
+唯一的例外是 RISC-V 上的 `freg` 寄存器类，其中 `f32` 值作为 RISC-V 架构所需的 NaN 被封装在 `f64` 中。
+
+当为 `inout` 操作数指定分开的输入和输出表达式时，两个表达式必须具有相同的类型。
+唯一的例外是如果两个操作数都是指针或整数，则它们只需要具有相同的大小。
+这个限制存在是因为 LLVM 和 GCC 中的寄存器分配器有时无法处理具有不同类型的绑定操作数。
+{==+==}
+
+
+{==+==}
 ## Register names
 
 Some registers have multiple names.
 These are all treated by the compiler as identical to the base register name.
 Here is the list of all supported register aliases:
+{==+==}
+## 寄存器名称
 
+一些寄存器有多个名称，编译器会将这些名称都视为与基础寄存器名称相同。以下是所有支持的寄存器别名列表：
+{==+==}
+
+
+{==+==}
 | Architecture | Base register | Aliases |
 | ------------ | ------------- | ------- |
 | x86 | `ax` | `eax`, `rax` |
@@ -284,9 +507,19 @@ Here is the list of all supported register aliases:
 | RISC-V | `f[10-17]` | `fa[0-7]` |
 | RISC-V | `f[18-27]` | `fs[2-11]` |
 | RISC-V | `f[28-31]` | `ft[8-11]` |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 Some registers cannot be used for input or output operands:
+{==+==}
+有些寄存器不能用于输入或输出操作数：
+{==+==}
 
+
+{==+==}
 | Architecture | Unsupported register | Reason |
 | ------------ | -------------------- | ------ |
 | All | `sp` | The stack pointer must be restored to its original value at the end of an asm code block. |
@@ -300,9 +533,32 @@ Some registers cannot be used for input or output operands:
 | ARM | `r9` | This is an OS-reserved register on some ARM targets. |
 | RISC-V | `x0` | This is a constant zero register which can't be modified. |
 | RISC-V | `gp`, `tp` | These registers are reserved and cannot be used as inputs or outputs. |
+{==+==}
+| 架构 | 不支持的寄存器 | 原因 |
+| ------------ | -------------------- | ------ |
+| All | `sp` | 栈指针必须在 asm 代码块结束时恢复为其原始值。 |
+| All | `bp` (x86), `x29` (AArch64), `x8` (RISC-V) | 帧指针不能用作输入或输出。 |
+| ARM | `r7` 或 `r11` | 在 ARM 上，帧指针可以是 `r7` 或 `r11`，具体取决于目标。帧指针不能用作输入或输出。 |
+| All | `si` (x86-32), `bx` (x86-64), `r6` (ARM), `x19` (AArch64), `x9` (RISC-V) | LLVM 在函数具有复杂堆栈帧的情况下将其用作“基指针”。 |
+| x86 | `ip` | 这是程序计数器，不是实际的寄存器。 |
+| AArch64 | `xzr` | 这是一个无法修改的常量零寄存器。 |
+| AArch64 | `x18` | 这是某些 AArch64 目标上保留的操作系统寄存器。 |
+| ARM | `pc` | 这是程序计数器，不是实际的寄存器。 |
+| ARM | `r9` | 这是某些 ARM 目标上保留的操作系统寄存器。 |
+| RISC-V | `x0` | 这是一个无法修改的常量零寄存器。 |
+| RISC-V | `gp`，`tp` | 这些寄存器是保留的，不能用作输入或输出。 |
+{==+==}
 
+
+{==+==}
 The frame pointer and base pointer registers are reserved for internal use by LLVM. While `asm!` statements cannot explicitly specify the use of reserved registers, in some cases LLVM will allocate one of these reserved registers for `reg` operands. Assembly code making use of reserved registers should be careful since `reg` operands may use the same registers.
+{==+==}
+帧指针和基指针寄存器被 LLVM 保留作为内部使用。虽然 `asm!` 语句不能显式地指定保留寄存器的使用，但在某些情况下，LLVM 将为 `reg` 操作数分配其中一个保留寄存器。
+使用保留寄存器的汇编代码应该小心，因为 `reg` 操作数可能会使用相同的寄存器。
+{==+==}
 
+
+{==+==}
 ## Template modifiers
 
 The placeholders can be augmented by modifiers which are specified after the `:` in the curly braces.
@@ -310,7 +566,16 @@ These modifiers do not affect register allocation, but change the way operands a
 Only one modifier is allowed per template placeholder.
 
 The supported modifiers are a subset of LLVM's (and GCC's) [asm template argument modifiers][llvm-argmod], but do not use the same letter codes.
+{==+==}
+## 模板修改器
 
+在花括号中的 `:` 后可以加上修改器，来改变插入模板字符串时操作数的格式，这些修改器不影响寄存器分配。每个模板占位符只能有一个修改器。
+
+这些修改器是 LLVM 和 GCC 的汇编模板参数修改器的子集，但使用的字母代码不同。
+{==+==}
+
+
+{==+==}
 | Architecture | Register class | Modifier | Example output | LLVM modifier |
 | ------------ | -------------- | -------- | -------------- | ------------- |
 | x86-32 | `reg` | None | `eax` | `k` |
@@ -346,7 +611,12 @@ The supported modifiers are a subset of LLVM's (and GCC's) [asm template argumen
 | ARM | `qreg` | `e` / `f` | `d0` / `d1` | `e` / `f` |
 | RISC-V | `reg` | None | `x1` | None |
 | RISC-V | `freg` | None | `f0` | None |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > **Notes**:
 > - on ARM `e` / `f`: this prints the low or high doubleword register name of a NEON quad (128-bit) register.
 > - on x86: our behavior for `reg` with no modifiers differs from what GCC does.
@@ -359,7 +629,23 @@ Since this an easy pitfall, the compiler will suggest a template modifier to use
 If all references to an operand already have modifiers then the warning is suppressed for that operand.
 
 [llvm-argmod]: http://llvm.org/docs/LangRef.html#asm-template-argument-modifiers
+{==+==}
+> **注**：
+> - 在 ARM 上，`e`/`f`：打印 NEON 四重（128 位）寄存器的低位或高位双字寄存器名称。
+> - 在 x86 上：我们对于没有修饰符的 `reg` 的行为与 GCC 不同。
+>   GCC 将根据操作数值类型推断修饰符，而我们默认使用完整的寄存器大小。
+> - 在 x86 上，`xmm_reg`：LLVM 修饰符 `x`、`t` 和 `g` 尚未在 LLVM 中实现（仅由 GCC 支持），但这应该是一个简单的更改。
 
+如前一节所述，如果内联汇编传递的输入值比寄存器宽度小，则寄存器的上位比特将包含未定义的值。
+如果内联汇编只访问寄存器的低位，这不是一个问题，可以通过使用模板修饰符在汇编代码中使用子寄存器名称（例如，使用 `ax` 代替 `rax`）来实现。
+由于这是一个简单的错误，编译器将根据输入类型在适当的地方建议使用模板修饰符。
+如果对一个操作数的所有引用已经有修饰符，则该警告将对该操作数进行抑制。
+
+[llvm-argmod]: http://llvm.org/docs/LangRef.html#asm-template-argument-modifiers
+{==+==}
+
+
+{==+==}
 ## ABI clobbers
 
 The `clobber_abi` keyword can be used to apply a default set of clobbers to an `asm!` block.
@@ -370,7 +656,20 @@ This will automatically insert the necessary clobber constraints as needed for c
 Generic register class outputs are disallowed by the compiler when `clobber_abi` is used: all outputs must specify an explicit register.
 Explicit register outputs have precedence over the implicit clobbers inserted by `clobber_abi`: a clobber will only be inserted for a register if that register is not used as an output.
 The following ABIs can be used with `clobber_abi`:
+{==+==}
+## ABI破坏标记
 
+`clobber_abi` 关键字可用于将默认一组破坏标记应用于 `asm!` 块。这将根据特定调用约定自动插入必要的破坏标记：如果调用约定在函数调用时不能完全保留寄存器的值，则会在操作数列表中隐式添加 `lateout("...") _` （其中 `...` 替换为寄存器名称）。
+
+`clobber_abi` 可以指定任意次数。它将为所有指定的调用约定的并集中的所有唯一寄存器插入一个破坏标记。
+
+当使用 `clobber_abi` 时，编译器禁止使用通用寄存器类输出：所有输出都必须指定显式寄存器。显式寄存器输出优先于由 `clobber_abi` 插入的隐式破坏标记：仅当该寄存器未用作输出时，才会为该寄存器插入破坏标记。
+
+以下ABIs可与 `clobber_abi` 一起使用：
+{==+==}
+
+
+{==+==}
 | Architecture | ABI name | Clobbered registers |
 | ------------ | -------- | ------------------- |
 | x86-32 | `"C"`, `"system"`, `"efiapi"`, `"cdecl"`, `"stdcall"`, `"fastcall"` | `ax`, `cx`, `dx`, `xmm[0-7]`, `mm[0-7]`, `k[0-7]`, `st([0-7])` |
@@ -379,12 +678,25 @@ The following ABIs can be used with `clobber_abi`:
 | AArch64 | `"C"`, `"system"`, `"efiapi"` | `x[0-17]`, `x18`\*, `x30`, `v[0-31]`, `p[0-15]`, `ffr` |
 | ARM | `"C"`, `"system"`, `"efiapi"`, `"aapcs"` | `r[0-3]`, `r12`, `r14`, `s[0-15]`, `d[0-7]`, `d[16-31]` |
 | RISC-V | `"C"`, `"system"`, `"efiapi"` | `x1`, `x[5-7]`, `x[10-17]`, `x[28-31]`, `f[0-7]`, `f[10-17]`, `f[28-31]`, `v[0-31]` |
+{==+==}
 
+{==+==}
+
+
+{==+==}
 > Notes:
 > - On AArch64 `x18` only included in the clobber list if it is not considered as a reserved register on the target.
 
 The list of clobbered registers for each ABI is updated in rustc as architectures gain new registers: this ensures that `asm!` clobbers will continue to be correct when LLVM starts using these new registers in its generated code.
+{==+==}
+> 注意：
+> - 在AArch64上，仅当 `x18` 在目标上不被视为保留寄存器时，才将其包括在破坏列表中。
 
+每个ABI的受破坏寄存器列表会随着架构获取新寄存器而在rustc中更新：这确保了当LLVM在其生成的代码中开始使用这些新寄存器时，`asm！` 破坏项将继续正确。
+{==+==}
+
+
+{==+==}
 ## Options
 
 Flags are used to further influence the behavior of the inline assembly block.
@@ -406,7 +718,23 @@ Currently the following options are defined:
   Register operands are substituted in with a leading `%`.
 - `raw`: This causes the template string to be parsed as a raw assembly string, with no special handling for `{` and `}`.
   This is primarily useful when including raw assembly code from an external file using `include_str!`.
+{==+==}
+## 选项
 
+标志用于进一步影响内联汇编块的行为。目前定义了以下选项：
+
+- `pure`：`asm!` 块没有副作用，其输出仅取决于其直接输入（即值本身，而不是它们所指向的内容）或从内存读取的值（除非也设置了 `nomem` 选项）。这使得编译器可以执行比程序中指定的更少的 `asm!` 块次数（例如将其提升出循环）或甚至完全消除它（如果输出没有使用）。
+- `nomem`：`asm!` 块不读取或写入任何内存。这使得编译器可以在 `asm!` 块之间缓存修改后的全局变量的值，因为它知道它们不会被 `asm!` 读取或写入。
+- `readonly`：`asm!` 块不写入任何内存。这使得编译器可以在 `asm!` 块之间缓存未修改的全局变量的值，因为它知道它们不会被 `asm!` 写入。
+- `preserves_flags`：`asm!` 块不修改标志寄存器（在下面的规则中定义）。这使得编译器可以在 `asm!` 块之后避免重新计算条件标志。
+- `noreturn`：`asm!` 块永远不会返回，其返回类型定义为 `!`（永远不会）。如果执行超过 asm 代码的结尾，行为是未定义的。`noreturn` asm 块的行为就像不返回的函数一样；特别是，作用域中的局部变量在调用之前不会被丢弃。
+- `nostack`：`asm!` 块不将数据推入栈，也不写入堆栈保护区域（如果目标支持）。如果未使用此选项，则栈指针保证根据目标 ABI 适当对齐，以用于函数调用。
+- `att_syntax`：此选项仅在 x86 上有效，导致汇编程序使用 GNU 汇编程序的 `.att_syntax` 前缀模式。寄存器操作数将替换为带有前导 `%` 的操作数。
+- `raw`：这将导致模板字符串被解析为原始汇编字符串，没有对 `{` 和 `}` 进行特殊处理。这在使用 `include_str!` 包含来自外部文件的原始汇编代码时非常有用。
+{==+==}
+
+
+{==+==}
 The compiler performs some additional checks on options:
 - The `nomem` and `readonly` options are mutually exclusive: it is a compile-time error to specify both.
 - The `pure` option must be combined with either the `nomem` or `readonly` options, otherwise a compile-time error is emitted.
@@ -415,11 +743,30 @@ The compiler performs some additional checks on options:
 
 `global_asm!` only supports the `att_syntax` and `raw` options.
 The remaining options are not meaningful for global-scope inline assembly
+{==+==}
+编译器对选项进行了一些额外的检查：
+- `nomem` 和 `readonly` 选项是互斥的：指定两者都会导致编译时错误。
+- `pure` 选项必须与 `nomem` 或 `readonly` 选项结合使用，否则会发出编译时错误。
+- 在没有输出或只有被丢弃的输出（`_`）的 `asm!` 块上指定 `pure` 是编译时错误。
+- 在带有输出的 `asm!` 块上指定 `noreturn` 是编译时错误。
 
+`global_asm!` 只支持 `att_syntax` 和 `raw` 选项。
+其他选项在全局作用域内的内联汇编中没有意义。
+{==+==}
+
+
+{==+==}
 ## Rules for inline assembly
 
 To avoid undefined behavior, these rules must be followed when using function-scope inline assembly (`asm!`):
+{==+==}
+## 函数内联汇编规则
 
+为了避免未定义的行为，在使用函数内联汇编 (`asm!`) 时必须遵守以下规则:
+{==+==}
+
+
+{==+==}
 - Any registers not specified as inputs will contain an undefined value on entry to the asm block.
   - An "undefined value" in the context of inline assembly means that the register can (non-deterministically) have any one of the possible values allowed by the architecture.
     Notably it is not the same as an LLVM `undef` which can have a different value every time you read it (since such a concept does not exist in assembly code).
@@ -443,6 +790,34 @@ To avoid undefined behavior, these rules must be followed when using function-sc
   - You are responsible for making sure you don't overflow the stack (e.g. use stack probing to ensure you hit a guard page).
   - You should adjust the stack pointer when allocating stack memory as required by the target ABI.
   - The stack pointer must be restored to its original value before leaving the asm block.
+{==+==}
+- 任何未在输入中指定的寄存器，在进入汇编块时将包含未定义的值。
+  - 在内联汇编的上下文中，“未定义的值”意味着该寄存器可以（非确定性地）具有体系结构允许的任何可能值。
+    需要注意的是，它与 LLVM 中的 `undef` 不同，后者每次读取时都可以具有不同的值（因为在汇编代码中不存在这样的概念）。
+- 任何未指定为输出的寄存器，在离开汇编块时必须具有与进入时相同的值，否则行为是未定义的。
+  - 这仅适用于可以指定为输入或输出的寄存器。
+    其他寄存器遵循特定于目标的规则。
+  - 需要注意的是，`lateout` 可能会分配到与 `in` 相同的寄存器中，此时此规则不适用。
+    不过代码不应该依赖此规则，因为它取决于寄存器分配的结果。
+- 如果执行从汇编块中退出，则行为是未定义的。
+  - 如果汇编代码调用一个函数，然后函数抛出异常也同样适用。
+- 汇编代码被允许读取和写入的内存位置集合与 FFI 函数允许的位置集合相同。
+  - 参考不安全代码指南了解确切的规则。
+  - 如果设置了 `readonly` 选项，则只允许内存读取。
+  - 如果设置了 `nomem` 选项，则不允许读取或写入内存。
+  - 这些规则不适用于汇编代码私有的内存，例如在汇编块中分配的栈空间。
+- 编译器不能假设汇编中的指令实际上就是将要执行的指令。
+  - 这实际上意味着编译器必须将 `asm!` 视为黑匣子，并仅考虑接口规范，而不考虑指令本身。
+  - 可以通过特定于目标的机制进行运行时代码修补。
+- 除非设置了 `nostack` 选项，汇编代码可以使用堆栈指针下面的堆栈空间。
+  - 进入汇编块时，堆栈指针保证对于函数调用具有适当的对齐方式（根据目标 ABI）。
+  - 你负责确保不会溢出堆栈（例如，使用堆栈探测以确保触发警戒页）。
+  - 分配堆栈内存时，应根据目标 ABI 调整堆栈指针。
+  - 在离开 asm 块之前，堆栈指针必须恢复到其原始值。
+{==+==}
+
+
+{==+==}
 - If the `noreturn` option is set then behavior is undefined if execution falls through to the end of the asm block.
 - If the `pure` option is set then behavior is undefined if the `asm!` has side-effects other than its direct outputs.
   Behavior is also undefined if two executions of the `asm!` code with the same inputs result in different outputs.
@@ -466,6 +841,33 @@ To avoid undefined behavior, these rules must be followed when using function-sc
   - RISC-V
     - Floating-point exception flags in `fcsr` (`fflags`).
     - Vector extension state (`vtype`, `vl`, `vcsr`).
+{==+==}
+- 如果设置了 `noreturn` 选项，则执行控制流跌落到 `asm` 块末尾时的行为未定义。
+- 如果设置了 `pure` 选项，则执行除直接输出之外的副作用的 `asm!` 的行为是未定义的。 如果相同输入的两次 `asm!` 执行产生不同的输出，则行为也是未定义的。
+  - 在与 `nomem` 选项一起使用时，“输入”只是 `asm!` 的直接输入。
+  - 在与 `readonly` 选项一起使用时，“输入”包括 `asm!` 的直接输入以及 `asm!` 块允许读取的任何内存。
+- 如果设置了 `preserves_flags` 选项，则必须在退出 `asm` 块时还原这些标志寄存器：
+  - x86
+    - `EFLAGS` 中的状态标志位（CF、PF、AF、ZF、SF、OF）。
+    - 浮点状态字（全部）。
+    - `MXCSR` 中的浮点异常标志（PE、UE、OE、ZE、DE、IE）。
+  - ARM
+    - `CPSR` 中的条件标志（N、Z、C、V）。
+    - `CPSR` 中的饱和标志（Q）。
+    - `CPSR` 中的大于或等于标志（GE）。
+    - `FPSCR` 中的条件标志（N、Z、C、V）。
+    - `FPSCR` 中的饱和标志（QC）。
+    - `FPSCR` 中的浮点异常标志（IDC、IXC、UFC、OFC、DZC、IOC）。
+  - AArch64
+    - 条件标志（`NZCV` 寄存器）。
+    - 浮点状态（`FPSR` 寄存器）。
+  - RISC-V
+    - `fcsr` 中的浮点异常标志（`fflags`）。
+    - 向量扩展状态（`vtype`、`vl`、`vcsr`）。
+{==+==}
+
+
+{==+==}
 - On x86, the direction flag (DF in `EFLAGS`) is clear on entry to an asm block and must be clear on exit.
   - Behavior is undefined if the direction flag is set on exiting an asm block.
 - On x86, the x87 floating-point register stack must remain unchanged unless all of the `st([0-7])` registers have been marked as clobbered with `out("st(0)") _, out("st(1)") _, ...`.
@@ -483,9 +885,34 @@ To avoid undefined behavior, these rules must be followed when using function-sc
   The compiler is allowed to instantiate multiple copies of the `asm!` block, for example when the function containing it is inlined in multiple places.
 - On x86, inline assembly must not end with an instruction prefix (such as `LOCK`) that would apply to instructions generated by the compiler.
   - The compiler is currently unable to detect this due to the way inline assembly is compiled, but may catch and reject this in the future.
+{==+==}
+- 在 x86 上，进入 asm 块时方向标志（`EFLAGS` 中的 DF）被清除，并且在退出时必须保持清除状态。
+  - 如果在退出 asm 块时设置了方向标志，则行为未定义。
+- 在 x86 上，除非所有的 `st([0-7])` 寄存器都被标记为被污染的，否则 x87 浮点寄存器堆栈必须保持不变，方法是使用 `out("st(0)") _，out("st(1)") _，...`。
+  - 如果所有 x87 寄存器都被污染，则在进入 `asm` 块时保证 x87 寄存器堆栈为空。汇编代码必须确保在退出 asm 块时 x87 寄存器堆栈也为空。
+- 将栈指针和非输出寄存器恢复到其原始值的要求仅适用于退出 `asm!` 块时。
+  - 这意味着从不返回的 `asm!` 块（即使没有标记为 `noreturn`）不需要保留这些寄存器。
+  - 当返回到与您进入的 `asm!` 块不同的 `asm!` 块时（例如用于上下文切换），这些寄存器必须包含您正在 *退出* 的 `asm!` 块进入时的值。
+    - 您不能退出未进入的 `asm!` 块。也不能退出已经退出的 `asm!` 块（除非首先再次进入它）。
+    - 您负责切换任何特定于目标的状态（例如线程本地存储，堆栈边界）。
+    - 您不能从一个 `asm!` 块中的地址跳转到另一个 `asm!` 块中的地址，即使在同一个函数或块中，也必须将它们的上下文视为可能不同并要求进行上下文切换。您不能假设这些上下文中的任何特定值（例如当前堆栈指针或堆栈指针下方的临时值）在两个 `asm!` 块之间保持不变。
+    - 您可以访问的内存位置集是您输入和退出的 `asm!` 块所允许的位置集的交集。
+- 您不能假设两个在源代码中相邻的 `asm!` 块，即使它们之间没有其他代码，也会在二进制代码中以连续的地址出现，而没有其他指令在它们之间。
+- 您不能假设 `asm!` 块将在输出二进制代码中出现一次。
+  编译器可以实例化多个 `asm!` 块，例如当包含它的函数在多个位置内联时。
+- 在 x86 平台上，内联汇编不得以指令前缀（如 `LOCK`）作为结尾，因为这将应用于编译器生成的指令。
+  - 目前，编译器无法检测到这种情况，但将来可能会检测并拒绝此类代码。
+{==+==}
 
+
+{==+==}
 > **Note**: As a general rule, the flags covered by `preserves_flags` are those which are *not* preserved when performing a function call.
+{==+==}
+> **注意**: 通常情况下，`preserves_flags` 覆盖的标志位是在函数调用时*不会*保留的标志位。
+{==+==}
 
+
+{==+==}
 ### Directives Support
 
 Inline assembly supports a subset of the directives supported by both GNU AS and LLVM's internal assembler, given as follows.
@@ -494,7 +921,19 @@ The result of using other directives is assembler-specific (and may cause an err
 If inline assembly includes any "stateful" directive that modifies how subsequent assembly is processed, the block must undo the effects of any such directives before the inline assembly ends.
 
 The following directives are guaranteed to be supported by the assembler:
+{==+==}
+### 指令支持
 
+内联汇编支持一些 GNU AS 和 LLVM 内部汇编器支持的指令子集，具体如下。
+使用其他指令的结果是汇编器特定的（可能会导致错误，也可能按原样接受）。
+
+如果内联汇编包含任何 "有状态" 的指令，修改了后续汇编的处理方式，那么该块在内联汇编结束前必须撤销任何此类指令的影响。
+
+以下指令保证被汇编器支持：
+{==+==}
+
+
+{==+==}
 - `.2byte`
 - `.4byte`
 - `.8byte`
@@ -545,16 +984,27 @@ The following directives are guaranteed to be supported by the assembler:
 - `.type`
 - `.uleb128`
 - `.word`
+{==+==}
+
+{==+==}
 
 
-
+{==+==}
 #### Target Specific Directive Support
 
 ##### Dwarf Unwinding
 
 The following directives are supported on ELF targets that support DWARF unwind info:
+{==+==}
+#### 目标特定指令支持
+
+##### DWARF 帧解构指令
+
+以下指令在支持 DWARF 帧解构信息的 ELF 目标上被支持：
+{==+==}
 
 
+{==+==}
 - `.cfi_adjust_cfa_offset`
 - `.cfi_def_cfa`
 - `.cfi_def_cfa_offset`
@@ -576,12 +1026,23 @@ The following directives are supported on ELF targets that support DWARF unwind 
 - `.cfi_startproc`
 - `.cfi_undefined`
 - `.cfi_window_save`
+{==+==}
+
+{==+==}
 
 
+{==+==}
 ##### Structured Exception Handling
 
 On targets with structured exception Handling, the following additional directives are guaranteed to be supported:
+{==+==}
+##### 结构化异常处理
 
+对于具有结构化异常处理的目标，以下附加指令被保证受支持：
+{==+==}
+
+
+{==+==}
 - `.seh_endproc`
 - `.seh_endprologue`
 - `.seh_proc`
@@ -589,8 +1050,12 @@ On targets with structured exception Handling, the following additional directiv
 - `.seh_savereg`
 - `.seh_setframe`
 - `.seh_stackalloc`
+{==+==}
+
+{==+==}
 
 
+{==+==}
 ##### x86 (32-bit and 64-bit)
 
 On x86 targets, both 32-bit and 64-bit, the following additional directives are guaranteed to be supported:
@@ -598,17 +1063,34 @@ On x86 targets, both 32-bit and 64-bit, the following additional directives are 
 - `.code16`
 - `.code32`
 - `.code64`
+{==+==}
+##### x86（32位和64位）
+
+在x86目标上，无论是32位还是64位，保证支持以下附加指令：
+- `.nops`
+- `.code16`
+- `.code32`
+- `.code64`
+{==+==}
 
 
+{==+==}
 Use of `.code16`, `.code32`, and `.code64` directives are only supported if the state is reset to the default before exiting the assembly block.
 32-bit x86 uses `.code32` by default, and x86_64 uses `.code64` by default.
-
-
 
 ##### ARM (32-bit)
 
 On ARM, the following additional directives are guaranteed to be supported:
+{==+==}
+对于使用 `.code16`, `.code32` 和 `.code64` 指令的情况，只有在退出汇编块之前将状态重置为默认值才受支持。32 位 x86 默认使用 `.code32`，而 x86_64 默认使用 `.code64`。
 
+##### ARM (32 位)
+
+在 ARM 上，以下其他指令保证得到支持：
+{==+==}
+
+
+{==+==}
 - `.even`
 - `.fnstart`
 - `.fnend`
@@ -617,3 +1099,6 @@ On ARM, the following additional directives are guaranteed to be supported:
 - `.code`
 - `.thumb`
 - `.thumb_func`
+{==+==}
+
+{==+==}
