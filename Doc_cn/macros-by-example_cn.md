@@ -66,10 +66,10 @@ the matcher and the transcriber must be surrounded by delimiters. Macros can
 expand to expressions, statements, items (including traits, impls, and foreign
 items), types, or patterns.
 {==+==}
-每个宏定义都有一个名称和一个或多个 _rules_ 规则。
+每个宏定义都有一个名称和一个或多个 _规则_ 。
 每个规则都有两个部分：一个 _matcher_ 匹配器，用于描述它匹配的语法，以及一个 _transcriber_ 转录器，用于描述成功匹配调用后将替换的语法。
 匹配器和转录器都必须被包含在分隔符中。
-宏可以扩展为表达式、语句、条目 (包括trait、实现和外部条目) 、类型或模式。
+宏可以扩展为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
 {==+==}
 
 
@@ -92,8 +92,8 @@ invocation unambiguously:
 {==+==}
 当宏被调用时，宏展开器通过名称查找宏调用，并依次尝试每个宏规则。
 它会转录第一个成功的匹配；如果这导致错误，则不会尝试后续匹配。
-在匹配时，不会进行前瞻；如果编译器不能逐个标记地明确定义如何解析宏调用，则会出错。
-在下面的示例中，编译器不会向前查看标识符以查看下一个标记是否为 `)` ，尽管这能够使它更明确地解析调用：
+在匹配时，不会进行前瞻；如果编译器不能逐个 Token 地明确定义如何解析宏调用，则会出错。
+在下面的示例中，编译器不会向前查看标识符，不会查看下一个 Token 是否为 `)` ，尽管这能够更明确地解析调用:
 {==+==}
 
 
@@ -128,7 +128,7 @@ instance, the matcher `(())` will match `{()}` but not `{{}}`. The character
 在匹配器和转录器中， `$` 符号用于从宏引擎中调用特殊行为 (在 [元变量][Metavariables] 和 [重复][Repetitions] 中描述)。
 不属于这种调用的标记会被字面匹配和转录，除了一个例外。
 该例外是匹配器的外部定界符将匹配任意一对定界符。
-因此，例如，匹配器 `(())` 将匹配 `{()}` 但不匹配 `{{}}`。字符 `$` 不能被字面匹配或转录。
+因此，例如，匹配器 `(())` 将匹配 `{()}` 但不匹配 `{{}}`。字符 `$` 不能按字面匹配或转录。
 {==+==}
 
 
@@ -147,7 +147,7 @@ fragment specifier of the same type. The `ident`, `lifetime`, and `tt`
 fragment types are an exception, and *can* be matched by literal tokens. The
 following illustrates this restriction:
 {==+==}
-在将匹配的片段转发到另一个实例宏时，第二个宏中的匹配器将看到片段类型的不透明AST。
+在将匹配的片段转发到另一个实例宏时，第二个宏中的匹配器将看到片段类型的不透明 AST 。
 第二个宏不能使用文本标记来匹配匹配器中的片段，只能使用相同类型的片段指定符。
  `ident` 、 `lifetime` 和 `tt` 片段类型例外，可以用文本标记匹配。以下是这个限制的示例：
 {==+==}
@@ -186,7 +186,7 @@ foo!(3);
 The following illustrates how tokens can be directly matched after matching a
 `tt` fragment:
 {==+==}
-以下是演示如何在匹配 `tt` 片段后直接匹配 token 的示例：
+以下是演示如何在匹配 `tt` 片段后直接匹配 Token 的示例：
 {==+==}
 
 
@@ -220,7 +220,7 @@ In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax
 fragment of the kind specified and binds it to the metavariable `$`_name_. Valid
 fragment specifiers are:
 {==+==}
-在匹配器中， `$` _name_  `:` _fragment-specifier_ "片段指定符" 用于匹配指定类型的 Rust 语法片段，并将其绑定到名为 `$`_name_ 的元变量中。有效的片段指示符包括：
+在匹配器中， `$` _name_ `:` _fragment-specifier_ "片段指定符" 用于匹配指定类型的 Rust 语法片段，并将其绑定到名为 `$`_name_ 的元变量中。有效的片段指示符包括：
 {==+==}
 
 
@@ -250,7 +250,7 @@ fragment specifiers are:
   * `ty`: [_Type_] 类型
   * `ident`: 一个 [IDENTIFIER_OR_KEYWORD] 或 [RAW_IDENTIFIER]
   * `path`: [_TypePath_] 类型路径
-  * `tt`: [_TokenTree_]&nbsp; (简单 [token] 或匹配在分割符 `()` 、 `[]` 、 `{}` 中 token)
+  * `tt`: [_TokenTree_]&nbsp; (简单 [token] 或匹配在定界符号 `()` 、 `[]` 、 `{}` 中 token)
   * `meta`: 一个 [_Attr_], 属性的内容
   * `lifetime`:  [LIFETIME_TOKEN]
   * `vis`: 一个可能是空的 [_Visibility_] 限定词
@@ -268,7 +268,7 @@ transcribed more than once or not at all.
 在转录器中，可以通过 `$`_name_ 的形式引用元变量，因为片段类型已经在匹配器中被指定了。
 元变量被替换为匹配到的语法元素。
 关键字元变量 `$crate` 可以用于引用当前的 crate。可以将元变量多次或不进行转录。
-参见下面的 [Hygiene] 
+参见下面的 [Hygiene] .
 {==+==}
 
 
@@ -331,8 +331,8 @@ The repetition operators are:
 - `?` — indicates an optional fragment with zero or one occurrences.
 {==+==}
 - `*` — 表示任何数量的重复。
-- `+` — 表示任何数字，但至少是1。
-- `?` — 表示有0或1个出现的可选片段。
+- `+` — 表示任何数字，但至少是 1 。
+- `?` — 表示有 0 或 1 个出现的可选片段。
 {==+==}
 
 
@@ -510,7 +510,7 @@ mod has_macro {
     macro_rules! m {
         () => {};
     }
-    m!{} // OK: 出现在m的声明之后。
+    m!{} // OK: 出现在 m 的声明之后。
 
     mod uses_macro;
 }
@@ -667,7 +667,7 @@ can be specified using the [_MetaListIdents_] syntax; this is not supported
 when `#[macro_use]` is applied to a module.
 {==+==}
 第二个作用是将它应用于出现在 crate 的根模块中的 `extern crate` 声明，从而从另一个 crate 导入宏。
-以这种方式导入的宏被导入到 [`macro_use` prelude]，而不是文本上导入，这意味着它们可以被任何其他名称隐藏。
+以这种方式导入的宏被导入到 [`macro_use` prelude] ，而不是文本上导入，这意味着它们可以被任何其他名称隐藏。
 虽然 `#[macro_use]` 导入的宏可以在导入语句之前使用，但在冲突的情况下，最后导入的宏优先。
 可选地，可以使用 [MetaListIdents] 语法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块时，不支持此功能。
 {==+==}
@@ -714,7 +714,7 @@ By default, a macro has no path-based scope. However, if it has the
 `#[macro_export]` attribute, then it is declared in the crate root scope and can
 be referred to normally as such:
 {==+==}
-默认情况，宏没有基于路径的作用域。然而，如果它有 `#[macro_export]` 属性，那么它就被声明在crate根作用域内，并可正常引用:
+默认情况，宏没有基于路径的作用域。然而，如果它有 `#[macro_export]` 属性，那么它就被声明在 crate 根作用域内，并可正常引用:
 {==+==}
 
 
@@ -738,7 +738,7 @@ mod mac {
 {==+==}
 ```rust
 self::m!();
-m!(); // OK: 基于路径的查找在当前模块中查找m。
+m!(); // OK: 基于路径的查找在当前模块中查找 m 。
 
 mod inner {
     super::m!();
@@ -821,7 +821,7 @@ macro_rules! helper {
     () => { () }
 }
 
-//// 在另一个crate里使用。
+//// 在另一个 crate 里使用。
 // 请注意，没有导入 `helper_macro::helper` !
 use helper_macro::helped;
 
@@ -836,7 +836,7 @@ fn unit() {
 Note that, because `$crate` refers to the current crate, it must be used with a
 fully qualified module path when referring to non-macro items:
 {==+==}
-注意，因为 `$crate` 指的是当前的 crate，所以当引用非宏条目时，必须使用完全限定的模块路径。
+注意，因为 `$crate` 指的是当前的 crate ，所以当引用非宏条目时，必须使用完全限定的模块路径。
 {==+==}
 
 
@@ -891,7 +891,7 @@ fn foo() {}
 > modified to use `$crate` or `local_inner_macros` to work well with path-based
 > imports.
 {==+==}
-> 在Rust 1.30之前， `$crate` 和 `local_inner_macros`  (下面会描述) 是不支持的。
+> 在 Rust 1.30 之前， `$crate` 和 `local_inner_macros`  (下面会描述) 是不支持的。
 > 它们与基于路径导入宏的引入一起添加，以确保辅助宏不需要由宏导出 crate 的用户手动导入。
 > 使用辅助宏的早期 Rust 版本编写的 crate 需要修改以使用 `$crate` 或 `local_inner_macros` 以便与基于路径导入一起使用。
 {==+==}
@@ -996,7 +996,7 @@ Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
 {==+==}
 > **Edition Differences**: Before the 2021 edition, `pat` may also be followed by `|`.
 {==+==}
-> **版次差异**: 在2021版之前， `pat` 后面还可以加上 `|`。
+> **版次差异**: 在 2021 版之前， `pat` 后面还可以加上 `|`。
 {==+==}
 
 

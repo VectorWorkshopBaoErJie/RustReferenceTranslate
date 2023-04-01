@@ -48,13 +48,13 @@ be used as the names of:
 * [Macro placeholders]
 * [Crates]
 {==+==}
-* [Items]
-* [Variables] 和函数参数
-* 字段 和 [variants]
-* [Type parameters]
-* 生命周期参数 或 [loop labels]
-* [Macros] 或 [attributes]
-* [Macro placeholders]
+* [Items] "条目"
+* [Variables] "变量"和函数参数
+* 字段 和 [variants] "变体"
+* [Type parameters] "类型参数"
+* 生命周期参数 或 [loop 标签][loop labels]
+* [Macros] "宏" 或 [attributes] "属笥"
+* [宏占位符][Macro placeholders]
 * [Crates]
 {==+==}
 
@@ -104,7 +104,7 @@ be used as the names of:
 {==+==}
 The following keywords were added beginning in the 2018 edition.
 {==+==}
-以下关键字从2018版开始添加。
+以下关键字从 2018 版开始添加。
 {==+==}
 
 
@@ -159,7 +159,7 @@ them to use these keywords.
 {==+==}
 The following keywords are reserved beginning in the 2018 edition.
 {==+==}
-以下关键字从2018版本开始保留。
+以下关键字从 2018 版本开始保留。
 {==+==}
 
 
@@ -196,7 +196,7 @@ is possible to declare a variable or method with the name `union`.
 {==+==}
 * `macro_rules` 用于创建自定义 [macros] 。
 * `union` 用于声明 [union] ，只有在使用 union 声明时才是一个关键字。
-* `'static` 用于静态生命周期，不能作为 [generic lifetime parameter] "泛型生命周期参数" 或 [loop label] "循环标签" 使用。
+* `'static` 用于静态生命周期，不能作为 [泛型生命周期参数][generic lifetime parameter] 或 [loop 标签][loop label] 使用。
 {==+==}
 
 
@@ -214,14 +214,14 @@ is possible to declare a variable or method with the name `union`.
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
 {==+==}
-* 在2015版中，[`dyn`] 是一个关键字，当它用于类型位置且其后跟随的路径不以 `::` 开头时。
+* 在 2015 版中，[`dyn`] 是一个关键字，当它用于类型位置且其后跟随的路径不以 `::` 开头时。
 {==+==}
 
 
 {==+==}
   Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
 {==+==}
-  从2018版开始， `dyn` 已提升为严格关键词。
+  从 2018 版开始， `dyn` 已提升为严格关键词。
 {==+==}
 
 

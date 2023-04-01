@@ -44,7 +44,7 @@ Whitespace is any non-empty string containing only characters that have the
 Rust is a "free-form" language, meaning that all forms of whitespace serve only
 to separate _tokens_ in the grammar, and have no semantic significance.
 {==+==}
-Rust 是一种 "形式自由" 的语言，这意味着所有形式的空白仅用于分隔语法中的 _tokens_ ，而没有语义。
+Rust 是一种 "形式自由" 的语言，这意味着所有形式的空白仅用于分隔语法中的 _Token_ ，空白自身没有语义。
 {==+==}
 
 
@@ -52,7 +52,7 @@ Rust 是一种 "形式自由" 的语言，这意味着所有形式的空白仅�
 A Rust program has identical meaning if each whitespace element is replaced
 with any other legal whitespace element, such as a single space character.
 {==+==}
-如果每个空白元素被替换成任何其他合法的空白元素，例如单独的空格字符，那么Rust程序认为具有相同的意义。
+如果每个空白元素被替换成任何其他合法的空白元素，例如单独的空格字符，那么 Rust 程序认为具有相同的意义。
 {==+==}
 
 

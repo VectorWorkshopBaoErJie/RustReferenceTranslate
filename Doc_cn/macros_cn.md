@@ -10,8 +10,8 @@ The functionality and syntax of Rust can be extended with custom definitions
 called macros. They are given names, and invoked through a consistent
 syntax: `some_extension!(...)`.
 {==+==}
-Rust 的功能和语法可以通过自定义称为 macro "宏" 的方式进行扩展。
-它们被赋予名称，并通过一致的语法调用: `some_extension!(...)` 。
+Rust 的功能和语法可以通过自定义宏来扩展。
+这些宏被赋予名称，并通过一致的语法调用：`some_extension!(...)`。
 {==+==}
 
 
@@ -28,7 +28,7 @@ There are two ways to define new macros:
   attributes using functions that operate on input tokens.
 {==+==}
 * [Macros by Example] "实例宏" 以更高级、声明式的方式定义新的语法。
-* [Procedural Macros] "过程宏" 通过在输入的 Token 上操作的函数来定义类函数的宏、自定义派生和自定义属性。
+* [Procedural Macros] "过程宏" 通过在输入 Token 上操作的函数，定义函数式宏、自定义派生和自定义属性。
 {==+==}
 
 
@@ -66,7 +66,7 @@ A macro invocation expands a macro at compile time and replaces the
 invocation with the result of the macro. Macros may be invoked in the
 following situations:
 {==+==}
-宏调用在编译时展开宏并用宏的结果替换调用的情况下发生。宏可以在以下情况下被调用：
+在编译时展开宏并用宏的结果替换调用时，发生宏调用。宏可以在以下情况下被调用：
 {==+==}
 
 
@@ -93,8 +93,8 @@ where a semicolon is required at the end when not using curly braces.
 [Visibility qualifiers] are never allowed before a macro invocation or
 [`macro_rules`] definition.
 {==+==}
-当它被用作条目（item）或语句（statement）时，使用 `_MacroInvocationSemi_` 形式，当不使用花括号时需要在末尾加上分号。
-在宏调用或 [`macro_rules`] 定义之前，不允许使用 [可见性修饰符][Visibility qualifiers] 。
+当它被用作条目或语句时，使用 `_MacroInvocationSemi_` 形式，当不使用花括号时需要在末尾加上分号。
+在宏调用或 [`macro_rules`] 定义之前，不允许出现[可见性限定符][Visibility qualifiers]。
 {==+==}
 
 

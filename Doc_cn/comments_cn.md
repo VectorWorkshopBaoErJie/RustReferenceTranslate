@@ -78,7 +78,7 @@ special syntax for [`doc` attributes]. That is, they are equivalent to writing
 `#[doc="..."]` around the body of the comment, i.e., `/// Foo` turns into
 `#[doc="Foo"]` and `/** Bar */` turns into `#[doc="Bar"]`.
 {==+==}
-以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` attributes] 的特殊语法。
+以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` 属性][`doc` attributes] 的特殊语法。
 也就是说，它们相当于在注释主体的周围写上 `#[doc="..."]` ，即， `/// Foo` 转换成 `#[doc="Foo"]` ， `/** Bar */` 转换成 `#[doc="Bar"` 。
 {==+==}
 
@@ -91,7 +91,7 @@ the body of the comment. `//!` comments are usually used to document
 modules that occupy a source file.
 {==+==}
 以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于注释的父级，而不是之后条目。
-也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//！` 注释通常用于记录占有源文件的模块。
+也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//!` 注释通常应用于记录占有源文件的模块。
 {==+==}
 
 
@@ -99,7 +99,6 @@ modules that occupy a source file.
 Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc
 comments.
 {==+==}
-Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc comments.
 在文档注释中不允许孤立的 CRs (`\r`) ，即后面没有 LF (`\n`) 。
 {==+==}
 
@@ -116,7 +115,7 @@ Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc comm
 //! A doc comment that applies to the implicit anonymous module of this crate
 {==+==}
 ```rust
-//! 应用于这个crate的隐式匿名模块的文档注释
+//! 应用于这个 crate 的隐式匿名模块的文档注释
 {==+==}
 
 

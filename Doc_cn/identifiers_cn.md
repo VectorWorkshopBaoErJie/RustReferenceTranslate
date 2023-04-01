@@ -84,7 +84,7 @@ Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix 
 {==+==}
 Zero width non-joiner (ZWNJ U+200C) and zero width joiner (ZWJ U+200D) characters are not allowed in identifiers.
 {==+==}
-零宽度不连字符 (ZWNJ U+200C) 和零宽度连字符 (ZWJ U+200D) 字符不能出现在标识符中。
+零宽度不连字符 (ZWNJ U+200C) 和零宽度连字符 (ZWJ U+200D) 不能出现在标识符中。
 {==+==}
 
 
@@ -104,7 +104,7 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 {==+==}
 * [`extern crate`] 声明
 * 在 [path] 中引用的外部 crate 的名称
-* 从文件系统加载的没有 [`path` attribute] 的 [Module] 名称 。
+* 从文件系统加载的没有 [`path` 属性][`path` attribute] 的 [模块][Module] 名称 。
 * [`no_mangle`] 所属条目
 * [external blocks] 中条目的名称
 {==+==}
@@ -120,7 +120,7 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 {==+==}
 Identifiers are normalized using Normalization Form C (NFC) as defined in [Unicode Standard Annex #15][UAX15]. Two identifiers are equal if their NFC forms are equal.
 {==+==}
-标识符使用 [Unicode Standard Annex #15][UAX15] 中定义的规范化形式C(NFC)进行规范化。如果两个标识符的NFC形式相同，那么它们就是相等的。
+标识符使用 [Unicode Standard Annex #15][UAX15] 中定义的规范化形式 C (NFC) 进行规范化。如果两个标识符的 NFC 形式相同，那么它们就是相等的。
 {==+==}
 
 

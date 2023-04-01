@@ -15,7 +15,7 @@
 {==+==}
 The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 {==+==}
-以下符号在 *Lexer* "词法" 和 *Syntax* "语法" 的语法代码段中使用：
+以下符号在 *Lexer* "词法" 和 *Syntax* "语法" 的代码表示段中使用：
 {==+==}
 
 
@@ -37,7 +37,22 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 | ~`string`         | ~`\n`, ~`*/`                  | Any characters, except this sequence      |
 | ( )               | (`,` _Parameter_)<sup>?</sup> | Groups items                              |
 {==+==}
-
+| 符号              | 示例                               | 意义                                     |
+|-------------------|------------------------------------|------------------------------------------|
+| CAPITAL           | KW_IF，INTEGER_LITERAL              | 词法分析器生成的标记                      |
+| _ItalicCamelCase_ | _LetStatement_，_Item_              | 语法产生式                                |
+| `string`          | `x`，`while`，`*`                   | 精确的字符                              |
+| \\x               | \\n，\\r，\\t，\\0                 | 表示此转义字符所代表的字符                |
+| x<sup>?</sup>     | `pub`<sup>?</sup>                  | 可选项                                    |
+| x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup>      | 0个或多个x                               |
+| x<sup>+</sup>     | _MacroMatch_<sup>+</sup>           | 1个或多个x                               |
+| x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>           | x重复a到b次                              |
+| \|                | `u8` \| `u16`，Block \| Item        | 两个选项中的一个                          |
+| \[ ]              | \[`b` `B`]                         | 列举出中括号内的任意一个字符              |
+| \[ - ]            | \[`a`-`z`]                         | 列举出指定范围内的任意一个字符            |
+| ~\[ ]             | ~\[`b` `B`]                        | 列举除中括号内的任意一个字符之外的所有字符 |
+| ~`string`         | ~`\n`，~`*/`                       | 列举除指定序列之外的所有字符              |
+| ( )               | (`,` _Parameter_)<sup>?</sup>      | 分组                                      |
 {==+==}
 
 
@@ -58,7 +73,8 @@ Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
 语法中的一些规则，特别是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，采用了简化形式，以可打印的字符串列表的形式给出。
-这些情况构成了与 [token][tokens] 规则相关的规则子集，假定它们是由驱动为确定性有限自动机（DFA）运行的语法分析器的词法分析阶段的结果，该 DFA 操作于所有这些字符串表的分支上。
+这些情况构成了与 [token][tokens] 规则相关的规则子集，假定其驱动为确定性有限自动机 <abbr title="Deterministic Finite Automaton">DFA</abbr>
+运行的语法分析器的词法分析阶段的结果，该 DFA 操作于所有这些字符串表的分支上。
 {==+==}
 
 

@@ -18,7 +18,7 @@ It provides three kinds of material:
   - Chapters that informally describe the memory model, concurrency model, runtime services, linkage model, and debugging facilities.
   - Appendix chapters providing rationale and references to languages that influenced the design.
 {==+==}
-  - 介绍语言构造和使用的章节。
+  - 介绍语言构造及使用的章节。
   - 介绍内存模型、并发模型、运行时服务、链接模型和调试功能的章节。
   - 附录章节提供相关设计的基本原理和其他对设计有影响的语言的参考资料。
 {==+==}
@@ -47,9 +47,9 @@ Rust has a new language release every six weeks.
 The first stable release of the language was Rust 1.0.0, followed by Rust 1.1.0 and so on.
 Tools (`rustc`, `cargo`, etc.) and documentation ([Standard library], this book, etc.) are released with the language release.
 {==+==}
-Rust每六周发布一个新的语言版本。
+Rust 每六周发布一个新的语言版本。
 第一个稳定版本是 Rust 1.0.0 ，之后是 Rust 1.1.0 等等。
-工具( `rustc` 、 `cargo` 等) 和文档 ( [Standard library]、本书等) 都随着语言版本一起发布。
+工具( `rustc` 、 `cargo` 等) 和文档 ( [标准库][Standard library] 、本书等) 都随着语言版本一起发布。
 {==+==}
 
 
@@ -59,7 +59,7 @@ Prior versions can be found by adding the Rust version before the "reference" di
 For example, the Reference for Rust 1.49.0 is located at <https://doc.rust-lang.org/1.49.0/reference/>.
 {==+==}
 本书的最新版本，与最新的 Rust 版本相匹配，始终可以在 <https://doc.rust-lang.org/reference/> 找到。
-以前的版本可以通过在 "reference" 目录前添加 Rust 版本来找到。
+以前的版本可以通过在 "reference" 前添加 Rust 版本来找到。
 例如， Rust 1.49.0 的参考资料位于 <https://doc.rust-lang.org/1.49.0/reference/> 。
 {==+==}
 
@@ -76,7 +76,7 @@ This book does not serve as an introduction to the language.
 Background familiarity with the language is assumed.
 A separate [book] is available to help acquire such background familiarity.
 {==+==}
-本书不是 Rust 语言的入门教程，假定读者已经对 Rust 有一定的了解。
+本书不是 Rust 语言的入门教程，将假定读者已经对 Rust 有一定的了解。
 如果需要学习 Rust，可以参考 Rust 官方提供的入门教程 [book] 。
 {==+==}
 
@@ -123,7 +123,7 @@ Everything that happens that way must conform to what the reference says.
 {==+==}
 Rust 编译器，包括 `rustc` ，会执行优化操作。
 该参考手册没有明确指定允许或禁止哪些优化。
-相反，将编译后的程序视为一个黑盒子。
+而是，将编译后的程序视为一个黑盒子。
 您只能通过运行程序、提供输入和观察输出的方式来探测它。
 这样发生的一切都必须符合参考手册所说的内容。
 {==+==}
@@ -171,10 +171,10 @@ For example, say you wanted to know when a temporary value created in a let stat
 If you didn't already know that the [lifetime of temporaries] is defined in the [expressions chapter], you could search "temporary let" and the first search result will take you to that section.
 {==+==}
 第一种是回答特定的问题。
-如果您知道哪个章节可以回答这个问题，可以在目录中跳转到该章节。
-否则，您可以按下 `s` 键或点击顶部栏上的放大镜搜索与您的问题相关的关键词。
-例如，假设您想知道在 let 语句中创建的临时值何时被丢弃。
-如果您不知道 [临时值的生命周期][lifetime of temporaries] 在 [表达式章节][expressions chapter] 中定义，您可以搜索 "temporary let" ，第一个搜索结果将带您到该部分。
+如果你知道哪个章节可以回答这个问题，可以在目录中跳转到该章节。
+否则，你可以按下 `s` 键或点击顶部栏上的放大镜搜索与您的问题相关的关键词。
+例如，假设你想知道在 let 语句中创建的临时值何时被丢弃。
+如果你不知道 [临时值的生命周期][lifetime of temporaries] 在 [表达式章节][expressions chapter] 中定义，您可以搜索 "temporary let" ，第一个搜索结果将带您到该部分。
 {==+==}
 
 
@@ -217,7 +217,7 @@ These conventions are documented here.
   Whenever that term is used outside of that chapter, it is usually a link to the section that has this definition.
 {==+==}
 * 定义术语的语句中，该术语会以 *斜体* 的形式出现。
-  在该章节之外的任何地方使用该术语时，通常都是指向包含此定义的部分的链接。
+  在该章节之外的任何地方使用该术语时，通常都是指向包含此定义部分的链接。
 {==+==}
 
 
@@ -239,7 +239,7 @@ These conventions are documented here.
 {==+==}
   > **Edition Differences**: In the 2015 edition, this syntax is valid that is disallowed as of the 2018 edition.
 {==+==}
-  > **Edition Differences**: 在2015版中，这个语法是有效的，但在2018版中不允许。
+  > **Edition Differences**: 在 2015 版中，这个语法是有效的，但在 2018 版中不允许。
 {==+==}
 
 
