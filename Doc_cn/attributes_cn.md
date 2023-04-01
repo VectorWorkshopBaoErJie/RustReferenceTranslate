@@ -73,7 +73,7 @@ Attributes can be classified into the following kinds:
 {==+==}
 * [内置属性][Built-in attributes]
 * [宏属性][attribute macros]
-* [派生宏辅助属性][Derive macro helper attributes]
+* [衍生宏辅助属性][Derive macro helper attributes]
 * [工具属性](#tool-attributes)
 {==+==}
 
@@ -488,7 +488,7 @@ The following is an index of all built-in attributes.
   - [`automatically_derived`] — Marker for implementations created by
     `derive`.
 {==+==}
-- 派生
+- 衍生
   - [`derive`] — 自动 trait 实现
   - [`automatically_derived`] — 由 `derive` 创建的实现的标记
 {==+==}
@@ -507,7 +507,7 @@ The following is an index of all built-in attributes.
   - [`macro_export`] — 导出一个 `macro_rules` 宏，用于跨 crate 使用。
   - [`macro_use`] — 展开宏的可见性，或从其他 crate 导入宏。
   - [`proc_macro`] — 定义类函数宏。
-  - [`proc_macro_derive`] — 定义派生宏。
+  - [`proc_macro_derive`] — 定义衍生宏。
   - [`proc_macro_attribute`] — 定义属性宏。
 {==+==}
 

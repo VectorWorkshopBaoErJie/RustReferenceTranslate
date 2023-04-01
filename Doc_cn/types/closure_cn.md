@@ -295,7 +295,7 @@ Because captures are often by reference, the following general rules arise:
 * [`Sync`]
 * [`Send`]
 
-[`Send`] 和 [`Sync`] 的规则与普通结构体类型相同，而 [`Clone`] 和 [`Copy`] 的行为则类似于 [派生](https://doc.rust-lang.org/reference/items/derive.html) 。
+[`Send`] 和 [`Sync`] 的规则与普通结构体类型相同，而 [`Clone`] 和 [`Copy`] 的行为则类似于 [衍生](https://doc.rust-lang.org/reference/items/derive.html) 。
 对于 [`Clone`] ，复制捕获变量的顺序未指定。
 
 由于捕获通常是通过引用进行的，因此会出现以下一般规则：

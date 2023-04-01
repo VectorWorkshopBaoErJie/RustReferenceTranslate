@@ -97,8 +97,8 @@ The following is a list of namespaces, with their corresponding entities:
     * [内置属性][Built-in attributes]
     * [工具属性][Tool attributes]
     * [类函数过程宏][Function-like procedural macros]
-    * [派生宏][Derive macros]
-    * [派生宏帮助工具][Derive macro helpers]
+    * [衍生宏][Derive macros]
+    * [衍生宏帮助工具][Derive macro helpers]
     * [属性宏][Attribute macros]
 * 生命周期命名空间
     * [泛型生命周期参数][Generic lifetime parameters]

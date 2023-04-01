@@ -28,7 +28,7 @@ There are two ways to define new macros:
   attributes using functions that operate on input tokens.
 {==+==}
 * [Macros by Example] "实例宏" 以更高级、声明式的方式定义新的语法。
-* [Procedural Macros] "过程宏" 通过在输入 Token 上操作的函数，定义函数式宏、自定义派生和自定义属性。
+* [Procedural Macros] "过程宏" 通过在输入 Token 上操作的函数，定义函数式宏、自定义衍生和自定义属性。
 {==+==}
 
 

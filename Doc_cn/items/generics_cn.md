@@ -516,7 +516,7 @@ Generic lifetime and type parameters allow [attributes] on them. There are no
 built-in attributes that do anything in this position, although custom derive
 attributes may give meaning to it.
 {==+==}
-泛型生命周期和类型参数允许 [属性][attributes] 。在这个位置，没有内置的属性可以做任何事情，尽管自定义派生属性可能会给它赋予意义。
+泛型生命周期和类型参数允许 [属性][attributes] 。在这个位置，没有内置的属性可以做任何事情，尽管自定义衍生属性可能会给它赋予意义。
 {==+==}
 
 
@@ -524,7 +524,7 @@ attributes may give meaning to it.
 This example shows using a custom derive attribute to modify the meaning of a
 generic parameter.
 {==+==}
-此示例展示使用自定义派生属性来修改泛型参数的含义。
+此示例展示使用自定义衍生属性来修改泛型参数的含义。
 {==+==}
 
 
@@ -541,7 +541,7 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 {==+==}
 <!-- ignore: requires proc macro derive -->
 ```rust,ignore
-// 假设 MyFlexibleClone 派生声明了 `my_flexible_clone` 作为它所理解的一个属性。
+// 假设 MyFlexibleClone 衍生声明了 `my_flexible_clone` 作为它所理解的一个属性。
 #[derive(MyFlexibleClone)]
 struct Foo<#[my_flexible_clone(unbounded)] H> {
     a: *const H
