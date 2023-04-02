@@ -506,7 +506,7 @@ The following is an index of all built-in attributes.
 - 宏
   - [`macro_export`] — 导出一个 `macro_rules` 宏，用于跨 crate 使用。
   - [`macro_use`] — 展开宏的可见性，或从其他 crate 导入宏。
-  - [`proc_macro`] — 定义类函数宏。
+  - [`proc_macro`] — 定义函数式宏。
   - [`proc_macro_derive`] — 定义衍生宏。
   - [`proc_macro_attribute`] — 定义属性宏。
 {==+==}
@@ -586,7 +586,7 @@ The following is an index of all built-in attributes.
     information. [Doc comments] are transformed into `doc` attributes.
 {==+==}
 - 文档
-  - `doc` — 用于指定文档。请参见 [Rustdoc文档][The Rustdoc Book] 获取更多信息。 [文档注释][Doc comments] 会被转换为 `doc` 属性。
+  - `doc` — 用于指定文档。请参见 [Rustdoc 文档][The Rustdoc Book] 获取更多信息。 [文档注释][Doc comments] 会被转换为 `doc` 属性。
 {==+==}
 
 

@@ -124,14 +124,14 @@ apply to the crate as a whole.
 ```
 {==+==}
 ```rust
-// 指定crate名称。
+// 指定 crate 名称。
 #![crate_name = "projx"]
 
 // 指定输出制品的类型。
 #![crate_type = "lib"]
 
 // 开启警告。
-// 这可以在任何模块中，而不仅是匿名的crate模块。
+// 这可以在任何模块中，而不仅是匿名的 crate 模块。
 #![warn(non_camel_case_types)]
 ```
 {==+==}
@@ -229,7 +229,7 @@ A crate that contains a `main` [function] can be compiled to an executable. If a
 type must implement the [`Termination`] trait.
 {==+==}
 如果一个 crate 包含一个 `main` [函数][function]，它可以被编译成可执行文件。
-如果存在一个 `main` 函数，则它不应接受任何参数，不应声明任何 [trait 或生命周期边界][trait or lifetime bounds]，也不应该有任何 `where` 子句，而且它的返回类型必须实现 [`Termination`] trait。
+如果存在一个 `main` 函数，则它不应接受任何参数，不应声明任何 [trait 或生命周期约束][trait or lifetime bounds]，也不应该有任何 `where` 子句，而且它的返回类型必须实现 [`Termination`] trait。
 {==+==}
 
 

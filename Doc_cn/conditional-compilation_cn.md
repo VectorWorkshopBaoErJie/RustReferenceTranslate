@@ -41,7 +41,7 @@ These conditions are based on the target architecture of the compiled crate,
 arbitrary values passed to the compiler, and a few other miscellaneous things
 further described below in detail.
 {==+==}
-*条件编译源代码* 是指根据某些条件来确定是否将其部分源代码视为源代码的一部分。
+*条件编译源代码* 是指根据某些条件来确定是否将其部分源代码不作为或者不作为源代码的一部分。
 <!-- This definition is sort of vacuous --> 
 可以使用 [attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` 宏][`cfg` macro] 条件编译源代码。
 这些条件是基于编译的 crate 的目标架构、传递给编译器的任意值和其他一些细节进行确定的，下面将对其进行详细描述。
@@ -79,7 +79,7 @@ unset. Names are written as a single identifier such as, for example, `unix`.
 Key-value pairs are written as an identifier, `=`, and then a string. For
 example, `target_arch = "x86_64"` is a configuration option.
 {==+==}
-_配置选项_ 是一些名称和键值对，它们可以被设置或未设置。
+_配置选项_ 是一些名称和键值对，可以被设置或不设置。
 名称被写成单个标识符，例如 `unix` 。
 键值对被写成一个标识符，后跟一个字符串 。
 例如， `target_arch = "x86_64"` 就是一个配置选项。
@@ -666,31 +666,31 @@ fn when_unwinding() {
 ```
 {==+==}
 ```rust
-// 该函数仅在为macOS编译时包含在构建中。
+// 该函数仅在为 macOS 编译时包含在构建中。
 #[cfg(target_os = "macos")]
 fn macos_only() {
   // ...
 }
 
-// 只有在定义了foo或bar的情况下，才会包含这个函数
+// 只有在定义了 foo 或 bar 的情况下，才会包含这个函数
 #[cfg(any(foo, bar))]
 fn needs_foo_or_bar() {
   // ...
 }
 
-// 这个函数只在为32位架构的unixish操作系统编译时包含。
+// 这个函数只在为 32 位架构的 unixish 操作系统编译时包含。
 #[cfg(all(unix, target_pointer_width = "32"))]
 fn on_32bit_unix() {
   // ...
 }
 
-// 只有在没有定义foo的情况下才包含这个函数
+// 只有在没有定义 foo 的情况下才包含这个函数
 #[cfg(not(foo))]
 fn needs_not_foo() {
   // ...
 }
 
-// 该函数仅在恐慌策略被设置为unwind时包含。
+// 该函数仅在恐慌策略被设置为 unwind 时包含。
 #[cfg(panic = "unwind")]
 fn when_unwinding() {
   // ...
@@ -820,7 +820,7 @@ The built-in `cfg` macro takes in a single configuration predicate and evaluates
 to the `true` literal when the predicate is true and the `false` literal when
 it is false.
 {==+==}
-内置的 `cfg` 宏接收一个配置谓词并在谓词为真时求值为 `true` 字面量，在谓词为假时求值为 `false` 字面量。
+内置的 `cfg` 宏接收一个配置谓词并在谓词为真时求值为 `true` 字面值，在谓词为假时求值为 `false` 字面值。
 {==+==}
 
 
