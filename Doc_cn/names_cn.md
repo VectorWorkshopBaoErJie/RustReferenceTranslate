@@ -28,11 +28,11 @@ Access to certain names may be restricted based on their [*visibility*].
 {==+==}
 # 名称
 
-*实体* 是语言结构，可以通过某种方式在源程序中引用，通常是通过 [路径][path] 。
+*实体* 是一种语言构造，可以通过某种方式在源程序中引用，通常是通过 [路径][path] 。
 实体包括 [类型][types] 、 [条目][items] 、 [泛型参数][generic parameters] 、 [变量绑定][variable bindings] 、 [循环标签][loop labels] 、 [生命周期][lifetimes] 、 [字段][fields] 、 [属性][attributes] 和 [代码分析][lints] 。
 
-*声明* 是一种语法结构，可以引入名称来引用实体。实体名称在 [*作用域*][*scope*] 内是有效的 —— 在源文本的一个区域中可以引用该名称。
-一些实体在源代码中 [显式声明](#explicitly-declared-entities) ，而有些实体作为语言或编译器扩展的 [隐式声明](#implicitly-declared-entities) 。
+*声明* 是一种语法构造，可以引入 *名称* 来引用一个实体。实体名称在 [*作用域*][*scope*] 内是有效的 —— 源文本的一个区域，可以在其中引用该名称。
+一些实体在源代码中 [显式声明](#explicitly-declared-entities)，一些实体则作为语言或编译器扩展的一部分 [隐式声明](#implicitly-declared-entities)。
 
 [*路径*][*Paths*] 用于引用实体，可能在另一个作用域中。生命周期和循环标签使用 [专用语法][lifetimes-and-loop-labels]，使用前导引号。
 
@@ -40,7 +40,7 @@ Access to certain names may be restricted based on their [*visibility*].
 
 [*名称解析*][*Name resolution*] 是将路径、标识符和标签与实体声明联系起来的编译时过程。
 
-根据 [*可见性*][*visibility*] ，可能限制对某些名称的访问。
+根据 [*可见性*][*visibility*] ，访问某些名称可能会受到限制。
 {==+==}
 
 
