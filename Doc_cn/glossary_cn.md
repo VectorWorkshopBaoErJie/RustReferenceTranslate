@@ -63,14 +63,14 @@ are covered by `Vec`.
 
 ### 关联条目
 
-关联条目是与另一个项相关联的条目。关联条目在 [实现][implementations] 中定义并在 [traits] 中声明。
+关联条目是与另一个条目相关联的条目。关联条目在 [实现][implementations] 中定义并在 [traits] 中声明。
 只有函数、常量和类型别名可以是关联的。与 [自由条目][free item] 相对。
 
-### 通用实现
+### 泛型实现
 
-任何一个类型出现 [uncovered](#uncovered-type) 的实现都是通用实现。
- `impl<T> Foo for T` ， `impl<T> Bar<T> for T` ， `impl<T> Bar<Vec<T>> for T` 和 `impl<T> Bar<T> for Vec<T>` 都被视为通用实现。
-但是， `impl<T> Bar<Vec<T>> for Vec<T>` 不是通用实现，因为此 `impl` 中出现的所有 `T` 的实例都被 `Vec` 覆盖了。
+任何一个类型出现 [uncovered](#uncovered-type) 的实现都是泛型实现。
+ `impl<T> Foo for T` ， `impl<T> Bar<T> for T` ， `impl<T> Bar<Vec<T>> for T` 和 `impl<T> Bar<T> for Vec<T>` 都被视为泛型实现。
+但是， `impl<T> Bar<Vec<T>> for Vec<T>` 不是泛型实现，因为此 `impl` 中出现的所有 `T` 的实例都被 `Vec` 覆盖了。
 {==+==}
 
 
@@ -107,7 +107,7 @@ root, including through [paths] of public modules.
 
 ### Crate
 
-Crate是编译和链接的单元。有不同类型的crate，例如库或可执行文件。Crate可以链接和引用其他库crate，
+Crate (箱体) 是编译和链接的基本单位。它有不同的类型，例如库或可执行文件。 Crate 可以链接和引用其他库 Crate ，称为外部 Crate 。 Crate 具有一个自包含的模块树，从一个未命名的根模块开始，称为 Crate 根。通过在 Crate 根中将条目标记为公共的，包括公共模块的路径，可以使这些条目对其他 Crate 可见。请参考 [Rust文档][crate] 以了解更多信息。
 {==+==}
 
 
@@ -132,11 +132,11 @@ within the source program, usually via a [path][paths]. Entities include
 {==+==}
 ### 调度
 
-调度是在涉及多态性时确定实际运行的特定代码版本的机制。静态调度和动态调度是两种主要的调度形式。虽然Rust更偏爱静态调度，但它也通过称为 “特征对象” 的机制支持动态调度。
+调度是在涉及多态性时确定实际运行的特定代码版本的机制。静态调度和动态调度是两种主要的调度形式。虽然 Rust 更偏爱静态调度，但它也通过称为 "特征对象" 的机制支持动态调度。
 
 ### 动态大小类型
 
-动态大小类型（DST）是一种没有静态已知大小或对齐方式的类型。
+动态大小类型 (DST) 是一种没有静态已知大小或对齐方式的类型。
 
 ### 实体
 
@@ -167,15 +167,15 @@ The `Fn` traits and `Sized` are fundamental.
 
 表达式是值、常量、变量、运算符和函数的组合，可以求值为单个值，带有或不带有副作用。
 
-例如，`2 + (3 * 4)` 是一个返回值为14的表达式。
+例如，`2 + (3 * 4)` 是一个返回值为 14 的表达式。
 
 ### 自由条目
 
-不属于[实现][implementation] 的 [条目][item] ，例如 *自由函数* 或 *自由常量* 。与 [关联条目][associated item] 相对。
+不属于 [实现][implementation] 的 [条目][item] ，例如 *自由函数* 或 *自由常量* 。与 [关联条目][associated item] 相对。
 
-### 基本trait
+### 基本 trait
 
-基本trait是指为现有类型添加一个impl会导致代码不兼容的trait。 `Fn` trait和 `Sized` trait是基本trait。
+基本 trait 是指为现有类型添加一个 impl 会导致代码不兼容的 trait 。 `Fn` trait 和 `Sized` trait 是基本 trait 。
 {==+==}
 
 
@@ -205,11 +205,11 @@ An [implementation] that applies to a nominal type, not to a trait-type pair.
 
 基本类型构造器是指实现 [泛型实现](#blanket-implementation) 会破坏其结构的类型。 `&` 、 `&mut` 、 `Box` 和 `Pin` 是基本类型构造器。
 
-任何时候，只要类型 `T` 被视为 [局部类型](#local-type)， `&T` 、 `&mut T` 、 `Box<T>` 和 `Pin<T>` 也会被视为局部类型。基本类型构造器不能[覆盖](#uncovered-type)其他类型。每当使用术语 “覆盖类型” 时， `&T` 、 `&mut T` 、 `Box<T>` 和 `Pin<T>` 中的 `T` 不被视为覆盖的类型。
+任何时候，只要类型 `T` 被视为 [局部类型](#local-type)， `&T` 、 `&mut T` 、 `Box<T>` 和 `Pin<T>` 也会被视为局部类型。基本类型构造器不能[覆盖](#uncovered-type)其他类型。每当使用术语 "覆盖类型" 时， `&T` 、 `&mut T` 、 `Box<T>` 和 `Pin<T>` 中的 `T` 不被视为覆盖的类型。
 
 ### 有实例
 
-如果一个类型具有构造函数并且因此可以被实例化，则称其为 “有实例” 。有实例的类型不是 “空的” ，因为它可以有值。与 [无实例](#uninhabited) 相对。
+如果一个类型具有构造函数并且因此可以被实例化，则称其为 "有实例" 。有实例的类型不是 "空的" ，因为它可以有值。与 [无实例](#uninhabited) 相对。
 
 ### 内在实现
 
@@ -245,7 +245,7 @@ or not independent of applied type arguments. Given `trait Foo<T, U>`,
 
 ### 本地 trait
 
-在当前 crate 中定义的 `trait`。一个 trait 定义是否本地与应用的类型参数无关。例如对于 `trait Foo<T, U>`，不管 `T` 和 `U` 被替换为哪些类型，`Foo` 都是本地的。
+在当前 crate 中定义的 `trait` 。一个 trait 定义是否本地与应用的类型参数无关。例如对于 `trait Foo<T, U>` ，不管 `T` 和 `U` 被替换为哪些类型， `Foo` 都是本地的。
 {==+==}
 
 
@@ -278,12 +278,12 @@ identifiers, and labels are used to refer to an entity.
 
 ### 模块
 
-模块是容纳零个或多个 [条目](https://doc.rust-lang.org/reference/items.html) 的容器。模块被组织成一棵树，从一个未命名的根模块开始，称为 crate root 或 root module。可以使用 [路径](https://doc.rust-lang.org/reference/paths.html) 引用其他模块中的条目，这些引用可能受 [可见性规则](https://doc.rust-lang.org/reference/visibility-and-privacy.html) 的限制。
+模块是容纳零个或多个 [条目][items] 的容器。模块被组织成一棵树，从一个未命名的根模块开始，称为 crate root 或 root module。可以使用 [路径][Paths] 引用其他模块中的条目，这些引用可能受 [可见性规则][visibility rules] 的限制。
 [更多信息][modules]
 
 ### 名称
 
-[*名称*][*name*] 是指引用一个 [实体](#entity) 的 [标识符][identifier] 、 [生命周期或循环标签][lifetime or loop label] 。当一个实体声明引入与该实体相关联的标识符或标签时，称之为 *名称绑定*。可以使用 [路径][Paths] 、标识符和标签来引用实体。
+[*名称*][*name*] 是指引用一个 [实体](#entity) 的 [标识符][identifier] 、 [生命周期或循环标签][lifetime or loop label] 。当一个实体声明引入与该实体相关联的标识符或标签时，称之为 *名称绑定* 。可以使用 [路径][Paths] 、标识符和标签来引用实体。
 {==+==}
 
 
@@ -383,7 +383,25 @@ platform (similar to how `usize` varies per-platform).
 
 [More][alignment].
 {==+==}
+### 作用域
 
+作用域 [*scope*] 是源代码文本中的一个区域，在此区域内的命名实体 [entity](#entity) 可以使用其名称引用。
+
+### 被检查对象
+
+被检查对象 [*Scrutinee*] 是在 `match` 表达式和类似的模式匹配结构中被匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是被检查的对象。
+
+### Size
+
+一个值的 [*Size*] 有两个定义:
+
+第一个定义是该值所需的内存量。
+
+第二个定义是具有该项类型的数组中，相邻元素之间的偏移量 (以字节为单位) 。
+
+大小是对齐的倍数，包括零。大小可以根据编译器版本 (随着新的优化) 和目标平台而变化 (类似于`usize`因平台而异) 。
+
+请参考 [Rust文档][alignment] 以了解更多信息。
 {==+==}
 
 
@@ -408,7 +426,21 @@ valid for the `'static` duration.
 
 Its type is `'static` duration borrowed string slice, `&'static str`.
 {==+==}
+### 切片
 
+切片 [*Slice*] 是对连续序列的动态大小视图，写作 `[T]` 。
+
+它经常以其借用形式出现，可以是可变的或共享的。共享切片类型是 `&[T]` ，而可变切片类型是 `&mut [T]` ，其中 `T` 表示元素类型。
+
+### 语句
+
+语句 [*Statement*] 语句是编程语言中最小的独立元素，它命令计算机执行一个操作。
+
+### 字符串字面值
+
+字符串字面值 [*String literal*] 是直接存储在最终二进制文件中的字符串，因此将对 `'static` 持续时间有效。
+
+它的类型是 `'static` 持续时间借用字符串切片， `&'static str` 。
 {==+==}
 
 
@@ -434,7 +466,21 @@ Paths with generic parameters in expressions must prefix the opening brackets wi
 Combined with the angular brackets for generics, this looks like a fish `::<>`.
 As such, this syntax is colloquially referred to as turbofish syntax.
 {==+==}
+### 字符串切片
 
+字符串切片 [*String slice*] 是 Rust 中最原始的字符串类型，写作`str`。它经常以其借用形式出现，可以是可变的或共享的。共享字符串切片类型是`&str`，而可变字符串切片类型是`&mut str`。
+
+字符串切片始终有效的UTF-8。
+
+### Trait
+
+[*Trait*]是一种语言条目，用于描述类型必须提供的功能。它允许类型对其行为做出某些承诺。
+
+通用函数和通用结构可以使用特征来约束或限制它们接受的类型。
+
+### Turbofish
+
+在表达式中具有通用参数的路径必须在开括号前加上 `::` 。与通用角括号结合使用，看起来像鱼形符号 `::<>` 。因此，这种语法俗称为 turbofish 语法。
 {==+==}
 
 
@@ -449,7 +495,15 @@ let vec = [1, 2, 3].iter().map(|n| n * 2).collect::<Vec<_>>();
 This `::` prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list.
 See [the bastion of the turbofish][turbofish test] for an example where not having the prefix would be ambiguous.
 {==+==}
+例如:
 
+```rust
+let ok_num = Ok::<_, ()>(5);
+let vec = [1, 2, 3].iter().map(|n| n * 2).collect::<Vec<_>>();
+```
+
+这个 `::` 前缀是为了消除在逗号分隔列表中有多个类型参数的泛型路径的歧义。
+请参见 [turbofish test][turbofish test] ，其中有一个在没有前缀时产生歧义的例子。
 {==+==}
 
 
@@ -474,7 +528,17 @@ uninhabited type is "empty" in the sense that there are no values of the type. T
 example of an uninhabited type is the [never type] `!`, or an enum with no variants
 `enum Never { }`. Opposite of [Inhabited](#inhabited).
 {==+==}
+### 未涵盖的类型
 
+一个未出现为另一个类型的参数的类型。例如， `T` 是未涵盖的类型，而 `Vec<T>` 中的 `T` 是涵盖的。这仅与类型参数有关。
+
+### 未定义行为
+
+未指定的编译时或运行时行为。这可能导致但不限于：进程终止或破坏；不适当、不正确或意外的计算；或平台特定的结果。[更多信息][undefined-behavior]。
+
+### 无法驻留的
+
+如果一个类型没有构造函数，因此永远无法被实例化，则该类型是无法驻留的。一个无法驻留的类型在某种意义上是 "空的" ，因为该类型没有值。无法居住类型的典型示例是 [never type] `!` ，或者没有变体的枚举 `enum Never { }` 。与 [Inhabited](#inhabited) 相对。
 {==+==}
 
 

@@ -20,7 +20,7 @@ thread.
 ## `panic_handler` 属性
 
 *`panic_handler` 属性* 只能应用于具有签名 `fn(&PanicInfo) -> !` 的函数。使用此 [属性][attribute] 标记的函数定义了 panic 的行为。
-[`PanicInfo`] 结构包含有关 panic 位置的信息。在二进制、dylib或 cdylib crate 的依赖图中，必须有一个单独的 `panic_handler` 函数。
+[`PanicInfo`] 结构包含有关 panic 位置的信息。在二进制、 dylib 或 cdylib crate 的依赖图中，必须有一个单独的 `panic_handler` 函数。
 
 下面是一个 `panic_handler` 函数，它记录 panic 消息，然后停止线程。
 {==+==}
@@ -103,9 +103,9 @@ display a console window on startup. It will run detached from any existing cons
 *`windows_subsystem` 属性* 可以在 Windows 目标上的链接时应用于 crate 级别，以设置 [subsystem]。
 它使用 [_MetaNameValueStr_] 语法来指定子系统，值为 `console` 或 `windows`。在非 Windows 目标上，此属性将被忽略，对于非 `bin` [crate types] 也是如此。
 
-“console” 子系统是默认值。如果从现有控制台运行控制台进程，则它将附加到该控制台，否则将创建一个新的控制台窗口。
+"console" 子系统是默认值。如果从现有控制台运行控制台进程，则它将附加到该控制台，否则将创建一个新的控制台窗口。
 
-“windows” 子系统通常用于不希望在启动时显示控制台窗口的 GUI 应用程序。它将在任何现有控制台之外运行。
+"windows" 子系统通常用于不希望在启动时显示控制台窗口的 GUI 应用程序。它将在任何现有控制台之外运行。
 {==+==}
 
 

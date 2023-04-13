@@ -70,12 +70,12 @@ to be run.
 {==+==}
 * [字面量][Literals]。
 * [常量参数][Const parameters]。
-* [函数][functions]和[常量][constants]的[路径][Paths]。不允许递归定义常量。
-* [静态变量][statics]的路径。这些只允许在静态变量的初始化器中使用。
-* [元组表达式][Tuple expressions]。
-* [数组表达式][Array expressions]。
-* [结构体][Struct]表达式。
-* [块表达式][Block expressions]，包括 `unsafe` 块。
+* [函数][functions] 和 [常量][constants] 的 [路径][Paths] 。不允许递归定义常量。
+* [静态变量][statics] 的路径。这些只允许在静态变量的初始化器中使用。
+* [元组表达式][Tuple expressions] 。
+* [数组表达式][Array expressions] 。
+* [结构体][Struct] 表达式。
+* [块表达式][Block expressions] ，包括 `unsafe` 块。
     * [let语句][let statements] 和因此不可反驳的 [模式][patterns] ，包括可变绑定。
     * [赋值表达式][assignment expressions]
     * [复合赋值表达式][compound assignment expressions]
@@ -91,7 +91,7 @@ to be run.
 * [转换][Cast] 表达式，除了
   * 指针到地址转换和
   * 函数指针到地址转换。
-* [const函数][const functions] 和const方法的调用。
+* [const函数][const functions] 和 const 方法的调用。
 * [loop] 、 [while] 和 [`while let`] 表达式。
 * [if] 、 [`if let`] 和 [match] 表达式。
 {==+==}
@@ -150,11 +150,11 @@ discriminants depend on floating point computations.
 将函数声明为 `const` 不会影响任何现有用途，它只限制了参数和返回类型可能使用的类型，并防止在其中使用各种表达式。您可以像普通函数一样自由地使用常量函数做相同的操作。
 
 在常量上下文中调用函数时，编译器会在编译时解释该函数。解释发生在编译目标的环境中，而不是主机的环境中。
-因此，如果您正在针对32位系统进行编译，则无论您在64位系统还是32位系统上构建， `usize` 都是32位。
+因此，如果您正在针对 32 位系统进行编译，则无论您在 64 位系统还是 32 位系统上构建， `usize` 都是 32 位。
 
 常量函数有各种限制，以确保它们可以在编译时求值。例如，不可能将随机数生成器编写为常量函数。
 在编译时调用常量函数将始终产生与在运行时调用它相同的结果，即使调用多次也是如此。
-有一个例外：如果在极端情况下进行复杂的浮点数运算，则可能会得到（极微小的）不同结果。
+有一个例外：如果在极端情况下进行复杂的浮点数运算，则可能会得到(极微小的)不同结果。
 建议不要使数组长度和枚举判别式依赖于浮点数计算。
 {==+==}
 

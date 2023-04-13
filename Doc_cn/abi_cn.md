@@ -20,13 +20,13 @@ output object file.
 {==+==}
 # 应用程序二进制接口 (ABI)
 
-本节记录了影响创建的编译结果的ABI的功能。
+本节记录了影响创建的编译结果的 ABI 的功能。
 
-有关指定导出函数的ABI的信息，请参见 *[extern functions]* 。 有关指定链接外部库的ABI的信息，请参见 *[external blocks]* 。
+有关指定导出函数的 ABI 的信息，请参见 *[extern functions]* 。 有关指定链接外部库的 ABI 的信息，请参见 *[external blocks]* 。
 
 ## `used`属性
 
-*`used` 属性* 仅适用于 [`static` 条目][`static` items] 。此 [属性][attribute] 强制编译器将变量保留在输出对象文件 (.o 、 .rlib 等，不包括最终二进制文件) 中，即使该变量没有被 crate 中的任何其他条目使用或引用。但是，链接器仍然可以删除这样的条目。
+*`used` 属性* 仅适用于 [`static` 条目][`static` items] 。此 [属性][attribute] 强制编译器将变量保留在输出对象文件 (.o .rlib 等，不包括最终二进制文件) 中，即使该变量没有被 crate 中的任何其他条目使用或引用。但是，链接器仍然可以删除这样的条目。
 
 下面是一个示例，展示了编译器在什么条件下保留一个 `static` 条目在输出对象文件中。
 {==+==}
