@@ -477,7 +477,6 @@ Implicit borrows may be taken in the following expressions:
 Many of the following operators and expressions can also be overloaded for other types using traits in `std::ops` or `std::cmp`.
 These traits also exist in `core::ops` and `core::cmp` with the same names.
 {==+==}
-
 ## trait 重载
 
 许多以下的运算符和表达式可以使用 `std::ops` 或 `std::cmp` 中的 trait 重载为其他类型所用。这些 trait 在 `core::ops` 和 `core::cmp` 中也有相同的名称。
