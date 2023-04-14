@@ -178,7 +178,7 @@ Other expressions either don't take operands or evaluate them conditionally as d
 {==+==}
 
 
-{==+==}v
+{==+==}
 The operands of these expressions are evaluated prior to applying the effects of the expression.
 Expressions taking multiple operands are evaluated left to right as written in the source code.
 

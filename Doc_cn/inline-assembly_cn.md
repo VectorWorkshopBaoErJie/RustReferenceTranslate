@@ -1078,6 +1078,8 @@ On x86 targets, both 32-bit and 64-bit, the following additional directives are 
 Use of `.code16`, `.code32`, and `.code64` directives are only supported if the state is reset to the default before exiting the assembly block.
 32-bit x86 uses `.code32` by default, and x86_64 uses `.code64` by default.
 
+
+
 ##### ARM (32-bit)
 
 On ARM, the following additional directives are guaranteed to be supported:
