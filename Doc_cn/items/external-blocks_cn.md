@@ -28,7 +28,7 @@ External blocks provide _declarations_ of items that are not _defined_ in the
 current crate and are the basis of Rust's foreign function interface. These are
 akin to unchecked imports.
 {==+==}
-外部块提供了当前 crate 中未定义的条目 _声明_ ，是 rust 外部函数接口的基础。这些类似于未经检查的导入。
+外部块提供了在当前 crate 中未定义的项的 _声明_ ，并且是 Rust 实现外部函数接口 (FFI) 的基础。这类似于未经检查的导入。
 {==+==}
 
 
@@ -48,8 +48,8 @@ keyword, but it is rejected at a semantic level. This allows macros to consume
 the syntax and make use of the `unsafe` keyword, before removing it from the
 token stream.
 {==+==}
-语法上允许在 `extern` 关键字之前使用 `unsafe` 关键字，但在语义层面会被拒绝。
-这允许宏使用该语法并利用 `unsafe` 关键字，然后从令牌流中移除它。
+`unsafe` 关键字在 `extern` 关键字之前语法上是被允许的，但是在语义层面上会被拒绝。
+这使得宏可以消耗语法并使用 `unsafe` 关键字，然后从令牌流中删除。
 {==+==}
 
 
@@ -67,9 +67,8 @@ terminated by a semicolon. Patterns are not allowed in parameters, only
 [IDENTIFIER] or `_` may be used. Function qualifiers (`const`, `async`,
 `unsafe`, and `extern`) are not allowed.
 {==+==}
-外部块中的函数声明方式与其他 rust 函数类似，但是不能有函数体，而以分号结束。
-参数中不允许使用模式，只能使用 [标识符][IDENTIFIER] 或 `_` 。
-不允许使用函数限定符 ( `const` , `async` , `unsafe` 和 `extern` )。
+在外部块中声明的函数与其他 Rust 函数的声明方式相同，但是它们不能有函数体，而是以分号结束。
+参数中不允许使用模式，只能使用 [IDENTIFIER] 或 `_` 。不允许使用函数修饰符 (如 `const` 、 `async` 、 `unsafe` 和 `extern` )。
 {==+==}
 
 
@@ -92,7 +91,7 @@ parameters and `R` is the declared return type.
 {==+==}
 在外部块中声明的函数隐式地被认为是 `unsafe` 的。
 当将其强转为函数指针时，外部块中声明的函数类型为 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，
-其中 `'l1`, ... `'lm` 为它的生命周期参数，`A1`, ..., `An` 为它参数的声明类型，而 `R` 为它返回值的声明类型。
+其中 `'l1` , ... `'lm` 为它的生命周期参数， `A1` , ... , `An` 为它参数的声明类型，而 `R` 为它返回值的声明类型。
 {==+==}
 
 
@@ -160,7 +159,7 @@ extern "stdcall" { }
 There are three ABI strings which are cross-platform, and which all compilers
 are guaranteed to support:
 {==+==}
-三个跨平台的 ABI 字符串，所有编译器都保证支持:
+有三个跨平台的 ABI 字符串，保证所有编译器都支持:
 {==+==}
 
 
@@ -173,9 +172,9 @@ are guaranteed to support:
   which case it's `"stdcall"`, or what you should use to link to the Windows
   API itself
 {==+==}
-* `extern "Rust"` -- 在任何 Rust 代码中写一个普通的 `fn foo()` 时的默认 ABI。
-* `extern "C"` -- 这与 `extern fn foo()` 相同；无论您的 C 编译器支持什么默认值。
-* `extern "system"` -- 通常与 `extern "C"` 相同，但在 Win32 上不同，在这种情况下它是 `"stdcall"`，或者您应该使用它来链接到 Windows API 本身。
+* `extern "Rust"` -- 在 Rust 代码中编写普通 `fn foo()` 时的默认 ABI。
+* `extern "C"` -- 与 `extern fn foo()` 相同，使用你的 C 编译器支持的默认 ABI。
+* `extern "system"` -- 通常与 `extern "C"` 相同，但在 Win32 上是 `"stdcall"` ，在链接到 Windows API 本身时应使用它。
 {==+==}
 
 
@@ -352,8 +351,8 @@ this to satisfy the linking requirements of extern blocks elsewhere in your
 code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
-可以在空的 extern 块上添加 `link` 属性。
-你可以使用它来满足代码中其他位置 (包括上游 crates) extern 块的链接要求，而不是为每个 extern 块都添加属性。
+可以在空的外部块上添加 `link` 属性。
+您可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
 {==+==}
 
 
@@ -389,8 +388,8 @@ When building a staticlib `-bundle` means that the native static library is simp
 into the archive and some higher level build system will need to add it later during linking of
 the final binary.
 {==+==}
-在构建 rlib 时， `-bundle` 表示本地静态库以名称的方式注册为该 rlib 的依赖项，并且只有在链接最终二进制文件时才包含来自它的对象文件，此名称的文件搜索也会在最终链接时执行。
-当构建 staticlib 时， `-bundle` 表示不会将本机静态库包含到归档中，而是由一些更高层的构建系统在链接最终二进制文件时添加它。
+在构建 rlib 时， `-bundle` 表示本地静态库以名称的方式注册为该 rlib 的依赖项，并且其中的目标文件仅在链接最终二进制文件时包含，文件搜索也在最终链接期间按该名称执行。\
+在构建 staticlib 时， `-bundle` 表示本地静态库不会被包含在档案中，某些更高级别的构建系统需要在链接最终二进制文件时稍后添加它。
 {==+==}
 
 
@@ -526,7 +525,7 @@ during compilation and provide that to the linker instead.
 (`target_arch="x86"`). Using it when targeting other platforms or
 x86 on Windows will result in a compiler error.
 {==+==}
-只有在 Windows 上才支持 `raw-dylib`，不支持 32 位 x86 (`target_arch="x86"`) 。将其用于针对其他平台或 Windows 上的 x86 时将导致编译器错误。
+只有在 Windows 上才支持 `raw-dylib`，不支持 32 位 x86 ( `target_arch="x86"` ) 。将其用于针对其他平台或 Windows 上的 x86 时将导致编译器错误。
 {==+==}
 
 
@@ -542,7 +541,7 @@ The *`link_name` attribute* may be specified on declarations inside an `extern`
 block to indicate the symbol to import for the given function or static. It
 uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
 {==+==}
-在 `extern` 块内的声明上可以指定 *`link_name` 属性*，以指示要为给定函数或静态导入的符号。
+在 `extern` 块内的声明上可以指定 *`link_name` 属性* ，以指示要为给定函数或静态导入的符号。
 使用 [_MetaNameValueStr_] 语法来指定符号的名称。
 {==+==}
 
@@ -581,8 +580,8 @@ to link against. An ordinal is a unique number per symbol exported by a dynamic
 library on Windows and can be used when the library is being loaded to find
 that symbol rather than having to look it up by name.
 {==+==}
-在 `extern` 块内的声明上可以应用 *`link_ordinal` 属性* ，以指示在生成要链接的导入库时使用的数字序号。
-在 Windows 上，每个动态库导出的符号都有一个唯一的数字序号，并且在加载该库时可以使用它来找到该符号，而不必通过名称来查找。
+可以在 `extern` 块内的声明上应用 *`link_ordinal` 属性*，以指示生成要链接的导入库时要使用的数字序数。 
+在 Windows 上，每个动态库导出的符号都有一个唯一的编号，可以在加载库时使用该编号查找该符号，而不必通过名称查找它。
 {==+==}
 
 
@@ -592,7 +591,7 @@ symbol is known to be stable: if the ordinal of a symbol is not explicitly set
 when its containing binary is built then one will be automatically assigned to
 it, and that assigned ordinal may change between builds of the binary.
 {==+==}
-警告： 只有在符号的序号已知是稳定的情况下才应使用 `link_ordinal` ：如果在构建其包含二进制文件时没有明确设置符号的序号，则会自动为其分配一个序号，并且该分配的序号在构建二进制文件时可能会更改。
+警告：`link_ordinal` 只应在符号的序数已知为稳定时使用：如果没有在构建其所在二进制文件时显式设置符号的序数，则将自动分配一个序数，而该分配的序数可能会在二进制文件的不同构建之间发生变化。
 {==+==}
 
 

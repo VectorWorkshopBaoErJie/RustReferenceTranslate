@@ -23,7 +23,7 @@ There are several different preludes:
 
 这些预定义名称不是模块本身的一部分: 它们在 [命名解析][name resolution] 期间隐式查询。例如，即使像 [`Box`] 这样的内容在每个模块中都处于作用域中，但您无法将其称为 `self::Box` ，因为它不是当前模块的成员。
 
-有几个不同的预定义：
+有几个不同的预定义:
 
 - [标准库预定义][Standard library prelude]
 - [外部预定义][Extern prelude]
@@ -54,7 +54,7 @@ Edition | `no_std` not applied        | `no_std` applied
 {==+==}
 ## 标准库预定义
 
-每个crate都有一个标准库预定义，其中包括来自单个标准库模块的名称。所使用的模块取决于crate的版本，以及是否应用了 [`no_std`属性][`no_std` attribute] ：
+每个crate都有一个标准库预定义，其中包括来自单个标准库模块的名称。所使用的模块取决于 crate 的版本，以及是否应用了 [`no_std`属性][`no_std` attribute] ：
 
 版本 | 未应用`no_std` | 应用`no_std`
 --------| --------------------------- | ----------------------------
@@ -108,22 +108,22 @@ alloc/test limitation.
 {==+==}
 ## 外部预定义
 
-在根模块中使用 [`extern crate`][`extern crate`] 导入的外部 crate 或提供给编译器的 crate (例如使用`rustc`的`--extern`标志) 将被添加到 *外部定义* 中。如果使用别名导入，例如 `extern crate orig_name as new_name` ，则符号 `new_name` 将添加到预定义中。
+在根模块中使用 [`extern crate`][`extern crate`] 导入的外部 crate 或提供给编译器的 crate (例如使用 `rustc` 的 `--extern` 标志) 将被添加到 *外部定义* 中。如果使用别名导入，例如 `extern crate orig_name as new_name` ，则符号  `new_name` 将添加到预定义中。
 
-[`core`] crate始终会被添加到外部预定义中。只要在crate根中未指定[`no_std`属性]，[`std`] crate也会被添加到预定义中。
+[`core`] crate 始终会被添加到外部预定义中。只要在 crate 根中未指定 [`no_std`属性] ， [`std`] crate 也会被添加到预定义中。
 
-> **版本差异**: 在2015版中，外部预定义中的crate不能通过[use声明]引用，因此通常的做法是使用`extern crate`声明将它们引入作用域。
+> **版本差异**: 在 2015 版中，外部预定义中的 crate 不能通过 [use 声明][use declarations] 引用，因此通常的做法是使用`extern crate`声明将它们引入作用域。
 >
-> 从2018年版开始，[use声明]可以引用外部预定义中的crate，因此使用`extern crate`被认为不符合惯例。
+> 从 2018 年版开始， [use声明][use declarations] 可以引用外部预定义中的 crate ，因此使用 `extern crate` 被认为不符合惯例。
 
-> **注意**: 随 `rustc` 一起提供的其他 crate ，例如 [`alloc`] 和 [`test`] ，在使用 Cargo 时不会自动包含在 `--extern` 标志中。它们必须通过 `extern crate` 声明引入作用域，即使在2018年版中也是如此。
+> **注意**: 随 `rustc` 一起提供的其他 crate ，例如 [`alloc`] 和 [`test`] ，在使用 Cargo 时不会自动包含在 `--extern` 标志中。它们必须通过 `extern crate` 声明引入作用域，即使在 2018 年版中也是如此。
 >
 > ```rust
 > extern crate alloc;
 > use alloc::rc::Rc;
 > ```
 >
-> 对于 proc-macro crate ，Cargo会将 `proc_macro` 自动添加到外部预定义中。
+> 对于 proc-macro crate ， Cargo 会将 `proc_macro` 自动添加到外部预定义中。
 
 <!--
 有关alloc/test限制的更多信息，请参见https://github.com/rust-lang/rust/issues/57288。

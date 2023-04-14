@@ -1,7 +1,7 @@
 {==+==}
 # Generic parameters
 {==+==}
-
+# 泛型参数
 {==+==}
 
 
@@ -35,9 +35,7 @@ usually immediately after the name of the item and before its definition. For
 implementations, which don't have a name, they come directly after `impl`.
 The order of generic parameters is restricted to lifetime parameters and then type and const parameters intermixed.
 {==+==}
-[Functions] 、 [type aliases] 、 [structs] 、 [enumerations] 、 [unions] 、 [traits] 和 [implementations] 可以通过类型、常量和生命周期 *参数化* 。
-这些参数列在尖括号 <span class="parenthetical"> (`<...>`) </span>中，通常是在条目名字之后和它的定义之前。
-对于没有名字的实现，它们直接出现在 `impl` 之后。泛型参数的顺序被约束为生命周期参数然后是混合的类型和常量参数。
+[函数][Functions]、 [类型别名][type aliases] 、 [结构体][structs] 、 [枚举][enumerations] 、 [联合体][unions] 、 [traits]和 [实现][implementations] 可以通过类型、常量和生命周期参数 *泛型化* 。这些参数在尖括号 <span class="parenthetical"> (`<...>`) </span> 中列出，通常紧跟在条目名称之后，在其定义之前。对于没有名称的实现，它们直接在 `impl` 之后。泛型参数的顺序仅限于先生命周期参数，然后交替出现类型和常量参数。
 {==+==}
 
 
@@ -331,8 +329,8 @@ When there is ambiguity if a generic argument could be resolved as either a
 type or const argument, it is always resolved as a type. Placing the argument
 in a block expression can force it to be interpreted as a const argument.
 {==+==}
-当泛型参数无法确定是作为类型参数还是常量参数解析时，它总是被解析为类型参数。
-将参数放入块表达式中可以强制将其解释为常量参数。
+当一个泛型参数可以同时被解析为类型或常量参数时，它将总是被解析为类型参数。
+将该参数放在块表达式中可以强制将其解释为常量参数。
 {==+==}
 
 
@@ -372,7 +370,7 @@ Unlike type and lifetime parameters, const parameters can be declared without
 being used inside of a parameterized item, with the exception of
 implementations as described in [generic implementations]:
 {==+==}
-与类型和生命周期参数不同，常量参数可以在未使用参数化条目内声明， [泛型实现][generic implementations] 中描述的实现是例外。
+与类型和生命周期参数不同，常量参数可以在不在参数化条目内部使用的情况下声明，但在实现中除外，如 [泛型实现][generic implementations] 所述：
 {==+==}
 
 
@@ -465,7 +463,7 @@ fn generic<const B: bool>() {
 parameters as well as a way to specify bounds on types that aren't type
 parameters.
 {==+==}
-*where 子句* 提供了另一种方法来指定类型和生存期参数的约束，以及指定非类型参数的类型约束的方法。
+*where 子句* 提供了另一种方法来指定类型和生命周期参数的约束，以及指定非类型参数的类型约束的方法。
 {==+==}
 
 
@@ -516,7 +514,7 @@ Generic lifetime and type parameters allow [attributes] on them. There are no
 built-in attributes that do anything in this position, although custom derive
 attributes may give meaning to it.
 {==+==}
-泛型生命周期和类型参数允许 [属性][attributes] 。在这个位置，没有内置的属性可以做任何事情，尽管自定义衍生属性可能会给它赋予意义。
+泛型生命周期和类型参数允许在它们上面使用 [属性][attributes] 。在这个位置上没有内置属性起作用，尽管自定义派生属性可能会赋予其意义。
 {==+==}
 
 
