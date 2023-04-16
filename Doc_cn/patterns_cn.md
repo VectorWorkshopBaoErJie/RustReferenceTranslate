@@ -28,7 +28,27 @@
 > &nbsp;&nbsp; | [_PathPattern_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `|`<sup>?</sup> _模式非顶层选项_  ( `|` _模式非顶层选项_ )<sup>\*</sup>
+>
+> _模式非顶层选项_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _无区间模式_\
+> &nbsp;&nbsp; | [_区间模式_][_RangePattern_]
+>
+> _无区间模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_字面值模式_][_LiteralPattern_]\
+> &nbsp;&nbsp; | [_标识符模式_][_IdentifierPattern_]\
+> &nbsp;&nbsp; | [_通配符模式_][_WildcardPattern_]\
+> &nbsp;&nbsp; | [_剩余模式_][_RestPattern_]\
+> &nbsp;&nbsp; | [_引用模式_][_ReferencePattern_]\
+> &nbsp;&nbsp; | [_结构体模式_][_StructPattern_]\
+> &nbsp;&nbsp; | [_元组结构体模式_][_TupleStructPattern_]\
+> &nbsp;&nbsp; | [_元组模式_][_TuplePattern_]\
+> &nbsp;&nbsp; | [_分组模式_][_GroupedPattern_]\
+> &nbsp;&nbsp; | [_切片模式_][_SlicePattern_]\
+> &nbsp;&nbsp; | [_路径模式_][_PathPattern_]\
+> &nbsp;&nbsp; | [_宏调用_][_MacroInvocation_]
 {==+==}
 
 
@@ -44,7 +64,7 @@ The pattern in the following example does four things:
 * Ignores the rest of the fields of `person`.
   The remaining fields can have any value and are not bound to any variables.
 {==+==}
-模式用于将值与结构进行匹配，并在这些结构内将变量绑定到值（可选）。
+模式用于将值与结构进行匹配，并在这些结构内将变量绑定到值(可选)。
 它们还用于函数和闭包的变量声明和参数。以下示例中的模式执行四个操作：
 
 * 检查 `person` 是否有填充了某些内容的 `car` 字段。
@@ -98,12 +118,12 @@ Patterns are used in:
 {==+==}
 模式用于:
 
-* [`let` declarations](statements.md#let-statements)
-* [Function](items/functions.md) and [closure](expressions/closure-expr.md) parameters
-* [`match` expressions](expressions/match-expr.md)
-* [`if let` expressions](expressions/if-expr.md)
-* [`while let` expressions](expressions/loop-expr.md#predicate-pattern-loops)
-* [`for` expressions](expressions/loop-expr.md#iterator-loops)
+* [`let` 声明](statements.md#let-statements)
+* [函数](items/functions.md) 和 [闭包](expressions/closure-expr.md) 参数
+* [`match` 表达式](expressions/match-expr.md)
+* [`if let` 表达式](expressions/if-expr.md)
+* [`while let` 表达式](expressions/loop-expr.md#predicate-pattern-loops)
+* [`for` 表达式](expressions/loop-expr.md#iterator-loops)
 {==+==}
 
 
@@ -119,7 +139,7 @@ When destructuring a data structure with named (but not numbered) fields, it is 
 ## 解构
 
 解构模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构将一个值分解成其组成部分。
-使用的语法与创建这些值时几乎相同。在一个模式中，其 [scrutinee] 表达式具有 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 代表 *单个* 数据字段，而通配符 `..` 代表 *特定变体的所有* 其余字段。
+使用的语法与创建这些值时几乎相同。在一个模式中，其 [被匹配项][scrutinee] 表达式具有 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 代表 *单个* 数据字段，而通配符 `..` 代表 *特定变体的所有* 其余字段。
 当解构具有命名字段 (但未编号) 的数据结构时，允许将 `fieldname` 写成 `fieldname: fieldname` 的简写形式。
 在 Rust 中，解构是一种方便的工具，可用于从结构化数据类型中提取所需数据。
 {==+==}
@@ -205,7 +225,17 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳的，将不匹配
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _字面值模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `true` | `false`\
+> &nbsp;&nbsp; | [字符字面值][CHAR_LITERAL]\
+> &nbsp;&nbsp; | [字节字面值][BYTE_LITERAL]\
+> &nbsp;&nbsp; | [字符串字面值][STRING_LITERAL]\
+> &nbsp;&nbsp; | [原始字符串字面值][RAW_STRING_LITERAL]\
+> &nbsp;&nbsp; | [字节字符串字面值][BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | [原始字节字符串字面值][RAW_BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [整数字面值][INTEGER_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [浮点数字面值][FLOAT_LITERAL]
 {==+==}
 
 
@@ -289,7 +319,9 @@ for i in -2..5 {
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_PatternNoTopAlt_] ) <sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _标识符模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [标识符][IDENTIFIER] (`@` [_模式非顶层选项_][_PatternNoTopAlt_] ) <sup>?</sup>
 {==+==}
 
 
@@ -328,7 +360,7 @@ To bind the matched value of a pattern to a variable, use the syntax `variable @
 For example, the following binds the value 2 to `e` (not the entire range: the range here is a range subpattern).
 {==+==}
 要将模式的匹配值绑定到变量上，请使用语法 `variable @ subpattern` 。
-例如，以下代码将值 2 绑定到 `e` (而不是整个范围：这里的范围是一个范围子模式) 。
+例如，以下代码将值 2 绑定到 `e` (而不是整个区间：这里的区间是一个区间子模式) 。
 {==+==}
 
 
@@ -492,7 +524,7 @@ This applies only if the type cannot be copied.
 In the example below, `name` is moved out of `person`.
 Trying to use `person` as a whole or `person.name` would result in an error because of *partial move*.
 {==+==}
-*非引用模式* 包括除绑定、 [通配符模式](#wildcard-pattern) (`_`)、引用类型的 [`const`模式](#path-patterns) 和 [引用模式](#reference-patterns) 之外的所有模式。
+*非引用模式* 包括除绑定、 [通配符模式](#wildcard-pattern) (`_`)、引用类型的 [`const` 模式](#path-patterns) 和 [引用模式](#reference-patterns) 之外的所有模式。
 
 如果一个绑定模式没有明确指定 `ref` 、 `ref mut` 或 `mut` ，则会使用 *默认绑定模式* 来确定变量如何被绑定。
 默认绑定模式开始于 "移动" 模式，使用移动语义。
@@ -549,7 +581,9 @@ let Person { name, ref age } = person;
 > _WildcardPattern_ :\
 > &nbsp;&nbsp; `_`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _通配符模式_ :\
+> &nbsp;&nbsp; `_`
 {==+==}
 
 
@@ -627,7 +661,7 @@ if let Some(_) = x {}
 {==+==}
 The wildcard pattern is always irrefutable.
 {==+==}
-通配符模式始终是不可反驳的 (irrefutable) 。
+通配符模式始终是不可反驳的。
 {==+==}
 
 
@@ -643,7 +677,9 @@ The wildcard pattern is always irrefutable.
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _剩余模式_ :\
+> &nbsp;&nbsp; `..`
 {==+==}
 
 
@@ -654,7 +690,7 @@ It is also allowed in an [identifier pattern](#identifier-patterns) for [slice p
 
 The rest pattern is always irrefutable.
 {==+==}
-_rest pattern_ (剩余模式) (`..` 符号) 作为一个可变长度的模式，用于匹配在之前和之后尚未被匹配到的零个或多个元素。
+_剩余模式_ (`..` 符号) 作为一个可变长度的模式，用于匹配在之前和之后尚未被匹配到的零个或多个元素。
 它只能在 [元组模式](#tuple-patterns) 、 [元组结构体模式](#tuple-struct-patterns) 和 [切片模式](#slice-patterns) 中使用，并且只能出现一次作为这些模式中的一个元素。
 在 [切片模式](#slice-patterns) 中，它也允许出现在 [标识符模式](#identifier-patterns) 中。
 
@@ -741,7 +777,7 @@ match tuple {
 {==+==}
 ## Range patterns
 {==+==}
-## 范围模式
+## 区间模式
 {==+==}
 
 
@@ -769,7 +805,28 @@ match tuple {
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | [_PathExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _区间模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _包含区间模式_\
+> &nbsp;&nbsp; | _HalfOpenRangePattern_\
+> &nbsp;&nbsp; | _ObsoleteRangePattern_
+>
+> _包含区间模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _区间模式边界_ `..=` _区间模式边界_
+>
+> _半开区间模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _区间模式边界_ `..`
+> &nbsp;&nbsp; | `..=` _区间模式边界_
+>
+> _废弃区间模式_ :\
+> &nbsp;&nbsp; _区间模式边界_ `...` _区间模式边界_
+>
+> _区间模式边界_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [CHAR_LITERAL]\
+> &nbsp;&nbsp; | [BYTE_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
+> &nbsp;&nbsp; | [_PathExpression_]
 {==+==}
 
 
@@ -788,15 +845,15 @@ The type of it is the type unification of its upper and lower bounds.
 
 For example, a pattern `'m'..='p'` will match only the values `'m'`, `'n'`, `'o'`, and `'p'`.
 {==+==}
-*范围模式* 匹配在它的边界定义的标量值的范围。
+*区间模式* 匹配在它的边界定义的标量值的区间。
 在符号左侧的边界是一个 *下界* 。
 右侧的边界是一个 *上界* 。
-范围模式可以是闭合或半开的。
+区间模式可以是闭合或半开的。
 
-如果范围模式有下界和上界，那么它是 *闭合的* 范围模式。
-唯一的闭合范围模式是包含范围模式。
+如果区间模式有下界和上界，那么它是 *闭合的* 区间模式。
+唯一的闭合区间模式是包含区间模式。
 
-*包含范围模式* 匹配在它的边界之间和包括边界两侧的所有值。
+*包含区间模式* 匹配在它的边界之间和包括边界两侧的所有值。
 它由其下界、跟着 `..=` 符号、以及它的上界组成。
 它的类型是它的上界和下界的类型统一。
 
@@ -824,20 +881,20 @@ For example, `..=10` will match 10, 1, 0, and for signed integer types, all nega
 Half-open range patterns cannot be used as the top-level pattern for subpatterns in [slice patterns](#slice-patterns).
 {==+==}
 下边界不能大于上边界，即在 `a..=b` 中，必须满足 a &le; b 。
-例如，有一个范围模式 `10..=0` 是错误的。
+例如，有一个区间模式 `10..=0` 是错误的。
 
-当范围模式仅具有上限或下限时，它们是 *半开放的* 。
+当区间模式仅具有上限或下限时，它们是 *半开放的* 。
 它们的类型与其上限或下限相同。
 
-仅具有下限的半开放范围写为其下限后跟 `..` 。
-这些范围模式将匹配大于或等于下限的任何值。
+仅具有下限的半开放区间写为其下限后跟 `..` 。
+这些区间模式将匹配大于或等于下限的任何值。
 例如， `1..` 将匹配 1 、 9 或 9001 ，或 9007199254740991 (如果它是适当大小的) ，但不匹配 0，对于有符号整数不匹配负数。
 
-边界可以是字面值或指向常量值的路径。仅具有上限的半开放范围写为 `..=` 后跟其上限。
-这些范围模式将匹配小于或等于上限的任何值。
+边界可以是字面值或指向常量值的路径。仅具有上限的半开放区间写为 `..=` 后跟其上限。
+这些区间模式将匹配小于或等于上限的任何值。
 例如，`..=10` 将匹配 10、1、0，对于有符号整数类型还会匹配所有负值。
 
-半开放的范围模式不能用作 [切片模式](#slice-patterns) 中子模式的顶层模式。
+半开放的区间模式不能用作 [切片模式](#slice-patterns) 中子模式的顶层模式。
 {==+==}
 
 
@@ -963,16 +1020,16 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 > **Note**: Although range patterns use the same syntax as [range expressions], there are no exclusive range patterns.
 > That is, neither `x .. y` nor `.. x` are valid range patterns.
 {==+==}
-固定宽度整数类型和 `char` 类型的范围模式在它们跨越类型的所有可能值时是不可反驳的。
+固定宽度整数类型和 `char` 类型的区间模式在它们跨越类型的所有可能值时是不可反驳的。
 例如，`0u8..=255u8` 是不可反驳的。
-整数类型的值范围是从最小值到最大值的闭合范围。
-`char` 类型的值范围恰好包含所有 Unicode 标量值的范围：`'\U{0000}'..='\U{D7FF}'` 和 `'\U{E000}'..='\U{10FFFF}'`。
+整数类型的值区间是从最小值到最大值的闭合区间。
+`char` 类型的值区间恰好包含所有 Unicode 标量值的区间：`'\U{0000}'..='\U{D7FF}'` 和 `'\U{E000}'..='\U{10FFFF}'`。
 
-浮点数范围模式已被弃用，并可能在未来的 Rust 版本中被移除。有关更多信息，请参见 [问题 #41620](https://github.com/rust-lang/rust/issues/41620)。
+浮点数区间模式已被弃用，并可能在未来的 Rust 版本中被移除。有关更多信息，请参见 [问题 #41620](https://github.com/rust-lang/rust/issues/41620)。
 
-> **Edition Differences**: 在 2021 版本之前，闭合范围模式也可以使用 `...` 作为 `..=` 的替代，具有相同的含义。
+> **版次差异**: 在 2021 版本之前，闭合区间模式也可以使用 `...` 作为 `..=` 的替代，具有相同的含义。
 
-> **注意**：虽然范围模式使用与 [范围表达式](https://doc.rust-lang.org/reference/expressions/range-expr.html) 相同的语法，但不存在独占范围模式。也就是说，`x .. y` 和 `.. x` 都不是有效的范围模式。
+> **注意**：虽然区间模式使用与 [区间表达式](https://doc.rust-lang.org/reference/expressions/range-expr.html) 相同的语法，但不存在独占区间模式。也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
 {==+==}
 
 
@@ -988,7 +1045,9 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 > _ReferencePattern_ :\
 > &nbsp;&nbsp; (`&`|`&&`) `mut`<sup>?</sup> [_PatternWithoutRange_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _引用模式_ :\
+> &nbsp;&nbsp; (`&`|`&&`) `mut`<sup>?</sup> [_无区间模式_][_PatternWithoutRange_]
 {==+==}
 
 
@@ -1036,7 +1095,7 @@ Reference patterns are always irrefutable.
 {==+==}
 ## Struct patterns
 {==+==}
-## 结构模式
+## 结构体模式
 {==+==}
 
 
@@ -1066,7 +1125,30 @@ Reference patterns are always irrefutable.
 > &nbsp;&nbsp; [_OuterAttribute_] <sup>\*</sup>\
 > &nbsp;&nbsp; `..`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _结构体模式_ :\
+> &nbsp;&nbsp; [_路径表达式_][_PathInExpression_] `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; _结构体模式组_ <sup>?</sup>\
+> &nbsp;&nbsp; `}`
+>
+> _结构体模式组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _结构体模式字段组_ (`,` | `,` _结构体模式符加_)<sup>?</sup>\
+> &nbsp;&nbsp; | _结构体模式符加_
+>
+> _结构体模式字段组_ :\
+> &nbsp;&nbsp; _结构体模式字段_ (`,` _结构体模式字段_) <sup>\*</sup>
+>
+> _结构体模式字段_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [元组索引][TUPLE_INDEX] `:` [_模式_][_Pattern_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [标识符][IDENTIFIER] `:` [_模式_][_Pattern_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | `ref`<sup>?</sup> `mut`<sup>?</sup> [标识符][IDENTIFIER]\
+> &nbsp;&nbsp; )
+>
+> _结构体模式符加_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; `..`
 {==+==}
 
 
@@ -1156,7 +1238,7 @@ match struct_value {
 {==+==}
 The `ref` and/or `mut` _IDENTIFIER_ syntax matches any value and binds it to a variable with the same name as the given field.
 {==+==}
-`ref` 和/或 `mut` _IDENTIFIER_ 语法匹配任何值，并将其绑定到与给定字段同名的变量。
+`ref` 和/或 `mut` _标识符_ 语法匹配任何值，并将其绑定到与给定字段同名的变量。
 {==+==}
 
 
@@ -1198,7 +1280,12 @@ A struct pattern is refutable when one of its subpatterns is refutable.
 > _TupleStructItems_ :\
 > &nbsp;&nbsp; [_Pattern_]&nbsp;( `,` [_Pattern_] )<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元组结构模式_ :\
+> &nbsp;&nbsp; [_路径表达式_][_PathInExpression_] `(` _元组结构条目组_<sup>?</sup> `)`
+>
+> _元组结构条目组_ :\
+> &nbsp;&nbsp; [_模式_][_Pattern_]&nbsp;( `,` [_模式_][_Pattern_] )<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -1231,7 +1318,14 @@ A tuple struct pattern is refutable when one of its subpatterns is refutable.
 > &nbsp;&nbsp; | [_RestPattern_]\
 > &nbsp;&nbsp; | [_Pattern_]&nbsp;(`,` [_Pattern_])<sup>+</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元组模式_ :\
+> &nbsp;&nbsp; `(` _元组模式条目组_<sup>?</sup> `)`
+>
+> _元组模式条目组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_模式_][_Pattern_] `,`\
+> &nbsp;&nbsp; | [_剩余模式_]\
+> &nbsp;&nbsp; | [_模式_][_Pattern_]&nbsp;(`,` [_模式_][_Pattern_])<sup>+</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -1246,7 +1340,7 @@ The tuple pattern is refutable when one of its subpatterns is refutable.
 An example of using tuple patterns:
 {==+==}
 元组模式匹配满足其子模式定义的所有条件的元组值。它们也用于 [解构](#destructuring) 元组。
-形式为 `(..)` 且具有单个 [_RestPattern_] 的是一种特殊形式，它不需要逗号，可以匹配任意大小的元组。
+形式为 `(..)` 且具有单个 [_剩余模式_][_RestPattern_] 的是一种特殊形式，它不需要逗号，可以匹配任意大小的元组。
 
 当其子模式中有一个可反驳时，元组模式是可反驳的。
 
@@ -1279,7 +1373,9 @@ assert_eq!(b, "ten");
 > _GroupedPattern_ :\
 > &nbsp;&nbsp; `(` [_Pattern_] `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _分组模式_ :\
+> &nbsp;&nbsp; `(` [_模式_][_Pattern_] `)`
 {==+==}
 
 
@@ -1288,7 +1384,7 @@ Enclosing a pattern in parentheses can be used to explicitly control the precede
 For example, a reference pattern next to a range pattern such as `&0..=5` is ambiguous and is not allowed, but can be expressed with parentheses.
 {==+==}
 将一个模式括在括号中可以用于显式地控制复合模式的优先级。
-例如，一个引用模式紧贴着一个范围模式，如 `&0..=5` 是有歧义的并且不被允许，但可以用括号来表示。
+例如，一个引用模式紧贴着一个区间模式，如 `&0..=5` 是有歧义的并且不被允许，但可以用括号来表示。
 {==+==}
 
 
@@ -1318,9 +1414,14 @@ match int_reference {
 > &nbsp;&nbsp; `[` _SlicePatternItems_<sup>?</sup> `]`
 >
 > _SlicePatternItems_ :\
-> &nbsp;&nbsp; [_Pattern_] \(`,` [_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
+> &nbsp;&nbsp; [_模式_][_Pattern_] \(`,` [_模式_][_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _切片模式_ :\
+> &nbsp;&nbsp; `[` _切片模式条目组_<sup>?</sup> `]`
+>
+> _切片模式条目组_ :\
+> &nbsp;&nbsp; [_模式_][_Pattern_] \(`,` [_模式_][_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -1393,7 +1494,9 @@ Within a slice, a half-open range pattern like `a..` must be enclosed in parenth
 > _PathPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_PathExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _路径模式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_路径表达式_][_PathExpression_]
 {==+==}
 
 
@@ -1440,7 +1543,7 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
 ## 或模式
 
 _或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。它们可以任意嵌套。
-从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _Pattern_ 产生式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _PatternNoTopAlt_ 产生式表示) 。
+从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 生成式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层选项_ 产生式表示) 。
 {==+==}
 
 

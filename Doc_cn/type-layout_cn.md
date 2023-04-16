@@ -767,7 +767,7 @@ different behavior whether the enum has fields or no fields. It is an error
 for [zero-variant enums] to have a primitive representation. Combining
 two primitive representations together is an error.
 {==+==}
-> 注意: 带有非`Copy`字段的`union`是不稳定的，请参见[55149]。
+> 注意: 带有非`Copy`字段的`union`是未稳定的，请参见[55149]。
 
 ### 原始表示
 
@@ -903,7 +903,7 @@ struct MyVariantD(MyEnumDiscriminant);
 {==+==}
 > Note: `union`s with non-`Copy` fields are unstable, see [55149].
 {==+==}
-> 注意: 具有非 `Copy` 字段的联合体是不稳定的，请参见 [55149] 。
+> 注意: 具有非 `Copy` 字段的联合体是未稳定的，请参见 [55149] 。
 {==+==}
 
 

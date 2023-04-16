@@ -134,7 +134,7 @@ reading uninitialized memory is permitted are inside `union`s and in "padding"
 > vice versa, undefined behavior in Rust can cause adverse affects on code
 > executed by any FFI calls to other languages.
 {==+==}
-    > **注意**: `rustc` 使用不稳定的 `rustc_layout_scalar_valid_range_*` 属性来实现此功能。
+    > **注意**: `rustc` 使用未稳定的 `rustc_layout_scalar_valid_range_*` 属性来实现此功能。
 
 * 不正确使用内联汇编。有关更多详细信息，请参阅使用内联汇编编写代码时要遵循的 [规则][rules] 。
   

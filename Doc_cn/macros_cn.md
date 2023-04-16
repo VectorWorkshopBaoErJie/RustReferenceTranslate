@@ -27,8 +27,8 @@ There are two ways to define new macros:
 * [Procedural Macros] define function-like macros, custom derives, and custom
   attributes using functions that operate on input tokens.
 {==+==}
-* [Macros by Example] "实例宏" 以更高级、声明式的方式定义新的语法。
-* [Procedural Macros] "过程宏" 通过在输入 Token 上操作的函数，定义函数式宏、自定义衍生和自定义属性。
+* [实例宏][Macros by Example] 以更高级、声明式的方式定义新的语法。
+* [过程宏][Procedural Macros] 通过在输入 Token 上操作的函数，定义函数式宏、自定义衍生和自定义属性。
 {==+==}
 
 
@@ -57,7 +57,22 @@ There are two ways to define new macros:
 > &nbsp;&nbsp; | [_SimplePath_] `!` `[` _TokenTree_<sup>\*</sup> `]` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `{` _TokenTree_<sup>\*</sup> `}`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _宏调用_ :\
+> &nbsp;&nbsp; [_简单路径_] `!` _定界Token树_
+>
+> _定界Token树_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp;  `(` _Token树_<sup>\*</sup> `)`\
+> &nbsp;&nbsp; | `[` _Token树_<sup>\*</sup> `]`\
+> &nbsp;&nbsp; | `{` _Token树_<sup>\*</sup> `}`
+>
+> _Token树_ :\
+> &nbsp;&nbsp; [_Token_]<sub>_不包括 [delimiters]_</sub> | _定界Token树_
+>
+> _宏调用语句_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_] `!` `(` _Token树_<sup>\*</sup> `)` `;`\
+> &nbsp;&nbsp; | [_SimplePath_] `!` `[` _Token树_<sup>\*</sup> `]` `;`\
+> &nbsp;&nbsp; | [_SimplePath_] `!` `{` _Token树_<sup>\*</sup> `}`
 {==+==}
 
 
@@ -78,12 +93,12 @@ following situations:
 * [`macro_rules`] transcribers
 * [External blocks]
 {==+==}
-* [Expressions] "表达式"和 [statements] "语句"
-* [Patterns] "模式"
-* [Types] "类型"
-* [Items] "条目" 包括 [associated items] "关联条目"
-* [`macro_rules`] "宏规则" 转换器
-* [External blocks] "外部块"
+* [表达式][Expressions] 和 [语句][statements] 
+* [模式][Patterns]
+* [类型][Types]
+* [条目][Items] 包括 [关联条目][associated items]
+* [`macro_rules`] 转换器
+* [外部块][External blocks] 
 {==+==}
 
 
@@ -93,8 +108,8 @@ where a semicolon is required at the end when not using curly braces.
 [Visibility qualifiers] are never allowed before a macro invocation or
 [`macro_rules`] definition.
 {==+==}
-当它被用作条目或语句时，使用 `_MacroInvocationSemi_` 形式，当不使用花括号时需要在末尾加上分号。
-在宏调用或 [`macro_rules`] 定义之前，不允许出现[可见性限定符][Visibility qualifiers]。
+当它被用作条目或语句时，使用 `_宏调用语句_` 形式，当不使用花括号时需要在末尾加上分号。
+在宏调用或 [`macro_rules`] 定义之前，不允许出现 [可见性限定符][Visibility qualifiers] 。
 {==+==}
 
 

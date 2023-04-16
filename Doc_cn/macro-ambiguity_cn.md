@@ -108,7 +108,7 @@ and `$i` are simple NT's with `expr` and `ident` as their respective fragment
 specifiers.
 {==+==}
 `(start $foo:expr $($i:ident),* end)` 是一个匹配器。
-整个匹配器是一个带有开/闭定界符 `(` 和 `)` 的定界序列， `$foo` 和 `$i` 是具有 `expr` 和 `ident` 作为它们各自的片段指示符的简单 NT 。
+整个匹配器是一个带有开/闭定界符 `(` 和 `)` 的定界序列， `$foo` 和 `$i` 是具有 `expr` 和 `ident` 作为它们各自的片段规格的简单 NT 。
 {==+==}
 
 
@@ -149,7 +149,7 @@ arbitrary token trees. (The use of "tt" does present potential ambiguity with
 its additional role as a fragment specifier; but it will be clear from context
 which interpretation is meant.)
 {==+==}
-我们通常使用变量 "M" 代表一个匹配器，变量 "t" 和 "u" 代表任意单个标记，变量 "tt" 和 "uu" 代表任意标记树。( "tt" 的使用可能存在潜在的歧义，因为它还作为片段指示符的额外角色；但从上下文中可以清楚地知道意思。)
+我们通常使用变量 "M" 代表一个匹配器，变量 "t" 和 "u" 代表任意单个标记，变量 "tt" 和 "uu" 代表任意标记树。( "tt" 的使用可能存在潜在的歧义，因为它还作为片段规格的额外角色；但从上下文中可以清楚地知道意思。)
 {==+==}
 
 

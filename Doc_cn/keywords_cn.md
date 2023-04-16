@@ -34,7 +34,7 @@ Rust 关键字分为三类:
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
 {==+==}
-这些关键字只能在它们正确的上下文中使用。它们不能用作以下内容的名称：
+这些关键字只能在其正确的上下文中使用。不能用作以下内容的名称：
 {==+==}
 
 
@@ -48,12 +48,12 @@ be used as the names of:
 * [Macro placeholders]
 * [Crates]
 {==+==}
-* [Items] "条目"
-* [Variables] "变量"和函数参数
-* 字段 和 [variants] "变体"
-* [Type parameters] "类型参数"
+* [条目][Items]
+* [变量][Variables] 和函数参数
+* 字段 和 [变体][variants]
+* [类型参数][Type parameters]
 * 生命周期参数 或 [loop 标签][loop labels]
-* [Macros] "宏" 或 [attributes] "属笥"
+* [宏][Macros] 或 [属性][attributes]
 * [宏占位符][Macro placeholders]
 * [Crates]
 {==+==}
@@ -97,7 +97,42 @@ be used as the names of:
 > KW_WHERE          : `where`\
 > KW_WHILE          : `while`
 {==+==}
-
+> **<sup>词法:<sup>**\
+> KW_AS             : `as`\
+> KW_BREAK          : `break`\
+> KW_CONST          : `const`\
+> KW_CONTINUE       : `continue`\
+> KW_CRATE          : `crate`\
+> KW_ELSE           : `else`\
+> KW_ENUM           : `enum`\
+> KW_EXTERN         : `extern`\
+> KW_FALSE          : `false`\
+> KW_FN             : `fn`\
+> KW_FOR            : `for`\
+> KW_IF             : `if`\
+> KW_IMPL           : `impl`\
+> KW_IN             : `in`\
+> KW_LET            : `let`\
+> KW_LOOP           : `loop`\
+> KW_MATCH          : `match`\
+> KW_MOD            : `mod`\
+> KW_MOVE           : `move`\
+> KW_MUT            : `mut`\
+> KW_PUB            : `pub`\
+> KW_REF            : `ref`\
+> KW_RETURN         : `return`\
+> KW_SELFVALUE      : `self`\
+> KW_SELFTYPE       : `Self`\
+> KW_STATIC         : `static`\
+> KW_STRUCT         : `struct`\
+> KW_SUPER          : `super`\
+> KW_TRAIT          : `trait`\
+> KW_TRUE           : `true`\
+> KW_TYPE           : `type`\
+> KW_UNSAFE         : `unsafe`\
+> KW_USE            : `use`\
+> KW_WHERE          : `where`\
+> KW_WHILE          : `while`
 {==+==}
 
 
@@ -114,7 +149,10 @@ The following keywords were added beginning in the 2018 edition.
 > KW_AWAIT          : `await`\
 > KW_DYN            : `dyn`
 {==+==}
-
+> **<sup>词法 2018+</sup>**\
+> KW_ASYNC          : `async`\
+> KW_AWAIT          : `await`\
+> KW_DYN            : `dyn`
 {==+==}
 
 
@@ -133,7 +171,7 @@ them to use these keywords.
 {==+==}
 这些关键字目前还没有被使用，但是它们被保留以供将来使用。
 它们的使用规则与严格关键字相同。
-这样做的原因是通过禁止当前程序使用这些关键字，使其与 Rust 的将来版本保持向前兼容。
+这样做的原因是通过禁止当前程序使用这些关键字，从而，使其与 Rust 的将来版本保持向前兼容。
 {==+==}
 
 
@@ -152,7 +190,19 @@ them to use these keywords.
 > KW_VIRTUAL        : `virtual`\
 > KW_YIELD          : `yield`
 {==+==}
-
+> **<sup>词法</sup>**\
+> KW_ABSTRACT       : `abstract`\
+> KW_BECOME         : `become`\
+> KW_BOX            : `box`\
+> KW_DO             : `do`\
+> KW_FINAL          : `final`\
+> KW_MACRO          : `macro`\
+> KW_OVERRIDE       : `override`\
+> KW_PRIV           : `priv`\
+> KW_TYPEOF         : `typeof`\
+> KW_UNSIZED        : `unsized`\
+> KW_VIRTUAL        : `virtual`\
+> KW_YIELD          : `yield`
 {==+==}
 
 
@@ -167,7 +217,8 @@ The following keywords are reserved beginning in the 2018 edition.
 > **<sup>Lexer 2018+</sup>**\
 > KW_TRY   : `try`
 {==+==}
-
+> **<sup>词法 2018+</sup>**\
+> KW_TRY   : `try`
 {==+==}
 
 
@@ -194,8 +245,8 @@ is possible to declare a variable or method with the name `union`.
 * `'static` is used for the static lifetime and cannot be used as a [generic
   lifetime parameter] or [loop label]
 {==+==}
-* `macro_rules` 用于创建自定义 [macros] 。
-* `union` 用于声明 [union] ，只有在使用 union 声明时才是一个关键字。
+* `macro_rules` 用于创建自定义 [宏][macros] 。
+* `union` 用于声明 [联合体][union] ，只有在使用 union 声明时才是一个关键字。
 * `'static` 用于静态生命周期，不能作为 [泛型生命周期参数][generic lifetime parameter] 或 [loop 标签][loop label] 使用。
 {==+==}
 
@@ -214,7 +265,7 @@ is possible to declare a variable or method with the name `union`.
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
 {==+==}
-* 在 2015 版中，[`dyn`] 是一个关键字，当它用于类型位置且其后跟随的路径不以 `::` 开头时。
+* 在 2015 版中，[`dyn`] 当用在类型位置且随后的路径不以 `::` 开头时，是一个关键字。
 {==+==}
 
 
@@ -233,7 +284,12 @@ is possible to declare a variable or method with the name `union`.
 > **<sup>Lexer 2015</sup>**\
 > KW_DYN            : `dyn`
 {==+==}
-
+> **<sup>词法</sup>**\
+> KW_UNION          : `union`\
+> KW_STATICLIFETIME : `'static`
+>
+> **<sup>词法 2015</sup>**\
+> KW_DYN            : `dyn`
 {==+==}
 
 

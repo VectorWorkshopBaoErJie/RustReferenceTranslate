@@ -101,7 +101,7 @@ display a console window on startup. It will run detached from any existing cons
 ## `windows_subsystem` 属性
 
 *`windows_subsystem` 属性* 可以在 Windows 目标上的链接时应用于 crate 级别，以设置 [subsystem]。
-它使用 [_MetaNameValueStr_] 语法来指定子系统，值为 `console` 或 `windows`。在非 Windows 目标上，此属性将被忽略，对于非 `bin` [crate types] 也是如此。
+它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定子系统，值为 `console` 或 `windows`。在非 Windows 目标上，此属性将被忽略，对于非 `bin` [crate types] 也是如此。
 
 "console" 子系统是默认值。如果从现有控制台运行控制台进程，则它将附加到该控制台，否则将创建一个新的控制台窗口。
 

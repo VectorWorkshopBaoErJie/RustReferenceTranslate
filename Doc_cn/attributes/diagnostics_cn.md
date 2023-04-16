@@ -433,7 +433,7 @@ violated.
 
 *`must_use` 属性* 用于在值未被 "使用" 时发出诊断警告。它可以应用于用户定义的复合类型 ( [`struct`] 、 [`enum`] 和 [`union`] ) 、 [`functions`] 和 [`traits`] 。
 
-`must_use` 属性可以通过使用 [_MetaNameValueStr_] 语法 (例如 `#[must_use = "example message"]` ) 包含一条消息。该消息将与警告一起给出。
+`must_use` 属性可以通过使用 [_元名称值字符串_][_MetaNameValueStr_] 语法 (例如 `#[must_use = "example message"]` ) 包含一条消息。该消息将与警告一起给出。
 
 当在用户定义的复合类型上使用时，如果 [expression] 的 [expression statement] 具有该类型，则违反了 `unused_must_use` lint。
 {==+==}

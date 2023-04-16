@@ -1025,7 +1025,7 @@ An assignment expression always produces [the unit value][unit].
 {==+==}
 ### 基本赋值语句
 
-对赋值表达式求值，需要先对操作数进行求值。先对被赋值操作数进行求值，然后是赋值操作数表达式。对于解构赋值，被赋值表达式的子表达式从左到右进行求值。
+对赋值表达式求值，需要先对操作数进行求值。先对被赋值操作数进行求值，然后是赋值操作数表达式。对于解构赋值，可赋值表达式的子表达式从左到右进行求值。
 
 > **注意**：与其他表达式不同的是，右操作数在左操作数之前进行求值。该表达式首先有一个效果：删除被赋值位置的值，除非被赋值的地方是未初始化的本地变量或本地变量的未初始化字段。然后将赋值的值复制或移动到被赋值的地方。
 
@@ -1083,7 +1083,7 @@ The desugared patterns must be irrefutable: in particular, this means that only 
 The desugaring method is straightforward, and is illustrated best by example.
 {==+==}
 与使用 `let` 进行解构声明不同，由于语法歧义，模式不能出现在赋值语句的左侧。
-相反，一组对应模式的表达式被指定为 [assignee expressions][assignee expression] ，并允许出现在赋值语句的左侧。
+相反，一组对应模式的表达式被指定为 [可赋值表达式][assignee expression] ，并允许出现在赋值语句的左侧。
 然后，将赋值表达式展开为模式匹配，然后进行顺序赋值。
 展开后的模式必须是不可反驳的：特别地，这意味着仅允许具有在编译时已知长度的切片模式以及简单的切片 `[..]` 用于解构赋值。
 
@@ -1133,7 +1133,7 @@ Identifiers are not forbidden from being used multiple times in a single assigne
 
 Note that default binding modes do not apply for the desugared expression.
 {==+==}
-在单个赋值表达式中，标识符不禁止被多次使用。
+在单个可赋值表达式中，标识符不禁止被多次使用。
 
 [下划线表达式][_UnderscoreExpression_] 和空 [区间表达式][_RangeExpression_] 可用于忽略某些值，而不将它们绑定到变量上。
 

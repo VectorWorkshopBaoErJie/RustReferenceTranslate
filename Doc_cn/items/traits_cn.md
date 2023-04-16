@@ -651,7 +651,7 @@ macro rule may be used in other situations where visibility is allowed.
 {==+==}
 Trait中的条目在语法上允许添加 [_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
 这使得在使用这些条目的不同上下文中，可以使用统一的语法进行解析。
-例如，可以使用一个空的 `vis` 宏片段指示符来表示 trait 条目，在其他允许使用可见性的情况下使用该宏规则。
+例如，可以使用一个空的 `vis` 宏片段规格来表示 trait 条目，在其他允许使用可见性的情况下使用该宏规则。
 {==+==}
 
 

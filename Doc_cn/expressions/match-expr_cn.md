@@ -40,7 +40,7 @@ A `match` expression has a *[scrutinee] expression*, which is the value to compa
 The scrutinee expression and the patterns must have the same type.
 {==+==}
 一个 *`match` 表达式* 会根据一个模式进行分支。匹配所发生的确切形式取决于 [模式][pattern] 。
-一个 `match` 表达式有一个 *[被匹配][scrutinee] 表达式*，它是要与模式进行比较的值。被匹配表达式和模式必须具有相同的类型。
+一个 `match` 表达式有一个 *[被匹配项][scrutinee] 表达式*，它是要与模式进行比较的值。被匹配表达式和模式必须具有相同的类型。
 {==+==}
 
 

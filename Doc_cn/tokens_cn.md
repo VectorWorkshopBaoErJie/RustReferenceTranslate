@@ -10,7 +10,7 @@ Tokens are primitive productions in the grammar defined by regular
 (non-recursive) languages.  Rust source input can be broken down
 into the following kinds of tokens:
 {==+==}
-Token (令牌)是常规(非递归)语言描述语法的原始制品。Rust 源码输入能分解为以下种类的 Token:
+Token 是非递归的常规编程语言描述语法的原始制品。 Rust 源码解析 Token 有以下几种 :
 {==+==}
 
 
@@ -22,12 +22,12 @@ Token (令牌)是常规(非递归)语言描述语法的原始制品。Rust 源�
 * [Punctuation](#punctuation)
 * [Delimiters](#delimiters)
 {==+==}
-* [Keywords] 关键字
-* [Identifiers][identifier] 标识符
-* [Literals](#literals) 字面值
-* [Lifetimes](#lifetimes-and-loop-labels) 生命周期
-* [Punctuation](#punctuation) 标点符号
-* [Delimiters](#delimiters) 定界符号
+* [关键字][Keywords] 
+* [标识符][identifier] 
+* [字面值](#literals) 
+* [生命周期](#lifetimes-and-loop-labels) 
+* [标点符号](#punctuation) 
+* [定界符号](#delimiters) 
 {==+==}
 
 
@@ -35,7 +35,7 @@ Token (令牌)是常规(非递归)语言描述语法的原始制品。Rust 源�
 Within this documentation's grammar, "simple" tokens are given in [string
 table production] form, and appear in `monospace` font.
 {==+==}
-在本文档的语法中，"简单的" Token 以 [字符串表项][string table production] 的形式给出，并以 `monospace` "等宽" 字体呈现。
+在本文档的语法中，"简单" Token 以 [string 标记][string table production] 的形式给出，并以 `monospace` "等宽" 字体呈现。
 {==+==}
 
 
@@ -56,7 +56,7 @@ table production] form, and appear in `monospace` font.
 {==+==}
 Literals are tokens used in [literal expressions].
 {==+==}
-字面值用于 [字面值表达式][literal expressions] Token。
+字面值 Token 用于 [字面值表达式][literal expressions] 。
 {==+==}
 
 
@@ -84,7 +84,14 @@ Literals are tokens used in [literal expressions].
 | [Byte string](#byte-string-literals)         | `b"hello"`      | 0          | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
 | [Raw byte string](#raw-byte-string-literals) | `br#"hello"#`   | <256       | All ASCII   | `N/A`                                                      |
 {==+==}
-
+|                                              | 示例         | `#` 标记\* | 字符集  | 转义             |
+|----------------------------------------------|-----------------|------------|-------------|---------------------|
+| [字符](#character-literals)             | `'H'`           | 0          | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
+| [字符串](#string-literals)                   | `"hello"`       | 0          | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
+| [原始字符串](#raw-string-literals)           | `r#"hello"#`    | <256       | All Unicode | `N/A`                                                      |
+| [字节](#byte-literals)                       | `b'H'`          | 0          | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
+| [字节字符串](#byte-string-literals)         | `b"hello"`      | 0          | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
+| [原始字节字符串](#raw-byte-string-literals) | `br#"hello"#`   | <256       | All ASCII   | `N/A`                                                      |
 {==+==}
 
 
@@ -112,7 +119,14 @@ Literals are tokens used in [literal expressions].
 | `\\` | Backslash |
 | `\0` | Null |
 {==+==}
-
+|   | 名称 |
+|---|------|
+| `\x41` | 7位字符编码(确切说是 2 位数字，最高为 0x7F ) |
+| `\n` | 换行 |
+| `\r` | 回车 |
+| `\t` | 制表符 |
+| `\\` | 反斜杠 |
+| `\0` | 空字符 |
 {==+==}
 
 
@@ -133,7 +147,14 @@ Literals are tokens used in [literal expressions].
 | `\\` | Backslash |
 | `\0` | Null |
 {==+==}
-
+|   | 名称 |
+|---|------|
+| `\x7F` | 8位字符编码 (确切地说是 2 位数字)  |
+| `\n` | 换行 |
+| `\r` | 回车 |
+| `\t` | 制表符 |
+| `\\` | 反斜杠 |
+| `\0` | 空字符 |
 {==+==}
 
 
@@ -149,9 +170,9 @@ Literals are tokens used in [literal expressions].
 |---|------|
 | `\u{7FFF}` | 24-bit Unicode character code (up to 6 digits) |
 {==+==}
-|   | Name |
+|   | 名称 |
 |---|------|
-| `\u{7FFF}` | 24 位 Unicode 字符编码(最多 6 位) |
+| `\u{7FFF}` | 24 位 Unicode 字符编码 (最多 6 位) |
 {==+==}
 
 
@@ -168,7 +189,7 @@ Literals are tokens used in [literal expressions].
 | `\'` | Single quote |
 | `\"` | Double quote |
 {==+==}
-|   | Name |
+|   | 名称 |
 |---|------|
 | `\'` | 单引号 |
 | `\"` | 双引号 |
@@ -218,7 +239,7 @@ Literals are tokens used in [literal expressions].
 {==+==}
 A suffix is a sequence of characters following the primary part of a literal (without intervening whitespace), of the same form as a non-raw identifier or keyword.
 {==+==}
-后缀是在字面值主要部分之后的一串字符(中间没有空白)，其形式与非原始标识符或关键词相同。
+后缀是在字面值主体部分之后的一串字符(中间没有空白)，其形式与非原始标识符或关键词相同。
 {==+==}
 
 
@@ -227,14 +248,16 @@ A suffix is a sequence of characters following the primary part of a literal (wi
 > SUFFIX : IDENTIFIER_OR_KEYWORD\
 > SUFFIX_NO_E : SUFFIX <sub>_not beginning with `e` or `E`_</sub>
 {==+==}
-
+> **<sup>词法</sup>**\
+> 后缀 : 标识符或关键字\
+> 后缀非E : 后缀 <sub>_不以 `e` 或 `E` 开始_</sub>
 {==+==}
 
 
 {==+==}
 Any kind of literal (string, integer, etc) with any suffix is valid as a token.
 {==+==}
-任何种类的字面值 (字符串、整数等) 可带有任意后缀，将作为一个 Token 使用。
+任何种类的字面值字符串、整数等可带有任意后缀，将作为单个 Token 。
 {==+==}
 
 
@@ -244,8 +267,8 @@ The macro itself will decide how to interpret such a token and whether to produc
 In particular, the `literal` fragment specifier for by-example macros matches literal tokens with arbitrary suffixes.
 {==+==}
 带有任意后缀的字面值 Token 可以传递给宏而不产生错误。
-宏本身将决定如何解释这样的 Token 以及是否产生错误。
-特别是，示例宏的 `literal` 片段 specifier "指示器"可以匹配具有任意后缀的字面值 Token。
+宏本身去决定如何解释这类 Token 以及是否产生错误。
+特别是，示例宏的 `literal` 片段指示器可以匹配具有任意后缀的字面值 Token。
 {==+==}
 
 
@@ -267,7 +290,7 @@ However, suffixes on literal tokens which are interpreted as literal expressions
 Any suffixes are rejected on non-numeric literal tokens,
 and numeric literal tokens are accepted only with suffixes from the list below.
 {==+==}
-然而，在被解释为字面值表达式或模式的字面值 Token 的后缀是受到限制的。
+然而，在被解释为字面值表达式或模式的字面值 Token 的后缀是受限的。
 会拒绝在非数字字面值 Token 上的任意后缀。
 而数字字面值 Token 只接受以下列表中的后缀。
 {==+==}
@@ -313,7 +336,19 @@ and numeric literal tokens are accepted only with suffixes from the list below.
 > UNICODE_ESCAPE :\
 > &nbsp;&nbsp; `\u{` ( HEX_DIGIT `_`<sup>\*</sup> )<sup>1..6</sup> `}`
 {==+==}
-
+> **<sup>词法</sup>**\
+> 字符字面值 :\
+> &nbsp;&nbsp; `'` ( ~\[`'` `\` \\n \\r \\t] | 引号转义 | ASCII转义 | UNICODE转义 ) `'` 后缀<sup>?</sup>
+>
+> 引号转义 :\
+> &nbsp;&nbsp; `\'` | `\"`
+>
+> ASCII转义 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `\x` 八进制数 十六进制数\
+> &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0`
+>
+> UNICODE转义 :\
+> &nbsp;&nbsp; `\u{` ( 十六进制数 `_`<sup>\*</sup> )<sup>1..6</sup> `}`
 {==+==}
 
 
@@ -348,7 +383,18 @@ _字符字面值_ 是指被两个 `U+0027` (单引号) 字符包围的单个 Uni
 > STRING_CONTINUE :\
 > &nbsp;&nbsp; `\` _followed by_ \\n
 {==+==}
-
+> **<sup>词法</sup>**\
+> 字符串字面值 :\
+> &nbsp;&nbsp; `"` (\
+> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _孤立CR_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | 引用转义\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ASCII转义\
+> &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE转义\
+> &nbsp;&nbsp; &nbsp;&nbsp; | 字符串继续\
+> &nbsp;&nbsp; )<sup>\*</sup> `"` 后缀<sup>?</sup>
+>
+> 字符串继续 :\
+> &nbsp;&nbsp; `\` _随后_ \\n
 {==+==}
 
 
@@ -401,9 +447,8 @@ assert_eq!(b, c);
 > recommended to avoid relying on this, i.e. skipping multiple newlines with line continuations.
 > See [this issue](https://github.com/rust-lang/reference/pull/1042) for more information.
 {==+==}
-> 注意: Rust 跳过额外的新行(比如在例子 `c` 中) ，这有可能会令人困惑和意外。 
-> 在未来可能会调整这种行为。在做出决定之前，建议避免使用, 
-> 也就是说，会跳过多个连续的换行。
+> 注意: Rust 跳过额外的新行 (比如在例子 `c` 中) ，这有可能会令人困惑和意外。 
+> 在未来可能会调整这种行为。在做出决定之前，建议避免使用,也就是说，目前，会跳过多个连续的换行。
 > 更多内容见这个 [Issue](https://github.com/rust-lang/reference/pull/1042) 。
 {==+==}
 
@@ -432,9 +477,8 @@ following forms:
   not permitted because it is ambiguous whether they mean Unicode code points or
   byte values.
 {==+==}
-* A _7-bit code point escape_ starts with `U+0078` (`x`) and is followed by exactly two _hex digits_ with value up to `0x7F`. It denotes the ASCII character with value equal to the provided hex value. Higher values are not permitted because it is ambiguous whether they mean Unicode code points or byte values.
 * _7 位编码转义_ 以 `U+0078` (`x`) 开始，后面正好有两个数值不超过 `0x7F` 的 _十六进制数字_ 。
-  它表示 ASCII 字符，其值等于提供的十六进制值。不允许的更高的值，因为无法明确是指 Unicode 编码还是字节值。
+  它表示 ASCII 字符，其值等于提供的十六进制值。不允许更高的值，因为无法明确是指 Unicode 编码还是字节值。
 {==+==}
 
 
@@ -478,7 +522,13 @@ following forms:
 > &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (non-greedy)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_STRING_CONTENT `#`
 {==+==}
-
+> **<sup>词法</sup>**\
+> 原始字符串字面值 :\
+> &nbsp;&nbsp; `r` 原始字符串上下文 后缀<sup>?</sup>
+>
+> 原始字符串上下文 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _孤立CR_ )<sup>* (非贪婪)</sup> `"`\
+> &nbsp;&nbsp; | `#` 原始字符串上下文 `#`
 {==+==}
 
 
@@ -491,7 +541,7 @@ character, followed by the same number of `U+0023` (`#`) characters that precede
 the opening `U+0022` (double-quote) character.
 {==+==}
 原始字符串字面值不处理任何转义。
-以字符 `U+0072` (`r`) 开始，后面是少于256个的 `U+0023` (`#`) 和 `U+0022` (双引号) 字符。
+以字符 `U+0072` (`r`) 开始，后面是少于 256 个的 `U+0023` (`#`) 和 `U+0022` (双引号) 字符。
 _原始字符串主体_ 可以包含任何 Unicode 字符序列，并且只能由另一个 `U+0022` (双引号) 字符结束，后面是 `U+0022` (双引号) 字符与开头相同数量的 `U+0023` (`#`) 字符。
 {==+==}
 
@@ -556,7 +606,16 @@ r##"foo #"# bar"##;                // foo #"# bar
 > &nbsp;&nbsp; &nbsp;&nbsp; `\x` HEX_DIGIT HEX_DIGIT\
 > &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0` | `\'` | `\"`
 {==+==}
-
+> **<sup>词法</sup>**\
+> 字节字面值 :\
+> &nbsp;&nbsp; `b'` ( ASCII字符 | 字节转义 )  `'` 后缀<sup>?</sup>
+>
+> ASCII字符 :\
+> &nbsp;&nbsp; _任意ASCII (如 0x00 至 0x7F), 不包括_ `'`, `\`, \\n, \\r 或 \\t
+>
+> 字节转义 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `\x` 十六进制数 十六进制数\
+> &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0` | `\'` | `\"`
 {==+==}
 
 
@@ -576,7 +635,7 @@ _字节字面值_ 表示是一个 ASCII 字符 (在 `U+0000` 到 `U+007F` 范围
 {==+==}
 #### Byte string literals
 {==+==}
-#### Byte 字符串字面值
+#### 字节字符串字面值
 {==+==}
 
 
@@ -588,7 +647,12 @@ _字节字面值_ 表示是一个 ASCII 字符 (在 `U+0000` 到 `U+007F` 范围
 > ASCII_FOR_STRING :\
 > &nbsp;&nbsp; _any ASCII (i.e 0x00 to 0x7F), except_ `"`, `\` _and IsolatedCR_
 {==+==}
-
+> **<sup>词法</sup>**\
+> 字节字符串字面值 :\
+> &nbsp;&nbsp; `b"` ( ASCII字符串 | 字节转义 | 字符串继续 )<sup>\*</sup> `"` 后缀<sup>?</sup>
+>
+> ASCII字符串 :\
+> &nbsp;&nbsp; _任意ASCII (如 0x00 至 0x7F), 不包括_ `"`, `\` _和 孤立CR_
 {==+==}
 
 
@@ -645,7 +709,7 @@ following forms:
 {==+==}
 #### Raw byte string literals
 {==+==}
-#### 原始 byte 字符串字面值
+#### 原始字节字符串字面值
 {==+==}
 
 
@@ -661,7 +725,16 @@ following forms:
 > ASCII :\
 > &nbsp;&nbsp; _any ASCII (i.e. 0x00 to 0x7F)_
 {==+==}
-
+> **<sup>词法</sup>**\
+> 原始字节字符串字面值 :\
+> &nbsp;&nbsp; `br` 原始字节字符串上下文 后缀<sup>?</sup>
+>
+> 原始字节字符串上下文 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ASCII<sup>* (非贪婪)</sup> `"`\
+> &nbsp;&nbsp; | `#` 原始字节字符串上下文 `#`
+>
+> ASCII :\
+> &nbsp;&nbsp; _任意ASCII (如 0x00 至 0x7F)_
 {==+==}
 
 
@@ -726,7 +799,7 @@ b"\\x52"; br"\x52";                  // \x52
 A _number literal_ is either an _integer literal_ or a _floating-point
 literal_. The grammar for recognizing the two kinds of literals is mixed.
 {==+==}
-_数字字面值_ 是一个 _整数字面值_ 或一个 _浮点字面值_ 。语法上混合识别这两种字面值。
+_数字字面值_ 是一个 _整数字面值_ 或 _浮点字面值_ 。语法上混合识别这两种字面值。
 {==+==}
 
 
@@ -763,7 +836,30 @@ _数字字面值_ 是一个 _整数字面值_ 或一个 _浮点字面值_ 。语
 >
 > HEX_DIGIT : \[`0`-`9` `a`-`f` `A`-`F`]
 {==+==}
-
+> **<sup>词法</sup>**\
+> 整数字面值 :\
+> &nbsp;&nbsp; ( 十进制字面值 | 二进制字面值 | 八进制字面值 | 十六进制字面值 )
+>              SUFFIX_NO_E<sup>?</sup>
+>
+> 十进制字面值 :\
+> &nbsp;&nbsp; 十进制数 (十进制数|`_`)<sup>\*</sup>
+>
+> 二进制字面值 :\
+> &nbsp;&nbsp; `0b` (二进制数|`_`)<sup>\*</sup> 二进制数 (二进制数|`_`)<sup>\*</sup>
+>
+> 八进制字面值 :\
+> &nbsp;&nbsp; `0o` (八进制数|`_`)<sup>\*</sup> 八进制数 (八进制数|`_`)<sup>\*</sup>
+>
+> 十六进制字面值 :\
+> &nbsp;&nbsp; `0x` (十六进制数|`_`)<sup>\*</sup> 十六进制数 (十六进制数|`_`)<sup>\*</sup>
+>
+> 十进制数 : \[`0`-`1`]
+>
+> 二进制数 : \[`0`-`7`]
+>
+> 八进制数 : \[`0`-`9`]
+>
+> 十六进制数 : \[`0`-`9` `a`-`f` `A`-`F`]
 {==+==}
 
 
@@ -914,7 +1010,9 @@ Examples of integer literals which are not accepted as literal expressions:
 > TUPLE_INDEX: \
 > &nbsp;&nbsp; INTEGER_LITERAL
 {==+==}
-
+> **<sup>词法</sup>**\
+> 元组索引: \
+> &nbsp;&nbsp; 整数字面值
 {==+==}
 
 
@@ -922,7 +1020,7 @@ Examples of integer literals which are not accepted as literal expressions:
 A tuple index is used to refer to the fields of [tuples], [tuple structs], and
 [tuple variants].
 {==+==}
-元组索引用于指代 [tuples] 元组、[tuple structs] 元组结构和 [tuple variants] 元组变体的字段。
+元组索引用于指代 [元组][tuples] 、[元组结构体][tuple structs] 和 [元组变体][tuple variants] 的字段。
 {==+==}
 
 
@@ -932,7 +1030,8 @@ start with `0` and each successive index increments the value by `1` as a
 decimal value. Thus, only decimal values will match, and the value must not
 have any extra `0` prefix characters.
 {==+==}
-元组索引直接与字面值 Token 进行对比。元组索引从 `0` 开始，每一个连续的索引其值增加 `1` ，为一个十进制值。因此，只有十进制的值才能匹配，其值不能有任何额外的 `0` 前缀字符。
+元组索引直接与字面值 Token 进行对比。元组索引从 `0` 开始，每一个连续的索引其值增加 `1` ，为一个十进制值。
+因此，只有十进制的值才能匹配，其值不能有任何额外的 `0` 前缀字符。
 {==+==}
 
 
@@ -986,7 +1085,17 @@ let horse = example.0b10;  // ERROR 字段名不能为 `0b10`
 >               (DEC_DIGIT|`_`)<sup>\*</sup> DEC_DIGIT (DEC_DIGIT|`_`)<sup>\*</sup>
 >
 {==+==}
-
+> **<sup>词法</sup>**\
+> 浮点字面值 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; 十进制数 `.`
+>   _(不是紧跟着 `.` , `_` 或 XID_起始 字符)_\
+> &nbsp;&nbsp; | 十进制字面值 `.` 十进制字面值 后缀非E<sup>?</sup>\
+> &nbsp;&nbsp; | 十进制字面值 (`.` 十进制字面值)<sup>?</sup> 浮点指数 后缀<sup>?</sup>\
+>
+> 浮点指数 :\
+> &nbsp;&nbsp; (`e`|`E`) (`+`|`-`)<sup>?</sup>
+>               (十进制数|`_`)<sup>\*</sup> 十进制数 (十进制数|`_`)<sup>\*</sup>
+>
 {==+==}
 
 
@@ -1098,7 +1207,17 @@ Examples of floating-point literals which are not accepted as literal expression
 > &nbsp;&nbsp; | `0x` `_`<sup>\*</sup> _end of input or not HEX_DIGIT_\
 > &nbsp;&nbsp; | DEC_LITERAL ( . DEC_LITERAL)<sup>?</sup> (`e`|`E`) (`+`|`-`)<sup>?</sup> _end of input or not DEC_DIGIT_
 {==+==}
-
+> **<sup>词法</sup>**\
+> 保留数 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; 二进制字面值 \[`2`-`9`&零空白;]\
+> &nbsp;&nbsp; | 八进制字面值 \[`8`-`9`&零空白;]\
+> &nbsp;&nbsp; | ( 二进制字面值 | 八进制字面值 | 十六进制字面值 ) `.` \
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _(不是紧随着 `.`, `_` 或 XID_起始 字符)_\
+> &nbsp;&nbsp; | ( 二进制字面值 | 八进制字面值 ) (`e`|`E`)\
+> &nbsp;&nbsp; | `0b` `_`<sup>\*</sup> _输入结束或非二进制数_\
+> &nbsp;&nbsp; | `0o` `_`<sup>\*</sup> _输入结束或非八进制数_\
+> &nbsp;&nbsp; | `0x` `_`<sup>\*</sup> _输入结束或非十六进制数_\
+> &nbsp;&nbsp; | 十进制字面值 ( . 十进制字面值)<sup>?</sup> (`e`|`E`) (`+`|`-`)<sup>?</sup> _输入结束或非十进制数_
 {==+==}
 
 
@@ -1121,7 +1240,7 @@ Due to the possible ambiguity these raise, they are rejected by the tokenizer in
 {==+==}
 * An unsuffixed binary, octal, or hexadecimal literal followed, without intervening whitespace, by a period character (with the same restrictions on what follows the period as for floating-point literals).
 {==+==}
-* 一个无后缀的二进制、八进制或十六进制字面值，中间没有空白，随后是一个句号(对句号后面的限制与浮点字面值相同)。
+* 一个无后缀的二进制、八进制或十六进制字面值，中间没有空白，随后是一个点号(对点号后面的限制与浮点字面值相同)。
 {==+==}
 
 
@@ -1198,7 +1317,13 @@ Examples of reserved forms:
 > LIFETIME_OR_LABEL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
 {==+==}
-
+> **<sup>词法</sup>**\
+> 生命周期TOKEN :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [标识符或关键字][identifier]\
+> &nbsp;&nbsp; | `'_`
+>
+> 生命周期或标签 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [非关键字标识符][identifier]
 {==+==}
 
 
@@ -1207,7 +1332,7 @@ Lifetime parameters and [loop labels] use LIFETIME_OR_LABEL tokens. Any
 LIFETIME_TOKEN will be accepted by the lexer, and for example, can be used in
 macros.
 {==+==}
-生命周期参数和 [loop labels] 循环标签使用 LIFETIME_OR_LABEL 标记。词法分析器接受任何 LIFETIME_TOKEN ，比如，可以在宏中使用。
+生命周期参数和 [循环标签][loop labels] 使用 '生命周期或标签' 标记。词法分析器接受任何 '生命周期TOKEN' ，比如，可以在宏中使用。
 {==+==}
 
 
@@ -1276,7 +1401,54 @@ usages and meanings are defined in the linked pages.
 | `?`    | Question    | [Question mark operator][question], [Questionably sized][sized], [Macro Kleene Matcher][macros]
 | `~`    | Tilde       | The tilde operator has been unused since before Rust 1.0, but its token may still be used
 {==+==}
-
+| 符号 | 名称        | 用法 |
+|--------|-------------|-------|
+| `+`    | 加号        | [加法][arith]，[trait约束][trait-bounds]，[宏重复匹配器][macros]
+| `-`    | 减号        | [减法][arith]，[否定][negation]
+| `*`    | 星号        | [乘法][arith]，[解引用][dereference]，[原始指针][raw-pointers]，[宏重复匹配器][macros]，[用作通配符][wildcards]
+| `/`    | 斜线        | [除法][arith]
+| `%`    | 百分号      | [取余][arith]
+| `^`    | 插入符号    | [位运算异或和逻辑运算异或][arith]
+| `!`    | 感叹号      | [位运算非和逻辑运算非][negation]，[宏调用][macros]，[内部属性][attributes]，[Never类型][never-type]，[否定的impl][negative-impls]
+| `&`    | 与符号      | [位运算与和逻辑运算与][arith]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]
+| <code>\|</code> | 或符号 | [位运算或和逻辑运算或][arith]，[闭包][closures]，[模式匹配][match]中的模式，[if let]和[while let]中的模式
+| `&&`   | 与运算符    | [惰性与运算][lazy-bool]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]
+| <code>\|\|</code> | 或运算符 | [惰性或运算][lazy-bool]，[闭包][closures]
+| `<<`   | 左移运算符  | [左移][arith]，[嵌套泛型][generics]
+| `>>`   | 右移运算符  | [右移][arith]，[嵌套泛型][generics]
+| `+=`   | 加等于运算符 | [加法赋值][compound]
+| `-=`   | 减等于运算符 | [减法赋值][compound]
+| `*=`   | 乘等于运算符 | [乘法赋值][compound]
+| `/=`   | 除等于运算符 | [除法赋值][compound]
+| `%=`   | 取余等于运算符 | [取余赋值][compound]
+| `^=`   | 异或等于运算符 | [位异或赋值][compound]
+| `&=`   | 与等于运算符 | [位与赋值][compound]
+| <code>\|=</code> | 或等于运算符 | [位或赋值][compound]
+| `<<=`  | 左移等于运算符 | [左移赋值][compound]
+| `>>=`  | 右移等于运算符 | [右移赋值][compound], [嵌套泛型][generics]
+| `=`    | 等号          | [赋值][Assignment]，[属性][Attributes]，各种类型定义
+| `==`   | 双等号      | [等于][比较]
+| `!=`   | 不等于号      | [不等于][比较]
+| `>`    | 大于号        | [大于][比较]，[泛型][Generics]，[路径][Paths]
+| `<`    | 小于号        | [小于][比较]，[泛型][Generics]，[路径][Paths]
+| `>=`   | 大于等于号    | [大于等于][比较]，[泛型][Generics]
+| `<=`   | 小于等于号    | [小于等于][比较]
+| `@`    | At          | [子模式绑定][Subpattern binding]
+| `_`    | 下划线      | [通配符模式][Wildcard patterns]，[推断类型][Inferred types]，[常量][constants]、[extern crates]、[use 声明]和[解构赋值][destructuring assignment]中的未命名条目
+| `.`    | 点号         | [字段访问][field]，[元组索引][Tuple index]
+| `..`   | 双点号      | [区间][range]，[结构体表达式][Struct expressions]，[模式][Patterns]，[区间模式][Range Patterns][rangepat]
+| `...`  | 三点号   | [可变参数函数][extern]，[区间模式][Range patterns]
+| `..=`  | 双点等号    | [闭区间][range]，[区间模式][Range patterns]
+| `,`    | 逗号        | 各种分隔符
+| `;`    | 分号         | 用于各种条目和语句的终止符，[数组类型][Array types]
+| `:`    | 冒号        | 各种分隔符
+| `::`   | 路径分隔符  | [路径分隔符][paths]
+| `->`   | 箭头符       | [函数返回类型][functions]，[闭包返回类型][closures]，[函数指针类型][Function pointer type]
+| `=>`   | 双箭头符     | [匹配分支][match]，[宏][Macros]
+| `#`    | 井号       | [属性][Attributes]
+| `$`    | 美元符      | [宏][Macros]
+| `?`    | 问号       | [问号运算符][question]，[大小可变][sized]，[宏重复匹配器][macros]
+| `~`    | 波浪符    | Rust 1.0 之前就已经不再使用了，但其标记仍可使用
 {==+==}
 
 
@@ -1292,7 +1464,7 @@ Bracket punctuation is used in various parts of the grammar. An open bracket
 must always be paired with a close bracket. Brackets and the tokens within
 them are referred to as "token trees" in [macros].  The three types of brackets are:
 {==+==}
-括号标点符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [macros] 中被称为 "token 树" 。三种类型的括号是：
+括号标点符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [宏][macros] 中被称为 "token 树" 。三种类型的括号是：
 {==+==}
 
 
@@ -1303,7 +1475,11 @@ them are referred to as "token trees" in [macros].  The three types of brackets 
 | `[` `]` | Square brackets |
 | `(` `)` | Parentheses     |
 {==+==}
-
+| 括号    | 类型            |
+|---------|-----------------|
+| `{` `}` | 大括号         |
+| `[` `]` | 方括号         |
+| `(` `)` | 圆括号         |
 {==+==}
 
 
@@ -1320,7 +1496,10 @@ them are referred to as "token trees" in [macros].  The three types of brackets 
 > RESERVED_TOKEN_SINGLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub>_Except `b`_</sub> | `_` ) `'`\
 > RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub>_Except `r` or `br`_</sub> | `_` ) `#`
 {==+==}
-
+> **<sup>词法 2021+</sup>**\
+> `保留TOKEN双引号`: (标识符或关键字<sub>_不包括 `b` 或 `r` 或 `br`_</sub> | `_` ) `"`\
+> `保留TOKEN单引号`: (标识符或关键字<sub>不包括 `b`_</sub> | `_` ) `'`\
+> `保留TOKEN井号`: (标识符或关键字<sub>_不包括 `r` 或 `br`_</sub> | `_` ) `#`
 {==+==}
 
 
@@ -1389,10 +1568,10 @@ Similarly the `r`, `b`, and `br` prefixes used in raw string literals, byte lite
 > lexes!{a #foo}
 > lexes!{continue 'foo}
 > lexes!{match "..." {}}
-> lexes!{r#let#foo}         // 三个token: r#let # foo
+> lexes!{r#let#foo}         // 三个 token: r#let # foo
 > ```
 >
-> 示例在2021版本之前是允许的，之后不允许:
+> 示例在 2021 版本之前是允许的，之后不允许:
 > ```rust,edition2018
 > macro_rules! lexes {($($_:tt)*) => {}}
 > lexes!{a#foo}

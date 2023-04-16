@@ -113,7 +113,7 @@ execute that function as a test. It will still be compiled when in test mode.
 The `ignore` attribute may optionally be written with the [_MetaNameValueStr_]
 syntax to specify a reason why the test is ignored.
 {==+==}
- `ignore` 属性可以选择用 [_MetaNameValueStr_] 语法编写，以具体说明测试被忽略的原因。
+ `ignore` 属性可以选择用 [_元名称值字符串_][_MetaNameValueStr_] 语法编写，以具体说明测试被忽略的原因。
 {==+==}
 
 
@@ -162,7 +162,7 @@ then the test will fail. The string may be passed using the
 `expected` field.
 {==+==}
 `should_panic` 属性可以选择性地接受一个输入字符串，该字符串必须出现在恐慌消息中。
-如果在消息中未找到该字符串，则测试将失败。可以使用 [_MetaNameValueStr_] 语法或具有 `expected` 字段的 [_MetaListNameValueStr_] 语法传递该字符串。
+如果在消息中未找到该字符串，则测试将失败。可以使用 [_元名称值字符串_][_MetaNameValueStr_] 语法或具有 `expected` 字段的 [_MetaListNameValueStr_] 语法传递该字符串。
 {==+==}
 
 

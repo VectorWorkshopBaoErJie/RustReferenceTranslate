@@ -134,7 +134,7 @@ The *`link_section` attribute* specifies the section of the object file that a
 
 ## `link_section` 属性
 
-*`link_section` 属性* 指定将 [函数][function] 或 [静态][static] 内容放置到的对象文件部分。它使用 [_MetaNameValueStr_] 语法来指定部分名称。
+*`link_section` 属性* 指定将 [函数][function] 或 [静态][static] 内容放置到的对象文件部分。它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定部分名称。
 {==+==}
 
 
@@ -164,7 +164,7 @@ pub fn name_in_rust() { }
 {==+==}
 ## `export_name` 属性
 
-*`export_name` 属性* 指定将在 [函数][function] 或 [静态变量][static] 上导出的符号名称。它使用 [_MetaNameValueStr_] 语法来指定符号名称。
+*`export_name` 属性* 指定将在 [函数][function] 或 [静态变量][static] 上导出的符号名称。它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定符号名称。
 
 ```rust
 #[export_name = "exported_symbol_name"]

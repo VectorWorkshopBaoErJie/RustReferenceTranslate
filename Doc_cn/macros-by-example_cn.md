@@ -46,6 +46,45 @@
 > &nbsp;&nbsp; [_DelimTokenTree_]
 {==+==}
 
+
+> **<sup>语法</sup>**\
+> _宏规则定义_ :\
+> &nbsp;&nbsp; `macro_rules` `!` [标识符] _实例宏规则定义_
+>
+> _实例宏规则定义_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `(` _实例宏规则组_ `)` `;`\
+> &nbsp;&nbsp; | `[` _实例宏规则组_ `]` `;`\
+> &nbsp;&nbsp; | `{` _实例宏规则组_ `}`
+>
+> _实例宏规则组_ :\
+> &nbsp;&nbsp; _实例宏规则_ ( `;` _实例宏规则_ )<sup>\*</sup> `;`<sup>?</sup>
+>
+> _实例宏规则_ :\
+> &nbsp;&nbsp; _宏匹配器_ `=>` _宏转录器_
+>
+> _宏匹配器_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `(` _宏匹配_<sup>\*</sup> `)`\
+> &nbsp;&nbsp; | `[` _宏匹配_<sup>\*</sup> `]`\
+> &nbsp;&nbsp; | `{` _宏匹配_<sup>\*</sup> `}`
+>
+> _宏匹配_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_除了 `$` 和 [分隔符][delimiters] 之外的任意 token_</sub>\
+> &nbsp;&nbsp; | _宏匹配器_\
+> &nbsp;&nbsp; | `$` ( [标识符或关键字][IDENTIFIER_OR_KEYWORD] <sub>_除了 `crate` 之外的任意标识符或关键字_</sub> | [原始标识符][RAW_IDENTIFIER] | `_` ) `:` _宏片段规格_\
+> &nbsp;&nbsp; | `$` `(` _宏匹配_<sup>+</sup> `)` _宏表示分割_<sup>?</sup> _宏表示操作符_
+>
+> _宏片段规格_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `block` | `expr` | `ident` | `item` | `lifetime` | `literal`\
+> &nbsp;&nbsp; | `meta` | `pat` | `pat_param` | `path` | `stmt` | `tt` | `ty` | `vis`
+>
+> _宏表示分割_ :\
+> &nbsp;&nbsp; [_Token_]<sub>_除了 [分隔符][delimiters] 和 宏表示操作符_ 之外的任意 token_</sub>
+>
+> _宏表示操作符_ :\
+> &nbsp;&nbsp; `*` | `+` | `?`
+>
+> _宏转录器_ :\
+> &nbsp;&nbsp; [_定界Token树_][_DelimTokenTree_]
 {==+==}
 
 
@@ -67,7 +106,7 @@ expand to expressions, statements, items (including traits, impls, and foreign
 items), types, or patterns.
 {==+==}
 每个宏定义都有一个名称和一个或多个 _规则_ 。
-每个规则都有两个部分：一个 _matcher_ 匹配器，用于描述它匹配的语法，以及一个 _transcriber_ 转录器，用于描述成功匹配调用后将替换的语法。
+每个规则都有两个部分：一个 _匹配器_ ，用于描述它匹配的语法，以及一个 _转录器_ ，用于描述成功匹配调用后将替换的语法。
 匹配器和转录器都必须被包含在分隔符中。
 宏可以扩展为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
 {==+==}
@@ -220,7 +259,7 @@ In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax
 fragment of the kind specified and binds it to the metavariable `$`_name_. Valid
 fragment specifiers are:
 {==+==}
-在匹配器中， `$` _name_ `:` _fragment-specifier_ "片段指定符" 用于匹配指定类型的 Rust 语法片段，并将其绑定到名为 `$`_name_ 的元变量中。有效的片段指示符包括：
+在匹配器中， `$` _名称_ `:` _片段规格_ 用于匹配指定类型的 Rust 语法片段，并将其绑定到名为 `$`_name_ 的元变量中。有效的片段规格包括：
 {==+==}
 
 
@@ -241,20 +280,20 @@ fragment specifiers are:
   * `vis`: a possibly empty [_Visibility_] qualifier
   * `literal`: matches `-`<sup>?</sup>[_LiteralExpression_]
 {==+==}
-  * `item`: [_Item_] 条目
-  * `block`: [_BlockExpression_] 块表达式
-  * `stmt`: [_Statement_] "语句" 不含尾部分号 (需要分号的条目语句除外)
-  * `pat_param`: [_PatternNoTopAlt_]
-  * `pat`: 至少在任何 [_PatternNoTopAlt_], 可能更多，取决于版本
-  * `expr`: [_Expression_] 表达式
-  * `ty`: [_Type_] 类型
-  * `ident`: 一个 [IDENTIFIER_OR_KEYWORD] 或 [RAW_IDENTIFIER]
-  * `path`: [_TypePath_] 类型路径
-  * `tt`: [_TokenTree_]&nbsp; (简单 [token] 或匹配在定界符号 `()` 、 `[]` 、 `{}` 中 token)
+  * `item`: [_条目_][_Item_] 
+  * `block`: [_块表达式_][_BlockExpression_] 
+  * `stmt`: [_语句_][_Statement_] 不含尾部分号 (需要分号的条目语句除外)
+  * `pat_param`: [_模式非顶层选项_][_PatternNoTopAlt_]
+  * `pat`: 至少在任何 [_模式非顶层选项_][_PatternNoTopAlt_], 可能更多，取决于版本
+  * `expr`: [_表达式_][_Expression_] 
+  * `ty`: [_类型_][_Type_] 
+  * `ident`: 一个 [标识符或关键字][IDENTIFIER_OR_KEYWORD] 或 [原始标识符][RAW_IDENTIFIER]
+  * `path`: [_类型路径_][_TypePath_] 
+  * `tt`: [_Token树_][_TokenTree_]&nbsp; (简单 [token] 或匹配在定界符号 `()` 、 `[]` 、 `{}` 中 token)
   * `meta`: 一个 [_Attr_], 属性的内容
-  * `lifetime`:  [LIFETIME_TOKEN]
-  * `vis`: 一个可能是空的 [_Visibility_] 限定词
-  * `literal`: 匹配的 `-`<sup>?</sup>[_LiteralExpression_]
+  * `lifetime`:  [生命周期TOKEN][LIFETIME_TOKEN]
+  * `vis`: 一个可能是空的 [_可见性_][_Visibility_] 限定词
+  * `literal`: 匹配的 `-`<sup>?</sup>[_字面值表达式_][_LiteralExpression_]
 {==+==}
 
 
@@ -265,10 +304,10 @@ the syntax element that matched them. The keyword metavariable `$crate` can be
 used to refer to the current crate; see [Hygiene] below. Metavariables can be
 transcribed more than once or not at all.
 {==+==}
-在转录器中，可以通过 `$`_name_ 的形式引用元变量，因为片段类型已经在匹配器中被指定了。
+在转录器中，可以通过 `$`_名称_ 的形式引用元变量，因为片段类型已经在匹配器中被指定了。
 元变量被替换为匹配到的语法元素。
 关键字元变量 `$crate` 可以用于引用当前的 crate。可以将元变量多次或不进行转录。
-参见下面的 [Hygiene] .
+参见下面的 [卫生性][Hygiene] .
 {==+==}
 
 
@@ -289,9 +328,9 @@ specifier when it appears as a subexpression.
 >
 > The relevant edition is the one in effect for the `macro_rules!` definition.
 {==+==}
-> **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [Pattern]) 。
+> **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [模式][Pattern]) 。
 >
-> 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [PatternNoTopAlt) 。
+> 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层选项_][_PatternNoTopAlt_] ) 。
 >
 > 相关版本指 `macro_rules!` 定义生效的版本。
 {==+==}
@@ -519,7 +558,7 @@ mod has_macro {
 
 //// src/has_macro/uses_macro.rs
 
-m!{} // OK: 在 src/lib.rs 中出现在m的声明之后。
+m!{} // OK: 在 src/lib.rs 中出现在 m 的声明之后。
 ```
 {==+==}
 
@@ -667,7 +706,7 @@ can be specified using the [_MetaListIdents_] syntax; this is not supported
 when `#[macro_use]` is applied to a module.
 {==+==}
 第二个作用是将它应用于出现在 crate 的根模块中的 `extern crate` 声明，从而从另一个 crate 导入宏。
-以这种方式导入的宏被导入到 [`macro_use` prelude] ，而不是文本上导入，这意味着它们可以被任何其他名称隐藏。
+以这种方式导入的宏被导入到 [`macro_use` 预定义][`macro_use` prelude] ，而不是文本上导入，这意味着它们可以被任何其他名称隐藏。
 虽然 `#[macro_use]` 导入的宏可以在导入语句之前使用，但在冲突的情况下，最后导入的宏优先。
 可选地，可以使用 [MetaListIdents] 语法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块时，不支持此功能。
 {==+==}
@@ -766,7 +805,7 @@ by other crates, either by path or by `#[macro_use]` as described above.
 {==+==}
 ## Hygiene
 {==+==}
-## 卫生
+## 卫生性
 {==+==}
 
 
@@ -809,7 +848,7 @@ fn unit() {
 {==+==}
 <!-- ignore: requires external crates -->
 ```rust,ignore
-//// 定义在`helper_macro` crate 中。
+//// 定义在 `helper_macro` crate 中。
 #[macro_export]
 macro_rules! helped {
     // () => { helper!() } // 由于 'helper' 不在作用域中，这可能会导致错误。

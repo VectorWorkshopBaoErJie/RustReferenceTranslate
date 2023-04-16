@@ -28,7 +28,27 @@
 > _ConfigurationPredicateList_\
 > &nbsp;&nbsp; _ConfigurationPredicate_ (`,` _ConfigurationPredicate_)<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _配置谓词_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _配置选项_\
+> &nbsp;&nbsp; | _配置All_\
+> &nbsp;&nbsp; | _配置Any_\
+> &nbsp;&nbsp; | _配置Not_
+>
+> _配置选项_ :\
+> &nbsp;&nbsp; [IDENTIFIER]&nbsp;(`=` ([STRING_LITERAL] | [RAW_STRING_LITERAL]))<sup>?</sup>
+>
+> _配置All_\
+> &nbsp;&nbsp; `all` `(` _配置选项列表_<sup>?</sup> `)`
+>
+> _配置Any_\
+> &nbsp;&nbsp; `any` `(` _配置选项列表_<sup>?</sup> `)`
+>
+> _配置Not_\
+> &nbsp;&nbsp; `not` `(` _配置选项_ `)`
+>
+> _配置选项列表_\
+> &nbsp;&nbsp; _配置选项_ (`,` _配置选项_)<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -41,7 +61,7 @@ These conditions are based on the target architecture of the compiled crate,
 arbitrary values passed to the compiler, and a few other miscellaneous things
 further described below in detail.
 {==+==}
-*条件编译源代码* 是指根据某些条件来确定是否将其部分源代码不作为或者不作为源代码的一部分。
+*条件编译源代码* 是指根据某些条件来确定是否将其部分源代码不作为或者作为源代码的一部分。
 <!-- This definition is sort of vacuous --> 
 可以使用 [attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` 宏][`cfg` macro] 条件编译源代码。
 这些条件是基于编译的 crate 的目标架构、传递给编译器的任意值和其他一些细节进行确定的，下面将对其进行详细描述。
@@ -118,7 +138,7 @@ configuration option from within the source code of the crate being compiled.
 {==+==}
 编译期间确定哪些配置选项被设置。某些选项是由编译数据设置的，称为编译器设置。
 其他选项是任意设置的，基于在代码之外传递给编译器的输入设置。
-无法从正在编译的 crate 的源代码中设置配置选项。
+无法为正在编译的 crate 的源代码设置配置选项。
 {==+==}
 
 
@@ -234,7 +254,7 @@ See the [`target_feature` attribute] for more details on the available
 features. An additional feature of `crt-static` is available to the
 `target_feature` option to indicate that a [static C runtime] is available.
 {==+==}
-详见 [`target_feature` attribute] 获取有关可用特性的更多详细信息。
+详见 [`target_feature` 属性][`target_feature` attribute] 获取有关可用特性的更多详细信息。
 `target_feature` 选项的另一个特性是 `crt-static` ，它指示可用 [静态 C 运行时库][static C runtime] 。
 {==+==}
 
@@ -588,7 +608,9 @@ Example values:
 > _CfgAttrAttribute_ :\
 > &nbsp;&nbsp; `cfg` `(` _ConfigurationPredicate_ `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _CfgAttr属性_ :\
+> &nbsp;&nbsp; `cfg` `(` _配置谓词_ `)`
 {==+==}
 
 
@@ -610,7 +632,7 @@ on a configuration predicate.
 {==+==}
 It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
 {==+==}
-它的语法是 `cfg` 、 `(` 、配置判断语句和 `)` 。
+它的语法是 `cfg`  `(` 配置判断语句 `)` 。
 {==+==}
 
 
@@ -722,7 +744,12 @@ The `cfg` attribute is allowed anywhere attributes are allowed.
 > _CfgAttrs_ :\
 > &nbsp;&nbsp; [_Attr_]&nbsp;(`,` [_Attr_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _CfgAttr属性_ :\
+> &nbsp;&nbsp; `cfg_attr` `(` _配置谓词_ `,` _CfgAttr组_<sup>?</sup> `)`
+>
+> _CfgAttr组_ :\
+> &nbsp;&nbsp; [_Attr_]&nbsp;(`,` [_Attr_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 

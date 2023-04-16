@@ -34,7 +34,33 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
 > &nbsp;&nbsp; | [_MacroRulesDefinition_]
 {==+==}
-
+> **<sup>语未能:<sup>**\
+> _条目_:\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; _可见性条目_\
+> &nbsp;&nbsp; | _宏条目_
+>
+> _可见性条目_:\
+> &nbsp;&nbsp; [_可见性_][_Visibility_]<sup>?</sup>\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;  [_模块_][_Module_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_外部Crate_][_ExternCrate_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Use声明_][_UseDeclaration_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_函数_][_Function_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_类型别名_][_TypeAlias_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_结构体_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_枚举_][_Struct_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_联合体_][_Union_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_常量条目_][_ConstantItem_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_静态条目_][_StaticItem_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Trait_][_Trait_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_实现_][_Implementation_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_外部块_][_ExternBlock_]\
+> &nbsp;&nbsp; )
+>
+> _宏条目_:\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_][_MacroInvocationSemi_]\
+> &nbsp;&nbsp; | [_宏规则定义_][_MacroRulesDefinition_]
 {==+==}
 
 
@@ -44,7 +70,7 @@ nested set of [modules]. Every crate has a single "outermost" anonymous module;
 all further items within the crate have [paths] within the module tree of the
 crate.
 {==+==}
-"条目" (item) 是 crate 的组成部分。条目通过一组嵌套的 [模块][modules] 组织在 crate 中。
+_条目_ 是 crate 的组成部分。条目通过一组嵌套的 [模块][modules] 组织在 crate 中。
 每个 crate 都有一个 "最外层" 的匿名模块；crate 中的所有其他条目都在这个模块树中，有自己的 [路径][paths]。
 {==+==}
 
@@ -79,19 +105,19 @@ There are several kinds of items:
 * [implementations]
 * [`extern` blocks]
 {==+==}
-* [modules] 模块
-* [`extern crate` declarations] `extern crate` 声明
-* [`use` declarations] `use`  声明
-* [function definitions] 函数定义
-* [type definitions] 类型定义
-* [struct definitions] 结构定义
-* [enumeration definitions] 枚举定义
-* [union definitions] 联合体定义
-* [constant items] 常量条目
-* [static items] 静态条目
-* [trait definitions] trait 定义
-* [implementations] impl
-* [`extern` blocks] `extern` 块
+* [模块][modules]
+* [`extern crate` 声明][`extern crate` declarations]
+* [`use` 声明][`use` declarations] 
+* [函数定义][function definitions] 
+* [类型定义][type definitions] 
+* [结构定义][struct definitions] 
+* [枚举定义][enumeration definitions] 
+* [联合体定义][union definitions] 
+* [常量条目][constant items] 
+* [静态条目][static items] 
+* [trait 定义][trait definitions] 
+* [实现][implementations]
+* [`extern` 块][`extern` blocks] 
 {==+==}
 
 

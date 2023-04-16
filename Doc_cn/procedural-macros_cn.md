@@ -9,7 +9,7 @@
 *Procedural macros* allow creating syntax extensions as execution of a function.
 Procedural macros come in one of three flavors:
 {==+==}
-*Procedural macros* "过程宏"允许创建语法扩展，作为函数执行。
+*过程宏* 允许创建语法扩展，作为函数执行。
 过程宏有三种添加形式:
 {==+==}
 
@@ -19,9 +19,9 @@ Procedural macros come in one of three flavors:
 * [Derive macros] - `#[derive(CustomDerive)]`
 * [Attribute macros] - `#[CustomAttribute]`
 {==+==}
-* [Function-like macros] - `custom!(...)`       "函数宏"
-* [Derive macros] - `#[derive(CustomDerive)]`   "衍生宏"
-* [Attribute macros] - `#[CustomAttribute]`     "属性宏"
+* [函数宏] - `custom!(...)` 
+* [衍生宏] - `#[derive(CustomDerive)]` 
+* [属性宏] - `#[CustomAttribute]` 
 {==+==}
 
 
@@ -72,7 +72,7 @@ Endless loops are not caught by the compiler which hangs the compiler.
 作为函数，其必须要么返回句法，要么恐慌，要么无休止地循环。
 返回的句法要么替换要么增加句法，这取决于过程宏的种类。
 编译器会捕获恐慌，并变成编译器错误。
-编译器不会捕捉无休止循环，从而会挂起编译器。
+编译器不会捕获无休止循环，从而会挂起编译器。
 {==+==}
 
 
@@ -148,7 +148,7 @@ with any token, such as through getting a `Span` from another token.
 {==+==}
 ### Procedural macro hygiene
 {==+==}
-### 过程宏卫生
+### 过程宏卫生性
 {==+==}
 
 
@@ -186,7 +186,7 @@ other functions (like `__internal_foo` instead of `foo`).
 *Function-like procedural macros* are procedural macros that are invoked using
 the macro invocation operator (`!`).
 {==+==}
-*Function-like procedural macros* 函数式过程宏使用宏调用操作符 (`!`) 来调用。
+*函数式过程宏* 使用宏调用操作符 (`!`) 来调用。
 {==+==}
 
 
@@ -256,8 +256,8 @@ position, which includes [statements], [expressions], [patterns], [type
 expressions], [item] positions, including items in [`extern` blocks], inherent
 and trait [implementations], and [trait definitions].
 {==+==}
-函数式过程宏可以在任何宏调用式位置被调用，其中包括 [statements] 语句、 [expressions] 表达式、 [patterns] 模式、 [type expressions] 类型表达式、 [item] 条目，
-包括 [`extern` blocks] 中的条目，inherent 和 trait [implementations] ，以及 [trait definitions] 。
+函数式过程宏可以在任何宏调用式位置被调用，其中包括 [语句][statements] 、 [表达式][expressions] 、 [模式][patterns] 、 [类型表达式][type expressions] 、 [条目][item] ，
+包括 [`extern` blocks] 中的条目，内部 和 trait [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 
@@ -273,9 +273,9 @@ and trait [implementations], and [trait definitions].
 can create new [items] given the token stream of a [struct], [enum], or [union].
 They can also define [derive macro helper attributes].
 {==+==}
-*Derive macros* "衍生宏" 为 [`derive` attribute] 定义新输入。
-这些宏可以根据 [struct] 、 [enum] 或 [union] 的 token 流创建新的 [items] 。
-它们也可以定义 [derive macro helper attributes] 衍生宏辅助属性。
+*衍生宏* 为 [`derive` 属笥][`derive` attribute] 定义新输入。
+这些宏可以根据 [struct] 、 [enum] 或 [union] 的 token 流创建新的 [条目][items] 。
+它们也可以定义 [衍生宏辅助属性][derive macro helper attributes] 。
 {==+==}
 
 
@@ -361,9 +361,9 @@ they are on. Said attributes are called *derive macro helper attributes*. These
 attributes are [inert], and their only purpose is to be fed into the derive
 macro that defined them. That said, they can be seen by all macros.
 {==+==}
-衍生宏可以在它们所在的 [item] "条目" 的作用域内添加额外的 [attributes] 。
+衍生宏可以在它们所在的 [条目][item] 的作用域内添加额外的 [属性][attributes] 。
 这些属性被称为 *衍生宏辅助属性* 。
-这些属性是 [inert] 惰性的，其唯一目的是嵌入到定义它们的衍生宏中。
+这些属性是 [惰性的][inert] ，其唯一目的是嵌入到定义它们的衍生宏中。
 也就是说，让所有的宏可以看到它们。
 {==+==}
 
@@ -405,7 +405,7 @@ pub fn derive_helper_attr(_item: TokenStream) -> TokenStream {
 {==+==}
 And then usage on the derive macro on a struct:
 {==+==}
-然后在结构上使用衍生宏:
+然后在结构体上使用衍生宏:
 {==+==}
 
 
@@ -434,8 +434,8 @@ struct Struct {
 attached to [items], including items in [`extern` blocks], inherent and trait
 [implementations], and [trait definitions].
 {==+==}
-*Attribute macros* 属性宏定义了新的 [outer attributes][attributes] ，可以附加到 [items] 条目上，
-包括 [`extern` blocks] 外部块中的条目，inherent 和 trait的 [implementations] 实现，以及 [trait definitions] 。
+*属性宏* 定义了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
+包括 [`extern` blocks] 外部块中的条目，内部 和 trait的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 
@@ -450,10 +450,10 @@ including other [attributes] on the [item]. The returned [`TokenStream`]
 replaces the [item] with an arbitrary number of [items].
 {==+==}
 属性宏是由带有 `proc_macro_attribute` [attribute] 的 [public]&#32;[function] 定义的，其签名为 `(TokenStream, TokenStream) -> TokenStream` 。
-第一个 [`TokenStream`] 是属性名称后面的分隔的token树，不包括外部分隔符号。
+第一个 [`TokenStream`] 是属性名称后面的分隔的 token 树，不包括外部分隔符号。
 如果属性被写成裸属性名，则属性 [`TokenStream`] 是空的。
-第二个 [`TokenStream`] 是 [item] 的其他部分，包括 [item] 上的其他 [attributes] 。
-返回的 [`TokenStream`] 用任意数量的 [item] 替换 [item] 。
+第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属笥][attributes] 。
+返回的 [`TokenStream`] 用任意数量的 [条目][item] 替换 [条目][item] 。
 {==+==}
 
 

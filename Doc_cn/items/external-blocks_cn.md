@@ -542,7 +542,7 @@ block to indicate the symbol to import for the given function or static. It
 uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
 {==+==}
 在 `extern` 块内的声明上可以指定 *`link_name` 属性* ，以指示要为给定函数或静态导入的符号。
-使用 [_MetaNameValueStr_] 语法来指定符号的名称。
+使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定符号的名称。
 {==+==}
 
 

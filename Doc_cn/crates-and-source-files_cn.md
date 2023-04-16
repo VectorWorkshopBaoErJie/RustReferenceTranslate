@@ -13,7 +13,12 @@
 > &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; [_Item_]<sup>\*</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Crate_ :\
+> &nbsp;&nbsp; UTF8BOM<sup>?</sup>\
+> &nbsp;&nbsp; 执行注解<sup>?</sup>\
+> &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_条目_][_Item_]<sup>\*</sup>
 {==+==}
 
 
@@ -22,7 +27,9 @@
 > UTF8BOM : `\uFEFF`\
 > SHEBANG : `#!` \~`\n`<sup>\+</sup>[†](#shebang)
 {==+==}
-
+> **<sup>词法</sup>**\
+> UTF8BOM : `\uFEFF`\
+> 执行注解 : `#!` \~`\n`<sup>\+</sup>[†](#shebang)
 {==+==}
 
 
@@ -55,8 +62,8 @@ processes a single crate in source form, and if successful, produces a single
 crate in binary form: either an executable or some sort of
 library.[^cratesourcefile]
 {==+==}
-编译模型以名为 _crates_ 的构件为中心。
-每个编译过程处理单个源代码形式的 crate，并且如果成功，将生成单个二进制形式的 crate ：可以是可执行文件或某种类型的库。[^cratesourcefile]
+编译模型以名为 _crate_ 的构件为中心。
+每个编译过程处理单个源代码形式的 crate，如果成功，将生成单个二进制形式的 crate ，生成可执行文件或某种类型的库。[^cratesourcefile]
 {==+==}
 
 
@@ -105,7 +112,7 @@ that apply to the containing module, most of which influence the behavior of
 the compiler. The anonymous crate module can have additional attributes that
 apply to the crate as a whole.
 {==+==}
-每个源文件包含零个或多个 [条目][_Item_] 定义，可以选择地以任意数量的 [属性][attributes] 开头，这些属性适用于包含的模块，大多数属性都会影响编译器的行为。
+每个源文件包含零个或多个 [_条目_][_Item_] 定义，可以选择地以任意数量的 [属性][attributes] 开头，这些属性适用于包含的模块，大多数属性都会影响编译器的行为。
 匿名的 crate 模块可以有适用于整个 crate 的附加属性。
 {==+==}
 
@@ -167,8 +174,8 @@ essentially to treat the source file as an executable script. The shebang
 can only occur at the beginning of the file (but after the optional
 _UTF8BOM_). It is ignored by the compiler. For example:
 {==+==}
-源码文件可以包含 [_shebang_] (SHEBANG 产生式) ，它指示操作系统要使用哪个程序来执行此文件。
-它基本上将源文件视为可执行脚本。执行注解 (Shebang) 只能出现在文件开头 (但在可选的 _UTF8BOM_ 之后) 。
+源码文件可以包含 [_shebang_] (执行注解) ，它指示操作系统要使用哪个程序来执行此文件。
+它基本上将源文件视为可执行脚本。执行注解只能出现在文件开头 (但在可选的 _UTF8BOM_ 之后) 。
 它会被编译器忽略。例如:
 {==+==}
 
@@ -193,16 +200,16 @@ A restriction is imposed on the shebang syntax to avoid confusion with an
 intervening [comments] or [whitespace]. If this restriction fails, then it is
 not treated as a shebang, but instead as the start of an attribute.
 {==+==}
-对于 shebang 语法，存在限制以避免与 [属性][attribute] 混淆。
+对于执行注解语法，存在限制以避免与 [属性][attribute] 混淆。
  `#!` 字符后面不能跟着 `[` 标记，忽略其中的注释或 [空白][whitespace] 。
- 如果此限制失败，则它不会被视为 shebang，而是被视为属性的开始。
+ 如果此限制失败，则它不会被视为执行注解，而是被视为属性的开始。
 {==+==}
 
 
 {==+==}
 ## Preludes and `no_std`
 {==+==}
-## Preludes 和 `no_std`
+## 预定义 和 `no_std`
 {==+==}
 
 
@@ -210,7 +217,7 @@ not treated as a shebang, but instead as the start of an attribute.
 This section has been moved to the [Preludes chapter](names/preludes.md).
 <!-- this is to appease the linkchecker, will remove once other books are updated -->
 {==+==}
-本节已移至 [Preludes chapter](names/preludes.md) 。
+本节已移至 [预定义章节](names/preludes.md) 。
 <!-- this is to appease the linkchecker, will remove once other books are updated -->
 {==+==}
 
@@ -307,7 +314,7 @@ other object being linked to defines `main`.
 The *`crate_name` [attribute]* may be applied at the crate level to specify the
 name of the crate with the [_MetaNameValueStr_] syntax.
 {==+==}
-`crate_name` 属性可以应用于 crate 层级，使用 [_MetaNameValueStr_] 语法指定 crate 名称。
+`crate_name` 属性可以应用于 crate 层级，使用 [_元名称值字符串_][_MetaNameValueStr_] 语法指定 crate 名称。
 {==+==}
 
 

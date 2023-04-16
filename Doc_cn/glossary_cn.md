@@ -387,9 +387,9 @@ platform (similar to how `usize` varies per-platform).
 
 作用域 [*scope*] 是源代码文本中的一个区域，在此区域内的命名实体 [entity](#entity) 可以使用其名称引用。
 
-### 被检查对象
+### 被匹配对象
 
-被检查对象 [*Scrutinee*] 是在 `match` 表达式和类似的模式匹配结构中被匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是被检查的对象。
+被匹配对象 [*Scrutinee*] 是在 `match` 表达式和类似的模式匹配结构中被匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是被匹配对象。
 
 ### Size
 

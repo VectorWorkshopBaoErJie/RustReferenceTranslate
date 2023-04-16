@@ -92,7 +92,7 @@ If the value of the scrutinee matches the pattern, the corresponding block will 
 Otherwise, flow proceeds to the following `else` block if it exists.
 Like `if` expressions, `if let` expressions have a value determined by the block that is evaluated.
 {==+==}
-`if let` 表达式在语义上类似于 `if` 表达式，但是在条件操作数的位置上，它期望关键字 `let` 后跟一个模式、一个等号和一个[被检查的操作数][scrutinee] 。如果被检查的操作数的值匹配模式，则执行相应的代码块。
+`if let` 表达式在语义上类似于 `if` 表达式，但是在条件操作数的位置上，它期望关键字 `let` 后跟一个模式、一个等号和一个[被匹配项][scrutinee] 。如果被检查的操作数的值匹配模式，则执行相应的代码块。
 否则，如果存在 `else` 块，则流程将继续执行该块。
 与 `if` 表达式类似， `if let` 表达式具有由执行的代码块确定的值。
 {==+==}

@@ -22,7 +22,19 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
 > &nbsp;&nbsp; | `=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _内部属性_ :\
+> &nbsp;&nbsp; `#` `!` `[` _属性_ `]`
+>
+> _外部属性_ :\
+> &nbsp;&nbsp; `#` `[` _属性_ `]`
+>
+> _属性_ :\
+> &nbsp;&nbsp; [_简单路径_][_SimplePath_] _属性输入_<sup>?</sup>
+>
+> _属性输入_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_定界Token树_][_DelimTokenTree_]\
+> &nbsp;&nbsp; | `=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -31,7 +43,7 @@ An _attribute_ is a general, free-form metadatum that is interpreted according
 to name, convention, language, and compiler version. Attributes are modeled
 on Attributes in [ECMA-335], with the syntax coming from [ECMA-334] \(C#).
 {==+==}
- _attribute_ "属性" 是通用的、自由形式的元数据，根据名称、约定、语言和编译器版本来解释。
+ _属性_ 是通用的、自由形式的元数据，根据名称、约定、语言和编译器版本来解释。
 属性以 [ECMA-335] 中的 Attributes 为模型，其语法来自 [ECMA-334] \(C#) 。
 {==+==}
 
@@ -81,7 +93,7 @@ Attributes can be classified into the following kinds:
 {==+==}
 Attributes may be applied to many things in the language:
 {==+==}
-属性可以应用于语言中的许多东西:
+属性可以应用于语言中的许多内容:
 {==+==}
 
 
@@ -219,7 +231,7 @@ fn some_unused_variables() {
 A "meta item" is the syntax used for the _Attr_ rule by most [built-in
 attributes]. It has the following grammar:
 {==+==}
- "元条目" 是大多数 [内置属性][built-in attributes] 中用于 _Attr_ 规则的语法，具体语法如下：
+ "元条目" 是大多数 [内置属性][built-in attributes] 中用于 _属性_ 规则的语法，具体语法如下：
 {==+==}
 
 
@@ -237,7 +249,18 @@ attributes]. It has the following grammar:
 > &nbsp;&nbsp; &nbsp;&nbsp; _MetaItem_\
 > &nbsp;&nbsp; | [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元条目_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_简单路径_][_SimplePath_]\
+> &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `(` _元_<sup>?</sup> `)`
+>
+> _元_ :\
+> &nbsp;&nbsp; _元条目内部_ ( `,` 元条目内部 )<sup>\*</sup> `,`<sup>?</sup>
+>
+> _元条目内部_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _元条目_\
+> &nbsp;&nbsp; | [_表达式_][_Expression_]
 {==+==}
 
 
@@ -247,7 +270,7 @@ include integer or float type suffixes. Expressions which are not literal expres
 will be syntactically accepted (and can be passed to proc-macros), but will be rejected after parsing.
 {==+==}
 元条目中的表达式必须宏展开为字面表达式，不得包含整数或浮点类型后缀。
-不是字面值表达式的表达式将在语法分析后被拒绝，但可以传递给过程宏 (proc-macros) 。
+不是字面值表达式的表达式将在语法分析后被拒绝，但可以传递给过程宏。
 {==+==}
 
 
@@ -327,7 +350,21 @@ forms:
 > _MetaListNameValueStr_:\
 > &nbsp;&nbsp; [IDENTIFIER] `(` ( _MetaNameValueStr_ (`,` _MetaNameValueStr_)* `,`<sup>?</sup> )<sup>?</sup> `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元字_:\
+> &nbsp;&nbsp; [标识符][IDENTIFIER]
+>
+> _元名称值字符串_:\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `=` ([STRING_LITERAL] | [RAW_STRING_LITERAL])
+>
+> _元列表路径_:\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( [_SimplePath_] (`,` [_SimplePath_])* `,`<sup>?</sup> )<sup>?</sup> `)`
+>
+> _元列表ID组_:\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( [标识符][IDENTIFIER] (`,` [标识符][IDENTIFIER])* `,`<sup>?</sup> )<sup>?</sup> `)`
+>
+> _元列表名称值字符串_:\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( _元名称值字符串_ (`,` _元名称值字符串_)* `,`<sup>?</sup> )<sup>?</sup> `)`
 {==+==}
 
 
@@ -347,7 +384,13 @@ _MetaListPaths_ | `allow(unused, clippy::inline_always)`
 _MetaListIdents_ | `macro_use(foo, bar)`
 _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 {==+==}
-
+类型 | 示例
+------|--------
+_元字_ | `no_std`
+_元名称值字符串_ | `doc = "example"`
+_元列表路径_ | `allow(unused, clippy::inline_always)`
+_元列表ID组_ | `macro_use(foo, bar)`
+_元列表名称值字符串_ | `link(name = "CoreFoundation", kind = "framework")`
 {==+==}
 
 
@@ -363,7 +406,7 @@ An attribute is either active or inert. During attribute processing, *active
 attributes* remove themselves from the thing they are on while *inert attributes*
 stay on.
 {==+==}
-一个属性可以是活动的 (active) 或惰性的 (inert) 。在属性处理过程中， *活动属性* 会从它们所在的元素中移除，而 *惰性属性* 则会保留。
+一个属性可以是活动的或惰性的。在属性处理过程中， *活动属性* 会从它们所在的元素中移除，而 *惰性属性* 则会保留。
 {==+==}
 
 
@@ -641,7 +684,7 @@ The following is an index of all built-in attributes.
     [The Unstable Book] for features implemented in `rustc`.
 {==+==}
 - 特性
-  - `feature` — 用于启用不稳定或实验性的编译器特性。有关 `rustc` 实现的特性，请参见 [The Unstable Book] 。
+  - `feature` — 用于启用不稳定或实验性的编译器特性。有关 `rustc` 实现的特性，请参见 [未稳定性文档][The Unstable Book] 。
 {==+==}
 
 

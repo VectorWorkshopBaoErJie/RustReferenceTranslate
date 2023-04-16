@@ -145,7 +145,7 @@ However, struct expressions can be in used in these situations if they are withi
 The field names can be decimal integer values to specify indices for constructing tuple structs.
 This can be used with base structs to fill out the remaining indices not specified:
 {==+==}
-结构体表达式使用花括号括起来的字段，可以在 [loop] 或 [if] 表达式的头部， [if let] 或 [match] 表达式的 [受检项][scrutinee] 中不能直接使用。
+结构体表达式使用花括号括起来的字段，可以在 [loop] 或 [if] 表达式的头部， [if let] 或 [match] 表达式的 [被匹配项][scrutinee] 中不能直接使用。
 但是，如果它们位于另一个表达式中，例如括号中，那么就可以在这些情况下使用结构体表达式。
 
 字段名可以是十进制整数值，用于构造元组结构体的索引。这可以与基础结构体一起使用，以填充未指定的其余索引:

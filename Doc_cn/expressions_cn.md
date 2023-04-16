@@ -48,7 +48,47 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MatchExpression_]\
 > &nbsp;&nbsp; )
 {==+==}
-
+> **<sup>语法</sup>**\
+> _表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _无块表达式_\
+> &nbsp;&nbsp; | _块表达式_
+>
+> _无块表达式_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_LiteralExpression_][_字面值表达式_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_路径表达式_][_PathExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_操作符表达式_][_OperatorExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_分组表达式_][_GroupedExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_数组表达式_][_ArrayExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Await表达式_][_AwaitExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_索引表达式_][_IndexExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_元组表达式_][_TupleExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_元组索引表达式_][_TupleIndexingExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_结构体表达式_][_StructExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_调用表达式_][_CallExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_方法调用表达式_][_MethodCallExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_字段表达式_][_FieldExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_闭包表达式_][_ClosureExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Async块表达式_][_AsyncBlockExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Continue表达式_][_ContinueExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Break表达式_][_BreakExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_区间表达式_][_RangeExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Return表达式_][_ReturnExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_下划线表达式_][_UnderscoreExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_宏调用表达式_][_MacroInvocation_]\
+> &nbsp;&nbsp; )
+>
+> _块表达式_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_块表达式_][_BlockExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Unsafe块表达式_][_UnsafeBlockExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Loop表达式_][_LoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_If表达式_][_IfExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_IfLet表达式_][_IfLetExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_Match表达式_][_MatchExpression_]\
+> &nbsp;&nbsp; )
 {==+==}
 
 
@@ -68,7 +108,7 @@ Blocks are just another kind of expression, so blocks, statements, expressions, 
 > **Note**: We give names to the operands of expressions so that we may discuss them, but these names are not stable and may be changed.
 {==+==}
 表达式可能具有两个角色: 它总是产生一个值，并且它可能具有效果 (也称为 "副作用" )。
-表达式计算为一个值，在计算期间具有效果。
+表达式计算为一个值，在计算期间具有副作用。
 许多表达式包含子表达式，称为表达式的操作数。每种表达式的含义决定了几件事:
 
 * 在计算表达式时是否评估操作数
@@ -78,7 +118,7 @@ Blocks are just another kind of expression, so blocks, statements, expressions, 
 通过这种方式，表达式的结构决定了执行的结构。
 块只是另一种表达式，因此块、语句、表达式和块可以递归地嵌套到任意深度。
 
-> **注意**: 我们给表达式的操作数命名以便于讨论，但这些名称不稳定，可能会更改。
+> **注意**: 我们给表达式的操作数命名以便于讨论，但这些名称未稳定，可能会更改。
 {==+==}
 
 
@@ -118,7 +158,27 @@ Rust 运算符和表达式的优先级按照以下顺序进行排列，从强到
 | `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | right to left |
 | `return` `break` closures   |                     |
 {==+==}
-
+| 运算符/表达式                | 结合性                  |
+|------------------------------|------------------------|
+| 路径                         |                        |
+| 方法调用                     |                        |
+| 字段表达式                   | 从左到右                |
+| 函数调用、数组索引           |                        |
+| `?`                          |                        |
+| 一元 `-` `*` `!` `&` `&mut`   |                        |
+| `as`                         | 从左到右                |
+| `*` `/` `%`                  | 从左到右                |
+| `+` `-`                      | 从左到右                |
+| `<<` `>>`                    | 从左到右                |
+| `&`                          | 从左到右                |
+| `^`                          | 从左到右                |
+| <code>&#124;</code>          | 从左到右                |
+| `==` `!=` `<` `>` `<=` `>=`  | 需要括号               |
+| `&&`                         | 从左到右                |
+| <code>&#124;&#124;</code>    | 从左到右                |
+| `..` `..=`                   | 需要括号               |
+| `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | 从右到左 |
+| `return` `break` 闭包         |                        |
 {==+==}
 
 
@@ -279,7 +339,7 @@ The following contexts are *place expression* contexts:
 * 数组索引表达式的索引操作数。
 * 任何 [隐式借用][implicit borrow] 的操作数。
 * [let 语句][let statement] 的初始化器。
-* [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配][scrutinee] 。
+* [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配项][scrutinee] 。
 * [结构体函数式更新][functional update]表达式的基础。
 
 > 注意: 从历史上看，占位表达式称为左值，值表达式称为右值。
@@ -301,18 +361,18 @@ Explicitly, the assignee expressions are:
 
 Arbitrary parenthesisation is permitted inside assignee expressions.
 {==+==}
-*Assignee 表达式* 是指出现在 [赋值][assign] 表达式的左操作数的表达式。
-明确地说， assignee 表达式包括：
+*可赋值表达式* 是指出现在 [赋值][assign] 表达式的左操作数的表达式。
+明确地说，可赋值表达式表达式包括：
 
 - 占位表达式
 - [下划线表达式][_UnderscoreExpression_]。
-- 包含 assignee 表达式的 [元组表达式][_TupleExpression_]。
-- 包含 assignee 表达式的 [数组表达式][_ArrayExpression_]。
-- 包含 assignee 表达式的 [元组结构体表达式][_StructExpression_]。
-- 包含 assignee 表达式的 [结构体表达式][_StructExpression_] (可包含命名字段) 。
+- 包含可赋值表达式的 [元组表达式][_TupleExpression_]。
+- 包含可赋值表达式的 [数组表达式][_ArrayExpression_]。
+- 包含可赋值表达式的 [元组结构体表达式][_StructExpression_]。
+- 包含可赋值表达式的 [结构体表达式][_StructExpression_] (可包含命名字段) 。
 - [单元结构体][_StructExpression_]。
 
-在 assignee 表达式 中允许任意括号化。
+在可赋值表达式中允许任意括号化。
 {==+==}
 
 
@@ -385,7 +445,7 @@ The following expressions can be mutable place expression contexts:
 * [临时值][Temporary values] 。
 * [字段][field]: 这将在可变占位表达式上下文中求出子表达式。
 * `*mut T` 指针的解引用 [dereference][deref] 。
-* 类型为 `&mut T `的变量或变量字段的解引用。注意：这是对下一条规则的例外情况。
+* 类型为 `&mut T` 的变量或变量字段的解引用。注意：这是对下一条规则的例外情况。
 * 实现 `DerefMut` 的类型的解引用: 这要求被解引用的值在可变占位表达式上下文中求值。
 * 实现 `IndexMut` 的类型的 [数组索引][Array indexing]: 这将在可变占位表达式上下文中求出被索引的值，但不包括索引。
 {==+==}
@@ -415,7 +475,7 @@ For example, it is possible to compare two unsized [slices][slice] for equality 
 ### 隐式借用
 
 某些表达式将会通过隐式借用将一个表达式视为一个占位表达式。
-例如，可以直接比较两个非固定大小的 [slices][slice] 是否相等，因为 `==` 运算符会隐式地借用它的操作数:
+例如，可以直接比较两个非固定大小的 [切片][slice] 是否相等，因为 `==` 运算符会隐式地借用它的操作数:
 {==+==}
 
 

@@ -333,7 +333,7 @@ smallest scope that contains the expression and is one of the following:
 > 
 > 在函数体的最终表达式中创建的临时变量将在函数体绑定的任何命名变量之后释放，因为没有更小的封闭临时作用域。
 > 
-> `match` 表达式的 [被匹配对象][scrutinee] 不是临时作用域，因此可以在 `match` 表达式之后丢弃被匹配对象中的临时变量。
+> `match` 表达式的 [被匹配项][scrutinee] 不是临时作用域，因此可以在 `match` 表达式之后丢弃被匹配对象中的临时变量。
 > 例如，在 `match 1 { ref mut z => z };` 中的 `1` 的临时变量将一直存在到语句的结尾。
 {==+==}
 

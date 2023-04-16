@@ -18,7 +18,7 @@ syntax to specify the recursion depth.
 
 ## `recursion_limit` 属性
 
-*`recursion_limit` 属性* 可以在 [crate] 级别上应用，以设置潜在的无限递归编译时操作 (如宏展开或自动解引用) 的最大深度。它使用 [_MetaNameValueStr_] 语法来指定递归深度。
+*`recursion_limit` 属性* 可以在 [crate] 级别上应用，以设置潜在的无限递归编译时操作 (如宏展开或自动解引用) 的最大深度。它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定递归深度。
 
 > 注意：`rustc` 中的默认值是 128。
 {==+==}
@@ -87,7 +87,7 @@ to set the limit based on the number of type substitutions.
 ## `type_length_limit` 属性
 
 `type_length_limit` 属性限制了当进行单态化时，构建具体类型所做的最大类型替换数量。
-它应用于 [crate] 级别，使用 [_MetaNameValueStr_] 语法设置限制，以基于类型替换数量设置限制。
+它应用于 [crate] 级别，使用 [_元名称值字符串_][_MetaNameValueStr_] 语法设置限制，以基于类型替换数量设置限制。
 
 > 注意：`rustc` 中的默认值为 1048576。
 {==+==}

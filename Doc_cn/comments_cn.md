@@ -38,7 +38,37 @@
 > _IsolatedCR_ :\
 > &nbsp;&nbsp; _A `\r` not followed by a `\n`_
 {==+==}
-
+> **<sup>词法</sup>**\
+> 行注释 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `//` (~\[`/` `!` `\n`] | `//`) ~`\n`<sup>\*</sup>\
+> &nbsp;&nbsp; | `//`
+>
+> 块注释 :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _行注释或文档_)
+>      (_行注释或文档_ | ~`*/`)<sup>\*</sup> `*/`\
+> &nbsp;&nbsp; | `/**/`\
+> &nbsp;&nbsp; | `/***/`
+>
+> 内部行文档 :\
+> &nbsp;&nbsp; `//!` ~\[`\n` _孤立CR_]<sup>\*</sup>
+>
+> 内部块文档 :\
+> &nbsp;&nbsp; `/*!` ( _行注释或文档_ | ~\[`*/` _孤立CR_] )<sup>\*</sup> `*/`
+>
+> 外部行文档 :\
+> &nbsp;&nbsp; `///` (~`/` ~\[`\n` _孤立CR_]<sup>\*</sup>)<sup>?</sup>
+>
+> 外部块文档 :\
+> &nbsp;&nbsp; `/**` (~`*` | _行注释或文档_ )
+>              (_行注释或文档_ | ~\[`*/` _孤立CR_])<sup>\*</sup> `*/`
+>
+> _行注释或文档_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; 块注释\
+> &nbsp;&nbsp; | 外部块文档\
+> &nbsp;&nbsp; | 内部块文档
+>
+> _孤立CR_ :\
+> &nbsp;&nbsp; _ `\r` 不紧随 `\n`_
 {==+==}
 
 
@@ -53,7 +83,7 @@
 Comments follow the general C++ style of line (`//`) and
 block (`/* ... */`) comment forms. Nested block comments are supported.
 {==+==}
-注释遵循一般C++风格的行 (`//`) 和 (`/* ... */`) 块注释形式。支持嵌套的块注释。
+注释遵循 C++ 风格的行 (`//`) 和 (`/* ... */`) 块注释的一般形式。支持嵌套的块注释。
 {==+==}
 
 
@@ -91,7 +121,7 @@ the body of the comment. `//!` comments are usually used to document
 modules that occupy a source file.
 {==+==}
 以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于注释的父级，而不是之后条目。
-也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//!` 注释通常应用于记录占有源文件的模块。
+也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//!` 注释通常应用于记录拥有源文件的模块。
 {==+==}
 
 
@@ -99,7 +129,7 @@ modules that occupy a source file.
 Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc
 comments.
 {==+==}
-在文档注释中不允许孤立的 CRs (`\r`) ，即后面没有 LF (`\n`) 。
+在文档注释中不允许孤立的 CR (`\r`) ，即后面没有 LF (`\n`) 。
 {==+==}
 
 
@@ -145,11 +175,11 @@ pub mod outer_module {
     /*!! - 仍是内部块文档 (但开始有感叹号) */
 
     //   - 仅是注释
-    ///  - 外部行文档 (正好3斜线)
+    ///  - 外部行文档 (正好 3 斜线)
     //// - 仅是注释
 
     /*   - 仅是注释 */
-    /**  - 外部块文档 (正好2星号) */
+    /**  - 外部块文档 (正好 2 星号) */
     /*** - 仅是注释 */
 {==+==}
 
@@ -226,7 +256,7 @@ pub mod outer_module {
 
         pub mod dummy_item {}
 
-        // 空的2星号块不是块文档，而是块注释。
+        // 空的 2 星号块不是块文档，而是块注释。
         /***/
 
     }

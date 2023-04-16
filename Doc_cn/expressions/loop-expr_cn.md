@@ -164,7 +164,7 @@ A `while let` loop is semantically similar to a `while` loop but in place of a c
 If the value of the scrutinee matches the pattern, the loop body block executes then control returns to the pattern matching statement.
 Otherwise, the while expression completes.
 {==+==}
-一个 `while let` 循环在语义上类似于一个 `while` 循环，但是在条件表达式的位置，它需要关键字 `let` ，后面跟着一个模式、一个等号、一个 [被匹配的表达式][scrutinee] 和一个代码块表达式。
+一个 `while let` 循环在语义上类似于一个 `while` 循环，但是在条件表达式的位置，它需要关键字 `let` ，后面跟着一个模式、一个等号、一个 [被匹配项][scrutinee] 和一个代码块表达式。
 如果被匹配的表达式的值与模式匹配，那么循环体代码块就会被执行，然后控制流会返回到匹配模式的语句处。
 否则， `while` 表达式会结束。
 {==+==}
@@ -261,7 +261,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 {==+==}
 As is the case in [`if let` expressions], the scrutinee cannot be a [lazy boolean operator expression][_LazyBooleanOperatorExpression_].
 {==+==}
-与 [`if let` 表达式][`if let` expressions] 一样，被检查的表达式不能是 [惰性布尔运算符表达式][_LazyBooleanOperatorExpression_] 。
+与 [`if let` 表达式][`if let` expressions] 一样，被匹配项不能是 [惰性布尔运算符表达式][_LazyBooleanOperatorExpression_] 。
 {==+==}
 
 
