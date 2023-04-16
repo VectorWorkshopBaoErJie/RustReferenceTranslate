@@ -228,7 +228,7 @@ to it. The following example shows a struct with a `C` representation.
 所有用户定义的复合类型 ( `struct` 、 `enum` 和 `union` ) 都有一个 *表示形式* ，用于指定类型的布局。
 类型的可能表示形式包括:
 
-- [Default]
+- [默认][Default]
 - [`C`]
 - [原始表示形式][primitive representations]
 - [`transparent`]
@@ -767,7 +767,7 @@ different behavior whether the enum has fields or no fields. It is an error
 for [zero-variant enums] to have a primitive representation. Combining
 two primitive representations together is an error.
 {==+==}
-> 注意: 带有非`Copy`字段的`union`是未稳定的，请参见[55149]。
+> 注意: 带有非 `Copy` 字段的 `union` 是未稳定的，请参见 [55149]。
 
 ### 原始表示
 
@@ -920,7 +920,7 @@ The discriminant enum from the example [earlier][`repr(C)`] then becomes:
 {==+==}
 #### 将带字段的枚举的原始表示与 `#[repr(C)]` 结合使用
 
-对于带字段的枚举，还可以将 `repr(C)` 和原始表示 (例如`repr(C, u8)`) 结合使用。这会修改 [`repr(C)`] ，将鉴别器枚举的表示方式更改为所选择的原始表示。
+对于带字段的枚举，还可以将 `repr(C)` 和原始表示 (例如 `repr(C, u8)`) 结合使用。这会修改 [`repr(C)`] ，将鉴别器枚举的表示方式更改为所选择的原始表示。
 因此，如果您选择了 `u8` 表示方式，则鉴别器枚举的大小和对齐方式将为 1 字节。来自 [之前][`repr(C)`] 示例的鉴别器枚举如下：
 {==+==}
 
@@ -1024,11 +1024,11 @@ enum Enum16 {
     Variant1,
 }
 
-// C表示方式的大小取决于平台
+// C 表示方式的大小取决于平台
 assert_eq!(std::mem::size_of::<EnumC>(), 8);
-// Enum8::Variant0 中鉴别器和值各占1个字节
+// Enum8::Variant0 中鉴别器和值各占 1 个字节
 assert_eq!(std::mem::size_of::<Enum8>(), 2);
-// Enum16::Variant0 中鉴别器和值各占1个字节，再加上1个字节的填充
+// Enum16::Variant0 中鉴别器和值各占 1 个字节，再加上 1 个字节的填充
 assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ```
 {==+==}
@@ -1139,7 +1139,7 @@ used with any other representation.
 `transparent` 表示只能用于具有以下特点的 `struct` 或 `enum` 中的单个变体:
 
 - 具有非零大小的单个字段，且
-- 具有大小为 0 且对齐方式为 1 的任意数量的字段 (例如[`PhantomData<T>`]) 。
+- 具有大小为 0 且对齐方式为 1 的任意数量的字段 (例如 [`PhantomData<T>`]) 。
 
 具有此表示的结构体和枚举具有与单个非零大小字段相同的布局和 ABI 。
 

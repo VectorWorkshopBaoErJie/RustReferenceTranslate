@@ -20,7 +20,7 @@ The list of types is:
 {==+==}
 在 Rust 程序中，每个变量、条目和值都有一个类型。一个 *值* 的 _类型_ 定义了其存储的内存的解释方式和可对该值执行的操作。
 
-内置类型与语言紧密集成，以一种用户定义类型无法模拟的非平凡方式实现。用户定义类型具有有限的功能。
+内置类型与语言紧密集成，以一种用户定义类型无法模拟的非平凡方式实现。用户定义类型则具有有限的功能。
 
 Rust 的类型列表包括：
 {==+==}
@@ -72,7 +72,7 @@ Rust 的类型列表包括：
     * [原始指针类型][Raw pointers]
     * [函数指针类型][Function pointers]
 * Trait 类型:
-    * [Trait objects]
+    * [Trait 对象]
     * [Impl trait]
 {==+==}
 
@@ -107,7 +107,27 @@ Rust 的类型列表包括：
 > &nbsp;&nbsp; | [_BareFunctionType_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _类型_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _无边界类型组_\
+> &nbsp;&nbsp; | [_ImplTrait类型_][_ImplTraitType_]\
+> &nbsp;&nbsp; | [_Trait对象类型_][_TraitObjectType_]
+>
+> _无边界类型组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_括号类型_][_ParenthesizedType_]\
+> &nbsp;&nbsp; | [_ImplTrait类型1边界_]_ImplTraitTypeOneBound_]\
+> &nbsp;&nbsp; | [_Trait对象类型1边界_][_TraitObjectTypeOneBound_]\
+> &nbsp;&nbsp; | [_类型路径_][_TypePath_]\
+> &nbsp;&nbsp; | [_元组类型_][_TupleType_]\
+> &nbsp;&nbsp; | [_空类型_][_NeverType_]\
+> &nbsp;&nbsp; | [_原始指针类型_][_RawPointerType_]\
+> &nbsp;&nbsp; | [_引用类型_][_ReferenceType_]\
+> &nbsp;&nbsp; | [_数组类型_][_ArrayType_]\
+> &nbsp;&nbsp; | [_切片类型_][_SliceType_]\
+> &nbsp;&nbsp; | [_推断类型_][_InferredType_]\
+> &nbsp;&nbsp; | [_限定路径类型_][_QualifiedPathInType_]\
+> &nbsp;&nbsp; | [_裸函数类型_][_BareFunctionType_]\
+> &nbsp;&nbsp; | [_宏调用_][_MacroInvocation_]
 {==+==}
 
 
@@ -128,15 +148,15 @@ for referring to a type. It may refer to:
 * The [never] type.
 * [Macros] which expand to a type expression.
 {==+==}
-在上面的 _Type_ 语法规则中定义的 _type expression_ 是指引用类型的语法。它可以引用以下内容：
+在上面的 _类型_ 语法规则中定义的 _类型表达式_ 是指引用类型的语法。它可以引用以下内容：
  
-* 序列类型 ( [tuple] ， [array] ， [slice] ) 。
-* [Type paths] 可以引用：
-    * 原始类型 ( [boolean] ， [numeric] ， [textual] ) 。
-    * 对 [item] 的引用 ( [struct] ， [enum] ， [union] ， [type alias] ， [trait] ) 。
-    * [Self path] ，其中 Self 是实现类型。
-    * 泛型 [type parameters] 。
-* 指针类型 ( [reference] ， [raw pointer] ， [function pointer] ) 。
+* 序列类型 ( [tuple] [array] [slice] ) 。
+* [类型路径][Type paths] 可以引用：
+    * 原始类型 ( [boolean] [numeric] [textual] ) 。
+    * 对 [条目][item] 的引用 ( [struct] [enum]  [union] [type alias]  [trait] ) 。
+    * [Self 路径][Self path] ，其中 Self 是实现类型。
+    * 泛型 [类型参数][type parameters] 。
+* 指针类型 ( [reference] [raw pointer] [function pointer] ) 。
 * [inferred type] ，请求编译器确定类型。
 * 用于消除歧义的 [Parentheses] 。
 * Trait 类型: [Trait objects] 和 [impl trait] 。
@@ -156,7 +176,8 @@ for referring to a type. It may refer to:
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
 {==+==}
-
+> _括号类型_ :\
+> &nbsp;&nbsp; `(` [_类型_][_Type_] `)`
 {==+==}
 
 
@@ -169,8 +190,8 @@ require this disambiguation use the [_TypeNoBounds_] rule instead of
 [_Type_].
 {==+==}
 在某些情况下，类型的组合可能是不明确的。在类型周围加上括号以避免歧义。
-例如， [引用类型] 中的 [type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
-需要此消除歧义的语法使用 [_TypeNoBounds_] 规则，而不是 [_Type_] 。
+例如， [引用类型] 中的 [类型边界][type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
+需要此消除歧义的语法使用 [_无边界类型组_][_TypeNoBounds_] 规则，而不是 [_类型_][_Type_] 。
 {==+==}
 
 
@@ -206,11 +227,11 @@ An example of a *recursive* type and its use:
 也就是说，每个 `enum` 变量或 `struct` 或 `union` 字段可以直接或间接地引用封闭的 `enum` 或 `struct` 类型本身。
 这种递归有限制:
 
-* 递归类型必须包含在递归中的名义类型 (不是仅仅是 [type aliases] ，或其他结构类型，例如 [arrays] 或 [tuples] ) 。因此， `type Rec = &'static [Rec]` 是不允许的。
+* 递归类型必须包含在递归中的名义类型 (不是仅仅是 [类型别名][type aliases] ，或其他结构类型，例如 [数组][arrays] 或 [元组][tuples] ) 。因此， `type Rec = &'static [Rec]` 是不允许的。
 
-* 递归类型的大小必须是有限的；换句话说，类型的递归字段必须是 [pointer types] 。
+* 递归类型的大小必须是有限的；换句话说，类型的递归字段必须是 [指针][pointer types] 。
 
-以下是 *recursive* 类型及其使用示例:
+以下是 *递归* 类型及其使用示例:
 {==+==}
 
 
