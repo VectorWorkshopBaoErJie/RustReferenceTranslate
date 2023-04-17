@@ -22,7 +22,7 @@ Such a function must be prefixed with the keyword `unsafe` and can only be calle
 # `unsafe` 关键字
 
 `unsafe` 关键字可以出现在几种不同的上下文: 不安全函数 (`unsafe fn`) ，不安全块 (`unsafe {}`) ，不安全 trait (`unsafe trait`) 和不安全 trait 实现 (`unsafe impl`) 中。
-它在不同的使用情况下扮演不同的角色，具体取决于它在哪里使用以及是否启用了 `unsafe_op_in_unsafe_fn` lint: 
+它在不同的使用情况下扮演不同的角色，具体取决于它在哪里使用以及是否启用了 `unsafe_op_in_unsafe_fn` 代码分析: 
 
 - 它用于标记 *定义* 额外安全条件的代码 (`unsafe fn` ， `unsafe trait`) 。
 - 它用于标记需要 *满足* 额外安全条件的代码 (`unsafe {}` ， `unsafe impl` ，没有 [`unsafe_op_in_unsafe_fn`] 的 `unsafe fn`) 。

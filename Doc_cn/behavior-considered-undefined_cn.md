@@ -56,8 +56,8 @@ code.
     [`UnsafeCell<U>`].
 {==+==}
   * 数据竞争。
-  * 在原始指针上评估解引用表达式 (`*expr`) ，即使在 [place expression context] 上也是如此，该原始指针是 [dangling] 或不对齐的。(例如， `addr_of!(&*expr)` ).
-  * 破坏 [pointer aliasing rules] 。 `Box<T>` 、 `&mut T` 和 `&T` 遵循 LLVM 的作用域 [noalias] 模型，除非 `&T` 包含 [`UnsafeCell<U>`] 。当引用和 box 无效时，它们不能处于活动状态。确切的存活时间没有指定，但存在一些界限:
+  * 在原始指针上评估解引用表达式 (`*expr`) ，即使在 [占位表达式上下文][place expression context] 上也是如此，该原始指针是 [dangling] 或不对齐的。(例如， `addr_of!(&*expr)` ).
+  * 破坏 [指针别名规则][pointer aliasing rules] 。 `Box<T>` 、 `&mut T` 和 `&T` 遵循 LLVM 的作用域 [noalias] 模型，除非 `&T` 包含 [`UnsafeCell<U>`] 。当引用和 box 无效时，它们不能处于活动状态。确切的存活时间没有指定，但存在一些界限:
     * 对于引用，存活时间的上界是借用检查器分配的语法生命周期；它不能活得比那个生命周期更长。
     * 每次引用或 box 被传递给或从函数返回时，它都被视为处于活动状态。
     * 当引用 (但不是 `Box`! ) 被传递到函数时，它至少在那个函数调用期间是活动的，再次除非 `&T` 包含一个 [`UnsafeCell<U>`] 。

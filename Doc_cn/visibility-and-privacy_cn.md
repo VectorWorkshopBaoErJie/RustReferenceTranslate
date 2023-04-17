@@ -14,7 +14,13 @@
 > &nbsp;&nbsp; | `pub` `(` `super` `)`\
 > &nbsp;&nbsp; | `pub` `(` `in` [_SimplePath_] `)`
 {==+==}
-
+> **<sup>语法<sup>**\
+> _可见性_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `pub`\
+> &nbsp;&nbsp; | `pub` `(` `crate` `)`\
+> &nbsp;&nbsp; | `pub` `(` `self` `)`\
+> &nbsp;&nbsp; | `pub` `(` `super` `)`\
+> &nbsp;&nbsp; | `pub` `(` `in` [_SimplePath_] `)`
 {==+==}
 
 

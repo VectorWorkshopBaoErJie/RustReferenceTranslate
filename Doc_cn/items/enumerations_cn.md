@@ -31,7 +31,30 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _枚举_ :\
+> &nbsp;&nbsp; `enum`
+>    [标识符][IDENTIFIER]&nbsp;
+>    [_泛型参数组_][_GenericParams_]<sup>?</sup>
+>    [_Where子句_][_WhereClause_]<sup>?</sup>
+>    `{` _枚举条目组_<sup>?</sup> `}`
+>
+> _枚举条目组_ :\
+> &nbsp;&nbsp; _枚举条目_ ( `,` _枚举条目_ )<sup>\*</sup> `,`<sup>?</sup>
+>
+> _枚举条目_ :\
+> &nbsp;&nbsp; _外部属性_<sup>\*</sup> [_可见性_][_Visibility_]<sup>?</sup>\
+> &nbsp;&nbsp; [标识符][IDENTIFIER]&nbsp;( _枚举条目元组_ | _枚举条目结构体_ )<sup>?</sup>
+>                                _枚举条目判别式_<sup>?</sup>
+>
+> _枚举条目元组_ :\
+> &nbsp;&nbsp; `(` [_元组字段组_][_TupleFields_]<sup>?</sup> `)`
+>
+> _枚举条目结构体_ :\
+> &nbsp;&nbsp; `{` [_结构体字段组_]<sup>?</sup> `}`
+>
+> _枚举条目判别式_ :\
+> &nbsp;&nbsp; `=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -158,9 +181,7 @@ enum Enum {
 Each enum instance has a _discriminant_: an integer logically associated to it
 that is used to determine which variant it holds.
 {==+==}
-每个枚举实例都有一个 鉴别值（discriminant）：一个与之相关联的整数，用于确定它持有的是哪个变量。
-
-每个枚举实例都有一个 _discriminant_ "鉴别值" ：一个逻辑上与之关联的整数，用来确定它持有的变体。
+每个枚举实例都有一个 _鉴别值_ ：一个逻辑上与之关联的整数，用来确定它持有的变体。
 {==+==}
 
 
@@ -206,7 +227,7 @@ following the variant name with `=` and a [constant expression]:
 {==+==}
 2. if a [primitive representation] is used. For example:
 {==+==}
-2. 如果使用 [primitive representation] "原始表示" 。例如：
+2. 如果使用 [原始表示] [primitive representation] 。例如：
 {==+==}
 
 
@@ -539,7 +560,7 @@ Enum variants syntactically allow a [_Visibility_] annotation, but this is
 rejected when the enum is validated. This allows items to be parsed with a
 unified syntax across different contexts where they are used.
 {==+==}
-枚举变体在语法上允许使用 [_Visibility_] 注释，但在验证枚举时，会被拒绝。
+枚举变体在语法上允许使用 [_可见性_][_Visibility_] 注释，但在验证枚举时，会被拒绝。
 这使得可以在使用它们的不同上下文中使用统一的语法来解析条目。
 {==+==}
 

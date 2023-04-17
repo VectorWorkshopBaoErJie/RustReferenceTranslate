@@ -10,7 +10,9 @@
 > _ConstantItem_ :\
 > &nbsp;&nbsp; `const` ( [IDENTIFIER] | `_` ) `:` [_Type_] ( `=` [_Expression_] )<sup>?</sup> `;`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _常量条目_ :\
+> &nbsp;&nbsp; `const` ( [标识符][IDENTIFIER] | `_` ) `:` [_类型_][_Type_] ( `=` [_表达式_][_Expression_] )<sup>?</sup> `;`
 {==+==}
 
 
@@ -184,7 +186,16 @@ m!(const _: () = (););
 // const _: () = ();
 ```
 {==+==}
+```rust
+macro_rules! m {
+    ($item: item) => { $item $item }
+}
 
+m!(const _: () = (););
+// 这扩展为:
+// const _: () = ();
+// const _: () = ();
+```
 {==+==}
 
 

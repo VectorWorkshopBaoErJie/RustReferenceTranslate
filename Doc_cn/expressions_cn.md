@@ -217,7 +217,7 @@ Other expressions either don't take operands or evaluate them conditionally as d
 * Return expression
 {==+==}
 * 解引用表达式
-* 错误传播表达式
+* 错误传导表达式
 * 取反表达式
 * 算术和逻辑二元运算符
 * 比较运算符

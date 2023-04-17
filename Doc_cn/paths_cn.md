@@ -56,12 +56,12 @@ mod m {
 
 ### 简单路径
 
-> **<sup>Syntax</sup>**\
-> _SimplePath_ :\
-> &nbsp;&nbsp; `::`<sup>?</sup> _SimplePathSegment_ (`::` _SimplePathSegment_)<sup>\*</sup>
+> **<sup>语法</sup>**\
+> _简单路径_ :\
+> &nbsp;&nbsp; `::`<sup>?</sup> _简单路径语句_ (`::` _简单路径语句_)<sup>\*</sup>
 >
-> _SimplePathSegment_ :\
-> &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
+> _简单路径语句_ :\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
 简单路径在 [可见性][visibility] 标记， [属性][attributes] ， [宏][macros] 和 [`use`] 条目中使用。
 例如：
@@ -79,7 +79,7 @@ mod m {
 {==+==}
 ### Paths in expressions
 {==+==}
-### 表达式中的路径
+### 路径表达式
 {==+==}
 
 
@@ -110,7 +110,31 @@ mod m {
 > _GenericArgsBinding_ :\
 > &nbsp;&nbsp; [IDENTIFIER] `=` [_Type_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _路径表达式_ :\
+> &nbsp;&nbsp; `::`<sup>?</sup> _路径表达式语句_ (`::` _路径表达式语句_)<sup>\*</sup>
+>
+> _路径表达式语句_ :\
+> &nbsp;&nbsp; _路径ID语句_ (`::` _泛型参数组_)<sup>?</sup>
+>
+> _路径ID语句_ :\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] | `super` | `self` | `Self` | `crate` | `$crate`
+>
+> _泛型参数组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `<` `>`\
+> &nbsp;&nbsp; | `<` ( _泛型参数_ `,` )<sup>\*</sup> _泛型参数_ `,`<sup>?</sup> `>`
+>
+> _泛型参数_ :\
+> &nbsp;&nbsp; [_生命周期_][_Lifetime_] | [_类型_][_Type_] | _泛型参数组常量_ | _泛型参数组绑定_
+>
+> _泛型参数组常量_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_块表达式_][_BlockExpression_]\
+> &nbsp;&nbsp; | [_字面值表达式_][_LiteralExpression_]\
+> &nbsp;&nbsp; | `-` [_字面值表达式_][_LiteralExpression_]\
+> &nbsp;&nbsp; | [_简单路径语句_][_SimplePathSegment_]
+>
+> _泛型参数组绑定_ :\
+> &nbsp;&nbsp; [标识符][IDENTIFIER]`=` [_类型_][_Type_]
 {==+==}
 
 
@@ -177,15 +201,15 @@ Fully qualified paths allow for disambiguating the path for [trait implementatio
 for specifying [canonical paths](#canonical-paths). When used in a type specification, it
 supports using the type syntax specified below.
 {==+==}
-> **<sup>Syntax</sup>**\
-> _QualifiedPathInExpression_ :\
-> &nbsp;&nbsp; _QualifiedPathType_ (`::` _PathExprSegment_)<sup>+</sup>
+> **<sup>语法</sup>**\
+> _表达式中的限定路径_ :\
+> &nbsp;&nbsp; _限定路径类型_ (`::` _路径表达式语句_)<sup>+</sup>
 >
-> _QualifiedPathType_ :\
-> &nbsp;&nbsp; `<` [_Type_] (`as` _TypePath_)<sup>?</sup> `>`
+> _限定路径类型_ :\
+> &nbsp;&nbsp; `<` [_Type_] (`as` _类型路径_)<sup>?</sup> `>`
 >
-> _QualifiedPathInType_ :\
-> &nbsp;&nbsp; _QualifiedPathType_ (`::` _TypePathSegment_)<sup>+</sup>
+> _类型中限定路径_ :\
+> &nbsp;&nbsp; _限定路径类型_ (`::` _类型路径语句_)<sup>+</sup>
 
 完全限定路径用于在 [trait 实现][trait implementations] 中消除歧义，并用于指定 [规范路径](#canonical-paths) 。在类型规范中使用时，它支持使用下面指定的类型语法。
 {==+==}
@@ -210,7 +234,23 @@ S::f();  // Calls the inherent impl.
 <S as T2>::f();  // Calls the T2 trait function.
 ```
 {==+==}
-
+```rust
+struct S;
+impl S {
+    fn f() { println!("S"); }
+}
+trait T1 {
+    fn f() { println!("T1 f"); }
+}
+impl T1 for S {}
+trait T2 {
+    fn f() { println!("T2 f"); }
+}
+impl T2 for S {}
+S::f();  // 调用内部 impl.
+<S as T1>::f();  // 调用 T1 trait 函数。
+<S as T2>::f();  // 调用 T2 trait 函数。
+```
 {==+==}
 
 
@@ -235,7 +275,18 @@ S::f();  // Calls the inherent impl.
 > _TypePathFnInputs_ :\
 > [_Type_] (`,` [_Type_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _类型路径_ :\
+> &nbsp;&nbsp; `::`<sup>?</sup> _类型路径语句_ (`::` _类型路径语句_)<sup>\*</sup>
+>
+> _类型路径语句_ :\
+> &nbsp;&nbsp; _类型ID语句_ `::`<sup>?</sup> ([_泛型参数_][_GenericArgs_] | _类型路径Fn_)<sup>?</sup>
+>
+> _类型路径Fn_ :\
+> `(` _类型路径Fn输入_<sup>?</sup> `)` (`->` [_类型_][_Type_])<sup>?</sup>
+>
+> _类型路径Fn输入_ :\
+> [_类型_][_Type_] (`,` [_类型_][_Type_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -391,7 +442,7 @@ fn bar() {
 {==+==}
 ### `Self`
 
-`Self` (注意大写) 用于在 [traits] 和 [implementations] 中引用实现类型本身。
+`Self` (注意大写) 用于在 [traits] 和 [实现][implementations] 中引用实现类型本身。
 
 `Self` 只能作为第一个段使用，不能有前导 `::` 。
 {==+==}
@@ -498,7 +549,21 @@ mod a {
 # fn main() {}
 ```
 {==+==}
+```rust
+mod a {
+    fn foo() {}
 
+    mod b {
+        mod c {
+            fn foo() {
+                super::super::foo(); // 调用 a's foo 函数
+                self::super::super::foo(); // 调用 a's foo 函数
+            }
+        }
+    }
+}
+# fn main() {}
+```
 {==+==}
 
 
@@ -539,7 +604,7 @@ invoked.
 {==+==}
 ### `$crate`
 
-`$crate` 仅在 [macro transcribers] 中使用，且只能用作第一个段，没有前置 `::` 。 `$crate` 将扩展为一个路径，以访问在定义宏的 crate 顶层的条目，而不管宏被调用的 crate 是哪个。
+`$crate` 仅在 [宏转录器][macro transcribers] 中使用，且只能用作第一个段，没有前置 `::` 。 `$crate` 将扩展为一个路径，以访问在定义宏的 crate 顶层的条目，而不管宏被调用的 crate 是哪个。
 {==+==}
 
 
@@ -646,7 +711,49 @@ mod without { // crate::without
 # fn main() {}
 ```
 {==+==}
+```rust
+// 注释显示了条目的规范路径。
 
+mod a { // crate::a
+    pub struct Struct; // crate::a::Struct
+
+    pub trait Trait { // crate::a::Trait
+        fn f(&self); // crate::a::Trait::f
+    }
+
+    impl Trait for Struct {
+        fn f(&self) {} // <crate::a::Struct as crate::a::Trait>::f
+    }
+
+    impl Struct {
+        fn g(&self) {} // <crate::a::Struct>::g
+    }
+}
+
+mod without { // crate::without
+    fn canonicals() { // crate::without::canonicals
+        struct OtherStruct; // None
+
+        trait OtherTrait { // None
+            fn g(&self); // None
+        }
+
+        impl OtherTrait for OtherStruct {
+            fn g(&self) {} // None
+        }
+
+        impl OtherTrait for crate::a::Struct {
+            fn g(&self) {} // None
+        }
+
+        impl crate::a::Trait for OtherStruct {
+            fn f(&self) {} // None
+        }
+    }
+}
+
+# fn main() {}
+```
 {==+==}
 
 

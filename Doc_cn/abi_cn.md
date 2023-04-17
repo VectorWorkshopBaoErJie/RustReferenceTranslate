@@ -128,7 +128,7 @@ The *`link_section` attribute* specifies the section of the object file that a
 {==+==}
 ## `no_mangle` 属性
 
-*`no_mangle` 属性* 可以用于任何 [item] ，以禁用标准符号名混淆。该条目的符号将是该条目名称的标识符。
+*`no_mangle` 属性* 可以用于任何 [条目][item] ，以禁用标准符号名混淆。该条目的符号将是该条目名称的标识符。
 
 此外，该条目将从生成的库或对象文件中公开导出，类似于 [`used` 属性](#the-used-attribute) 。
 

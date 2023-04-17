@@ -92,7 +92,7 @@ expanding to one of the above items.
     * [结构体][struct] 、 [联合体][union] 、 [枚举][enum] 、枚举变体声明及其命名字段
     * [常量条目声明][Constant item declarations]
     * [静态条目声明][Static item declarations]
-    * [Trait条目声明][Trait item declarations] 及其 [关联条目][associated items]
+    * [Trait 条目声明][Trait item declarations] 及其 [关联条目][associated items]
     * [外部块条目][External block items]
     * [`macro_rules` 声明][`macro_rules` declarations] 和 [匹配器元变量][matcher metavariables]
     * [实现][Implementation] 的关联条目
@@ -152,7 +152,7 @@ to with certain [path qualifiers] or aliases.
 * 根模块中的 [标准库][extern-prelude] crate
 * 编译器链接的 [外部 crate][extern-prelude]
 * [工具属性][Tool attributes]
-* [Lints] 和 [工具 Lint 属性]
+* [代码分析][Lints] 和 [工具 Lint 属性][tool lint attributes]
 * [衍生助手属性][Derive helper attributes] 在条目内有效，无需显式导入
 * [`'static`] 生命周期
 

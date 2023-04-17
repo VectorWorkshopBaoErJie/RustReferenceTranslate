@@ -300,7 +300,7 @@ smallest scope that contains the expression and is one of the following:
 * The expression for a match arm.
 * The second operand of a [lazy boolean expression].
 {==+==}
-如果在`match`表达式的同一个`arm`中使用了多个模式，则将使用未指定的模式来确定释放顺序。
+如果在 `match` 表达式的同一个 `arm` 中使用了多个模式，则将使用未指定的模式来确定释放顺序。
 
 ### 临时作用域
 

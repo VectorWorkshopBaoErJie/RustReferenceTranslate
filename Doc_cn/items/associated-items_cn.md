@@ -13,7 +13,12 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] ) )\
 > &nbsp;&nbsp; )
 {==+==}
-
+> **<sup>语法</sup>**\
+> _关联条目_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_可见性_][_Visibility_]<sup>?</sup> ( [_类型别名_][_TypeAlias_] | [_常量条目_][_ConstantItem_] | [_函数_][_Function_] ) )\
+> &nbsp;&nbsp; )
 {==+==}
 
 
@@ -24,7 +29,7 @@ type &mdash; the type in the implementation. They are a subset of the kinds of
 items you can declare in a module. Specifically, there are [associated
 functions] (including methods), [associated types], and [associated constants].
 {==+==}
-*关联条目* 是在 Rust 语言中通过 [traits] 或 [implementations] 中的类型定义的条目。
+*关联条目* 是在 Rust 语言中通过 [traits] 或 [实现][implementations] 中的类型定义的条目。
 它们被称为关联条目，是因为它们是在关联类型上定义的。
 关联条目是你可以在模块中声明的条目的子集，具体包括 [关联函数][associated functions] (包括方法)、 [关联类型][associated types] 和 [关联常量][associated constants]。
 {==+==}
@@ -281,7 +286,11 @@ Shorthand             | Equivalent
 `&'lifetime self`     | `self: &'lifetime Self`
 `&'lifetime mut self` | `self: &'lifetime mut Self`
 {==+==}
-
+简写             | 等同于
+----------------------|-----------
+`self`                | `self: Self`
+`&'lifetime self`     | `self: &'lifetime Self`
+`&'lifetime mut self` | `self: &'lifetime mut Self`
 {==+==}
 
 

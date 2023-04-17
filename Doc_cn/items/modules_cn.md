@@ -14,14 +14,20 @@
 > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_Item_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `}`
 {==+==}
-
+> **<sup>语法:</sup>**\
+> _模块_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `unsafe`<sup>?</sup> `mod` [标识符][IDENTIFIER] `;`\
+> &nbsp;&nbsp; | `unsafe`<sup>?</sup> `mod` [标识符][IDENTIFIER] `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_条目_][_Item_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; `}`
 {==+==}
 
 
 {==+==}
 A module is a container for zero or more [items].
 {==+==}
-module "模块" 是包含零个或多个 [items] "条目" 的容器。
+模块是包含零个或多个 [条目][items] 的容器。
 {==+==}
 
 
@@ -117,7 +123,11 @@ Module Path               | Filesystem Path  | File Contents
 `crate::util`             | `util.rs`        | `mod config;`
 `crate::util::config`     | `util/config.rs` |
 {==+==}
-
+模块路径                  | 文件系统路径      | 文件内容
+------------------------- | ---------------  | -------------
+`crate`                   | `lib.rs`         | `mod util;`
+`crate::util`             | `util.rs`        | `mod config;`
+`crate::util::config`     | `util/config.rs` |
 {==+==}
 
 
@@ -185,7 +195,10 @@ Source File    | `c`'s File Location | `c`'s Module Path
 `src/a/b.rs`   | `src/a/foo.rs`      | `crate::a::b::c`
 `src/a/mod.rs` | `src/a/foo.rs`      | `crate::a::c`
 {==+==}
-
+源代码文件     | `c` 的文件位置      | `c` 的模块路径
+-------------- | ------------------- | ----------------------
+`src/a/b.rs`   | `src/a/foo.rs`      | `crate::a::b::c`
+`src/a/mod.rs` | `src/a/foo.rs`      | `crate::a::c`
 {==+==}
 
 
@@ -229,7 +242,10 @@ Source File    | `inner`'s File Location   | `inner`'s Module Path
 `src/a/b.rs`   | `src/a/b/inline/other.rs` | `crate::a::b::inline::inner`
 `src/a/mod.rs` | `src/a/inline/other.rs`   | `crate::a::inline::inner`
 {==+==}
-
+源代码文件     | `inner` 的文件位置        | `inner` 的模块路径
+-------------- | --------------------------| ----------------------------
+`src/a/b.rs`   | `src/a/b/inline/other.rs` | `crate::a::b::inline::inner`
+`src/a/mod.rs` | `src/a/inline/other.rs`   | `crate::a::inline::inner`
 {==+==}
 
 
