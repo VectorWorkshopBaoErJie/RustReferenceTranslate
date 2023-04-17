@@ -27,7 +27,26 @@
 > &nbsp;&nbsp; | `'static`\
 > &nbsp;&nbsp; | `'_`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _类型参数约束组_ :\
+> &nbsp;&nbsp; _类型参数约束_ ( `+` _类型参数约束_ )<sup>\*</sup> `+`<sup>?</sup>
+>
+> _类型参数约束_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _生命周期_ | _Trait约束_
+>
+> _Trait约束_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `?`<sup>?</sup>
+> [_对于生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_]\
+> &nbsp;&nbsp; | `(` `?`<sup>?</sup>
+> [_对于生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_] `)`
+>
+> _生命周期约束_ :\
+> &nbsp;&nbsp; ( _生命周期_ `+` )<sup>\*</sup> _生命周期_<sup>?</sup>
+>
+> _生命周期_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [生命周期或标签][LIFETIME_OR_LABEL]\
+> &nbsp;&nbsp; | `'static`\
+> &nbsp;&nbsp; | `'_`
 {==+==}
 
 
@@ -142,7 +161,7 @@ It is an error to have `Sized` as a bound on a trait object or slice.
 不涉及该条目参数或 [高层生命周期][higher-ranked lifetimes] 的约束在定义该条目时进行检查。如果这样的约束为假，就会出现错误。
 
 对于某些泛型类型，即使使用时不提供具体类型，也会对 [`Copy`] ， [`Clone`] 和 [`Sized`] 约束进行检查。
-在可变引用， [trait object] 或 [slice] 上使用 `Copy` 或 `Clone`  作为约束是错误的。在 [trait object] 或 [slice] 上使用 `Sized` 作为限制也是错误的。
+在可变引用， [trait 对象][trait object] 或 [slice] 上使用 `Copy` 或 `Clone`  作为约束是错误的。在 [trait 对象][trait object] 或 [slice] 上使用 `Sized` 作为限制也是错误的。
 {==+==}
 
 
@@ -243,11 +262,11 @@ PartialEq<i32>` would require an implementation like
 {==+==}
 ## 高阶 trait 约束
 
-> _ForLifetimes_ :\
-> &nbsp;&nbsp; `for` [_GenericParams_]
+> _for生命周期_ :\
+> &nbsp;&nbsp; `for` [_泛型参数组_][_GenericParams_]
 
 Trait 约束可以对生命周期进行 *提阶* ，这些约束指定了一个对于 *所有* 生命周期都成立的约束。
-例如， `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个这样的实现：
+例如， `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个这样的实现:
 {==+==}
 
 
@@ -270,6 +289,7 @@ and could then be used to compare a `&'a T` with any lifetime to an `i32`.
 Only a higher-ranked bound can be used here, because the lifetime of the reference is shorter than any possible lifetime parameter on the function:
 {==+==}
 可以用它来将一个 `&'a T` 的生命周期与任意的 `i32` 进行比较。
+
 只有一个更高层的约束可以在这里使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
 {==+==}
 

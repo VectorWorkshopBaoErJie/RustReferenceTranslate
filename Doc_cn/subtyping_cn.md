@@ -12,12 +12,12 @@ lifetime. Nevertheless, we can assign `s` to `t`:
 {==+==}
 # 子类型和协变性
 
-子类型是隐式的，并且可以在类型检查或推断的任何阶段发生。
+子类型是隐式的，并且可以在类型检查或推断的任意阶段产生。
 子类型仅限于两种情况:
 与生命周期相关的协变性和具有更高层生命周期的类型之间的协变性。
 如果我们从类型中抹去生命周期，那么唯一的子类型就是由于类型相等而产生的。
 
-考虑以下示例: 字符串字面量始终具有 `'static` 生命周期。尽管如此，我们可以将 `s` 分配给 `t` :
+考虑以下示例: 字符串字面值始终具有 `'static` 生命周期。尽管如此，我们可以将 `s` 分配给 `t` :
 {==+==}
 
 
@@ -103,7 +103,7 @@ Variance of types is automatically determined as follows
 * 如果 `T` 是 `U` 的子类型，那么 `F<U>` 是 `F<T>` 的子类型，`F<T>` 对 `T` 是 *逆变的* (contravariant)
 * 否则，`F<T>` 对 `T` 是 *不变的* (invariant) (不能推导出子类型关系)
 
-类型的协变性是按以下方式自动确定的：
+类型的协变性是按以下方式自动确定的:
 {==+==}
 
 
@@ -122,6 +122,19 @@ Variance of types is automatically determined as follows
 | `dyn Trait<T> + 'a`           | covariant         | invariant         |
 {==+==}
 
+
+| 类型                          | `'a` 的变化     | `T` 的变化     |
+|-------------------------------|----------------|----------------|
+| `&'a T`                       | 协变           | 协变           |
+| `&'a mut T`                   | 协变           | 不变           |
+| `*const T`                    |                | 协变           |
+| `*mut T`                      |                | 不变           |
+| `[T]` 和 `[T; n]`             |                | 协变           |
+| `fn() -> T`                   |                | 协变           |
+| `fn(T) -> ()`                 |                | 逆变           |
+| `std::cell::UnsafeCell<T>`    |                | 不变           |
+| `std::marker::PhantomData<T>` |                | 协变           |
+| `dyn Trait<T> + 'a`           | 协变           | 不变           |
 {==+==}
 
 
@@ -169,7 +182,7 @@ struct Variance<'a, 'b, 'c, T, U: 'a> {
 {==+==}
 When used outside of an `struct`, `enum`, or `union`, the variance for parameters is checked at each location separately.
 {==+==}
-当在 `struct` 、 `enum` 或 `union` 之外使用参数时，每个位置的参数的协变性是单独检查的。
+当在 `struct`  `enum` 或 `union` 之外使用参数时，每个位置的参数的协变性是单独检查的。
 {==+==}
 
 
