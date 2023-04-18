@@ -11,7 +11,10 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` `)`\
 > &nbsp;&nbsp; | `(` ( [_Type_] `,` )<sup>+</sup> [_Type_]<sup>?</sup> `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元组类型_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `(` `)`\
+> &nbsp;&nbsp; | `(` ( [_类型_][_Type_] `,` )<sup>+</sup> [_类型_][_Type_]<sup>?</sup> `)`
 {==+==}
 
 
@@ -72,9 +75,9 @@ Tuple fields can be accessed by either a [tuple index expression] or [pattern ma
 * `(i32，String)` (与前一个示例的类型不同)
 * `(i32，f64，Vec<String>，Option<bool>)`
 
-可以使用 [元组表达式][tuple expression] 构造此类型的值。此外，如果没有其他有意义的值可以评估，则各种表达式将产生单位值。元组字段可以通过 [tuple index expression] 或 [pattern matching] 来访问。
+可以使用 [元组表达式][tuple expression] 构造此类型的值。此外，如果没有其他有意义的值可以评估，则各种表达式将产生单位值。元组字段可以通过 [元组索引表达式][tuple index expression] 或 [模式匹配][pattern matching] 来访问。
 
-[^1]: 如果它们的内部类型等效，则结构类型始终是等效的。有关元组结构体的名义版本，请参见 [tuple structs] 。
+[^1]: 如果它们的内部类型等效，则结构类型始终是等效的。有关元组结构体的名义版本，请参见 [元组结构体][tuple structs] 。
 {==+==}
 
 

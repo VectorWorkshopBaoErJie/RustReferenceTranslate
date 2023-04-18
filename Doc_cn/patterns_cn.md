@@ -1127,7 +1127,7 @@ Reference patterns are always irrefutable.
 {==+==}
 > **<sup>语法</sup>**\
 > _结构体模式_ :\
-> &nbsp;&nbsp; [_路径表达式_][_PathInExpression_] `{`\
+> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; _结构体模式组_ <sup>?</sup>\
 > &nbsp;&nbsp; `}`
 >
@@ -1282,7 +1282,7 @@ A struct pattern is refutable when one of its subpatterns is refutable.
 {==+==}
 > **<sup>语法</sup>**\
 > _元组结构模式_ :\
-> &nbsp;&nbsp; [_路径表达式_][_PathInExpression_] `(` _元组结构条目组_<sup>?</sup> `)`
+> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `(` _元组结构条目组_<sup>?</sup> `)`
 >
 > _元组结构条目组_ :\
 > &nbsp;&nbsp; [_模式_][_Pattern_]&nbsp;( `,` [_模式_][_Pattern_] )<sup>\*</sup> `,`<sup>?</sup>

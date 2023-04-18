@@ -20,7 +20,12 @@
 > _TupleElements_ :\
 > &nbsp;&nbsp; ( [_Expression_] `,` )<sup>+</sup> [_Expression_]<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元组表达式_ :\
+> &nbsp;&nbsp; `(` _元组元素组_<sup>?</sup> `)`
+>
+> _元组元素组_ :\
+> &nbsp;&nbsp; ( [_表达式_][_Expression_] `,` )<sup>+</sup> [_表达式_][_Expression_]<sup>?</sup>
 {==+==}
 
 
@@ -61,7 +66,12 @@ Examples of tuple expressions and their types:
 | `("x".to_string(), )` | `(String, )`  |
 | `("a", 4usize, true)`| `(&'static str, usize, bool)` |
 {==+==}
-
+| 表达式           | 类型         |
+| -------------------- | ------------ |
+| `()`                 | `()` (单元)  |
+| `(0.0, 4.5)`         | `(f64, f64)` |
+| `("x".to_string(), )` | `(String, )`  |
+| `("a", 4usize, true)`| `(&'static str, usize, bool)` |
 {==+==}
 
 
@@ -77,7 +87,9 @@ Examples of tuple expressions and their types:
 > _TupleIndexingExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [TUPLE_INDEX]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _元组索引表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `.` [元组索引][TUPLE_INDEX]
 {==+==}
 
 
@@ -96,7 +108,7 @@ As a [place expression], it evaluates to the location of the field of the tuple 
 
 Examples of tuple indexing expressions:
 {==+==}
-*元组索引表达式* 用于访问 [tuples][tuple type] 和 [tuple structs][tuple struct] 中的字段。
+*元组索引表达式* 用于访问 [元组][tuple type] 和 [元组结构体][tuple struct] 中的字段。
 
 元组索引表达式的语法是一个表达式，即 *元组操作数* ，后跟一个点号 ( `.` ) ，最后是一个元组索引。
 元组索引的语法是一个 [十进制字面值][decimal literal] ，没有前导零、下划线或后缀。

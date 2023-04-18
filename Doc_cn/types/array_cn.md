@@ -10,7 +10,9 @@
 > _ArrayType_ :\
 > &nbsp;&nbsp; `[` [_Type_] `;` [_Expression_] `]`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _数组类型_ :\
+> &nbsp;&nbsp; `[` [_Type_] `;` [_表达式_][_Expression_] `]`
 {==+==}
 
 

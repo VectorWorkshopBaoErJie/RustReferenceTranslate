@@ -13,7 +13,12 @@
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _调用语法_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `(` _调用参数组_<sup>?</sup> `)`
+>
+> _调用参数组_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_]&nbsp;( `,` [_表达式_][_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 

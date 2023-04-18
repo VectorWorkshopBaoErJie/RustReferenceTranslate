@@ -18,7 +18,17 @@
 > _ClosureParam_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_PatternNoTopAlt_]&nbsp;( `:` [_Type_] )<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _闭包表达式_ :\
+> &nbsp;&nbsp; `move`<sup>?</sup>\
+> &nbsp;&nbsp; ( `||` | `|` _闭包参数组_<sup>?</sup> `|` )\
+> &nbsp;&nbsp; ([_表达式_][_Expression_] | `->` [_无约束类型组_][_TypeNoBounds_]&nbsp;[_块表达式_][_BlockExpression_])
+>
+> _闭包参数组_ :\
+> &nbsp;&nbsp; _闭包参数_ (`,` _闭包参数_)<sup>\*</sup> `,`<sup>?</sup>
+>
+> _闭包参数_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> [_模式无顶层选项_][_PatternNoTopAlt_]&nbsp;( `:` [_Type_][_类型_] )<sup>?</sup>
 {==+==}
 
 

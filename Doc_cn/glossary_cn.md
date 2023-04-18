@@ -538,7 +538,7 @@ example of an uninhabited type is the [never type] `!`, or an enum with no varia
 
 ### 无法驻留的
 
-如果一个类型没有构造函数，因此永远无法被实例化，则该类型是无法驻留的。一个无法驻留的类型在某种意义上是 "空的" ，因为该类型没有值。无法居住类型的典型示例是 [never type] `!` ，或者没有变体的枚举 `enum Never { }` 。与 [Inhabited](#inhabited) 相对。
+如果一个类型没有构造函数，因此永远无法被实例化，则该类型是无法驻留的。一个无法驻留的类型在某种意义上是 "空的" ，因为该类型没有值。无法居住类型的典型示例是 [永不类型][never type] `!` ，或者没有变体的枚举 `enum Never { }` 。与 [Inhabited](#inhabited) 相对。
 {==+==}
 
 

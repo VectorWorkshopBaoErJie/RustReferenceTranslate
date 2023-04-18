@@ -25,7 +25,9 @@ They can be moved or copied, stored into data structs, and returned from functio
 > _ReferenceType_ :\
 > &nbsp;&nbsp; `&` [_Lifetime_]<sup>?</sup> `mut`<sup>?</sup> [_TypeNoBounds_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _引用类型_ :\
+> &nbsp;&nbsp; `&` [_生命周期_][_Lifetime_]<sup>?</sup> `mut`<sup>?</sup> [_无约束类型组_][_TypeNoBounds_]
 {==+==}
 
 
@@ -75,7 +77,9 @@ A mutable reference (that hasn't been borrowed) is the only way to access the va
 > _RawPointerType_ :\
 > &nbsp;&nbsp; `*` ( `mut` | `const` ) [_TypeNoBounds_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _原始指针类型_ :\
+> &nbsp;&nbsp; `*` ( `mut` | `const` ) [_无约束类型组_][_TypeNoBounds_]
 {==+==}
 
 

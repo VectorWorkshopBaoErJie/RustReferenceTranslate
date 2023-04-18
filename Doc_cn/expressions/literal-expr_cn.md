@@ -18,7 +18,17 @@
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | `true` | `false`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _字面值表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [字符字面值][CHAR_LITERAL]\
+> &nbsp;&nbsp; | [字符串字面值][STRING_LITERAL]\
+> &nbsp;&nbsp; | [原始字符串字面值][RAW_STRING_LITERAL]\
+> &nbsp;&nbsp; | [字节字面值][BYTE_LITERAL]\
+> &nbsp;&nbsp; | [字节字符串字面值][BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | [原始字节字符串字面值][RAW_BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | [整数字面值][INTEGER_LITERAL]\
+> &nbsp;&nbsp; | [浮点数字面值][FLOAT_LITERAL]\
+> &nbsp;&nbsp; | `true` | `false`
 {==+==}
 
 
@@ -77,25 +87,25 @@ A string literal expression consists of a single [BYTE_STRING_LITERAL] or [RAW_B
 {==+==}
 ## 字符字面量表达式
 
-字符字面量表达式由一个 [CHAR_LITERAL] 令牌构成。
+字符字面量表达式由一个 [字符字面值][CHAR_LITERAL] 令牌构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字符串字面量表达式
 
-字符串字面量表达式由一个 [STRING_LITERAL] 或 [RAW_STRING_LITERAL] 令牌构成。
+字符串字面量表达式由一个 [字符串字面值][STRING_LITERAL] 或 [原始字符串字面值][RAW_STRING_LITERAL] 令牌构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字节字面量表达式
 
-字节字面量表达式由一个 [BYTE_LITERAL] 令牌构成。
+字节字面量表达式由一个 [字节字面值][BYTE_LITERAL] 令牌构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字节字符串字面量表达式
 
-字节字符串字面量表达式由一个 [BYTE_STRING_LITERAL] 或 [RAW_BYTE_STRING_LITERAL] 令牌构成。
+字节字符串字面量表达式由一个 [字节字符串字面值][BYTE_STRING_LITERAL] 或 [原始字节字符串字面值][RAW_BYTE_STRING_LITERAL] 令牌构成。
 
 > **注意**: 此部分内容不完整。
 {==+==}
@@ -120,7 +130,7 @@ Examples of integer literal expressions:
 {==+==}
 ## 整型字面值表达式
 
-整型字面值表达式由一个 [INTEGER_LITERAL] 令牌组成。
+整型字面值表达式由一个 [整数字面值][INTEGER_LITERAL] 令牌组成。
 
 如果令牌有 [后缀][suffix] ，则后缀必须是 [基本整数类型][numeric types] 中的一个名称： `u8` 、 `i8` 、 `u16` 、 `i16` 、 `u32` 、 `i32` 、 `u64` 、 `i64` 、 `u128` 、 `i128` 、 `usize` 或 `isize` ，并且表达式具有该类型。
 
@@ -235,10 +245,10 @@ Examples of floating-point literal expressions:
 
 浮点数字面值表达式具有以下两种形式:
 
- * 单个 [FLOAT_LITERAL] 标记
- * 单个 [INTEGER_LITERAL] 标记，该标记具有后缀但没有基数指示符
+ * 单个 [浮点数字面值][FLOAT_LITERAL] 标记
+ * 单个 [整数字面值][INTEGER_LITERAL] 标记，该标记具有后缀但没有基数指示符
 
-如果标记具有 [后缀] ，则后缀必须是 [原始浮点类型][floating-point types] 之一的名称： `f32` 或 `f64` ，并且表达式具有该类型。
+如果标记具有 [后缀][suffix] ，则后缀必须是 [原始浮点类型][floating-point types] 之一的名称： `f32` 或 `f64` ，并且表达式具有该类型。
 
 如果标记没有后缀，则表达式的类型由类型推断确定：
 
@@ -308,7 +318,7 @@ The expression's type is the primitive [boolean type], and its value is:
 
 一个布尔字面值表达式由 `true` 或 `false` 中的一个关键字组成。
 
-该表达式的类型为原始的[布尔类型]，其值是:
+该表达式的类型为原始的 [布尔类型][boolean type] ，其值是:
  * 如果关键字是 `true`，则为真
  * 如果关键字是 `false`，则为假
 {==+==}

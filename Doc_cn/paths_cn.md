@@ -111,7 +111,7 @@ mod m {
 > &nbsp;&nbsp; [IDENTIFIER] `=` [_Type_]
 {==+==}
 > **<sup>语法</sup>**\
-> _路径表达式_ :\
+> _表达式中路径_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _路径表达式语句_ (`::` _路径表达式语句_)<sup>\*</sup>
 >
 > _路径表达式语句_ :\
@@ -297,9 +297,9 @@ and qualified paths.
 Although the `::` token is allowed before the generics arguments, it is not required
 because there is no ambiguity like there is in _PathInExpression_.
 {==+==}
-类型路径 (Type paths) 在类型定义、trait 约束、类型参数约束和限定路径中使用。
+类型路径在类型定义、trait 约束、类型参数约束和限定路径中使用。
 
-虽然 `::` 令牌在泛型参数之前是允许的，但不是必须的，因为与在表达式中的情况不同，这里没有歧义。
+虽然 `::` 令牌在泛型参数之前是允许的，但不是必须的，因为与在 _表达式中路径_ 的情况不同，这里没有歧义。
 {==+==}
 
 

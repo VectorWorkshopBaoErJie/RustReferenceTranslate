@@ -142,7 +142,7 @@ The `else` block must always diverge (evaluate to the [never type]).
 如果不存在 `else` 块，则模式必须是不可反驳的。
 如果存在 `else` 块，则模式可以是可反驳的。
 如果模式不匹配 (这需要它是可反驳的) ，则执行 `else` 块。
-`else` 块必须始终发散 (求值为 [never 类型][never type] )。
+`else` 块必须始终发散 (求值为 [永不类型][never type] )。
 
 译注："反驳" (refutable) 和 "不可反驳" (irrefutable) 表示模式是否能够在任何情况下都成功匹配。
 "发散" (diverge) 指的是一个表达式无法正常终止并返回值的情况。

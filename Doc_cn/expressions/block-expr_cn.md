@@ -18,7 +18,17 @@
 > &nbsp;&nbsp; | [_Statement_]<sup>\+</sup> [_ExpressionWithoutBlock_]\
 > &nbsp;&nbsp; | [_ExpressionWithoutBlock_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _块表达式_ :\
+> &nbsp;&nbsp; `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; _语句组_<sup>?</sup>\
+> &nbsp;&nbsp; `}`
+>
+> _语句组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_语句_][_Statement_]<sup>\+</sup>\
+> &nbsp;&nbsp; | [_语句_][_Statement_]<sup>\+</sup> [_无块表达式_][_ExpressionWithoutBlock_]\
+> &nbsp;&nbsp; | [_无块表达式_][_ExpressionWithoutBlock_]
 {==+==}
 
 
@@ -158,9 +168,9 @@ The actual data format for this type is unspecified.
 {==+==}
 ## `async` 块
 
-> **<sup>Syntax</sup>**\
-> _AsyncBlockExpression_ :\
-> &nbsp;&nbsp; `async` `move`<sup>?</sup> _BlockExpression_
+> **<sup>语法</sup>**\
+> _Async块表达式_ :\
+> &nbsp;&nbsp; `async` `move`<sup>?</sup> _块表达式_
 
 异步块是块表达式的一种变体，它计算为一个 future。
 块的最终表达式 (如果存在) 确定 future 的结果值。
@@ -223,7 +233,7 @@ loop {
 {==+==}
 ### 控制流运算符
 
-异步块类似于函数边界，就像闭包一样。
+异步块类似于函数约束，就像闭包一样。
 因此， `?` 运算符和 `return` 表达式都会影响未来的输出，而不是封闭函数或其他上下文。
 也就是说，从异步块中的 `return <expr>` 将返回 `<expr>` 的结果作为未来的输出。
 同样，如果 `<expr>?` 传播错误，则该错误将作为未来的结果传播。
@@ -255,9 +265,9 @@ Examples:
 {==+==}
 ## `unsafe` 块
 
-> **<sup>Syntax</sup>**\
-> _UnsafeBlockExpression_ :\
-> &nbsp;&nbsp; `unsafe` _BlockExpression_
+> **<sup>语法</sup>**\
+> _Unsafe块表达式_ :\
+> &nbsp;&nbsp; `unsafe` _块表达式_
 
 在需要进行 [unsafe 操作][unsafe operations] 时，可以在一段代码块前加上 `unsafe` 关键字。详见 [`unsafe` block](../unsafe-blocks.md) 。
 示例:

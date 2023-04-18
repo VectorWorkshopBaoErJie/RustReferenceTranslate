@@ -10,7 +10,9 @@
 > _FieldExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [IDENTIFIER]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _字段表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `.` [标识符][IDENTIFIER]
 {==+==}
 
 
@@ -22,7 +24,7 @@ The syntax for a field expression is an expression, called the *container operan
 Field expressions cannot be followed by a parenthetical comma-separated list of expressions, as that is instead parsed as a [method call expression].
 That is, they cannot be the function operand of a [call expression].
 {==+==}
-*字段表达式* 是一个 [占位表达式] ，它求值为 [结构体][struct] 或 [联合体][union] 的一个字段的位置。
+*字段表达式* 是一个 [占位表达式][place expression]  ，它求值为 [结构体][struct] 或 [联合体][union] 的一个字段的位置。
 当操作数是 [可变的][mutable] ，字段表达式也是可变的。
 字段表达式的语法是一个表达式 (称为 *容器操作数* ) ，然后是一个 `.` ，最后是一个 [标识符][identifier] 。
 字段表达式不能后跟一个括号内的逗号分隔的表达式列表，因为那将被解析为 [方法调用表达式][method call expression] 。

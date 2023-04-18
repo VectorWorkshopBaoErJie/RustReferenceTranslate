@@ -213,7 +213,7 @@ more specific call traits:
 {==+==}
 ## 调用trait和类型强制转换
 
-闭包类型都实现了 [`FnOnce`] ，表示它们可以通过消费闭包所有权来被调用一次。此外，一些闭包还实现了更具体的调用trait:
+闭包类型都实现了 [`FnOnce`] ，表示它们可以通过消费闭包所有权来被调用一次。此外，一些闭包还实现了更具体的调用 trait:
 {==+==}
 
 
@@ -298,7 +298,7 @@ Because captures are often by reference, the following general rules arise:
 [`Send`] 和 [`Sync`] 的规则与普通结构体类型相同，而 [`Clone`] 和 [`Copy`] 的行为则类似于 [衍生](https://doc.rust-lang.org/reference/items/derive.html) 。
 对于 [`Clone`] ，复制捕获变量的顺序未指定。
 
-由于捕获通常是通过引用进行的，因此会出现以下一般规则：
+由于捕获通常是通过引用进行的，因此会出现以下一般规则:
 
 * 如果所有捕获的变量都是 [`Sync`] ，则闭包是 [`Sync`] 的。
 * 如果所有非唯一不可变引用捕获的变量都是 [`Sync`] ，并且所有唯一不可变或可变引用、复制或移动捕获的值都是 [`Send`] ，则闭包是 [`Send`] 的。

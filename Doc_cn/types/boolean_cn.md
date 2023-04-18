@@ -59,9 +59,9 @@ Like all primitives, the boolean type [implements][p-impl] the
 > **Note**: See the [standard library docs][std] for library operations.
 {==+==}
 * [if 表达式][if expressions] 和 [while 表达式][while expressions] 中的条件操作数
-* [lazy boolean operator expressions][lazy] 中的操作数
+* [惰性布尔运算符表达式][lazy] 中的操作数
 
-> **注意**: 布尔类型类似于但不是 [enumerated type] 。实际上，这主要意味着构造函数未与类型关联 (例如， `bool::true` ) 。
+> **注意**: 布尔类型类似于但不是 [可枚举类型][enumerated type] 。实际上，这主要意味着构造函数未与类型关联 (例如， `bool::true` ) 。
 
 与所有原始类型一样，布尔类型 [p-impl] 实现了 [traits][p-traits] [`Clone`][p-clone] ， [`Copy`][p-copy] ， [`Sized`][p-sized] ， [`Send`][p-send] 和 [`Sync`][p-sync] 。
 

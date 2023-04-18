@@ -10,7 +10,9 @@
 > _GroupedExpression_ :\
 > &nbsp;&nbsp; `(` [_Expression_] `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _分组表达式_ :\
+> &nbsp;&nbsp; `(` [_表达式_][_Expression_] `)`
 {==+==}
 
 

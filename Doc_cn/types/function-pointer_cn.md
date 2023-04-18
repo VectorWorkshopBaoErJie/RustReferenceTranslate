@@ -29,7 +29,28 @@
 > _MaybeNamedFunctionParametersVariadic_ :\
 > &nbsp;&nbsp; ( _MaybeNamedParam_ `,` )<sup>\*</sup> _MaybeNamedParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _裸函数类型_ :\
+> &nbsp;&nbsp; [_对于生命周期组_][_ForLifetimes_]<sup>?</sup> _函数类型限定符组_ `fn`\
+> &nbsp;&nbsp; &nbsp;&nbsp;  `(` _函数参数可能命名为可变参数_<sup>?</sup> `)` _裸函数返回类型_<sup>?</sup>
+>
+> _函数类型限定符组_:\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> (`extern` [_Abi_]<sup>?</sup>)<sup>?</sup>
+>
+> _裸函数返回类型_:\
+> &nbsp;&nbsp; `->` [_TypeNoBounds_]
+>
+> _函数参数可能命名为可变参数_ :\
+> &nbsp;&nbsp; _可能命名函数参数组_ | _可能命名函数参数可变_
+>
+> _可能命名函数参数组_ :\
+> &nbsp;&nbsp; _可能命名函数参数_ ( `,` _可能命名函数参数_ )<sup>\*</sup> `,`<sup>?</sup>
+>
+> _可能命名函数参数_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( ( [标识符][IDENTIFIER] | `_` ) `:` )<sup>?</sup> [_类型_][_Type_]
+>
+> _可能命名函数参数可变_ :\
+> &nbsp;&nbsp; ( _可能命名函数参数_ `,` )<sup>\*</sup> _可能命名函数参数_ `,` [_外部属性_][_OuterAttribute_]<sup>\*</sup> `...`
 {==+==}
 
 

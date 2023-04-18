@@ -35,7 +35,34 @@
 >
 > _StructExprUnit_ : [_PathInExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _结构体表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _结构体表达式结构体_\
+> &nbsp;&nbsp; | _结构体表达式元组_\
+> &nbsp;&nbsp; | _结构体表达式单元_
+>
+> _结构体表达式结构体_ :\
+> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `{` (_结构体表达式字段组_ | _结构体省略_)<sup>?</sup> `}`
+>
+> _结构体表达式字段组_ :\
+> &nbsp;&nbsp; _结构体表达式字段_ (`,` _结构体表达式字段_)<sup>\*</sup> (`,` _结构体省略_ | `,`<sup>?</sup>)
+>
+> _结构体表达式字段_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [标识符][IDENTIFIER]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ([标识符][IDENTIFIER] | [元组索引][TUPLE_INDEX]) `:` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; )
+>
+> _结构体省略_ :\
+> &nbsp;&nbsp; `..` [_表达式_][_Expression_]
+>
+> _结构体表达式元组_ :\
+> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `(`\
+> &nbsp;&nbsp; &nbsp;&nbsp; ( [_表达式_][_Expression_] (`,` [_表达式_][_Expression_])<sup>\*</sup> `,`<sup>?</sup> )<sup>?</sup>\
+> &nbsp;&nbsp; `)`
+>
+> _结构体表达式单元_ : [_表达式中路径_][_PathInExpression_]
 {==+==}
 
 
@@ -92,7 +119,7 @@ The field name is separated from its value with a colon.
 
 A value of a [union] type can only be created using this syntax, and it must specify exactly one field.
 {==+==}
-## 带有字段的结构体表达式
+## 字段结构体表达式
 
 带有花括号括起来的字段结构体表达式允许您以任何顺序指定每个单独字段的值。字段名称用冒号与其值分开。
 

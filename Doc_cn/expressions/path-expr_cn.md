@@ -11,7 +11,10 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _路径表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_]\
+> &nbsp;&nbsp; | [_表达式中的限定路径_][_QualifiedPathInExpression_]
 {==+==}
 
 
@@ -22,7 +25,7 @@ Using a [`static mut`] variable requires an [`unsafe` block].
 {==+==}
 在表达式上下文中使用的 [路径][path] 表示一个局部变量或一个条目。
 解析为局部变量或静态变量的路径表达式是 [占位表达式][place expressions]，其他路径是 [值表达式][value expressions]。
-使用 [`static mut`] 变量需要一个 [`unsafe` block] 。
+使用 [`static mut`] 变量需要一个 [`unsafe` 块][`unsafe` block] 。
 {==+==}
 
 

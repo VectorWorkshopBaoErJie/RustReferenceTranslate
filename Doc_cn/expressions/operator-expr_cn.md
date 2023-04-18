@@ -859,9 +859,9 @@ reference types and `mut` or `const` in pointer types.
 | 整型类型                  | `*V` where `V: Sized`    | 地址类型到指针类型的转换            |
 | `&m₁ T` 类型               | `*m₂ T` \*\*           | 引用类型到指针类型的转换            |
 | `&m₁ [T; n]` 类型          | `*m₂ T` \*\*           | 数组类型到指针类型的转换            |
-| [函数条目][Function item] 类型              | [函数指针][Function pointer] 类型        | 函数项到函数指针类型的转换         |
-| [函数条目][Function item] 类型              | `*V` where `V: Sized`   | 函数项到指针类型的转换             |
-| [函数条目][Function item] 类型              | 整型类型                | 函数项到地址类型的转换             |
+| [函数条目][Function item] 类型              | [函数指针][Function pointer] 类型        | 函数条目到函数指针类型的转换         |
+| [函数条目][Function item] 类型              | `*V` where `V: Sized`   | 函数条目到指针类型的转换             |
+| [函数条目][Function item] 类型              | 整型类型                | 函数条目到地址类型的转换             |
 | [函数指针][Function pointer] 类型            | `*V` where `V: Sized`   | 函数指针到指针类型的转换           |
 | [函数指针][Function pointer] 类型            | 整型类型                | 函数指针到地址类型的转换           |
 | 闭包类型 \*\*\*            | 函数指针类型           | 闭包类型到函数指针类型的转换       |
@@ -915,9 +915,9 @@ reference types and `mut` or `const` in pointer types.
     * if necessary, rounding is according to `roundTiesToEven` mode \*\*\*
     * on overflow, infinity (of the same sign as the input) is produced
 {==+==}
-* 两个大小相同的整数之间的转换 (例如i32 -> u32) 是无操作的 (Rust对于固定整数的负值使用 2 的补码) 
-* 从较大的整数转换为较小的整数 (例如u32 -> u8) 会截断
-* 从较小的整数转换为较大的整数 (例如u8 -> u32) 将：
+* 两个大小相同的整数之间的转换 (例如 i32 -> u32) 是无操作的 (Rust 对于固定整数的负值使用 2 的补码) 
+* 从较大的整数转换为较小的整数 (例如 u32 -> u8) 会截断
+* 从较小的整数转换为较大的整数 (例如 u8 -> u32) 将：
     * 如果源是无符号的，则用零填充
     * 如果源是有符号的，则使用符号扩展
 * 将浮点数转换为整数会将浮点数向零舍入 
@@ -928,8 +928,8 @@ reference types and `mut` or `const` in pointer types.
     * 如有必要，舍入按照 `roundTiesToEven` 模式进行  \*\*\* 
     * 溢出时，将生成无限大 (与输入相同的符号) 
     * 注意：对于当前的数字类型集，只有在 `u128 as f32` 的值大于或等于 `f32::MAX + (0.5 ULP)` 时才会发生溢出
-* 从f32转换为f64是完美的和无损的
-* 从f64转换为f32将产生可能最接近的f32 \*\*
+* 从 f32 转换为 f64 是完美的和无损的
+* 从 f64 转换为 f32 将产生可能最接近的 f32 \*\*
     * 如有必要，舍入按照 `roundTiesToEven` 模式进行 \*\*\* 
     * 溢出时，将生成无限大 (与输入相同的符号) 
 {==+==}
@@ -1071,7 +1071,9 @@ assert_eq!(values[1], 3);
 > _AssignmentExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _赋值表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -1243,7 +1245,18 @@ Note that default binding modes do not apply for the desugared expression.
 > &nbsp;&nbsp; | [_Expression_] `<<=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _复合赋值表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式_][_Expression_] `+=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `-=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `*=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `/=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `%=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `&=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `|=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `^=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `<<=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `>>=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -1291,7 +1304,7 @@ A mutable borrow of the assigned operand is automatically taken.
 
 For example, the following expression statements in `example` are equivalent:
 {==+==}
-复合赋值语法是一个 [可变的][mutable] [占位表达式][place expression]，紧接着是 *被赋值的操作数* ，然后是其中一个运算符，后面跟着一个 `=` 符号 (无空格) ，最后是一个 [value 表达式][value expression] ，即 *修改操作数* 。
+复合赋值语法是一个 [可变的][mutable] [占位表达式][place expression]，紧接着是 *被赋值的操作数* ，然后是其中一个运算符，后面跟着一个 `=` 符号 (无空格) ，最后是一个 [值表达式][value expression] ，即 *修改操作数* 。
 
 与其他占位操作数不同，被赋值的占位操作数必须是一个占位表达式。尝试使用值表达式会导致编译错误，而不是将其升级为临时值。
 

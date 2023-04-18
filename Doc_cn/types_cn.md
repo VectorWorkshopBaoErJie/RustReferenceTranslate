@@ -109,14 +109,14 @@ Rust 的类型列表包括：
 {==+==}
 > **<sup>语法</sup>**\
 > _类型_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _无边界类型组_\
+> &nbsp;&nbsp; &nbsp;&nbsp; _无约束类型组_\
 > &nbsp;&nbsp; | [_ImplTrait类型_][_ImplTraitType_]\
 > &nbsp;&nbsp; | [_Trait对象类型_][_TraitObjectType_]
 >
 > _无边界类型组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_括号类型_][_ParenthesizedType_]\
-> &nbsp;&nbsp; | [_ImplTrait类型1边界_]_ImplTraitTypeOneBound_]\
-> &nbsp;&nbsp; | [_Trait对象类型1边界_][_TraitObjectTypeOneBound_]\
+> &nbsp;&nbsp; | [_ImplTrait类型1约束_]_ImplTraitTypeOneBound_]\
+> &nbsp;&nbsp; | [_Trait对象类型1约束_][_TraitObjectTypeOneBound_]\
 > &nbsp;&nbsp; | [_类型路径_][_TypePath_]\
 > &nbsp;&nbsp; | [_元组类型_][_TupleType_]\
 > &nbsp;&nbsp; | [_空类型_][_NeverType_]\
@@ -190,8 +190,8 @@ require this disambiguation use the [_TypeNoBounds_] rule instead of
 [_Type_].
 {==+==}
 在某些情况下，类型的组合可能是不明确的。在类型周围加上括号以避免歧义。
-例如， [引用类型] 中的 [类型边界][type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
-需要此消除歧义的语法使用 [_无边界类型组_][_TypeNoBounds_] 规则，而不是 [_类型_][_Type_] 。
+例如， [引用类型] 中的 [类型约束][type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
+需要此消除歧义的语法使用 [_无约束类型组_][_TypeNoBounds_] 规则，而不是 [_类型_][_Type_] 。
 {==+==}
 
 

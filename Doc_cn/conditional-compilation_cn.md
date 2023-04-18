@@ -29,7 +29,7 @@
 > &nbsp;&nbsp; _ConfigurationPredicate_ (`,` _ConfigurationPredicate_)<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 > **<sup>语法</sup>**\
-> _配置谓词_ :\
+> _配置断言_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _配置选项_\
 > &nbsp;&nbsp; | _配置All_\
 > &nbsp;&nbsp; | _配置Any_\
@@ -39,16 +39,16 @@
 > &nbsp;&nbsp; [IDENTIFIER]&nbsp;(`=` ([STRING_LITERAL] | [RAW_STRING_LITERAL]))<sup>?</sup>
 >
 > _配置All_\
-> &nbsp;&nbsp; `all` `(` _配置选项列表_<sup>?</sup> `)`
+> &nbsp;&nbsp; `all` `(` _配置断言列表_<sup>?</sup> `)`
 >
 > _配置Any_\
-> &nbsp;&nbsp; `any` `(` _配置选项列表_<sup>?</sup> `)`
+> &nbsp;&nbsp; `any` `(` _配置断言列表_<sup>?</sup> `)`
 >
 > _配置Not_\
-> &nbsp;&nbsp; `not` `(` _配置选项_ `)`
+> &nbsp;&nbsp; `not` `(` _配置断言_ `)`
 >
-> _配置选项列表_\
-> &nbsp;&nbsp; _配置选项_ (`,` _配置选项_)<sup>\*</sup> `,`<sup>?</sup>
+> _配置断言列表_\
+> &nbsp;&nbsp; _配置断言_ (`,` _配置断言_)<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
 
@@ -72,7 +72,7 @@ further described below in detail.
 Each form of conditional compilation takes a _configuration predicate_ that
 evaluates to true or false. The predicate is one of the following:
 {==+==}
-每种形式的条件编译都需要有配置谓词，该谓词评估为 true 或 false。谓词有以下几种形式：
+每种形式的条件编译都需要有配置断言，该断言评估为 true 或 false。断言有以下几种形式：
 {==+==}
 
 
@@ -87,9 +87,9 @@ evaluates to true or false. The predicate is one of the following:
   and false if its predicate is true.
 {==+==}
 * 配置选项。如果选项设置为 true ，则为真，否则为假。
-* `all()`，带有逗号分隔的配置谓词列表。如果至少有一个谓词为 false ，则结果为 false 。如果没有谓词，则为 true 。
-* `any()`，带有逗号分隔的配置谓词列表。如果至少有一个谓词为 true ，则结果为 true 。如果没有谓词，则为 false 。
-* `not()`，带有一个配置谓词。如果其谓词为 false ，则为 true ，如果其谓词为 true ，则为 false 。
+* `all()`，带有逗号分隔的配置断言列表。如果至少有一个断言为 false ，则结果为 false 。如果没有断言，则为 true 。
+* `any()`，带有逗号分隔的配置断言列表。如果至少有一个断言为 true ，则结果为 true 。如果没有断言，则为 false 。
+* `not()`，带有一个配置断言。如果其断言为 false ，则为 true ，如果其断言为 true ，则为 false 。
 {==+==}
 
 
@@ -610,7 +610,7 @@ Example values:
 {==+==}
 > **<sup>语法</sup>**\
 > _CfgAttr属性_ :\
-> &nbsp;&nbsp; `cfg` `(` _配置谓词_ `)`
+> &nbsp;&nbsp; `cfg` `(` _配置断言_ `)`
 {==+==}
 
 
@@ -632,7 +632,7 @@ on a configuration predicate.
 {==+==}
 It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
 {==+==}
-它的语法是 `cfg`  `(` 配置判断语句 `)` 。
+它的语法是 `cfg`  `(` 配置断言语句 `)` 。
 {==+==}
 
 
@@ -640,8 +640,8 @@ It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
 If the predicate is true, the thing is rewritten to not have the `cfg` attribute
 on it. If the predicate is false, the thing is removed from the source code.
 {==+==}
-如果谓词为 true，则将该条件附加到的条目重新编写，不再具有 `cfg` 属性。
-如果谓词为 false，则该条目将从源代码中删除。
+如果断言为 true，则将该条件附加到的条目重新编写，不再具有 `cfg` 属性。
+如果断言为 false，则该条目将从源代码中删除。
 {==+==}
 
 
@@ -746,7 +746,7 @@ The `cfg` attribute is allowed anywhere attributes are allowed.
 {==+==}
 > **<sup>语法</sup>**\
 > _CfgAttr属性_ :\
-> &nbsp;&nbsp; `cfg_attr` `(` _配置谓词_ `,` _CfgAttr组_<sup>?</sup> `)`
+> &nbsp;&nbsp; `cfg_attr` `(` _配置断言 `,` _CfgAttr组_<sup>?</sup> `)`
 >
 > _CfgAttr组_ :\
 > &nbsp;&nbsp; [_Attr_]&nbsp;(`,` [_Attr_])<sup>\*</sup> `,`<sup>?</sup>
@@ -757,7 +757,7 @@ The `cfg` attribute is allowed anywhere attributes are allowed.
 The `cfg_attr` [attribute] conditionally includes [attributes] based on a
 configuration predicate.
 {==+==}
-`cfg_attr` 属性会根据条件谓词来选择性地包含其他属性。
+`cfg_attr` 属性会根据条件断言来选择性地包含其他属性。
 {==+==}
 
 
@@ -766,7 +766,7 @@ When the configuration predicate is true, this attribute expands out to the
 attributes listed after the predicate. For example, the following module will
 either be found at `linux.rs` or `windows.rs` based on the target.
 {==+==}
-当配置谓词为真时，此属性将展开为谓词后列出的属性。
+当配置断言为真时，此属性将展开为断言后列出的属性。
 例如，以下模块将基于目标平台在 `linux.rs` 或 `windows.rs` 中找到：
 {==+==}
 
@@ -847,7 +847,7 @@ The built-in `cfg` macro takes in a single configuration predicate and evaluates
 to the `true` literal when the predicate is true and the `false` literal when
 it is false.
 {==+==}
-内置的 `cfg` 宏接收一个配置谓词并在谓词为真时求值为 `true` 字面值，在谓词为假时求值为 `false` 字面值。
+内置的 `cfg` 宏接收一个配置断言并在断言为真时求值为 `true` 字面值，在断言为假时求值为 `false` 字面值。
 {==+==}
 
 

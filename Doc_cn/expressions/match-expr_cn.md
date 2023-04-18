@@ -29,7 +29,28 @@
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Match表达式_ :\
+> &nbsp;&nbsp; `match` _被匹配项_ `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; _Match分支组_<sup>?</sup>\
+> &nbsp;&nbsp; `}`
+>
+>_被匹配项_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_]<sub>_不包括结构体表达式_</sub>
+>
+> _Match分支组_ :\
+> &nbsp;&nbsp; ( _Match分支_ `=>`
+>                             ( [_无块表达式_][_Expression_] `,`
+>                             | [_块表达式_][_Expression_] `,`<sup>?</sup> )
+>                           )<sup>\*</sup>\
+> &nbsp;&nbsp; _Match分支_ `=>` [_表达式_][_Expression_] `,`<sup>?</sup>
+>
+> _Match分支_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> [_模式_][_Pattern_] _Match分支守卫_<sup>?</sup>
+>
+> _Match分支守卫_ :\
+> &nbsp;&nbsp; `if` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -50,7 +71,7 @@ If the scrutinee expression is a [value expression], it is first evaluated into 
 The first arm with a matching pattern is chosen as the branch target of the `match`, any variables bound by the pattern are assigned to local variables in the arm's block, and control enters the block.
 {==+==}
 `match` 的行为取决于被匹配表达式是一个 [占位表达式还是值表达式][place expression]。
-如果被匹配表达式是一个 [值表达式]，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
+如果被匹配表达式是一个 [值表达式][value expression] ，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
 第一个具有匹配模式的分支被选择作为 `match` 的分支目标，任何由模式绑定的变量都分配到分支的块中的本地变量中，并且控制进入块中。
 {==+==}
 
@@ -62,7 +83,7 @@ When possible, it is preferable to match on place expressions, as the lifetime o
 
 An example of a `match` expression:
 {==+==}
-当被匹配表达式是一个 [占位表达式] 时，`match` 不会分配临时位置；但是，按值绑定可能会从内存位置复制或移动。
+当被匹配表达式是一个 [占位表达式][place expression] 时，`match` 不会分配临时位置；但是，按值绑定可能会从内存位置复制或移动。
 如果可能的话，最好匹配占位表达式，因为这些匹配的生命周期继承了占位表达式的生命周期，而不是被限制在 `match` 内部。
 
 下面是一个 `match` 表达式的示例：
@@ -242,7 +263,7 @@ The only attributes that have meaning on match arms are [`cfg`] and the [lint ch
 ## 匹配分支上的属性
 
 可以在匹配分支上使用外部属性。
-在匹配分支上具有意义的属性只有 [`cfg`] 和 [lint 检查属性][lint check attributes] 。
+在匹配分支上具有意义的属性只有 [`cfg`] 和 [代码分析检查属性][lint check attributes] 。
 [内部属性][Inner attributes] 可以直接放置在匹配表达式的左括号后面，在与 [块表达式上的属性][attributes on block expressions] 相同的表达式上下文中。
 {==+==}
 

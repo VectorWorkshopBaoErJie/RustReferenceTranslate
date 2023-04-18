@@ -11,7 +11,10 @@
 >
 > _ImplTraitTypeOneBound_ : `impl` [_TraitBound_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _ImplTrait类型_ : `impl` [_类型参数约束组_][_TypeParamBounds_]
+>
+> _ImplTrait类型1约束_ : `impl` [_Trait约束_][_TraitBound_]
 {==+==}
 
 

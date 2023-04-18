@@ -33,7 +33,32 @@
 > _RangeToInclusiveExpr_ :\
 > &nbsp;&nbsp; `..=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _区间表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _区间式_\
+> &nbsp;&nbsp; | _区间From表达式_\
+> &nbsp;&nbsp; | _区间To表达式_\
+> &nbsp;&nbsp; | _区间Full表达式_\
+> &nbsp;&nbsp; | _区间包含表达式_\
+> &nbsp;&nbsp; | _区间To包含表达式_
+>
+> _区间式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `..` [_表达式_][_Expression_]
+>
+> _区间From表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `..`
+>
+> _区间To表达式_ :\
+> &nbsp;&nbsp; `..` [_表达式_][_Expression_]
+>
+> _区间Full表达式_ :\
+> &nbsp;&nbsp; `..`
+>
+> _区间包含表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `..=` [_表达式_][_Expression_]
+>
+> _区间To包含表达式_ :\
+> &nbsp;&nbsp; `..=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -54,7 +79,14 @@ The `..` and `..=` operators will construct an object of one of the `std::ops::R
 | _RangeInclusiveExpr_   | start`..=`end | [std::ops::RangeInclusive]   | start &le; x &le; end |
 | _RangeToInclusiveExpr_ | `..=`end      | [std::ops::RangeToInclusive] |            x &le; end |
 {==+==}
-
+| 生产                | 语法           | 类型                      | 区间                  |
+|------------------------|---------------|------------------------------|-----------------------|
+| _区间式_            | 头`..`尾  | [std::ops::Range]            | 头 ≤ x < 尾      |
+| _区间From表达式_        | 头`..`     | [std::ops::RangeFrom]        | 头 ≤ x            |
+| _区间To表达式_          | `..`尾       | [std::ops::RangeTo]          |            x < 尾   |
+| _区间Full表达式_        | `..`          | [std::ops::RangeFull]        |            -         |
+| _区间包含表达式_   | 头`..=`尾 | [std::ops::RangeInclusive]   | 头 ≤ x ≤ 尾      |
+| _区间To包含表达式_ | `..=`尾      | [std::ops::RangeToInclusive] |            x ≤ 尾   |
 {==+==}
 
 

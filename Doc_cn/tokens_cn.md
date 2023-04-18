@@ -1409,7 +1409,7 @@ usages and meanings are defined in the linked pages.
 | `/`    | 斜线        | [除法][arith]
 | `%`    | 百分号      | [取余][arith]
 | `^`    | 插入符号    | [位运算异或和逻辑运算异或][arith]
-| `!`    | 感叹号      | [位运算非和逻辑运算非][negation]，[宏调用][macros]，[内部属性][attributes]，[Never类型][never-type]，[否定的impl][negative-impls]
+| `!`    | 感叹号      | [位运算非和逻辑运算非][negation]，[宏调用][macros]，[内部属性][attributes]，[永不类型][never-type]，[否定的impl][negative-impls]
 | `&`    | 与符号      | [位运算与和逻辑运算与][arith]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]
 | <code>\|</code> | 或符号 | [位运算或和逻辑运算或][arith]，[闭包][closures]，[模式匹配][match]中的模式，[if let]和[while let]中的模式
 | `&&`   | 与运算符    | [惰性与运算][lazy-bool]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]

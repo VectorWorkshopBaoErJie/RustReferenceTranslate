@@ -10,7 +10,9 @@
 > _MethodCallExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [_PathExprSegment_] `(`[_CallParams_]<sup>?</sup> `)`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _方法调用表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `.` [_路径表达式语句_][_PathExprSegment_] `(`[_调用参数组_]<sup>?</sup> `)`
 {==+==}
 
 
@@ -139,7 +141,7 @@ Instead, you can call the method using [disambiguating function call syntax], in
 There is no way to call the inherent method.
 Just don't define inherent methods on trait objects with the same name as a trait method and you'll be fine.
 {==+==}
-***警告:*** 对于 [trait对象][trait objects] ，如果存在与 trait 方法同名的内部方法，在方法调用表达式中尝试调用该方法会导致编译器错误。相反，可以使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用该方法，这样会调用 trait 方法而不是内部方法。没有方法可以调用内部方法。不要在具有与trait方法同名的内部方法的trait对象上定义内部方法，这样就不会出现问题。
+***警告:*** 对于 [trait对象][trait objects] ，如果存在与 trait 方法同名的内部方法，在方法调用表达式中尝试调用该方法会导致编译器错误。相反，可以使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用该方法，这样会调用 trait 方法而不是内部方法。没有方法可以调用内部方法。不要在具有与 trait 方法同名的内部方法的 trait 对象上定义内部方法，这样就不会出现问题。
 {==+==}
 
 

@@ -182,10 +182,10 @@ If neither of those rules apply, then the bounds on the trait are used:
 
 这些默认对象生命周期限制在完全省略生命周期限制时使用，而不是使用上述省略生命周期参数的规则。如果将 `'_` 用作生命周期限制，则该限制遵循通常的省略规则。
 
-如果 trait 对象用作泛型类型的类型参数，则首先使用包含类型来尝试推断边界。
+如果 trait 对象用作泛型类型的类型参数，则首先使用包含类型来尝试推断约束。
 
-* 如果包含类型存在唯一的边界，则使用该边界作为默认值。
-* 如果来自包含类型的边界超过一个，则必须指定显式边界。
+* 如果包含类型存在唯一的约束，则使用该约束作为默认值。
+* 如果来自包含类型的约束超过一个，则必须指定显式约束。
 
 如果上述规则都不适用，则使用特征的限制：
 
@@ -273,7 +273,7 @@ type T7<'a, 'b> = TwoBounds<'a, 'b, dyn Foo>;
 Note that the innermost object sets the bound, so `&'a Box<dyn Foo>` is still
 `&'a Box<dyn Foo + 'static>`.
 {==+==}
-请注意，最内层的对象设置了生命周期边界，因此 `&'a Box<dyn Foo>` 仍然等同于 `&'a Box<dyn Foo + 'static>` 。
+请注意，最内层的对象设置了生命周期约束，因此 `&'a Box<dyn Foo>` 仍然等同于 `&'a Box<dyn Foo + 'static>` 。
 {==+==}
 
 

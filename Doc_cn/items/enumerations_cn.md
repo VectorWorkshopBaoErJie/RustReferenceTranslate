@@ -529,7 +529,7 @@ enum ZeroVariants {}
 Zero-variant enums are equivalent to the [never type], but they cannot be
 coerced into other types.
 {==+==}
-零变体枚举被认为是 [never 类型][never type] 的等效形式，但是它们不能被强制转换为其他类型。
+零变体枚举被认为是 [永不类型][never type] 的等效形式，但是它们不能被强制转换为其他类型。
 {==+==}
 
 

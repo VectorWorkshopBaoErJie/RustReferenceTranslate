@@ -16,7 +16,15 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_LabelBlockExpression_]\
 > &nbsp;&nbsp; )
 {==+==}
-
+> **<sup>语法</sup>**\
+> _循环表达式_ :\
+> &nbsp;&nbsp; [_循环标签_][_LoopLabel_]<sup>?</sup> (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_无限循环表达式_][_InfiniteLoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_断言循环表达式_][_PredicateLoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_断言模式循环表达式_][_PredicatePatternLoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_迭代循环表达式_][_IteratorLoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_标签块表达式_][_LabelBlockExpression_]\
+> &nbsp;&nbsp; )
 {==+==}
 
 
@@ -48,7 +56,7 @@ Only `loop` and labelled block expressions support [evaluation to non-trivial va
 Rust 支持五种循环表达式:
 
 *   [`loop` 表达式](#infinite-loops) 表示无限循环。
-*   [`while` 表达式](#predicate-loops) 循环直到谓词为 false。
+*   [`while` 表达式](#predicate-loops) 循环直到断言为 false。
 *   [`while let` 表达式](#predicate-pattern-loops) 测试模式。
 *   [`for` 表达式](#iterator-loops) 从迭代器中提取值，循环直到迭代器为空。
 *   [带标签的块表达式](#labelled-block-expressions) 只运行一次循环，但允许使用 `break` 提前退出循环。
@@ -71,7 +79,9 @@ Rust 支持五种循环表达式:
 > _InfiniteLoopExpression_ :\
 > &nbsp;&nbsp; `loop` [_BlockExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _无限循环表达式_ :\
+> &nbsp;&nbsp; `loop` [_块表达式_][_BlockExpression_]
 {==+==}
 
 
@@ -102,7 +112,9 @@ A `loop` expression containing associated [`break` expression(s)](#break-express
 > _PredicateLoopExpression_ :\
 > &nbsp;&nbsp; `while` [_Expression_]<sub>_except struct expression_</sub> [_BlockExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _断言循环表达式_ :\
+> &nbsp;&nbsp; `while` [_表达式_][_Expression_]<sub>_不包括结构体表达式_</sub> [_块表达式_][_BlockExpression_]
 {==+==}
 
 
@@ -145,7 +157,7 @@ while i < 10 {
 {==+==}
 ## Predicate pattern loops
 {==+==}
-## 带有模式的条件循环
+## 断言模式循环
 {==+==}
 
 
@@ -155,7 +167,10 @@ while i < 10 {
 > &nbsp;&nbsp; `while` `let` [_Pattern_] `=` [_Scrutinee_]<sub>_except lazy boolean operator expression_</sub>
 >              [_BlockExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> [_断言模式循环表达式_][_PredicatePatternLoopExpression_] :\
+> &nbsp;&nbsp; `while` `let` [_模式_][_Pattern_] `=` [_被匹配项_][_Scrutinee_]<sub>_不包括惰性布尔运算符表达式_</sub>
+>              [_块表达式_][_BlockExpression_]
 {==+==}
 
 
@@ -278,7 +293,10 @@ As is the case in [`if let` expressions], the scrutinee cannot be a [lazy boolea
 > &nbsp;&nbsp; `for` [_Pattern_] `in` [_Expression_]<sub>_except struct expression_</sub>
 >              [_BlockExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _迭代器循环表达式_ :\
+> &nbsp;&nbsp; `for` [_模式_][_Pattern_] `in` [_表达式_][_Expression_]<sub>_不包括结构体表达式_</sub>
+>              [_块表达式_][_BlockExpression_]
 {==+==}
 
 
@@ -422,7 +440,9 @@ The variable names `next`, `iter`, and `val` are for exposition only, they do no
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _循环标签_ :\
+> &nbsp;&nbsp; [生命周期或标签][LIFETIME_OR_LABEL] `:`
 {==+==}
 
 
@@ -436,7 +456,7 @@ Labels follow the hygiene and shadowing rules of local variables. For example, t
 循环表达式可以选择性地使用标签。
 标签在循环表达式之前写入一个生命周期，例如 `'foo: loop { break 'foo; }` 、 `'bar: while false {}` 、 `'humbug: for _ in 0..0 {}` 。
 如果存在标签，则嵌套在此循环中的带有标签的 `break` 和 `continue` 表达式可以退出该循环或将控制返回到其头部。
-请参见 [break expressions](#break-expressions) 和 [continue expressions](#continue-expressions) 。
+请参见 [break 表达式](#break-expressions) 和 [continue 表达式](#continue-expressions) 。
 
 标签遵循本地变量的卫生和隐藏规则。例如，以下代码将打印 "outer loop" :
 {==+==}
@@ -469,7 +489,9 @@ Labels follow the hygiene and shadowing rules of local variables. For example, t
 > _BreakExpression_ :\
 > &nbsp;&nbsp; `break` [LIFETIME_OR_LABEL]<sup>?</sup> [_Expression_]<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Break表达式_ :\
+> &nbsp;&nbsp; `break` [生命周期或标签][LIFETIME_OR_LABEL]<sup>?</sup> [_表达式_][_Expression_]<sup>?</sup>
 {==+==}
 
 
@@ -530,7 +552,7 @@ A `break` expression is only permitted in the body of a loop, and has one of the
 {==+==}
 ## Labelled block expressions
 {==+==}
-## 带标签的块表达式
+## 标签块表达式
 {==+==}
 
 
@@ -539,7 +561,9 @@ A `break` expression is only permitted in the body of a loop, and has one of the
 > _LabelBlockExpression_ :\
 > &nbsp;&nbsp; [_BlockExpression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _标签块表达式_ :\
+> &nbsp;&nbsp; [_块表达式_][_BlockExpression_]
 {==+==}
 
 
@@ -566,7 +590,9 @@ Unlike other loops, labelled block expressions *must* begin with a label.
 > _ContinueExpression_ :\
 > &nbsp;&nbsp; `continue` [LIFETIME_OR_LABEL]<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Continue 表达式_ :\
+> &nbsp;&nbsp; `continue` [生命周期或标签][LIFETIME_OR_LABEL]<sup>?</sup>
 {==+==}
 
 

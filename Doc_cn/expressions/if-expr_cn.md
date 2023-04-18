@@ -18,7 +18,13 @@
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _If表达式_ :\
+> &nbsp;&nbsp; `if` [_表达式_][_Expression_]<sub>_不包括结构体表达式_</sub> [_块表达式_][_BlockExpression_]\
+> &nbsp;&nbsp; (`else` (
+>   [_块表达式_][_BlockExpression_]
+> | _If表达式_
+> | _IfLet表达式_ ) )<sup>\?</sup>
 {==+==}
 
 
@@ -82,7 +88,14 @@ assert_eq!(y, "Bigger");
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _IfLet表达式_ :\
+> &nbsp;&nbsp; `if` `let` [_模式_][_Pattern_] `=` [_被匹配项_][_Scrutinee_]<sub>_包括惰性布尔运算符表达式_</sub>
+>              [_块表达式_][_BlockExpression_]\
+> &nbsp;&nbsp; (`else` (
+>   [_块表达式_][_BlockExpression_]
+> | _If表达式_
+> | _IfLet表达式_ ) )<sup>\?</sup>
 {==+==}
 
 

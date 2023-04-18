@@ -10,7 +10,9 @@
 > _ReturnExpression_ :\
 > &nbsp;&nbsp; `return` [_Expression_]<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Return表达式_ :\
+> &nbsp;&nbsp; `return` [_表达式_][_Expression_]<sup>?</sup>
 {==+==}
 
 

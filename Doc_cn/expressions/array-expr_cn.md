@@ -18,7 +18,13 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
 > &nbsp;&nbsp; | [_Expression_] `;` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _数组表达式_ :\
+> &nbsp;&nbsp; `[` _数组元素组_<sup>?</sup> `]`
+>
+> _数组元素组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式_][_Expression_] ( `,` [_表达式_][_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `;` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -52,10 +58,10 @@ For expressions that are not a constant item, it is evaluated exactly once, and 
 第二种形式的语法是两个表达式之间用分号 (`;`) 隔开并用方括号括起来。
 分号前的表达式称为 *重复操作数* 。
 分号后的表达式称为 *长度操作数* 。
-它必须是类型为 usize 的 [常量表达式] ，例如  [字面值] 或 [常量条目] 。
+它必须是类型为 usize 的 [常量表达式][constant expression] ，例如  [字面值][literal] 或 [常量条目][constant item] 。
 这种形式的数组表达式会创建一个长度为长度操作数的值的数组，每个元素都是重复操作数的副本。
 也就是说，[a; b] 创建一个包含 b 个 a 值的副本的数组。
-如果长度操作数的值大于 1 ，则要求重复操作数的类型是 [`Copy`] ，或者必须是指向常量条目的 [路径] 。
+如果长度操作数的值大于 1 ，则要求重复操作数的类型是 [`Copy`] ，或者必须是指向常量条目的 [路径][path] 。
 
 当重复操作数是常量条目时，它会被计算长度操作数的值的次数。
 如果该值为 0 ，则不会对常量条目进行计算。
@@ -98,7 +104,9 @@ const EMPTY: Vec<i32> = Vec::new();
 > _IndexExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `[` [_Expression_] `]`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _索引表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `[` [_表达式_][_Expression_] `]`
 {==+==}
 
 

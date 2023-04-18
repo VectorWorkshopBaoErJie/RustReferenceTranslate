@@ -10,7 +10,9 @@
 > _AwaitExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` `await`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Await表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `.` `await`
 {==+==}
 
 
