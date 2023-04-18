@@ -11,7 +11,10 @@
 > &nbsp;&nbsp; `union` [IDENTIFIER]&nbsp;[_GenericParams_]<sup>?</sup> [_WhereClause_]<sup>?</sup>
 >   `{`[_StructFields_] `}`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _联合体_ :\
+> &nbsp;&nbsp; `union` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup> [_Where子句_][_WhereClause_]<sup>?</sup>
+>   `{`[_结构体字段组_][_StructFields_] `}`
 {==+==}
 
 

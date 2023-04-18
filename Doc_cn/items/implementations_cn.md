@@ -25,7 +25,24 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _实现_ :\
+> &nbsp;&nbsp; _内部实现_ | _Trait实现_
+>
+> _内部实现_ :\
+> &nbsp;&nbsp; `impl` [_泛型参数组_][_GenericParams_]<sup>?</sup>&nbsp;[_类型_][_Type_]&nbsp;[_Where子句_][_WhereClause_]<sup>?</sup> `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
+> &nbsp;&nbsp; `}`
+>
+> _Trait实现_ :\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> `impl` [_泛型参数组_][_GenericParams_]<sup>?</sup> `!`<sup>?</sup>
+>              [_类型路径_][_TypePath_] `for` [_类型_][_Type_]\
+> &nbsp;&nbsp; [_Where子句_][_WhereClause_]<sup>?</sup>\
+> &nbsp;&nbsp; `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
+> &nbsp;&nbsp; `}`
 {==+==}
 
 
@@ -95,7 +112,7 @@ The [path] to an associated item is any path to the implementing type,
 followed by the associated item's identifier as the final path
 component.
 {==+==}
-到关联条目的[路径][path]是指到实现类型的任何路径，后面跟着关联条目的标识符作为最终路径组件。
+到关联条目的 [路径][path] 是指到实现类型的任何路径，后面跟着关联条目的标识符作为最终路径组件。
 {==+==}
 
 
@@ -193,7 +210,7 @@ by the keyword `for`, followed by a path to a nominal type.
 The trait is known as the _implemented trait_. The implementing type
 implements the implemented trait.
 {==+==}
-该 trait 被称为 _实现trait_ 。实现类型实现了实现 trait 。
+该 trait 被称为 _实现 trait_ 。实现类型实现了实现 trait 。
 {==+==}
 
 
@@ -309,9 +326,9 @@ least one of the following is true:
   - No [uncovered type] parameters `P1..=Pn` may appear in `T0..Ti` (excluding
     `Ti`)
 {==+==}
-- `Trait` 是 [local trait] "局部trait"
+- `Trait` 是 [局部trait][local trait]
 - 全部为
-  - `T0..=Tn` 中至少有一个类型必须是 [local type] 。让 `Ti` 成为第一个这样的类型。
+  - `T0..=Tn` 中至少有一个类型必须是 [局部类型][local type] 。让 `Ti` 成为第一个这样的类型。
   - 在 `T0..Ti` (不包括 `Ti` ) 中不得出现 [未覆盖类型][uncovered type] 参数 `P1..=Pn` 。
 {==+==}
 
@@ -339,7 +356,7 @@ An implementation can take [generic parameters], which can be used in the rest
 of the implementation. Implementation parameters are written directly after the
 `impl` keyword.
 {==+==}
-一个实现可以带有[泛型参数][generic parameters]，这些参数可以在实现的其余部分中使用。实现参数直接写在 `impl` 关键字之后。
+一个实现可以带有 [泛型参数][generic parameters] ，这些参数可以在实现的其余部分中使用。实现参数直接写在 `impl` 关键字之后。
 {==+==}
 
 
@@ -442,7 +459,7 @@ impl<T, U> GenericTrait<U> for u32 where U: HasAssocType<Ty = T> { /* ... */ }
 impl<T, U> GenericStruct<U> where (U, isize): HasAssocType<Ty = T> { /* ... */ }
 ```
 {==+==}
-// 同样地，N通过作为ConstGenericStruct的一个参数来约束
+// 同样地， N 通过作为 ConstGenericStruct 的一个参数来约束
 impl<const N: usize> Trait for ConstGenericStruct<N> { /* ... */ }
 
 // T 通过在类型 `U` 的约束中的关联类型来约束，该类型本身是约束 trait 的一个泛型参数。
@@ -457,7 +474,7 @@ impl<T, U> GenericStruct<U> where (U, isize): HasAssocType<Ty = T> { /* ... */ }
 {==+==}
 Examples of non-constraining situations:
 {==+==}
-非约束性的示例。
+非约束性的示例:
 {==+==}
 
 

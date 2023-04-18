@@ -16,7 +16,15 @@
 > &nbsp;&nbsp;&nbsp;&nbsp; [_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Trait_ :\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> `trait` [标识符][IDENTIFIER]&nbsp;
+>              [_泛型参数组_][_GenericParams_]<sup>?</sup>
+>              ( `:` [_类型参数约束组_][_TypeParamBounds_]<sup>?</sup> )<sup>?</sup>
+>              [_Where子句_][_WhereClause_]<sup>?</sup> `{`\
+> &nbsp;&nbsp;&nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp;&nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
+> &nbsp;&nbsp; `}`
 {==+==}
 
 
@@ -24,7 +32,7 @@
 A _trait_ describes an abstract interface that types can implement. This
 interface consists of [associated items], which come in three varieties:
 {==+==}
-一个 _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目] 组成，包括以下三种类型：
+一个 _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目][associated items] 组成，包括以下三种类型：
 {==+==}
 
 
@@ -86,7 +94,6 @@ trait Example {
 ```
 {==+==}
 ```rust
-// Examples of associated trait items with and without definitions.
 // 有定义和无定义的关联trait条目的示例。
 trait Example {
     const CONST_NO_DEFAULT: i32;
@@ -111,9 +118,9 @@ Trait 函数不允许为 [`async`] 或 [`const`] 。
 
 Generic items may use traits as [bounds] on their type parameters.
 {==+==}
-## Trait 绑定
+## Trait 约束
 
-泛型条目可以使用 trait 作为其类型参数的 [绑定][bounds] 。
+泛型条目可以使用 trait 作为其类型参数的 [约束][bounds] 。
 {==+==}
 
 
@@ -177,7 +184,7 @@ Object safe traits can be the base trait of a [trait object]. A trait is
         * Have a `where Self: Sized` bound (receiver type of `Self` (i.e. `self`) implies this).
 {==+==}
 * 所有的 [supertraits] 也必须是对象安全的。
-* `Sized` 不能是 [supertrait][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
+* `Sized` 不能是 [超级trait][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
 * 不能有任何关联常量。
 * 不能有任何泛型关联类型。
 * 所有关联函数必须是可从 trait 对象中可派发的，或者是明确不可派发的。
@@ -379,7 +386,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 {==+==}
 ## Supertraits
 {==+==}
-
+## 超级trait
 {==+==}
 
 
@@ -388,7 +395,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object]
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
-**Supertraits** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
+**超级trait** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
 此外，在泛型或 trait 对象受到一个 trait 限定时，它可以访问其超级 trait 的关联条目。
 {==+==}
 
@@ -405,7 +412,7 @@ an error for a trait to be its own supertrait.
 {==+==}
 The trait with a supertrait is called a **subtrait** of its supertrait.
 {==+==}
-具有超级 trait 的 trait 被称为其超级 trait 的 **subtrait** 子 trait 。
+具有超级 trait 的 trait 被称为其超级 trait 的 **子trait** 。
 {==+==}
 
 
@@ -464,14 +471,24 @@ trait Circle where Self: Shape {
 }
 ```
 {==+==}
-
+```rust
+# trait Shape { fn area(&self) -> f64; }
+trait Circle where Self: Shape {
+    fn radius(&self) -> f64 {
+        // A = pi * r^2
+        // 对于代数，
+        // r = sqrt(A / pi)
+        (self.area() /std::f64::consts::PI).sqrt()
+    }
+}
+```
 {==+==}
 
 
 {==+==}
 This next example calls a supertrait method on a generic parameter.
 {==+==}
-这个例子展示了在一个泛型参数上调用 supertrait 方法。
+这个例子展示了在一个泛型参数上调用超级 trait 方法。
 {==+==}
 
 
@@ -490,7 +507,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 # trait Shape { fn area(&self) -> f64; }
 # trait Circle : Shape { fn radius(&self) -> f64; }
 fn print_area_and_radius<C: Circle>(c: C) {
-    // 这里从 `Circle` 的 supertrait `Shape` 中调用 area 方法。
+    // 这里从 `Circle` 的超级trait `Shape` 中调用 area 方法。
     println!("Area: {}", c.area());
     println!("Radius: {}", c.radius());
 }
@@ -501,7 +518,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 {==+==}
 Similarly, here is an example of calling supertrait methods on trait objects.
 {==+==}
-类似地，以下是在 trait 对象上调用 supertrait 方法的示例。
+类似地，以下是在 trait 对象上调用超级 trait 方法的示例。
 {==+==}
 
 
@@ -558,8 +575,8 @@ Function or method declarations without a body only allow [IDENTIFIER] or
 allowed, but it is deprecated and will become a hard error in the future.
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 {==+==}
-未设置函数或方法的实现体只允许使用 [IDENTIFIER] 或者 `_` [通配符模式][WildcardPattern]。
-目前允许使用 `mut` [IDENTIFIER]，但是这种方式已经被弃用，并且将来会变成一个严格的错误。
+未设置函数或方法的实现体只允许使用 [标识符][IDENTIFIER] 或者 `_` [通配符模式][WildcardPattern]。
+目前允许使用 `mut` [标识符][IDENTIFIER]，但是这种方式已经被弃用，并且将来会变成一个严格的错误。
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 {==+==}
 
@@ -568,7 +585,7 @@ allowed, but it is deprecated and will become a hard error in the future.
 In the 2015 edition, the pattern for a trait function or method parameter is
 optional:
 {==+==}
-在2015版中，trait 函数或方法参数的模式是可选的。
+在 2015 版中，trait 函数或方法参数的模式是可选的。
 {==+==}
 
 
@@ -603,7 +620,11 @@ The kinds of patterns for parameters is limited to one of the following:
 * `&` [IDENTIFIER]
 * `&&` [IDENTIFIER]
 {==+==}
-
+* [标识符][IDENTIFIER]
+* `mut` [标识符][IDENTIFIER]
+* [`_`][WildcardPattern]
+* `&` [标识符][IDENTIFIER]
+* `&&` [标识符][IDENTIFIER]
 {==+==}
 
 
@@ -612,8 +633,8 @@ Beginning in the 2018 edition, function or method parameter patterns are no
 longer optional. Also, all irrefutable patterns are allowed as long as there
 is a body. Without a body, the limitations listed above are still in effect.
 {==+==}
-从2018版开始，函数或方法参数模式不再是可选的。
-此外，只要有函数体，所有不可反驳模式(irrefutable pattern)都是允许的。
+从 2018 版开始，函数或方法参数模式不再是可选的。
+此外，只要有函数体，所有不可反驳模式都是允许的。
 如果没有函数体，则仍然受到上述限制。
 {==+==}
 
@@ -649,7 +670,7 @@ unified syntax across different contexts where they are used. As an example,
 an empty `vis` macro fragment specifier can be used for trait items, where the
 macro rule may be used in other situations where visibility is allowed.
 {==+==}
-Trait中的条目在语法上允许添加 [_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
+Trait中的条目在语法上允许添加 [_可见性_][_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
 这使得在使用这些条目的不同上下文中，可以使用统一的语法进行解析。
 例如，可以使用一个空的 `vis` 宏片段规格来表示 trait 条目，在其他允许使用可见性的情况下使用该宏规则。
 {==+==}

@@ -16,7 +16,15 @@
 > _AsClause_ :\
 > &nbsp;&nbsp; `as` ( [IDENTIFIER] | `_` )
 {==+==}
-
+> **<sup>语法:<sup>**\
+> _外部Crate_ :\
+> &nbsp;&nbsp; `extern` `crate` _Crate引用_ _As子句_<sup>?</sup> `;`
+>
+> _Crate引用_ :\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] | `self`
+>
+> _As子句_ :\
+> &nbsp;&nbsp; `as` ( [标识符][IDENTIFIER] | `_` )
 {==+==}
 
 
@@ -30,7 +38,7 @@ clause can be used to bind the imported crate to a different name.
 {==+==}
 一个 _`extern crate` 声明_ 指定了一个对外部 crate 的依赖。
 外部 crate 然后被绑定到 `extern crate` 声明中提供的标识符中。
-此外，如果 `extern crate` 出现在 crate 根中，则 crate 名称也会被添加到 [extern prelude] 中，在所有模块中自动处于作用域内。
+此外，如果 `extern crate` 出现在 crate 根中，则 crate 名称也会被添加到 [extern 预定义][extern prelude] 中，在所有模块中自动处于作用域内。
 可以使用 `as` 子句将导入的 crate 绑定到不同的名称。
 {==+==}
 

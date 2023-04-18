@@ -23,7 +23,22 @@
 > _ConstParam_:\
 > &nbsp;&nbsp; `const` [IDENTIFIER] `:` [_Type_] ( `=` _[Block][block]_ | [IDENTIFIER] | -<sup>?</sup>[LITERAL] )<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _泛型参数组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `<` `>`\
+> &nbsp;&nbsp;  | `<` (_泛型参数_ `,`)<sup>\*</sup> _泛型参数_ `,`<sup>?</sup> `>`
+>
+> _泛型参数_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( _生命周期参数_ | _类型参数_ | _常量参数_ )
+>
+> _生命周期参数_ :\
+> &nbsp;&nbsp; [生命周期或标签][LIFETIME_OR_LABEL]&nbsp;( `:` [_生命周期约束组_][_LifetimeBounds_] )<sup>?</sup>
+>
+> _类型参数_ :\
+> &nbsp;&nbsp; [标识符][IDENTIFIER]( `:` [_类型参数约束组_][_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_类型_][_Type_] )<sup>?</sup>
+>
+> _常量参数_:\
+> &nbsp;&nbsp; `const` [标识符][IDENTIFIER] `:` [_类型_][_Type_] ( `=` _[块][block]_ | [标识符][IDENTIFIER] | -<sup>?</sup>[字面值][LITERAL] )<sup>?</sup>
 {==+==}
 
 
@@ -73,7 +88,7 @@ function as described in [item declarations].
 [function pointers] have lifetime or type parameters as well, but are not
 referred to with path syntax.
 {==+==}
-[References] 、 [raw pointers] 、 [arrays] 、 [slices] 、 [tuples] ， 和 [function pointers] 也有生命周期或类型参数，但不是用路径语法来引用。
+[引用][References] 、 [原始指针][raw pointers] 、 [数组][arrays] 、 [切片][slices] 、 [元组][tuples] ， 和 [函数指针][function pointers] 也有生命周期或类型参数，但不是用路径语法来引用。
 {==+==}
 
 
@@ -454,7 +469,19 @@ fn generic<const B: bool>() {
 > _TypeBoundWhereClauseItem_ :\
 > &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
 {==+==}
-
+> **<sup>语法</sup>**\
+> _Where子句_ :\
+> &nbsp;&nbsp; `where` ( _Where子句条目_ `,` )<sup>\*</sup> _Where子句条目_ <sup>?</sup>
+>
+> _Where子句条目_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _生命周期Where子句条目_\
+> &nbsp;&nbsp; | _类型约束Where子句条目_
+>
+> _生命周期Where子句条目_ :\
+> &nbsp;&nbsp; [_生命周期_][_Lifetime_] `:` [_生命周期约束组_][_LifetimeBounds_]
+>
+> _类型约束Where子句条目_ :\
+> &nbsp;&nbsp; [_对于生命周期组_]<sup>?</sup> [_类型_][_Type_] `:` [_类型参数约束组_][_TypeParamBounds_]<sup>?</sup>
 {==+==}
 
 
@@ -471,7 +498,7 @@ parameters.
 The `for` keyword can be used to introduce [higher-ranked lifetimes]. It only
 allows [_LifetimeParam_] parameters.
 {==+==}
- `for` 关键字可用于引入 [更高级的生命周期][higher-ranked lifetimes] 。它仅允许 [_LifetimeParam_] 参数。
+ `for` 关键字可用于引入 [更高级的生命周期][higher-ranked lifetimes] 。它仅允许 [_生命周期参数_][_LifetimeParam_] 参数。
 {==+==}
 
 

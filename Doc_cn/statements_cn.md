@@ -200,7 +200,7 @@ The type of [_ExpressionWithBlock_][expression] expressions when used as stateme
 
 如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中使用，它可以省略尾随的分号。
 这会导致在将其解析为独立语句和作为另一个表达式的一部分之间产生歧义。在这种情况下，它会被解析为语句。
-当作为语句使用时，[_块表达式_][expression] 表达式的类型必须是 unit 类型。
+当作为语句使用时，[_块表达式_][expression] 表达式的类型必须是单元类型。
 {==+==}
 
 

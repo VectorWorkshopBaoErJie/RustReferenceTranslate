@@ -19,7 +19,18 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_StaticItem_] | [_Function_] ) )\
 > &nbsp;&nbsp; )
 {==+==}
-
+> **<sup>语法</sup>**\
+> _外部块_ :\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> `extern` [_Abi_]<sup>?</sup> `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; _外部条目_<sup>\*</sup>\
+> &nbsp;&nbsp; `}`
+>
+> _外部条目_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_][_MacroInvocationSemi_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_可见性_][_Visibility_]<sup>?</sup> ( [_静态条目_][_StaticItem_] | [_函数_][_Function_] ) )\
+> &nbsp;&nbsp; )
 {==+==}
 
 
@@ -68,7 +79,7 @@ terminated by a semicolon. Patterns are not allowed in parameters, only
 `unsafe`, and `extern`) are not allowed.
 {==+==}
 在外部块中声明的函数与其他 Rust 函数的声明方式相同，但是它们不能有函数体，而是以分号结束。
-参数中不允许使用模式，只能使用 [IDENTIFIER] 或 `_` 。不允许使用函数修饰符 (如 `const` 、 `async` 、 `unsafe` 和 `extern` )。
+参数中不允许使用模式，只能使用 [标识符][IDENTIFIER] 或 `_` 。不允许使用函数修饰符 (如 `const` 、 `async` 、 `unsafe` 和 `extern` )。
 {==+==}
 
 
@@ -246,7 +257,7 @@ extern "C" {
 {==+==}
 The following [attributes] control the behavior of external blocks.
 {==+==}
-以下 [attributes] 控制外部块的行为。
+以下 [属性][attributes] 控制外部块的行为。
 {==+==}
 
 
@@ -265,7 +276,7 @@ name of the native library to link. The `kind` key is an optional value which
 specifies the kind of library with the following possible values:
 {==+==}
 *`link` 属性* 指定编译器为 `extern` 块中的条目链接的本地库的名称。
-它使用 [_MetaListNameValueStr_] 语法来指定其输入。
+它使用 [_元列表名称值字符串_][_MetaListNameValueStr_] 语法来指定其输入。
 `name` 键是要链接的本地库的名称。`kind` 键是可选值，用于指定以下可能值的库类型:
 {==+==}
 
@@ -411,7 +422,7 @@ The default for this modifier is `+bundle`.
 More implementation details about this modifier can be found in
 [`bundle` documentation for rustc].
 {==+==}
-关于这个修饰符的更多实现细节可在 [`bundle` documentation for rustc] 找到 。
+关于这个修饰符的更多实现细节可在 [rustc 文档 `bundle`][`bundle` documentation for rustc] 找到 。
 {==+==}
 
 
@@ -441,7 +452,7 @@ The default for this modifier is `-whole-archive`.
 More implementation details about this modifier can be found in
 [`whole-archive` documentation for rustc].
 {==+==}
-关于这个修改器的更多实现细节可在 [`whole-archive` documentation for rustc] 中找到。
+关于这个修改器的更多实现细节可在 [rustc 文档 `whole-archive`][`whole-archive` documentation for rustc] 中找到。
 {==+==}
 
 
@@ -487,7 +498,7 @@ The default for this modifier is `-verbatim`.
 More implementation details about this modifier can be found in
 [`verbatim` documentation for rustc].
 {==+==}
-关于这个修饰符的更多实现细节可在 [`verbatim` documentation for rustc] 中找到。
+关于这个修饰符的更多实现细节可在 [rustc 文档 `verbatim`][`verbatim` documentation for rustc] 中找到。
 {==+==}
 
 

@@ -11,7 +11,10 @@
 > &nbsp;&nbsp; `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_]
 >              ( `=` [_Expression_] )<sup>?</sup> `;`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _静态条目_ :\
+> &nbsp;&nbsp; `static` `mut`<sup>?</sup> [标识符][IDENTIFIER] `:` [_类型_][_Type_]
+>              ( `=` [_表达式_][_Expression_] )<sup>?</sup> `;`
 {==+==}
 
 
@@ -82,7 +85,7 @@ implementation) will result in exactly one static item being defined, as if
 the static definition was pulled out of the current scope into the module.
 There will *not* be one item per monomorphization.
 {==+==}
-在泛型作用域中定义的静态条目（例如在一个泛型实现的默认实现中）将恰好定义一个静态条目，就好像静态定义从当前作用域被提取到模块中一样。
+在泛型作用域中定义的静态条目 (例如在一个泛型实现的默认实现中) 将恰好定义一个静态条目，就好像静态定义从当前作用域被提取到模块中一样。
 不会为每个单态化生成一个静态条目。
 {==+==}
 
@@ -139,7 +142,14 @@ blanket_impl: counter was 0
 blanket_impl: counter was 1
 ```
 {==+==}
+打印
 
+```text
+default_impl: counter was 0
+default_impl: counter was 1
+blanket_impl: counter was 0
+blanket_impl: counter was 1
+```
 {==+==}
 
 

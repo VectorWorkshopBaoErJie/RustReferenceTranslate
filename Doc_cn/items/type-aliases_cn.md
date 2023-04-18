@@ -12,7 +12,11 @@
 >              ( `:` [_TypeParamBounds_] )<sup>?</sup>
 >              [_WhereClause_]<sup>?</sup> ( `=` [_Type_] [_WhereClause_]<sup>?</sup>)<sup>?</sup> `;`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _类型别名组_ :\
+> &nbsp;&nbsp; `type` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup>
+>              ( `:` [_类型参数约束组_][_TypeParamBounds_] )<sup>?</sup>
+>              [_Where子句_][_WhereClause_]<sup>?</sup> ( `=` [_类型_][_Type_] [_Where子句_][_WhereClause_]<sup>?</sup>)<sup>?</sup> `;`
 {==+==}
 
 
@@ -71,7 +75,7 @@ let _ = TypeAlias(5); // Doesn't work
 A type alias, when not used as an associated type, must include a [_Type_] and
 may not include [_TypeParamBounds_].
 {==+==}
-当类型别名不作为关联类型使用时，必须包含一个 [_Type_] ，不能包含 [_TypeParamBounds_] 。
+当类型别名不作为关联类型使用时，必须包含一个 [_类型_][_Type_] ，不能包含 [_类型参数约束组_][_TypeParamBounds_] 。
 {==+==}
 
 
@@ -79,7 +83,7 @@ may not include [_TypeParamBounds_].
 A type alias, when used as an [associated type] in a [trait], must not include a
 [_Type_] specification but may include [_TypeParamBounds_].
 {==+==}
-在 [trait] 中使用作为 [关联类型][associated type] 的类型别名，不应该包含类型本身的声明 [_Type_] ，但是可以包含类型参数约束声明 [_TypeParamBounds_] 。
+在 [trait] 中使用作为 [关联类型][associated type] 的类型别名，不应该包含类型本身的声明 [_类型_][_Type_] ，但是可以包含类型参数约束声明 [_类型参数约束组_][_TypeParamBounds_] 。
 {==+==}
 
 
@@ -87,7 +91,7 @@ A type alias, when used as an [associated type] in a [trait], must not include a
 A type alias, when used as an [associated type] in a [trait impl], must include
 a [_Type_] specification and may not include [_TypeParamBounds_].
 {==+==}
-类型别名在 [trait impl] 中作为 [关联类型][associated type] 使用时，必须包括 [_Type_] ，但不能包括 [_TypeParamBounds_] 。
+类型别名在 [trait impl] 中作为 [关联类型][associated type] 使用时，必须包括 [_类型_][_Type_] ，但不能包括 [_类型参数约束组_][_TypeParamBounds_] 。
 {==+==}
 
 

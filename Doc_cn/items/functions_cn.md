@@ -44,7 +44,43 @@
 > &nbsp;&nbsp; `->` [_Type_]
 >
 {==+==}
-
+> **<sup>语法</sup>**\
+> _函数_ :\
+> &nbsp;&nbsp; _函数修饰符组_ `fn` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; `(` _函数参数组_<sup>?</sup> `)`\
+> &nbsp;&nbsp; &nbsp;&nbsp; _函数返回类型_<sup>?</sup> [_Where子句_][_WhereClause_]<sup>?</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; ( [_块表达式_] | `;` )
+>
+> _函数修饰符组_ :\
+> &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
+>
+> _Abi_ :\
+> &nbsp;&nbsp; [STRING_LITERAL] | [RAW_STRING_LITERAL]
+>
+> _函数参数组_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _Self参数_ `,`<sup>?</sup>\
+> &nbsp;&nbsp; | (_Self参数_ `,`)<sup>?</sup> _函数数参数_ (`,` _函数数参数_)<sup>\*</sup> `,`<sup>?</sup>
+>
+> _Self参数_ :\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
+>
+> _简写Self_ :\
+> &nbsp;&nbsp;  (`&` | `&` [_生命周期_][_Lifetime_])<sup>?</sup> `mut`<sup>?</sup> `self`
+>
+> _类型化Self_ :\
+> &nbsp;&nbsp; `mut`<sup>?</sup> `self` `:` [_类型_][_Type_]
+>
+> _函数参数_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (
+>   _函数参数模式_ | `...` | [_模式_][_Type_] [^fn-param-2015]
+> )
+>
+> _函数参数模式_ :\
+> &nbsp;&nbsp; [_模式非顶层选项_][_PatternNoTopAlt_] `:` ( [_类型_][_Type_] | `...` )
+>
+> _函数返回类型_ :\
+> &nbsp;&nbsp; `->` [_类型_][_Type_]
+>
 {==+==}
 
 
@@ -70,7 +106,7 @@ If the output type is not explicitly stated, it is the [unit type].
 一个函数包括一个 [代码块][block] ，以及一个名称、一组参数和一个输出类型。
 除名称外，其他是可选的。函数是用关键字 `fn` 声明。
 函数可以声明一组 *输入* [变量][variables] 作为参数，通过这些变量，调用者将参数传递给函数，并且函数的 *输出* 类型为函数完成时将返回给其调用者的 [类型][type] 。
-如果未显式指定输出类型，则为 [unit type] 。
+如果未显式指定输出类型，则为 [单元类型][unit type] 。
 {==+==}
 
 
@@ -127,8 +163,8 @@ If the first parameter is a _SelfParam_, this indicates that the function is a
 [method]. Functions with a self parameter may only appear as an [associated
 function] in a [trait] or [implementation].
 {==+==}
-如果第一个参数是 _SelfParam_ ，则表示该函数是一个 [方法][method] 。
-带有 `self` 参数的函数只能作为 [trait] 或 [implementation] 中的关联函数出现。
+如果第一个参数是 _Self参数_ ，则表示该函数是一个 [方法][method] 。
+带有 `self` 参数的函数只能作为 [trait] 或 [实现][implementation] 中的关联函数出现。
 {==+==}
 
 
@@ -194,7 +230,7 @@ return {
 Functions without a body block are terminated with a semicolon. This form
 may only appear in a [trait] or [external block].
 {==+==}
-函数没有函数体时以分号结束。这种形式只能出现在 [trait] 或 [external block] 中。
+函数没有函数体时以分号结束。这种形式只能出现在 [trait] 或 [外部块][external block] 中。
 {==+==}
 
 
@@ -306,7 +342,7 @@ sufficient context to determine the type parameters. For example,
 The `extern` function qualifier allows providing function _definitions_ that can
 be called with a particular ABI:
 {==+==}
-`extern` 函数修饰符允许提供函数 _定义_ ，这些函数可以使用特定的 ABI 进行调用：
+`extern` 函数修饰符允许提供函数 _定义组_ ，这些函数可以使用特定的 ABI 进行调用：
 {==+==}
 
 
@@ -325,7 +361,7 @@ These are often used in combination with [external block] items which provide
 function _declarations_ that can be used to call functions without providing
 their _definition_:
 {==+==}
-这些通常与 [external block] 条目结合使用，后者提供可以用来调用函数而不提供其定义的函数声明:
+这些通常与 [外部块][external block] 条目结合使用，后者提供可以用来调用函数而不提供其定义的函数声明:
 {==+==}
 
 
@@ -443,7 +479,7 @@ Functions with an ABI that differs from `"Rust"` do not support unwinding in the
 exact same way that Rust does. Therefore, unwinding past the end of functions
 with such ABIs causes the process to abort.
 {==+==}
-函数的 ABI (Application Binary Interface) 和 Rust 不同的函数的 ABI 不能像 Rust 一样支持展开 (unwind) 方式，因此尝试在这些 ABI 中展开超过函数末尾的部分会导致进程中止。
+函数的 ABI (应用程序二进制接口) 和 Rust 不同的函数的 ABI 不能像 Rust 一样支持展开 (unwind) 方式，因此尝试在这些 ABI 中展开超过函数末尾的部分会导致进程中止。
 {==+==}
 
 
@@ -467,7 +503,7 @@ Functions qualified with the `const` keyword are [const functions], as are
 [tuple struct] and [tuple variant] constructors. _Const functions_  can be
 called from within [const contexts].
 {==+==}
-被 `const` 修饰的函数是 [常量函数][const functions] ，同样的构造函数 [tuple struct] 和 [tuple variant] 也是。 _常量函数_ 可以在 [常量上下文][const contexts] 中被调用。
+被 `const` 修饰的函数是 [常量函数][const functions] ，同样的构造函数 [元组结构体][tuple struct] 和 [元组变体][tuple variant] 也是。 _常量函数_ 可以在 [常量上下文][const contexts] 中被调用。
 {==+==}
 
 
@@ -610,7 +646,7 @@ For more information on the effect of async, see [`async` blocks][async-blocks].
 > **Edition differences**: Async functions are only available beginning with
 > Rust 2018.
 {==+==}
-> **版本差异**: 异步函数 (Async functions) 仅在 Rust 2018 开始提供。
+> **版本差异**: 异步函数仅在 Rust 2018 开始提供。
 {==+==}
 
 
@@ -752,7 +788,7 @@ attributes], [`must_use`], [the procedural macro attributes], [the testing
 attributes], and [the optimization hint attributes]. Functions also accept
 attributes macros.
 {==+==}
-函数可用的属性包括 [`cfg`] 、 [`cfg_attr`] 、 [`deprecated`] 、 [`doc`] 、 [`export_name`] 、 [`link_section`] 、 [`no_mangle`] 、[lint 检查属性][the lint check attributes] 、 [`must_use`] 、 [过程宏属性][the procedural macro attributes] 、 [测试属性][the testing attributes] 和 [优化提示属性][the optimization hint attributes] 。此外，函数还接受属性宏。
+函数可用的属性包括 [`cfg`] 、 [`cfg_attr`] 、 [`deprecated`] 、 [`doc`] 、 [`export_name`] 、 [`link_section`] 、 [`no_mangle`] 、[代码分析检查属性][the lint check attributes] 、 [`must_use`] 、 [过程宏属性][the procedural macro attributes] 、 [测试属性][the testing attributes] 和 [优化提示属性][the optimization hint attributes] 。此外，函数还接受属性宏。
 {==+==}
 
 

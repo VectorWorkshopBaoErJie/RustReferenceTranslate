@@ -19,7 +19,18 @@
 > &nbsp;&nbsp; | [_AssignmentExpression_]\
 > &nbsp;&nbsp; | [_CompoundAssignmentExpression_]
 {==+==}
-
+> **<sup>Syntax</sup>**\
+> _OperatorExpression_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_借用表达式_][_BorrowExpression_]\
+> &nbsp;&nbsp; | [_解引用表达式_][_DereferenceExpression_]\
+> &nbsp;&nbsp; | [_错误传导表达式_][_ErrorPropagationExpression_]\
+> &nbsp;&nbsp; | [_取反表达式_][_NegationExpression_]\
+> &nbsp;&nbsp; | [_算术或逻辑表达式_][_ArithmeticOrLogicalExpression_]\
+> &nbsp;&nbsp; | [_比较表达式_][_ComparisonExpression_]\
+> &nbsp;&nbsp; | [_惰性布尔表达式_][_LazyBooleanExpression_]\
+> &nbsp;&nbsp; | [_类型转换表达式_][_TypeCastExpression_]\
+> &nbsp;&nbsp; | [_赋值表达式_][_AssignmentExpression_]\
+> &nbsp;&nbsp; | [_复合赋值表达式_][_CompoundAssignmentExpression_]
 {==+==}
 
 
@@ -51,8 +62,8 @@ The following things are considered to be overflow:
 可以使用 `-C debug-assertions` 和 `-C overflow-checks` 编译器标志来更直接地控制这个行为。下列情况被视为溢出：
 
 * 当 `+`、`*` 或二元 `-` 创建的值大于可以存储的最大值或小于最小值。
-* 对任何有符号整数类型的最小值应用一元 `-` ，除非操作数是 [字面值表达式](https://doc.rust-lang.org/reference/expressions/literal-expr.html)
-  (或在一个或多个 [分组表达式](https://doc.rust-lang.org/reference/expressions/grouped-expr.html) 中单独使用的字面值表达式) 。
+* 对任何有符号整数类型的最小值应用一元 `-` ，除非操作数是 [字面值表达式][literal expression]
+  (或在一个或多个 [分组表达式][grouped expression] 中单独使用的字面值表达式) 。
 * 在左操作数是有符号整数类型的最小整数且右操作数是 `-1` 时，使用 `/` 或 `%` 。 出于兼容性原因，即使禁用了 `-C overflow-checks` ，这些检查也会发生。
 * 在右操作数大于或等于左操作数类型的位数或为负时，使用 `<<` 或 `>>` 。
 {==+==}
@@ -73,7 +84,7 @@ The following things are considered to be overflow:
 >
 > 这些最小值的否定不会改变值，因为采用了二进制补码的溢出约定。
 >
-> 在 `rustc` 中，这些最小值表达式也被 `overflowing_literals` lint 检查忽略。
+> 在 `rustc` 中，这些最小值表达式也被 `overflowing_literals` 代码分析检查忽略。
 {==+==}
 
 
@@ -90,7 +101,10 @@ The following things are considered to be overflow:
 > &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_Expression_]\
 > &nbsp;&nbsp; | (`&`|`&&`) `mut` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _借用表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | (`&`|`&&`) `mut` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -281,7 +295,9 @@ let init = unsafe { uninit.assume_init() };
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _解引用表达式_ :\
+> &nbsp;&nbsp; `*` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -327,7 +343,9 @@ assert_eq!(*y, 11);
 > _ErrorPropagationExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `?`
 {==+==}
-
+> **<sup>语法</sup>**\
+> _错误传导表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_] `?`
 {==+==}
 
 
@@ -424,7 +442,10 @@ assert_eq!(try_option_none(), None);
 > &nbsp;&nbsp; &nbsp;&nbsp; `-` [_Expression_]\
 > &nbsp;&nbsp; | `!` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _取反表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `-` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | `!` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -446,7 +467,10 @@ The operands of all of these operators are evaluated in [value expression contex
 | `-`    | Negation*   |               | Negation       | `std::ops::Neg`    |
 | `!`    | Bitwise NOT | [Logical NOT] |                | `std::ops::Not`    |
 {==+==}
-
+| 符号   | 整数        | 布尔                   | 浮点数        | 重载 Trait   |
+|--------|-------------|--------------|---------------|---------------------|
+| `-`    | 取反*       |                          | 取反           | `std::ops::Neg`     |
+| `!`    | 按位取反    | [逻辑取反][Logical NOT]  |               | `std::ops::Not`     |
 {==+==}
 
 
@@ -494,7 +518,18 @@ assert_eq!(true, !false);
 > &nbsp;&nbsp; | [_Expression_] `<<` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _算术或逻辑表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式_][_Expression_] `+` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `-` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `*` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `/` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `%` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `&` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `|` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `^` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `<<` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `>>` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -505,7 +540,7 @@ Remember that signed integers are always represented using two's complement.
 The operands of all of these operators are evaluated in [value expression context][value expression] so are moved or copied.
 {==+==}
 二元运算符表达式均以中缀表示。此表总结了原始类型上算术和逻辑二元运算符的行为，以及用于重载其他类型的这些运算符的特性。
-请记住，有符号整数始终使用二进制补码表示。所有这些运算符的操作数都在值表达式上下文中计算，因此会被移动或复制。
+请记住，有符号整数始终使用二进制补码表示。所有这些运算符的操作数都在 [值表达式上下文][value expression] 中计算，因此会被移动或复制。
 {==+==}
 
 
@@ -523,7 +558,18 @@ The operands of all of these operators are evaluated in [value expression contex
 | `<<`   | Left Shift              |               |                | `std::ops::Shl`    | `std::ops::ShlAssign`                 |
 | `>>`   | Right Shift***          |               |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                |
 {==+==}
-
+| 符号   | 整数                   | 布尔       | 浮点数        |   重载 Trait  | 重载复合赋值 Trait |
+|--------|-------------------------|---------------|----------------|--------------------| --------------------------------------|
+| `+`    | 加法                    |               | 加法           | `std::ops::Add`    | `std::ops::AddAssign`                  |
+| `-`    | 减法                    |               | 减法           | `std::ops::Sub`    | `std::ops::SubAssign`                  |
+| `*`    | 乘法                    |               | 乘法           | `std::ops::Mul`    | `std::ops::MulAssign`                  |
+| `/`    | 除法*                   |               | 除法           | `std::ops::Div`    | `std::ops::DivAssign`                  |
+| `%`    | 取余**                  |               | 取余           | `std::ops::Rem`    | `std::ops::RemAssign`                  |
+| `&`    | 按位与                  | [逻辑与][Logical AND]      |                | `std::ops::BitAnd` | `std::ops::BitAndAssign`               |
+| <code>&#124;</code> | 按位或  | [逻辑或][Logical OR]      |                | `std::ops::BitOr`  | `std::ops::BitOrAssign`                |
+| `^`    | 按位异或                | [逻辑异或][Logical XOR]    |                | `std::ops::BitXor` | `std::ops::BitXorAssign`               |
+| `<<`   | 左移                    |               |                | `std::ops::Shl`    | `std::ops::ShlAssign`                  |
+| `>>`   | 右移***                 |               |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                 |
 {==+==}
 
 
@@ -581,7 +627,14 @@ assert_eq!(-10 >> 2, -3);
 > &nbsp;&nbsp; | [_Expression_] `>=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `<=` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _比较表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式_][_Expression_] `==` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_]`!=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `>` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `<` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `>=` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `<=` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -638,7 +691,14 @@ This means that the operands don't have to be moved out of.
 | `>=`   | Greater than or equal to | `std::cmp::PartialOrd::ge` |
 | `<=`   | Less than or equal to    | `std::cmp::PartialOrd::le` |
 {==+==}
-
+| 符号   | 意义                 |  重载方法                  |
+|--------|----------------------|----------------------------|
+| `==`   | 等于                 | `std::cmp::PartialEq::eq`  |
+| `!=`   | 不等于               | `std::cmp::PartialEq::ne`  |
+| `>`    | 大于                 | `std::cmp::PartialOrd::gt` |
+| `<`    | 小于                 | `std::cmp::PartialOrd::lt` |
+| `>=`   | 大于等于             | `std::cmp::PartialOrd::ge` |
+| `<=`   | 小于等于             | `std::cmp::PartialOrd::le` |
 {==+==}
 
 
@@ -676,7 +736,10 @@ assert!("World" >= "Hello");
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `||` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `&&` [_Expression_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _惰性布尔表达式_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_表达式_][_Expression_] `||` [_表达式_][_Expression_]\
+> &nbsp;&nbsp; | [_表达式_][_Expression_] `&&` [_表达式_][_Expression_]
 {==+==}
 
 
@@ -717,7 +780,9 @@ let y = false && panic!(); // false 不会对右侧的操作数进行求值，�
 > _TypeCastExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `as` [_TypeNoBounds_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _类型转换表达式_ :\
+> &nbsp;&nbsp; [_表达式_][_Expression_]  `as` [_无约束类型_]
 {==+==}
 
 
@@ -783,7 +848,23 @@ reference types and `mut` or `const` in pointer types.
 | [Function pointer]    | Integer               | Function pointer to address cast |
 | Closure \*\*\*        | Function pointer      | Closure to function pointer cast |
 {==+==}
-
+| `e` 的类型                | `U`                   | `e as U` 执行的类型转换             |
+|---------------------------|-----------------------|--------------------------------------|
+| 整型或浮点型               | 整型或浮点型               | 数值类型转换                        |
+| 枚举类型                  | 整型类型                | 枚举类型转换                        |
+| `bool` 或 `char` 类型      | 整型类型                | 基本类型到整型类型的转换            |
+| `u8` 类型                  | `char` 类型             | `u8` 类型到 `char` 类型的转换       |
+| `*T` 类型                  | `*V` where `V: Sized` \* | 指针类型到指针类型的转换         |
+| `*T` where `T: Sized`   | 整型类型                | 指针类型到地址类型的转换            |
+| 整型类型                  | `*V` where `V: Sized`    | 地址类型到指针类型的转换            |
+| `&m₁ T` 类型               | `*m₂ T` \*\*           | 引用类型到指针类型的转换            |
+| `&m₁ [T; n]` 类型          | `*m₂ T` \*\*           | 数组类型到指针类型的转换            |
+| [函数条目][Function item] 类型              | [函数指针][Function pointer] 类型        | 函数项到函数指针类型的转换         |
+| [函数条目][Function item] 类型              | `*V` where `V: Sized`   | 函数项到指针类型的转换             |
+| [函数条目][Function item] 类型              | 整型类型                | 函数项到地址类型的转换             |
+| [函数指针][Function pointer] 类型            | `*V` where `V: Sized`   | 函数指针到指针类型的转换           |
+| [函数指针][Function pointer] 类型            | 整型类型                | 函数指针到地址类型的转换           |
+| 闭包类型 \*\*\*            | 函数指针类型           | 闭包类型到函数指针类型的转换       |
 {==+==}
 
 

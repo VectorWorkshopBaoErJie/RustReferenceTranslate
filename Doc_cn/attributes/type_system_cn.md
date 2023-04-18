@@ -251,7 +251,7 @@ if let Ok(Config { window_width, window_height }) = config {
 match message {
   // 无法在非穷尽的结构体上进行匹配，除非使用通配符。
   Message::Send { from, to, contents } => { },
-  // 无法匹配非穷尽的元组或单元(enum unit)枚举变体。
+  // 无法匹配非穷尽的元组或单元枚举变体。
   Message::Reaction(type) => { },
   Message::Quit => { },
 }

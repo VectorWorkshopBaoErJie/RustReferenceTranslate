@@ -42,14 +42,48 @@
 > &nbsp;&nbsp; [_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [_Type_]
 {==+==}
-
+> **<sup>语法</sup>**\
+> _结构体_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _Struct结构体_\
+> &nbsp;&nbsp; | _元组结构体_
+>
+> _Struct结构体_ :\
+> &nbsp;&nbsp; `struct`
+>   [标识符][IDENTIFIER]&nbsp;
+>   [_泛型参数组_][_GenericParams_]<sup>?</sup>
+>   [_Where子句_][_WhereClause_]<sup>?</sup>
+>   ( `{` _结构体字段组_<sup>?</sup> `}` | `;` )
+>
+> _元组结构体_ :\
+> &nbsp;&nbsp; `struct`
+>   [标识符][IDENTIFIER]&nbsp;
+>   [_泛型参数组_][_GenericParams_]<sup>?</sup>
+>   `(` _元组字段组_<sup>?</sup> `)`
+>   [_Where子句_][_WhereClause_]<sup>?</sup>
+>   `;`
+>
+> _结构体字段组_ :\
+> &nbsp;&nbsp; _结构体字段_ (`,` _结构体字段_)<sup>\*</sup> `,`<sup>?</sup>
+>
+> _结构体字段_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_可见性_][_Visibility_]<sup>?</sup>\
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `:` [_类型_][_Type_]
+>
+> _元组字段组_ :\
+> &nbsp;&nbsp; _元组字段_ (`,` _元组字段_)<sup>\*</sup> `,`<sup>?</sup>
+>
+> _元组字段_ :\
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_可见性_][_Visibility_]<sup>?</sup>\
+> &nbsp;&nbsp; [_类型_][_Type_]
 {==+==}
 
 
 {==+==}
 A _struct_ is a nominal [struct type] defined with the keyword `struct`.
 {==+==}
-_struct_ "结构" 是使用关键字 `struct` 定义命名的 [结构体类型][struct type] 。
+_结构体_ 是使用关键字 `struct` 定义命名的 [结构体类型][struct type] 。
 {==+==}
 
 
@@ -75,7 +109,7 @@ let px: i32 = p.x;
 A _tuple struct_ is a nominal [tuple type], also defined with the keyword
 `struct`. For example:
 {==+==}
-元组结构体 ( _tuple struct_ ) 是一种命名的 [元组类型] ，同样使用关键字 `struct` 定义。例如:
+_元组结构体_ 是一种命名的 [元组类型] ，同样使用关键字 `struct` 定义。例如:
 {==+==}
 
 
@@ -103,7 +137,7 @@ A _unit-like struct_ is a struct without any fields, defined by leaving off the
 list of fields entirely. Such a struct implicitly defines a constant of its
 type with the same name. For example:
 {==+==}
- _unit-like struct_ "单元结构" 是一种没有任何字段的结构体，通过完全省略字段列表定义。这样的结构体隐式地定义了一个与其类型相同的常量名称。例如：
+ _单元结构体_ 是一种没有任何字段的结构体，通过完全省略字段列表定义。这样的结构体隐式地定义了一个与其类型相同的常量名称。例如：
 {==+==}
 
 

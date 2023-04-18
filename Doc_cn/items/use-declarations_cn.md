@@ -15,7 +15,14 @@
 > &nbsp;&nbsp; | ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `{` (_UseTree_ ( `,`  _UseTree_ )<sup>\*</sup> `,`<sup>?</sup>)<sup>?</sup> `}`\
 > &nbsp;&nbsp; | [_SimplePath_]&nbsp;( `as` ( [IDENTIFIER] | `_` ) )<sup>?</sup>
 {==+==}
-
+> **<sup>语法:</sup>**\
+> _Use声明_ :\
+> &nbsp;&nbsp; `use` _Use树_ `;`
+>
+> _Use树_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; ([_简单路径_][_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `*`\
+> &nbsp;&nbsp; | ([_简单路径_][_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `{` (_Use树_ ( `,`  _Use树_ )<sup>\*</sup> `,`<sup>?</sup>)<sup>?</sup> `}`\
+> &nbsp;&nbsp; | [_简单路径_][_SimplePath_]&nbsp;( `as` ( [标识符][IDENTIFIER] | `_` ) )<sup>?</sup>
 {==+==}
 
 
@@ -25,7 +32,7 @@ some other [path]. Usually a `use` declaration is used to shorten the path
 required to refer to a module item. These declarations may appear in [modules]
 and [blocks], usually at the top.
 {==+==}
-_ `use` 声明_ 会创建一个或多个本地的名称绑定，和某个其他路径同义。
+_use 声明_ 会创建一个或多个本地的名称绑定，和某个其他路径同义。
 通常，`use` 声明用于缩短引用模块条目所需的路径。
 这些声明通常出现在 [模块][modules] 和 [块][blocks] 中，通常在顶部。
 {==+==}
@@ -297,7 +304,7 @@ fn main() {}
 > way `extern crate` can.
 >
 {==+==}
-> 2015版不允许 `use` 声明引用 [extern prelude] 。因此，在2015中，仍需要使用 [`extern crate`] 声明来引用 `use` 声明中的外部 crate。从 2018 版开始， `use` 声明可以像 `extern crate` 一样指定一个外部 crate 依赖。
+> 2015版不允许 `use` 声明引用 [extern 预定义][extern prelude] 。因此，在2015中，仍需要使用 [`extern crate`] 声明来引用 `use` 声明中的外部 crate。从 2018 版开始， `use` 声明可以像 `extern crate` 一样指定一个外部 crate 依赖。
 >
 {==+==}
 
