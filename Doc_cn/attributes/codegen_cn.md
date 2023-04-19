@@ -84,7 +84,7 @@ be called.
 {==+==}
 ### `cold` 属性
 
- *`cold` 属性* 表示带有该属性的函数不太可能被调用。
+ *`cold` [属性][attribute]* 表示带有该属性的函数不太可能被调用。
 {==+==}
 
 
@@ -97,7 +97,7 @@ assumed to exist.
 {==+==}
 ## `no_builtins` 属性
 
- `no_builtins` 属性可以用于禁用优化特定的代码模式以调用预期存在的库函数。该属性可以在 crate 级别应用。
+ *`no_builtins` [属性][attribute]* 可以用于禁用优化特定的代码模式以调用预期存在的库函数。该属性可以在 crate 级别应用。
 {==+==}
 
 
@@ -111,7 +111,7 @@ features. It uses the [_MetaListNameValueStr_] syntax with a single key of
 {==+==}
 ## `target_feature` 属性
 
- *`target_feature` 属性* 可以应用于函数，以启用为特定平台架构特性生成该函数的代码。
+ *`target_feature` [属性][attribute]* 可以应用于函数，以启用为特定平台架构特性生成该函数的代码。
 它使用带有单个 `enable` 键的 [_元列表名称值字符串_][_MetaListNameValueStr_] 语法，其值是逗号分隔的要启用的特性名称字符串。
 {==+==}
 
@@ -291,6 +291,9 @@ Reference Manual], or elsewhere on [developer.arm.com].
 这个平台要求 `#[target_feature]` 仅能应用于 [`unsafe`函数][unsafe function] 。
 
 更多关于这些特性的文档可以在 [ARM 架构参考手册][ARM Architecture Reference Manual] 或 [developer.arm.com] 中找到。
+
+[ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
+[developer.arm.com]: https://developer.arm.com
 
 > ***注意***: 如果使用以下特性对，应该一起标记为已启用或已禁用:
 > `paca` 和 `pacg` ，LLVM 当前将它们实现为一个特性。

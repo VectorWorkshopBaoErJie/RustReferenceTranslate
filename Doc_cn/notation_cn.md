@@ -61,7 +61,7 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 {==+==}
 ## String table productions
 {==+==}
-## `string` 符号
+## `string` 标记
 {==+==}
 
 
@@ -85,7 +85,7 @@ When such a string in `monospace` font occurs inside the grammar,
 it is an implicit reference to a single member of such a string table
 production. See [tokens] for more information.
 {==+==}
-当在语法中看到用 `monospace` 等宽字体显示的字符串时，它隐式地引用了该 `string` 表标记的一个成员。有关更多信息，请参见 [tokens] 。
+当在语法中看到用 `monospace` 等宽字体显示的字符串时，它隐式地引用了该 `string` 表标记的一个成员。有关更多信息，请参见 [令牌][tokens] 。
 {==+==}
 
 

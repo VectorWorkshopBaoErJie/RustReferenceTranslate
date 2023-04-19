@@ -273,7 +273,7 @@ and trait [implementations], and [trait definitions].
 can create new [items] given the token stream of a [struct], [enum], or [union].
 They can also define [derive macro helper attributes].
 {==+==}
-*衍生宏* 为 [`derive` 属笥][`derive` attribute] 定义新输入。
+*衍生宏* 为 [`derive` 属性][`derive` attribute] 定义新输入。
 这些宏可以根据 [struct] 、 [enum] 或 [union] 的 token 流创建新的 [条目][items] 。
 它们也可以定义 [衍生宏辅助属性][derive macro helper attributes] 。
 {==+==}
@@ -452,7 +452,7 @@ replaces the [item] with an arbitrary number of [items].
 属性宏是由带有 `proc_macro_attribute` [attribute] 的 [public]&#32;[function] 定义的，其签名为 `(TokenStream, TokenStream) -> TokenStream` 。
 第一个 [`TokenStream`] 是属性名称后面的分隔的 token 树，不包括外部分隔符号。
 如果属性被写成裸属性名，则属性 [`TokenStream`] 是空的。
-第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属笥][attributes] 。
+第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属性][attributes] 。
 返回的 [`TokenStream`] 用任意数量的 [条目][item] 替换 [条目][item] 。
 {==+==}
 
@@ -559,7 +559,7 @@ fn invoke4() {}
 Declarative `macro_rules` macros and procedural macros use similar, but
 different definitions for tokens (or rather [`TokenTree`s].)
 {==+==}
-声明 `macro_rules` 宏和过程宏使用是类似的，但是不同的 Token (或者说 [`TokenTree's] ) 定义。
+声明 `macro_rules` 宏和过程宏使用是类似的，但是不同的 Token (或者说 [`TokenTree`s] ) 定义。
 {==+==}
 
 

@@ -33,7 +33,7 @@
     - [标识符](identifiers.md)
     - [注释](comments.md)
     - [空白](whitespace.md)
-    - [记号](tokens.md)
+    - [令牌](tokens.md)
 
 - [宏](macros.md)
     - [实例宏](macros-by-example.md)
@@ -189,7 +189,7 @@
         - [布尔类型](types/boolean.md)
         - [数字类型](types/numeric.md)
         - [文本类型](types/textual.md)
-        - [永远不存在的类型](types/never.md)
+        - [永不类型](types/never.md)
         - [元组类型](types/tuple.md)
         - [数组类型](types/array.md)
         - [切片类型](types/slice.md)

@@ -1324,7 +1324,7 @@ A tuple struct pattern is refutable when one of its subpatterns is refutable.
 >
 > _元组模式条目组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_模式_][_Pattern_] `,`\
-> &nbsp;&nbsp; | [_剩余模式_]\
+> &nbsp;&nbsp; | [_剩余模式_][_RestPattern_]\
 > &nbsp;&nbsp; | [_模式_][_Pattern_]&nbsp;(`,` [_模式_][_Pattern_])<sup>+</sup> `,`<sup>?</sup>
 {==+==}
 

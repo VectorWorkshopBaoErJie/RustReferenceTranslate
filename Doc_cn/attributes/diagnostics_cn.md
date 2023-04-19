@@ -34,7 +34,7 @@ For any lint check `C`:
 ## 代码分析检查属性
 
 代码分析检查指的是一些可能存在不良编码模式的代码，例如不可到达的代码或省略的文档。
-代码分析属性 `allow` 、 `warn` 、 `deny` 和 `forbid` 使用 [_MetaListPaths_] 语法指定要更改为应用属性的实体的代码分析级别列表。
+代码分析属性 `allow` 、 `warn` 、 `deny` 和 `forbid` 使用 [_元列表路径组_][_MetaListPaths_] 语法指定要更改为应用属性的实体的代码分析级别列表。
 
 对于任何代码分析检查 `C` ：
 
@@ -431,7 +431,7 @@ violated.
 {==+==}
 ## `must_use` 属性
 
-*`must_use` 属性* 用于在值未被 "使用" 时发出诊断警告。它可以应用于用户定义的复合类型 ( [`struct`] 、 [`enum`] 和 [`union`] ) 、 [`functions`] 和 [`traits`] 。
+*`must_use` 属性* 用于在值未被 "使用" 时发出诊断警告。它可以应用于用户定义的复合类型 ( [`struct`][struct] 、 [`enum`][enum] 和 [`union`][union] ) 、 [`functions`][functions] 和 [`traits`][traits] 。
 
 `must_use` 属性可以通过使用 [_元名称值字符串_][_MetaNameValueStr_] 语法 (例如 `#[must_use = "example message"]` ) 包含一条消息。该消息将与警告一起给出。
 

@@ -72,7 +72,7 @@ Rust 的类型列表包括：
     * [原始指针类型][Raw pointers]
     * [函数指针类型][Function pointers]
 * Trait 类型:
-    * [Trait 对象]
+    * [Trait 对象][Trait objects]
     * [Impl trait]
 {==+==}
 
@@ -115,7 +115,7 @@ Rust 的类型列表包括：
 >
 > _无边界类型组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_括号类型_][_ParenthesizedType_]\
-> &nbsp;&nbsp; | [_ImplTrait类型1约束_]_ImplTraitTypeOneBound_]\
+> &nbsp;&nbsp; | [_ImplTrait类型1约束_][_ImplTraitTypeOneBound_]\
 > &nbsp;&nbsp; | [_Trait对象类型1约束_][_TraitObjectTypeOneBound_]\
 > &nbsp;&nbsp; | [_类型路径_][_TypePath_]\
 > &nbsp;&nbsp; | [_元组类型_][_TupleType_]\
@@ -154,7 +154,7 @@ for referring to a type. It may refer to:
 * [类型路径][Type paths] 可以引用：
     * 原始类型 ( [boolean] [numeric] [textual] ) 。
     * 对 [条目][item] 的引用 ( [struct] [enum]  [union] [type alias]  [trait] ) 。
-    * [Self 路径][Self path] ，其中 Self 是实现类型。
+    * [Self 路径][`Self` path] ，其中 Self 是实现类型。
     * 泛型 [类型参数][type parameters] 。
 * 指针类型 ( [reference] [raw pointer] [function pointer] ) 。
 * [inferred type] ，请求编译器确定类型。
@@ -190,7 +190,7 @@ require this disambiguation use the [_TypeNoBounds_] rule instead of
 [_Type_].
 {==+==}
 在某些情况下，类型的组合可能是不明确的。在类型周围加上括号以避免歧义。
-例如， [引用类型] 中的 [类型约束][type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
+例如， [引用类型][reference type] 中的 [类型约束][type boundaries] 的 `+` 运算符不清楚边界适用的位置，因此需要使用括号。
 需要此消除歧义的语法使用 [_无约束类型组_][_TypeNoBounds_] 规则，而不是 [_类型_][_Type_] 。
 {==+==}
 

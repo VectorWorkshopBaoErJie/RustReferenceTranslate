@@ -12,7 +12,7 @@
 {==+==}
 > **<sup>语法</sup>**\
 > _方法调用表达式_ :\
-> &nbsp;&nbsp; [_表达式_][_Expression_] `.` [_路径表达式语句_][_PathExprSegment_] `(`[_调用参数组_]<sup>?</sup> `)`
+> &nbsp;&nbsp; [_表达式_][_Expression_] `.` [_路径表达式语句_][_PathExprSegment_] `(`[_调用参数组_][_CallParams_]<sup>?</sup> `)`
 {==+==}
 
 

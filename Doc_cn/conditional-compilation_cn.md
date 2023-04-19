@@ -36,7 +36,7 @@
 > &nbsp;&nbsp; | _配置Not_
 >
 > _配置选项_ :\
-> &nbsp;&nbsp; [IDENTIFIER]&nbsp;(`=` ([STRING_LITERAL] | [RAW_STRING_LITERAL]))<sup>?</sup>
+> &nbsp;&nbsp; [标识符][IDENTIFIER]&nbsp;(`=` ([字符串字面值][STRING_LITERAL] | [原始字符串字面值][RAW_STRING_LITERAL]))<sup>?</sup>
 >
 > _配置All_\
 > &nbsp;&nbsp; `all` `(` _配置断言列表_<sup>?</sup> `)`

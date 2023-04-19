@@ -139,7 +139,7 @@ extern crate hello_world; // 连字符替换为下划线
 This section has been moved to [Preludes — Extern Prelude](../names/preludes.md#extern-prelude).
 <!-- this is to appease the linkchecker, will remove once other books are updated -->
 {==+==}
-本节已移至 [Preludes — Extern Prelude](../names/preludes.md#extern-prelude) 。
+本节已移至 [预定义 — 外部预定义](../names/preludes.md#extern-prelude) 。
 <!-- this is to appease the linkchecker, will remove once other books are updated -->
 {==+==}
 

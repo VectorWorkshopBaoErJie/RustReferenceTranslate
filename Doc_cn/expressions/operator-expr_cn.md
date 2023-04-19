@@ -19,8 +19,8 @@
 > &nbsp;&nbsp; | [_AssignmentExpression_]\
 > &nbsp;&nbsp; | [_CompoundAssignmentExpression_]
 {==+==}
-> **<sup>Syntax</sup>**\
-> _OperatorExpression_ :\
+> **<sup>语法</sup>**\
+> _运算符表达式_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_借用表达式_][_BorrowExpression_]\
 > &nbsp;&nbsp; | [_解引用表达式_][_DereferenceExpression_]\
 > &nbsp;&nbsp; | [_错误传导表达式_][_ErrorPropagationExpression_]\
@@ -782,7 +782,7 @@ let y = false && panic!(); // false 不会对右侧的操作数进行求值，�
 {==+==}
 > **<sup>语法</sup>**\
 > _类型转换表达式_ :\
-> &nbsp;&nbsp; [_表达式_][_Expression_]  `as` [_无约束类型_]
+> &nbsp;&nbsp; [_表达式_][_Expression_]  `as` [_无约束类型_][_TypeNoBounds_]
 {==+==}
 
 

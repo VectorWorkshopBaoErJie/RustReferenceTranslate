@@ -113,10 +113,10 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 * Item names in [external blocks]
 {==+==}
 * [`extern crate`] 声明
-* 在 [path] 中引用的外部 crate 的名称
+* 在 [路径][path] 中引用的外部 crate 的名称
 * 从文件系统加载的没有 [`path` 属性][`path` attribute] 的 [模块][Module] 名称 。
 * [`no_mangle`] 所属条目
-* 外部块][external blocks] 中条目的名称
+* [外部块][external blocks] 中条目的名称
 {==+==}
 
 

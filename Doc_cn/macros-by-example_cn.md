@@ -328,7 +328,7 @@ specifier when it appears as a subexpression.
 >
 > The relevant edition is the one in effect for the `macro_rules!` definition.
 {==+==}
-> **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [模式][Pattern]) 。
+> **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [_模式_][_Pattern_]) 。
 >
 > 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层选项_][_PatternNoTopAlt_] ) 。
 >
@@ -1068,7 +1068,7 @@ expansions, taking separators into account. This means:
 {==+==}
 For more detail, see the [formal specification].
 {==+==}
-更多细节，见形式说明 [formal specification] 。
+更多细节，见 [形式说明][formal specification] 。
 {==+==}
 
 

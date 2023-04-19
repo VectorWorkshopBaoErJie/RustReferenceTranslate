@@ -48,8 +48,8 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_Use声明_][_UseDeclaration_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_函数_][_Function_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_类型别名_][_TypeAlias_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | [_结构体_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | [_枚举_][_Struct_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_结构体_][_Struct_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_枚举_][_Enumeration_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_联合体_][_Union_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_常量条目_][_ConstantItem_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_静态条目_][_StaticItem_]\

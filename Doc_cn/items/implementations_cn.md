@@ -579,7 +579,7 @@ meaning here are [`cfg`], [`deprecated`], [`doc`], and [the lint check
 attributes].
 {==+==}
 实现可以在 `impl` 关键字之前包含外部 [属性][attributes] ，在包含关联条目的括号内部包含内部 [属性][attributes] 。
-内部属性必须在任何关联条目之前。在这里有意义的属性是 [`cfg`] ， [`deprecated`] ， [`doc`] 和 [检查属性][lint check attributes] 。
+内部属性必须在任何关联条目之前。在这里有意义的属性是 [`cfg`] ， [`deprecated`] ， [`doc`] 和 [检查属性][the lint check attributes] 。
 {==+==}
 
 

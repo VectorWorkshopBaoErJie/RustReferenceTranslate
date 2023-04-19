@@ -134,7 +134,7 @@ Non-exhaustive types cannot be constructed outside of the defining crate:
 
 不能在定义之外构造非穷尽类型:
 
-- 不能使用 [结构体表达式][StructExpression] (包括 [函数更新语法][functional update syntax]) 构造非穷尽变体 ( [`struct`] 或 [`enum` variant] ) 。
+- 不能使用 [_结构体表达式_][_StructExpression_] (包括 [函数更新语法][functional update syntax]) 构造非穷尽变体 ( [`struct`][struct] 或 [`enum` variant][enum] ) 。
 - 可以构造 [`enum`] 实例。
 {==+==}
 

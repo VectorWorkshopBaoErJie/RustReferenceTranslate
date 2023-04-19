@@ -51,7 +51,7 @@
 > &nbsp;&nbsp; `(` [_元组字段组_][_TupleFields_]<sup>?</sup> `)`
 >
 > _枚举条目结构体_ :\
-> &nbsp;&nbsp; `{` [_结构体字段组_]<sup>?</sup> `}`
+> &nbsp;&nbsp; `{` [_结构体字段组_][_StructFields_]<sup>?</sup> `}`
 >
 > _枚举条目判别式_ :\
 > &nbsp;&nbsp; `=` [_表达式_][_Expression_]

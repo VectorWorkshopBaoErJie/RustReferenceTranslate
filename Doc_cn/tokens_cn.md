@@ -179,7 +179,7 @@ Literals are tokens used in [literal expressions].
 {==+==}
 #### Quote escapes
 {==+==}
-#### Quote 转义符
+#### 引号转义符
 {==+==}
 
 
@@ -839,7 +839,7 @@ _数字字面值_ 是一个 _整数字面值_ 或 _浮点字面值_ 。语法上
 > **<sup>词法</sup>**\
 > 整数字面值 :\
 > &nbsp;&nbsp; ( 十进制字面值 | 二进制字面值 | 八进制字面值 | 十六进制字面值 )
->              SUFFIX_NO_E<sup>?</sup>
+>              非E后缀<sup>?</sup>
 >
 > 十进制字面值 :\
 > &nbsp;&nbsp; 十进制数 (十进制数|`_`)<sup>\*</sup>
@@ -1403,16 +1403,16 @@ usages and meanings are defined in the linked pages.
 {==+==}
 | 符号 | 名称        | 用法 |
 |--------|-------------|-------|
-| `+`    | 加号        | [加法][arith]，[trait约束][trait-bounds]，[宏重复匹配器][macros]
+| `+`    | 加号        | [加法][arith]，[trait约束][Trait Bounds]，[宏重复匹配器][macros]
 | `-`    | 减号        | [减法][arith]，[否定][negation]
-| `*`    | 星号        | [乘法][arith]，[解引用][dereference]，[原始指针][raw-pointers]，[宏重复匹配器][macros]，[用作通配符][wildcards]
+| `*`    | 星号        | [乘法][arith]，[解引用][dereference]，[原始指针][Raw Pointers]，[宏重复匹配器][macros]，[用作通配符][wildcards]
 | `/`    | 斜线        | [除法][arith]
 | `%`    | 百分号      | [取余][arith]
 | `^`    | 插入符号    | [位运算异或和逻辑运算异或][arith]
-| `!`    | 感叹号      | [位运算非和逻辑运算非][negation]，[宏调用][macros]，[内部属性][attributes]，[永不类型][never-type]，[否定的impl][negative-impls]
-| `&`    | 与符号      | [位运算与和逻辑运算与][arith]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]
+| `!`    | 感叹号      | [位运算非和逻辑运算非][negation]，[宏调用][macros]，[内部属性][attributes]，[永不类型][Never Type]，[否定的impl][Negative impls]
+| `&`    | 与符号      | [位运算与和逻辑运算与][arith]，[借用][borrow]，[引用][references]，[引用模式][Reference patterns]
 | <code>\|</code> | 或符号 | [位运算或和逻辑运算或][arith]，[闭包][closures]，[模式匹配][match]中的模式，[if let]和[while let]中的模式
-| `&&`   | 与运算符    | [惰性与运算][lazy-bool]，[借用][borrow]，[引用][references]，[引用模式][reference-patterns]
+| `&&`   | 与运算符    | [惰性与运算][lazy-bool]，[借用][borrow]，[引用][references]，[引用模式][Reference patterns]
 | <code>\|\|</code> | 或运算符 | [惰性或运算][lazy-bool]，[闭包][closures]
 | `<<`   | 左移运算符  | [左移][arith]，[嵌套泛型][generics]
 | `>>`   | 右移运算符  | [右移][arith]，[嵌套泛型][generics]
@@ -1427,14 +1427,14 @@ usages and meanings are defined in the linked pages.
 | `<<=`  | 左移等于运算符 | [左移赋值][compound]
 | `>>=`  | 右移等于运算符 | [右移赋值][compound], [嵌套泛型][generics]
 | `=`    | 等号          | [赋值][Assignment]，[属性][Attributes]，各种类型定义
-| `==`   | 双等号      | [等于][比较]
-| `!=`   | 不等于号      | [不等于][比较]
-| `>`    | 大于号        | [大于][比较]，[泛型][Generics]，[路径][Paths]
-| `<`    | 小于号        | [小于][比较]，[泛型][Generics]，[路径][Paths]
-| `>=`   | 大于等于号    | [大于等于][比较]，[泛型][Generics]
-| `<=`   | 小于等于号    | [小于等于][比较]
+| `==`   | 双等号      | [等于][comparison]
+| `!=`   | 不等于号      | [不等于][comparison]
+| `>`    | 大于号        | [大于][comparison]，[泛型][Generics]，[路径][Paths]
+| `<`    | 小于号        | [小于][comparison]，[泛型][Generics]，[路径][Paths]
+| `>=`   | 大于等于号    | [大于等于][comparison]，[泛型][Generics]
+| `<=`   | 小于等于号    | [小于等于][comparison]
 | `@`    | At          | [子模式绑定][Subpattern binding]
-| `_`    | 下划线      | [通配符模式][Wildcard patterns]，[推断类型][Inferred types]，[常量][constants]、[extern crates]、[use 声明]和[解构赋值][destructuring assignment]中的未命名条目
+| `_`    | 下划线      | [通配符模式][Wildcard patterns]，[推断类型][Inferred types]，[常量][constants]、[extern crates]、[use 声明][use declarations]和[解构赋值][destructuring assignment]中的未命名条目
 | `.`    | 点号         | [字段访问][field]，[元组索引][Tuple index]
 | `..`   | 双点号      | [区间][range]，[结构体表达式][Struct expressions]，[模式][Patterns]，[区间模式][Range Patterns][rangepat]
 | `...`  | 三点号   | [可变参数函数][extern]，[区间模式][Range patterns]

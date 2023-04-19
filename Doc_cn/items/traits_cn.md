@@ -41,9 +41,9 @@ interface consists of [associated items], which come in three varieties:
 - [types](associated-items.md#associated-types)
 - [constants](associated-items.md#associated-constants)
 {==+==}
-- [functions](associated-items.md#associated-functions-and-methods) 函数
-- [types](associated-items.md#associated-types) 类型
-- [constants](associated-items.md#associated-constants) 常量
+- [函数](associated-items.md#associated-functions-and-methods) 
+- [类型](associated-items.md#associated-types) 
+- [常量](associated-items.md#associated-constants) 
 {==+==}
 
 

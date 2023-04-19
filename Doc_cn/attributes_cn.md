@@ -66,7 +66,7 @@ sign (`=`) followed by an expression. See the [meta item
 syntax](#meta-item-attribute-syntax) below for more details.
 {==+==}
 属性由一个路径和一个可选的被定界的令牌树组成，该令牌树的解释由属性定义。
-除宏属性之外的属性还允许输入是一个等号 (`=`) 后跟一个表达式。更多细节请参见下面的 [元条目语法](meta item attribute syntax) 。
+除宏属性之外的属性还允许输入是一个等号 (`=`) 后跟一个表达式。更多细节请参见下面的 [元条目语法](#meta-item-attribute-syntax) 。
 {==+==}
 
 

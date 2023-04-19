@@ -59,7 +59,7 @@ There are two ways to define new macros:
 {==+==}
 > **<sup>语法</sup>**\
 > _宏调用_ :\
-> &nbsp;&nbsp; [_简单路径_] `!` _定界Token树_
+> &nbsp;&nbsp; [_简单路径_][_SimplePath_] `!` _定界Token树_
 >
 > _定界Token树_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp;  `(` _Token树_<sup>\*</sup> `)`\
@@ -67,12 +67,12 @@ There are two ways to define new macros:
 > &nbsp;&nbsp; | `{` _Token树_<sup>\*</sup> `}`
 >
 > _Token树_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_不包括 [delimiters]_</sub> | _定界Token树_
+> &nbsp;&nbsp; [_Token_]<sub>_不包括 [分隔符][delimiters]_</sub> | _定界Token树_
 >
 > _宏调用语句_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_] `!` `(` _Token树_<sup>\*</sup> `)` `;`\
-> &nbsp;&nbsp; | [_SimplePath_] `!` `[` _Token树_<sup>\*</sup> `]` `;`\
-> &nbsp;&nbsp; | [_SimplePath_] `!` `{` _Token树_<sup>\*</sup> `}`
+> &nbsp;&nbsp; &nbsp;&nbsp; [_简单路径_][_SimplePath_] `!` `(` _Token树_<sup>\*</sup> `)` `;`\
+> &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `!` `[` _Token树_<sup>\*</sup> `]` `;`\
+> &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `!` `{` _Token树_<sup>\*</sup> `}`
 {==+==}
 
 

@@ -55,14 +55,14 @@
 > &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
 >
 > _Abi_ :\
-> &nbsp;&nbsp; [STRING_LITERAL] | [RAW_STRING_LITERAL]
+> &nbsp;&nbsp; [字符串字面值][STRING_LITERAL] | [原始字符串字面值][RAW_STRING_LITERAL]
 >
 > _函数参数组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _Self参数_ `,`<sup>?</sup>\
 > &nbsp;&nbsp; | (_Self参数_ `,`)<sup>?</sup> _函数数参数_ (`,` _函数数参数_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _Self参数_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
 >
 > _简写Self_ :\
 > &nbsp;&nbsp;  (`&` | `&` [_生命周期_][_Lifetime_])<sup>?</sup> `mut`<sup>?</sup> `self`

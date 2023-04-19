@@ -28,7 +28,7 @@
 > &nbsp;&nbsp; _闭包参数_ (`,` _闭包参数_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _闭包参数_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> [_模式无顶层选项_][_PatternNoTopAlt_]&nbsp;( `:` [_Type_][_类型_] )<sup>?</sup>
+> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> [_模式无顶层选项_][_PatternNoTopAlt_]&nbsp;( `:` [_类型_][_Type_] )<sup>?</sup>
 {==+==}
 
 

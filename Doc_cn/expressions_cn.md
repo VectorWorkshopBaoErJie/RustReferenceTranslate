@@ -56,7 +56,7 @@
 > _无块表达式_ :\
 > &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
 > &nbsp;&nbsp; (\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_LiteralExpression_][_字面值表达式_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_字面值表达式_][_LiteralExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_路径表达式_][_PathExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_操作符表达式_][_OperatorExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_分组表达式_][_GroupedExpression_]\
@@ -559,7 +559,7 @@ They are never allowed before:
 {==+==}
 ## 表达式属性
 
-在表达式前面的 [外部属性][OuterAttribute] 只允许在以下几种情况下使用：
+在表达式前面的 [_外部属性_][_OuterAttribute_] 只允许在以下几种情况下使用：
 
 * 用作 [语句][statement] 的表达式之前。
 * [数组表达式][array expressions]，[元组表达式][tuple expressions]，[调用表达式][call expressions]和元组风格的 [结构体][struct] 表达式的元素。
@@ -567,8 +567,8 @@ They are never allowed before:
 <!-- Keep list in sync with block-expr.md -->
 
 它们不允许在以下情况下使用:
-* [范围][Range] 表达式。
-* 二元运算符表达式 ([算术或逻辑表达式][_ArithmeticOrLogicalExpression_]，[比较表达式][_ComparisonExpression_]，[懒惰布尔表达式][_LazyBooleanExpression_]，[类型转换表达式][_TypeCastExpression_]，[赋值表达式][_AssignmentExpression_]，[复合赋值表达式][CompoundAssignmentExpression]) 。
+* [区间][_RangeExpression_] 表达式。
+* 二元运算符表达式 ([_算术或逻辑表达式_][_ArithmeticOrLogicalExpression_]，[_比较表达式_][_ComparisonExpression_]，[_懒惰布尔表达式_][_LazyBooleanExpression_]，[_类型转换表达式_][_TypeCastExpression_]，[_赋值表达式_][_AssignmentExpression_]，[_复合赋值表达式_][_CompoundAssignmentExpression_]) 。
 {==+==}
 
 

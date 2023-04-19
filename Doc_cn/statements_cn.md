@@ -28,7 +28,7 @@ Rust has two kinds of statement: [declaration statements](#declaration-statement
 {==+==}
 *语句* 是 [块][block] 的组成部分，而块又是之外 [表达式][expression] 或 [函数][function] 的组成部分。
 
-Rust 有两种语句：[声明语句](#declaration-statements) 和 [表达式语句](expression statements) 。
+Rust 有两种语句：[声明语句](#declaration-statements) 和 [表达式语句](#expression-statements) 。
 {==+==}
 
 
