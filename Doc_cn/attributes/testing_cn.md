@@ -162,7 +162,7 @@ then the test will fail. The string may be passed using the
 `expected` field.
 {==+==}
 `should_panic` 属性可以选择性地接受一个输入字符串，该字符串必须出现在恐慌消息中。
-如果在消息中未找到该字符串，则测试将失败。可以使用 [_元名称值字符串_][_MetaNameValueStr_] 语法或具有 `expected` 字段的 [_MetaListNameValueStr_] 语法传递该字符串。
+如果在消息中未找到该字符串，则测试将失败。可以使用 [_元名称值字符串_][_MetaNameValueStr_] 语法或具有 `expected` 字段的 [_元列表名称值字符串_][_MetaListNameValueStr_] 语法传递该字符串。
 {==+==}
 
 

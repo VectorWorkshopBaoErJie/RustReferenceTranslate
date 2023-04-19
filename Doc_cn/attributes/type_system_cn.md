@@ -23,7 +23,7 @@ Within the defining crate, `non_exhaustive` has no effect.
 *`non_exhaustive` 属性* 表示类型或变体将来可能会添加更多的字段或变体。
 它可以应用于 [`struct`] 、 [`enum`] 和 `enum` 变体。
 
-`non_exhaustive` 属性使用 [_MetaWord_] 语法，因此不需要输入任何内容。
+`non_exhaustive` 属性使用 [_元字_][_MetaWord_] 语法，因此不需要输入任何内容。
 
 在定义的 crate 中，`non_exhaustive` 没有任何作用。
 {==+==}
@@ -134,7 +134,7 @@ Non-exhaustive types cannot be constructed outside of the defining crate:
 
 不能在定义之外构造非穷尽类型:
 
-- 不能使用 [StructExpression] (包括 [functional update syntax]) 构造非穷尽变体 ( [`struct`] 或 [`enum` variant] ) 。
+- 不能使用 [结构体表达式][StructExpression] (包括 [函数更新语法][functional update syntax]) 构造非穷尽变体 ( [`struct`] 或 [`enum` variant] ) 。
 - 可以构造 [`enum`] 实例。
 {==+==}
 
@@ -198,7 +198,7 @@ There are limitations when matching on non-exhaustive types outside of the defin
 {==+==}
 在定义类型的 crate 之外，在匹配非穷尽类型时存在以下限制:
 
-- 当匹配非穷尽变体 ([`struct`][struct] 或 [`enum` variant][enum]) 时，必须使用带有 `..` 的 [_StructPattern_] ，元组变体构造函数的可见性降为 `min($vis, pub(crate))` 。
+- 当匹配非穷尽变体 ([`struct`][struct] 或 [`enum` variant][enum]) 时，必须使用带有 `..` 的 [_结构体模式_][_StructPattern_] ，元组变体构造函数的可见性降为 `min($vis, pub(crate))` 。
 - 当匹配非穷尽 [`enum`][enum] 时，匹配一个变体不会导致分支的穷尽性。
 {==+==}
 
@@ -281,7 +281,7 @@ let _ = NonExhaustiveEnum::default() as u8;
 {==+==}
 Non-exhaustive types are always considered inhabited in downstream crates.
 {==+==}
-非穷尽类型在下游的 crate 中总是被视为是有 inhabitant(指代值或实例) 的。
+非穷尽类型在下游的 crate 中总是被视为是有 inhabitant(指代值或实例) 。
 {==+==}
 
 

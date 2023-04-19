@@ -31,19 +31,19 @@ For any lint check `C`:
 > Note: The lint checks supported by `rustc` can be found via `rustc -W help`,
 > along with their default settings and are documented in the [rustc book].
 {==+==}
-## Lint 检查属性
+## 代码分析检查属性
 
-Lint检查指的是一些可能存在不良编码模式的代码，例如不可到达的代码或省略的文档。
-lint属性 `allow` 、 `warn` 、 `deny` 和 `forbid` 使用 [_MetaListPaths_] 语法指定要更改为应用属性的实体的 lint 级别列表。
+代码分析检查指的是一些可能存在不良编码模式的代码，例如不可到达的代码或省略的文档。
+代码分析属性 `allow` 、 `warn` 、 `deny` 和 `forbid` 使用 [_MetaListPaths_] 语法指定要更改为应用属性的实体的代码分析级别列表。
 
-对于任何lint检查 `C` ：
+对于任何代码分析检查 `C` ：
 
 * `allow(C)` 会覆盖 `C` 的检查，使违规不会被报告，
 * `warn(C)` 警告有关 `C` 的违规，但继续编译。
 * `deny(C)` 在遇到 `C` 的违规后发出错误信号，
-* `forbid(C)` 与 `deny(C)` 相同，但还禁止以后更改 lint 级别。
+* `forbid(C)` 与 `deny(C)` 相同，但还禁止以后更改代码分析级别。
 
-> 注意: `rustc` 支持的 lint 检查可以通过 `rustc -W help` 找到，包括它们的默认设置，并在 [rustc book] 中有记录。
+> 注意: `rustc` 支持的代码分析检查可以通过 `rustc -W help` 找到，包括它们的默认设置，并在 [rustc 文档][rustc book] 中有记录。
 {==+==}
 
 
@@ -175,7 +175,7 @@ pub mod m3 {
 > [command-line][rustc-lint-cli], and also supports [setting
 > caps][rustc-lint-caps] on the lints that are reported.
 {==+==}
-> 注意：`rustc` 允许在 [命令行][rustc-lint-cli] 上设置 lint 级别，并支持在报告的 lints 上 [设置限制][rustc-lint-caps] 。
+> 注意：`rustc` 允许在 [命令行][rustc-lint-cli] 上设置代码分析级别，并支持在报告的代码分析上 [设置限制][rustc-lint-caps] 。
 {==+==}
 
 
@@ -186,9 +186,9 @@ Lints may be organized into named groups so that the level of related lints
 can be adjusted together. Using a named group is equivalent to listing out the
 lints within that group.
 {==+==}
-### Lint 组
+### 代码分析组
 
-Lints 可以被组织成具有名称的组，以便可以一起调整相关 lint 的级别。使用命名组相当于列出该组中的 lints。
+代码分析可以被组织成具有名称的组，以便可以一起调整相关代码分析的级别。使用命名组相当于列出该组中的代码分析。
 {==+==}
 
 
@@ -229,8 +229,8 @@ There is a special group named "warnings" which includes all lints at the
 "warn" level. The "warnings" group ignores attribute order and applies to all
 lints that would otherwise warn within the entity.
 {==+==}
-有一个特殊的名为 "warnings" 的分组，其中包括所有 "warn" 级别的 lint。
-"warnings" 分组忽略属性顺序，并适用于实体中所有会产生警告的 lint 。
+有一个特殊的名为 "warnings" 的分组，其中包括所有 "warn" 级别的代码分析。
+"warnings" 分组忽略属性顺序，并适用于实体中所有会产生警告的代码分析。
 {==+==}
 
 
@@ -274,14 +274,14 @@ will not warn about the nonexistent lint until you use the tool.
 
 Otherwise, they work just like regular lint attributes:
 {==+==}
-### 工具 lint 属性
+### 工具代码分析属性
 
-工具 lint 允许使用作用域 lint ，以允许、警告、禁止某些工具的lint。
+'工具代码分析' 允许使用作用域 '代码分析' ，以允许、警告、禁止某些工具的代码分析。
 
-只有在相关工具处于活动状态时才会检查工 具lint 。
-如果像 `allow` 这样的 lint 属性引用了不存在的工具 lint ，则编译器在使用该工具之前不会警告不存在的 lint 。
+只有在相关工具处于活动状态时才会检查工具代码分析。
+如果像 `allow` 这样的代码分析属性引用了不存在的 '工具代码分析' ，则编译器在使用该工具之前不会警告不存在的代码分析。
 
-否则，它们的工作方式与常规 lint 属性相同：
+否则，它们的工作方式与常规代码分析属性相同：
 {==+==}
 
 
@@ -304,16 +304,16 @@ fn foo() {
 ```
 {==+==}
 ```rust
-// 将整个 pedantic clippy lint 组设置为警告
+// 将整个 pedantic clippy 代码分析组设置为警告
 #![warn(clippy::pedantic)]
-// 屏蔽 filter_map clippy lint 中的警告
+// 屏蔽 filter_map clippy 代码分析中的警告
 #![allow(clippy::filter_map)]
 
 fn main() {
 // ...
 }
 
-// 仅针对该函数屏蔽 cmp_nan clippy lint 的警告
+// 仅针对该函数屏蔽 cmp_nan clippy 代码分析的警告
 #[allow(clippy::cmp_nan)]
 fn foo() {
 // ...
@@ -325,7 +325,7 @@ fn foo() {
 {==+==}
 > Note: `rustc` currently recognizes the tool lints for "[clippy]" and "[rustdoc]".
 {==+==}
-> 注意: 目前 `rustc` 只支持 "[clippy]" 和 "[rustdoc]" 的工具 lint 。
+> 注意: 目前 `rustc` 只支持 "[clippy]" 和 "[rustdoc]" 的工具代码分析。
 {==+==}
 
 
@@ -368,8 +368,8 @@ items inherit the deprecation attribute.
   - `since` — 指定条目被弃用的版本号。 `rustc` 目前不解释该字符串，但像 [Clippy] 这样的外部工具可能会检查值的有效性。
   - `note` — 指定应在弃用消息中包含的字符串。通常用于提供有关弃用和首选替代方法的解释。
 
-`deprecated` 属性可应用于任何 [item] 、 [trait item] 、 [enum variant] 、 [struct field] 、 [external block item] 或 [macro definition]。
-它不能应用于 [trait implementation items]。当应用于包含其他条目的条目 (例如 [module] 或 [implementation] )时，所有子条目都继承弃用属性。
+`deprecated` 属性可应用于任何 [条目][item] 、 [trait 条目][trait item] 、 [enum 变体][enum variant] 、 [struct 字段][struct field] 、 [外部块条目][external block item] 或 [宏定义][macro definition]。
+它不能应用于 [trait 实现条目][trait implementation items]。当应用于包含其他条目的条目 (例如 [模块][module] 或 [实现][implementation] )时，所有子条目都继承弃用属性。
 {==+==}
 
 
@@ -435,7 +435,7 @@ violated.
 
 `must_use` 属性可以通过使用 [_元名称值字符串_][_MetaNameValueStr_] 语法 (例如 `#[must_use = "example message"]` ) 包含一条消息。该消息将与警告一起给出。
 
-当在用户定义的复合类型上使用时，如果 [expression] 的 [expression statement] 具有该类型，则违反了 `unused_must_use` lint。
+当在用户定义的复合类型上使用时，如果 [表达式][expression] 的 [表达式语句][expression statement] 具有该类型，则违反了 `unused_must_use` 代码分析。
 {==+==}
 
 
@@ -503,7 +503,7 @@ When used on a [trait declaration], a [call expression] of an [expression
 statement] to a function that returns an [impl trait] or a [dyn trait] of that trait violates
 the `unused_must_use` lint.
 {==+==}
-当在 [trait 声明][trait declaration] 上使用时，对该 trait 的 [impl trait] 或 [dyn trait] 返回的函数的 [call expression] 的 [expression statement] 违反了 `unused_must_use` lint。
+当在 [trait 声明][trait declaration] 上使用时，对该 trait 的 [impl trait] 或 [dyn trait] 返回的函数的 [调用表达式][call expression] 的 [表达式语句][expression statement] 违反了 `unused_must_use` 代码代析。
 {==+==}
 
 
@@ -610,7 +610,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 {==+==}
 当用于 trait 实现中的函数时，该属性无效。
 
-> 注意：包含该值的无关紧要的无操作表达式不会违反 lint 。
+> 注意：包含该值的无关紧要的无操作表达式不会违反代码分析。
 > 例如，将该值包装在未实现 [`Drop`] 的类型中，然后不使用该类型，或者是块表达式的最终表达式，而不使用该表达式。
 
 > ```rust

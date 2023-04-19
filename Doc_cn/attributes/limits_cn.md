@@ -14,7 +14,7 @@ syntax to specify the recursion depth.
 {==+==}
 # 限制
 
-下面的 [attributes] 影响编译时的限制。
+下面的 [属性][attributes] 影响编译时的限制。
 
 ## `recursion_limit` 属性
 
@@ -79,7 +79,7 @@ a!{}
 
 The *`type_length_limit` attribute* limits the maximum number of type
 substitutions made when constructing a concrete type during monomorphization.
-It is applied at the [crate] level, and uses the [_MetaNameValueStr_] syntax
+It is applied at the [crate] level, and uses the [_元名称值字符串_][_MetaNameValueStr_] syntax
 to set the limit based on the number of type substitutions.
 
 > Note: The default in `rustc` is 1048576.

@@ -17,7 +17,7 @@ There are several different preludes:
 - [`macro_use` prelude]
 - [Tool prelude]
 {==+==}
-# Preludes
+# 预定义
 
  *预定义* 是一组自动引入到一个 crate 中每个模块作用域的名称。
 
@@ -156,15 +156,15 @@ The *`no_std` [attribute]* may be applied at the crate level to prevent the
 {==+==}
 ### `no_std` 属性
 
-默认情况下，标准库会自动包含在 crate 的根模块中。[`std`] crate 与一个隐式的 [`macro_use` 属性][`macro_use` attribute] 一同添加到根模块，将 `std` 导出的所有宏都添加到 [`macro_use` 预定义模块][`macro_use` prelude] 中。同时，[`core`] 和 [`std`] 也会添加到 [extern prelude] 中。
+默认情况下，标准库会自动包含在 crate 的根模块中。[`std`] crate 与一个隐式的 [`macro_use` 属性][`macro_use` attribute] 一同添加到根模块，将 `std` 导出的所有宏都添加到 [`macro_use` 预定义模块][`macro_use` prelude] 中。同时，[`core`] 和 [`std`] 也会添加到 [extern 预定义][extern prelude] 中。
 
 可以在 crate 级别应用 *`no_std` [属性][attribute]* 来阻止自动将 [`std`] crate 添加到作用域中。它会做三件事情：
 
-* 防止 `std` 添加到 [extern prelude] 中。
-* 影响用于构建 [standard library prelude] 的模块 (如上所述) 。
+* 防止 `std` 添加到 [extern 预定义][extern prelude] 中。
+* 影响用于构建 [标准库预定义][standard library prelude] 的模块 (如上所述) 。
 * 将 [`core`] crate 注入到 crate 根模块中，而不是 [`std`]，并将所有从 `core` 导出的宏添加到 [`macro_use` 预定义模块][`macro_use` prelude] 中。
 
-> **注意**: 当 crate 目标平台不支持标准库或有意不使用标准库的功能时，使用核心预定义 (core prelude) 而不是标准预定义 (standard prelude) 很有用。
+> **注意**: 当 crate 目标平台不支持标准库或有意不使用标准库的功能时，使用核心预定义而不是标准库预定义很有用。
 > 这些功能主要包括动态内存分配 (例如 `Box` 和 `Vec` ) 以及文件和网络功能 (例如 `std::fs` 和 `std::io` ) 。
 {==+==}
 

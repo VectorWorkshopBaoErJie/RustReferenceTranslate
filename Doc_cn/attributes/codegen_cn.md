@@ -112,7 +112,7 @@ features. It uses the [_MetaListNameValueStr_] syntax with a single key of
 ## `target_feature` 属性
 
  *`target_feature` 属性* 可以应用于函数，以启用为特定平台架构特性生成该函数的代码。
-它使用带有单个 `enable` 键的 [_MetaListNameValueStr_] 语法，其值是逗号分隔的要启用的特性名称字符串。
+它使用带有单个 `enable` 键的 [_元列表名称值字符串_][_MetaListNameValueStr_] 语法，其值是逗号分隔的要启用的特性名称字符串。
 {==+==}
 
 
@@ -203,7 +203,32 @@ Feature     | Implicitly Enables | Description
 `xsaveopt`  |          | [`xsaveopt`] — Save processor extended states optimized
 `xsaves`    |          | [`xsaves`] — Save processor extended states supervisor
 {==+==}
-
+特性 | 隐式启用 | 描述
+--- | --- | ---
+`adx` | | [ADX] — 多精度加进位指令扩展
+`aes` | `sse2` | [AES] — 高级加密标准
+`avx` | `sse4.2` | [AVX] — 高级矢量扩展
+`avx2` | `avx` | [AVX2] — 高级矢量扩展 2
+`bmi1` | | [BMI1] — 位操作指令集
+`bmi2` | | [BMI2] — 位操作指令集 2
+`fma` | `avx` | [FMA3] — 三操作数融合乘加
+`fxsr` | | [`fxsave`] 和 [`fxrstor`] — 保存和恢复 x87 FPU、MMX 技术和 SSE 状态
+`lzcnt` | | [`lzcnt`] — 领先的零数目
+`pclmulqdq` | `sse2` | [`pclmulqdq`] — 打包无进位乘法的乘积四倍字
+`popcnt` | | [`popcnt`] — 位值为 1 的位数
+`rdrand` | | [`rdrand`] — 读取随机数
+`rdseed` | | [`rdseed`] — 读取随机种子
+`sha` | `sse2` | [SHA] — 安全哈希算法
+`sse` | | [SSE] — 流处理 SIMD 扩展
+`sse2` | `sse` | [SSE2] — 流处理 SIMD 扩展 2
+`sse3` | `sse2` | [SSE3] — 流处理 SIMD 扩展 3
+`sse4.1` | `ssse3` | [SSE4.1] — 流处理 SIMD 扩展 4.1
+`sse4.2` | `sse4.1` | [SSE4.2] — 流处理 SIMD 扩展 4.2
+`ssse3` | `sse3` | [SSSE3] — 补充流处理 SIMD 扩展 3
+`xsave` | | [`xsave`] — 保存处理器扩展状态
+`xsavec` | | [`xsavec`] — 保存带压缩的处理器扩展状态
+`xsaveopt` | | [`xsaveopt`] — 优化保存处理器扩展状态
+`xsaves` | | [`xsaves`] — 以管理模式保存处理器扩展状态
 {==+==}
 
 
@@ -265,7 +290,7 @@ Reference Manual], or elsewhere on [developer.arm.com].
 
 这个平台要求 `#[target_feature]` 仅能应用于 [`unsafe`函数][unsafe function] 。
 
-更多关于这些特性的文档可以在 [ARM架构参考手册][ARM Architecture Reference Manual] 或 [developer.arm.com] 中找到。
+更多关于这些特性的文档可以在 [ARM 架构参考手册][ARM Architecture Reference Manual] 或 [developer.arm.com] 中找到。
 
 > ***注意***: 如果使用以下特性对，应该一起标记为已启用或已禁用:
 > `paca` 和 `pacg` ，LLVM 当前将它们实现为一个特性。
@@ -320,7 +345,51 @@ Feature        | Implicitly Enables | Feature Name
 `tme`          |                | FEAT_TME - Transactional Memory Extension
 `vh`           |                | FEAT_VHE - Virtualization Host Extensions
 {==+==}
-
+特性  | 隐式启用  | 特性名称
+---------------|--------------------|-------------------
+`aes`          | `neon`         | FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令
+`bf16`         |                | FEAT_BF16 - BFloat16 指令
+`bti`          |                | FEAT_BTI - 分支目标识别
+`crc`          |                | FEAT_CRC - CRC32 校验和指令
+`dit`          |                | FEAT_DIT - 数据独立定时指令
+`dotprod`      |                | FEAT_DotProd - 高级 SIMD Int8 点乘指令
+`dpb`          |                | FEAT_DPB - 数据缓存清除到持久点
+`dpb2`         |                | FEAT_DPB2 - 数据缓存清除到深度持久点
+`f32mm`        | `sve`          | FEAT_F32MM - SVE 单精度 FP 矩阵乘法指令
+`f64mm`        | `sve`          | FEAT_F64MM - SVE 双精度 FP 矩阵乘法指令
+`fcma`         | `neon`         | FEAT_FCMA - 浮点复数支持
+`fhm`          | `fp16`         | FEAT_FHM - 半精度 FP FMLAL 指令
+`flagm`        |                | FEAT_FlagM - 条件标志位操作
+`fp16`         | `neon`         | FEAT_FP16 - 半精度 FP 数据处理
+`frintts`      |                | FEAT_FRINTTS - 浮点到整数帮助指令
+`i8mm`         |                | FEAT_I8MM - Int8 矩阵乘法
+`jsconv`       | `neon`         | FEAT_JSCVT - JavaScript 转换指令
+`lse`          |                | FEAT_LSE - 大系统扩展
+`lor`          |                | FEAT_LOR - 有限排序区域扩展
+`mte`          |                | FEAT_MTE - 内存标记扩展
+`neon`         |                | FEAT_FP 和 FEAT_AdvSIMD - 浮点数和高级 SIMD 扩展
+`pan`          |                | FEAT_PAN - 特权访问不允许扩展
+`paca`         |                | FEAT_PAuth - 指针认证（地址认证）
+`pacg`         |                | FEAT_PAuth - 指针认证（通用认证）
+`pmuv3`        |                | FEAT_PMUv3 - 性能监视器扩展（v3）
+`rand`         |                | FEAT_RNG - 随机数生成器
+`ras`          |                | FEAT_RAS - 可靠性、可用性和服务性扩展
+`rcpc`         |                | FEAT_LRCPC - 一致性处理器ARMv8.2 可以支持多种架构，其中一些可用特性如下所示：
+`rdm`          |                | FEAT_RDM - 双精度乘累加取整指令
+`sb`           |                | FEAT_SB - 推测屏障指令
+`sha2`         | `neon`         | FEAT_SHA1 & FEAT_SHA256 - 高级SIMD SHA指令
+`sha3`         | `sha2`         | FEAT_SHA512 & FEAT_SHA3 - 高级SIMD SHA指令
+`sm4`          | `neon`         | FEAT_SM3 & FEAT_SM4 - 高级SIMD SM3/4指令
+`spe`          |                | FEAT_SPE - 统计分析扩展指令
+`ssbs`         |                | FEAT_SSBS - 推测存储旁路安全指令
+`sve`          | `fp16`         | FEAT_SVE - 可扩展向量扩展指令
+`sve2`         | `sve`          | FEAT_SVE2 - 可扩展向量扩展2指令
+`sve2-aes`     | `sve2`, `aes`  | FEAT_SVE_AES - SVE AES指令
+`sve2-sm4`     | `sve2`, `sm4`  | FEAT_SVE_SM4 - SVE SM4指令
+`sve2-sha3`    | `sve2`, `sha3` | FEAT_SVE_SHA3 - SVE SHA3指令
+`sve2-bitperm` | `sve2`         | FEAT_SVE_BitPerm - SVE 位重排指令
+`tme`          |                | FEAT_TME - 事务内存扩展指令
+`vh`           |                | FEAT_VHE - 虚拟化主机扩展指令
 {==+==}
 
 
@@ -348,7 +417,11 @@ Feature     | Description
 
 [simd128]: https://github.com/webassembly/simd
 {==+==}
+特性     | 描述
+------------|-------------------
+`simd128`   | [WebAssembly simd proposal][simd128]
 
+[simd128]: https://github.com/webassembly/simd
 {==+==}
 
 
@@ -615,7 +688,8 @@ The following values are available on targets for the `ARMv4` and `ARMv5te` arch
 * `arm::a32` - Uses ARM code.
 * `arm::t32` - Uses Thumb code.
 {==+==}
-
+* `arm::a32` - 使用 ARM 编码.
+* `arm::t32` - 使用 Thumb 编码.
 {==+==}
 
 

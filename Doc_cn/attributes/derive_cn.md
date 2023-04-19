@@ -11,7 +11,7 @@ data structures. It uses the [_MetaListPaths_] syntax to specify a list of
 traits to implement or paths to [derive macros] to process.
 {==+==}
 *` derive` 属性* 允许自动生成数据结构的新 [条目][items] 。
-它使用 [_MetaListPaths_] 语法来指定要实现的一组 trait 或要处理的 [衍生宏][derive macros] 的路径。
+它使用 [_元列表路径组_][_MetaListPaths_] 语法来指定要实现的一组 trait 或要处理的 [衍生宏][derive macros] 的路径。
 {==+==}
 
 
