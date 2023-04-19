@@ -1414,7 +1414,7 @@ match int_reference {
 > &nbsp;&nbsp; `[` _SlicePatternItems_<sup>?</sup> `]`
 >
 > _SlicePatternItems_ :\
-> &nbsp;&nbsp; [_模式_][_Pattern_] \(`,` [_模式_][_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
+> &nbsp;&nbsp; [_Pattern_] \(`,` [_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 > **<sup>语法</sup>**\
 > _切片模式_ :\

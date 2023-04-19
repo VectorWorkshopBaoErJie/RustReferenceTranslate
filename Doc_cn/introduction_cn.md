@@ -356,7 +356,7 @@ If this book does not answer your question, and you think its answer is in scope
 Knowing what people use this book for the most helps direct our attention to making those sections the best that they can be.
 We also want the reference to be as normative as possible, so if you see anything that is wrong or is non-normative but not specifically called out, please also [file an issue].
 {==+==}
-您可以通过打开一个 issue 或发送一个 pull request 到 [Rust 参考仓库][Rust Reference repository] 做出贡献。
+您可以通过打开一个 issue 或发送一个 pull request 到 [Rust 参考仓库][the Rust Reference repository] 做出贡献。
 如果你的问题这本书没有回答，并且你认为该问题有必要范围包含在本书中，请 [提交 issue][file an issue] 或在 [Zulip] 的 `t-lang/doc` 频道提问。
 了解本书最常使用的内容，有助于集中精力使这些部分变得更好。
 我们还希望本书尽可能成为标准规范，对于发现的任何错误或不规范的问题，请 [提交 issue][file an issue] 。
