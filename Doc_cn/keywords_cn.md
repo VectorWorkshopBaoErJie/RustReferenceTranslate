@@ -13,14 +13,14 @@ Rust 关键字分为三类:
 
 
 {==+==}
-- [Keywords](#keywords)
-- [关键字](#关键字)
-  - [Strict keywords](#strict-keywords)
-  - [严格字](#严格字)
-  - [Reserved keywords](#reserved-keywords)
-  - [保留字](#保留字)
-  - [Weak keywords](#weak-keywords)
-  - [松散字](#松散字)
+* [strict](#strict-keywords)
+* [reserved](#reserved-keywords)
+* [weak](#weak-keywords)
+{==+==}
+* [严格字](#strict-keywords)
+* [保留字](#reserved-keywords)
+* [松散字](#weak-keywords)
+{==+==}
 
 
 {==+==}
