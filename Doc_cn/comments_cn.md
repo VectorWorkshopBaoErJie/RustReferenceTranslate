@@ -44,8 +44,8 @@
 > &nbsp;&nbsp; | `//`
 >
 > 块注释 :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _行注释或文档_)
->      (_行注释或文档_ | ~`*/`)<sup>\*</sup> `*/`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _块注释或文档_)
+>      (_块注释或文档_ | ~`*/`)<sup>\*</sup> `*/`\
 > &nbsp;&nbsp; | `/**/`\
 > &nbsp;&nbsp; | `/***/`
 >
@@ -53,16 +53,16 @@
 > &nbsp;&nbsp; `//!` ~\[`\n` _孤立CR_]<sup>\*</sup>
 >
 > 内部块文档 :\
-> &nbsp;&nbsp; `/*!` ( _行注释或文档_ | ~\[`*/` _孤立CR_] )<sup>\*</sup> `*/`
+> &nbsp;&nbsp; `/*!` ( _块注释或文档_ | ~\[`*/` _孤立CR_] )<sup>\*</sup> `*/`
 >
 > 外部行文档 :\
 > &nbsp;&nbsp; `///` (~`/` ~\[`\n` _孤立CR_]<sup>\*</sup>)<sup>?</sup>
 >
 > 外部块文档 :\
-> &nbsp;&nbsp; `/**` (~`*` | _行注释或文档_ )
->              (_行注释或文档_ | ~\[`*/` _孤立CR_])<sup>\*</sup> `*/`
+> &nbsp;&nbsp; `/**` (~`*` | _块注释或文档_ )
+>              (_块注释或文档_ | ~\[`*/` _孤立CR_])<sup>\*</sup> `*/`
 >
-> _行注释或文档_ :\
+> _块注释或文档_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; 块注释\
 > &nbsp;&nbsp; | 外部块文档\
 > &nbsp;&nbsp; | 内部块文档
@@ -109,7 +109,7 @@ special syntax for [`doc` attributes]. That is, they are equivalent to writing
 `#[doc="Foo"]` and `/** Bar */` turns into `#[doc="Bar"]`.
 {==+==}
 以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` 属性][`doc` attributes] 的特殊语法。
-也就是说，它们相当于在注释主体的周围写上 `#[doc="..."]` ，即， `/// Foo` 转换成 `#[doc="Foo"]` ， `/** Bar */` 转换成 `#[doc="Bar"` 。
+也就是说，它们相当于在注释主体的周围写上 `#[doc="..."]` ，即， `/// Foo` 和 `/** Bar */` 转换成 `#[doc="Bar"]` 。
 {==+==}
 
 
@@ -120,8 +120,8 @@ that follows.  That is, they are equivalent to writing `#![doc="..."]` around
 the body of the comment. `//!` comments are usually used to document
 modules that occupy a source file.
 {==+==}
-以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于注释的父级，而不是之后条目。
-也就是说，它们相当于在注释主体的周围写上 `#![doc="..."]` 。 `//!` 注释通常应用于记录拥有源文件的模块。
+以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于父级，而不是之后条目。
+也就是说，相当于在注释位置写上 `#![doc="..."]` 。 `//!` 注释通常用于拥有源文件的模块。
 {==+==}
 
 
@@ -145,7 +145,7 @@ comments.
 //! A doc comment that applies to the implicit anonymous module of this crate
 {==+==}
 ```rust
-//! 应用于这个 crate 的隐式匿名模块的文档注释
+//! 应用于这个 crate 隐式匿名模块的文档注释
 {==+==}
 
 

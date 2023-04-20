@@ -363,7 +363,7 @@ code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
 可以在空的外部块上添加 `link` 属性。
-您可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
+你可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
 {==+==}
 
 

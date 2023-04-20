@@ -25,9 +25,9 @@
 >
 > 原始标识符 : `r#` 标识符或关键字 <sub>*不包括 `crate`, `self`, `super`, `Self`*</sub>
 >
-> 非关键字标识符 : 标识符或关键字 <sub>*包括 [strict] 或 [reserved] 关键字*</sub>
+> 非关键字标识符 : 标识符或关键字 <sub>*不包括 [strict] 或 [reserved] 关键字*</sub>
 >
-> 关键字 :\
+> 标识符 :\
 > 非关键字标识符 | 原始标识符
 {==+==}
 
@@ -130,7 +130,7 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 {==+==}
 Identifiers are normalized using Normalization Form C (NFC) as defined in [Unicode Standard Annex #15][UAX15]. Two identifiers are equal if their NFC forms are equal.
 {==+==}
-标识符使用 [Unicode Standard Annex #15][UAX15] 中定义的规范化形式 C (NFC) 进行规范化。如果两个标识符的 NFC 形式相同，那么它们就是相等的。
+标识符使用 [Unicode 标准附录 #15][UAX15] 中定义的规范化形式 C (NFC) 进行规范化。如果两个标识符的 NFC 形式相同，那么它们就是相等的。
 {==+==}
 
 

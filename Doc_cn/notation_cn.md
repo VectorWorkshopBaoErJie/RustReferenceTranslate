@@ -37,7 +37,7 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 | ~`string`         | ~`\n`, ~`*/`                  | Any characters, except this sequence      |
 | ( )               | (`,` _Parameter_)<sup>?</sup> | Groups items                              |
 {==+==}
-| 符号              | 示例                               | 意义                                     |
+| 符号              | 示例                               | 含义                                     |
 |-------------------|------------------------------------|------------------------------------------|
 | 大写字母           | KW_IF，INTEGER_LITERAL            | 表示词法分析器所生成的标记                |
 | _驼峰斜体_        | _LetStatement_，_Item_             | 表示语法标记                              |
@@ -75,8 +75,7 @@ Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
 语法中的一些规则，特别是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，采用了简化形式，以可打印的字符串列表的形式给出。
-这些情况构成了与 [token][tokens] 令牌规则相关的规则子集，假定其编译驱动为确定性有限自动机 <abbr title="Deterministic Finite Automaton">DFA</abbr>
-运行的语法分析器的词法分析阶段的结果，那么，该 DFA 操作于所有这些 `string` 表的分支上。
+这些情况构成了与 [令牌][tokens] 规则相关的规则子集，假定被词法分析的结果提供给语法解析器，由<abbr title="Deterministic Finite Automaton">DFA</abbr>驱动，则操作于所有这样的字符串表的析取条目。
 {==+==}
 
 
@@ -85,7 +84,7 @@ When such a string in `monospace` font occurs inside the grammar,
 it is an implicit reference to a single member of such a string table
 production. See [tokens] for more information.
 {==+==}
-当在语法中看到用 `monospace` 等宽字体显示的字符串时，它隐式地引用了该 `string` 表标记的一个成员。有关更多信息，请参见 [令牌][tokens] 。
+当在语法中看到用 `monospace` 等宽字体显示的字符串时，其隐式地引用该 `string` 表标记的一个成员。有关更多信息，请参见 [令牌][tokens] 。
 {==+==}
 
 
