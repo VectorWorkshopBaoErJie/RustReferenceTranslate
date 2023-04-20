@@ -293,7 +293,7 @@ Modules, like all items, accept outer attributes. They also accept inner
 attributes: either after `{` for a module with a body, or at the beginning of the
 source file, after the optional BOM and shebang.
 {==+==}
-模块和所有条目一样，可以接受外部属性 (outer attributes) ，同时也可以接受内部属性 (inner attributes) ，
+模块和所有条目一样，可以接受外围属性 (outer attributes) ，同时也可以接受内部属性 (inner attributes) ，
 内部属性可以出现在模块主体的左括号 `{` 之后，也可以出现在源文件的开头，在可选的 BOM 和 shebang 之后。
 {==+==}
 

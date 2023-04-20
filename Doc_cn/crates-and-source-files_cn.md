@@ -100,7 +100,7 @@ source file, or by the name of the crate itself. Every source file is a
 module, but not every module needs its own source file: [module
 definitions][module] can be nested within one file.
 {==+==}
-一个 Rust 的源文件描述了一个模块，它的名称和位置是在源文件之外定义的，即通过引用源文件中的 [Module][module] 条目，或者通过 crate 自身的名称。
+一个 Rust 的源文件描述了一个模块，它的名称和位置是在源文件之外定义的，即通过引用源文件中的 [模块][module] 条目，或者通过 crate 自身的名称。
 每个源文件都是一个模块，但不是每个模块都需要自己的源文件：[模块定义][module] 可以在一个文件中嵌套。
 {==+==}
 
@@ -314,7 +314,7 @@ other object being linked to defines `main`.
 The *`crate_name` [attribute]* may be applied at the crate level to specify the
 name of the crate with the [_MetaNameValueStr_] syntax.
 {==+==}
-`crate_name` 属性可以应用于 crate 层级，使用 [_元名称值字符串_][_MetaNameValueStr_] 语法指定 crate 名称。
+*`crate_name` [属性][attribute]* 可以应用于 crate 层级，使用 [_元名称值字符串_][_MetaNameValueStr_] 语法指定 crate 名称。
 {==+==}
 
 

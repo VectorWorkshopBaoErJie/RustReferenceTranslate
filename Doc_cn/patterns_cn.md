@@ -138,7 +138,7 @@ When destructuring a data structure with named (but not numbered) fields, it is 
 {==+==}
 ## 解构
 
-解构模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构将一个值分解成其组成部分。
+模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构将一个值分解成其组成部分。
 使用的语法与创建这些值时几乎相同。在一个模式中，其 [被匹配项][scrutinee] 表达式具有 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 代表 *单个* 数据字段，而通配符 `..` 代表 *特定变体的所有* 其余字段。
 当解构具有命名字段 (但未编号) 的数据结构时，允许将 `fieldname` 写成 `fieldname: fieldname` 的简写形式。
 在 Rust 中，解构是一种方便的工具，可用于从结构化数据类型中提取所需数据。
@@ -808,8 +808,8 @@ match tuple {
 > **<sup>语法</sup>**\
 > _区间模式_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _包含区间模式_\
-> &nbsp;&nbsp; | _HalfOpenRangePattern_\
-> &nbsp;&nbsp; | _ObsoleteRangePattern_
+> &nbsp;&nbsp; | _包含区间模式_\
+> &nbsp;&nbsp; | _废弃区间模式_
 >
 > _包含区间模式_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _区间模式边界_ `..=` _区间模式边界_
@@ -822,11 +822,11 @@ match tuple {
 > &nbsp;&nbsp; _区间模式边界_ `...` _区间模式边界_
 >
 > _区间模式边界_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [CHAR_LITERAL]\
-> &nbsp;&nbsp; | [BYTE_LITERAL]\
-> &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
-> &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
-> &nbsp;&nbsp; | [_PathExpression_]
+> &nbsp;&nbsp; &nbsp;&nbsp; [字符字面值][CHAR_LITERAL]\
+> &nbsp;&nbsp; | [字节字面值][BYTE_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [整数字面值][INTEGER_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [浮点数字面值][FLOAT_LITERAL]\
+> &nbsp;&nbsp; | [_路径表达式_][_PathExpression_]
 {==+==}
 
 
@@ -1139,7 +1139,7 @@ Reference patterns are always irrefutable.
 > &nbsp;&nbsp; _结构体模式字段_ (`,` _结构体模式字段_) <sup>\*</sup>
 >
 > _结构体模式字段_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_] <sup>\*</sup>\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [元组索引][TUPLE_INDEX] `:` [_模式_][_Pattern_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [标识符][IDENTIFIER] `:` [_模式_][_Pattern_]\
@@ -1147,7 +1147,7 @@ Reference patterns are always irrefutable.
 > &nbsp;&nbsp; )
 >
 > _结构体模式符加_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_] <sup>\*</sup>\
 > &nbsp;&nbsp; `..`
 {==+==}
 

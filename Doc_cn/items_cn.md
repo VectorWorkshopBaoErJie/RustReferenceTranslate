@@ -34,9 +34,9 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
 > &nbsp;&nbsp; | [_MacroRulesDefinition_]
 {==+==}
-> **<sup>语未能:<sup>**\
+> **<sup>语法:<sup>**\
 > _条目_:\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; _可见性条目_\
 > &nbsp;&nbsp; | _宏条目_
 >

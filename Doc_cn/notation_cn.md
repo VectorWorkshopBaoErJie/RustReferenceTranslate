@@ -44,7 +44,7 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 | `string`          | `x`，`while`，`*`                  | 表示精确的字符                            |
 | \\x               | \\n，\\r，\\t，\\0                 | 表示此转义字符所代表的字符                |
 | x<sup>?</sup>     | `pub`<sup>?</sup>                  | 表示可选项                                |
-| x<sup>\*</sup>    | _外部属性_<sup>\*</sup>      | 表示 0 个或多个 x                          |
+| x<sup>\*</sup>    | _外围属性_<sup>\*</sup>      | 表示 0 个或多个 x                          |
 | x<sup>+</sup>     | _宏匹配_<sup>+</sup>           | 表示 1 个或多个 x                          |
 | x<sup>a..b</sup>  | 十六进制数<sup>1..6</sup>           | 表示 x 重复 a 到 b 次                      |
 | \|                | `u8` \| `u16`，块 \| 条目        | 两个选项中的一个                          |

@@ -47,10 +47,10 @@
 > &nbsp;&nbsp; _可能命名函数参数_ ( `,` _可能命名函数参数_ )<sup>\*</sup> `,`<sup>?</sup>
 >
 > _可能命名函数参数_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( ( [标识符][IDENTIFIER] | `_` ) `:` )<sup>?</sup> [_类型_][_Type_]
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> ( ( [标识符][IDENTIFIER] | `_` ) `:` )<sup>?</sup> [_类型_][_Type_]
 >
 > _可能命名函数参数可变_ :\
-> &nbsp;&nbsp; ( _可能命名函数参数_ `,` )<sup>\*</sup> _可能命名函数参数_ `,` [_外部属性_][_OuterAttribute_]<sup>\*</sup> `...`
+> &nbsp;&nbsp; ( _可能命名函数参数_ `,` )<sup>\*</sup> _可能命名函数参数_ `,` [_外围属性_][_OuterAttribute_]<sup>\*</sup> `...`
 {==+==}
 
 

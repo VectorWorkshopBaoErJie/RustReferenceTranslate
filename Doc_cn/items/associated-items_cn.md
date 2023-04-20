@@ -15,7 +15,7 @@
 {==+==}
 > **<sup>语法</sup>**\
 > _关联条目_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_][_MacroInvocationSemi_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_可见性_][_Visibility_]<sup>?</sup> ( [_类型别名_][_TypeAlias_] | [_常量条目_][_ConstantItem_] | [_函数_][_Function_] ) )\
 > &nbsp;&nbsp; )

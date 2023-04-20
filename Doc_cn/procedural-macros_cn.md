@@ -125,8 +125,8 @@ token, `.` is a `Punct` token, and `1.2` is a `Literal` token. The `TokenStream`
 type, unlike `Vec<TokenTree>`, is cheap to clone.
 {==+==}
 这个 crate 主要包含一个 [`TokenStream`] 类型。
-过程宏在 *token streams* 流上操作，而不是 AST 节点，这对编译器和过程宏来说是更稳定的接口。
- *token streams* 大致相当于 `Vec<TokenTree>` ，其中 `TokenTree` 可以大致认为是词法 Token 。
+过程宏在 *token 流* 上操作，而不是 AST 节点，这对编译器和过程宏来说是更稳定的接口。
+ *token 流* 大致相当于 `Vec<TokenTree>` ，其中 `TokenTree` 可以大致认为是词法 Token 。
 例如 `foo` 是 `Ident` 标记， `.` 是 `Punct` 标记，而 `1.2` 是 `Literal` 标记。与 `Vec<TokenTree>` 不同，`TokenStream` 类型克隆更轻便。
 {==+==}
 
@@ -257,7 +257,7 @@ expressions], [item] positions, including items in [`extern` blocks], inherent
 and trait [implementations], and [trait definitions].
 {==+==}
 函数式过程宏可以在任何宏调用式位置被调用，其中包括 [语句][statements] 、 [表达式][expressions] 、 [模式][patterns] 、 [类型表达式][type expressions] 、 [条目][item] ，
-包括 [`extern` blocks] 中的条目，内部 和 trait [实现][implementations] ，以及 [trait 定义][trait definitions] 。
+包括 [`extern` 块][`extern` blocks] 中的条目，内部 和 trait [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 
@@ -294,7 +294,7 @@ then appended to the [module] or [block] that the item from the input
 [`TokenStream`] is in.
 {==+==}
 输入 [`TokenStream`] 是具有 `derive` 属性条目的 token 流。
-输出 [`TokenStream`] 必须是一组条目，然后附加到输入 [`TokenStream`] 的条目所在的 [module] 或 [block] 。
+输出 [`TokenStream`] 必须是一组条目，然后附加到输入 [`TokenStream`] 的条目所在的 [模块][module] 或 [块][block] 。
 {==+==}
 
 
@@ -435,7 +435,7 @@ attached to [items], including items in [`extern` blocks], inherent and trait
 [implementations], and [trait definitions].
 {==+==}
 *属性宏* 定义了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
-包括 [`extern` blocks] 外部块中的条目，内部 和 trait的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
+包括 [`extern` 块][`extern` blocks] 外部块中的条目，内部 和 trait的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 
@@ -450,7 +450,7 @@ including other [attributes] on the [item]. The returned [`TokenStream`]
 replaces the [item] with an arbitrary number of [items].
 {==+==}
 属性宏是由带有 `proc_macro_attribute` [attribute] 的 [public]&#32;[function] 定义的，其签名为 `(TokenStream, TokenStream) -> TokenStream` 。
-第一个 [`TokenStream`] 是属性名称后面的分隔的 token 树，不包括外部分隔符号。
+第一个 [`TokenStream`] 是属性名称后面的分隔的 token 树，不包括外部定界符号。
 如果属性被写成裸属性名，则属性 [`TokenStream`] 是空的。
 第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属性][attributes] 。
 返回的 [`TokenStream`] 用任意数量的 [条目][item] 替换 [条目][item] 。
@@ -573,7 +573,7 @@ Token trees in `macro_rules` (corresponding to `tt` matchers) are defined as
     - Note that negation (e.g. `-1`) is never a part of such literal tokens,
       but a separate operator token.
 {==+==}
-在 `macro_rules` 中的 Token 树 (对应于 `tt` matcher) 被定义为
+在 `macro_rules` 中的 Token 树 (对应于 `tt` 匹配器) 被定义为
 - 限定的组 (`(...)`, `{...}`, 等) 。
 - 语言支持的所有运算符，包括单字符和多字符的运算符 (`+`, `+=`) 。
     - 请注意，这个集合不包括单引号 `'` 。
@@ -653,7 +653,7 @@ When passed to a proc-macro
       always represented as their underlying token trees.
 {==+==}
 - 所有元变量的替换都表示为它们实际的 Token 流。
-    - 当需要保留语法分析的优先级时，这样的 Token 流可以被包装成带有隐含限定符号 ([Delimiter::None]) 的限定组 ([Group]) 。
+    - 当需要保留语法分析的优先级时，这样的 Token 流可以被包装成带有隐式定界符号 ([Delimiter::None]) 的限定组 ([Group]) 。
     - `tt` 和 `ident` 的替换从来不会被包裹在这样的组中，而总是作为它们的实际的 Token 树来表示。
 {==+==}
 
@@ -670,7 +670,7 @@ When emitted from a proc macro
 当从过程宏触发时
 - 在适用的情况下，标点符号被粘接在多字符运算符中。
 - 与标识符连接的单引号 `'` 被粘接在生命周期中。
-- 负字面值被转换为两个标记 ( `-` 和字面值 )，当需要保留语法分析的优先级时，可能会被包裹在一个带限定符号的组 ([`Group`]) 中，并带有隐式限定符 ([`Delimiter::None`]) 。
+- 负字面值被转换为两个标记 ( `-` 和字面值 )，当需要保留语法分析的优先级时，可能会被包裹在一个带限定符号的组 ([`Group`]) 中，并带有隐式定界符号 ([`Delimiter::None`]) 。
 {==+==}
 
 

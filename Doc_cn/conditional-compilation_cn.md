@@ -63,7 +63,7 @@ further described below in detail.
 {==+==}
 *条件编译源代码* 是指根据某些条件来确定是否将其部分源代码不作为或者作为源代码的一部分。
 <!-- This definition is sort of vacuous --> 
-可以使用 [attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` 宏][`cfg` macro] 条件编译源代码。
+可以使用 [属性][attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` 宏][`cfg` macro] 条件编译源代码。
 这些条件是基于编译的 crate 的目标架构、传递给编译器的任意值和其他一些细节进行确定的，下面将对其进行详细描述。
 {==+==}
 
@@ -524,7 +524,7 @@ Enabled when compiling the test harness. Done with `rustc` by using the
 [`--test`] flag. See [Testing] for more on testing support.
 {==+==}
 该选项在编译测试套件时启用，可以通过在使用 `rustc` 时加上 [`--test`] 标志来实现。
-有关测试支持的更多信息，请参见 [Testing] 。
+有关测试支持的更多信息，请参见 [测试][Testing] 。
 {==+==}
 
 
@@ -558,7 +558,7 @@ production.  For example, it controls the behavior of the standard library's
 Set when the crate being compiled is being compiled with the `proc_macro`
 [crate type].
 {==+==}
-当编译的 crate 使用 `proc_macro` [crate type] 时被设置。
+当编译的 crate 使用 `proc_macro` [crate 类型][crate type] 时被设置。
 {==+==}
 
 
@@ -625,7 +625,7 @@ Example values:
 The `cfg` [attribute] conditionally includes the thing it is attached to based
 on a configuration predicate.
 {==+==}
- `cfg` 属性是一个条件包含器，根据一系列配置判断来决定是否包含它所附着的目标。
+ `cfg` [属性][attribute]是一个条件包含器，根据一系列配置判断来决定是否包含它所附着的目标。
 {==+==}
 
 
@@ -757,7 +757,7 @@ The `cfg` attribute is allowed anywhere attributes are allowed.
 The `cfg_attr` [attribute] conditionally includes [attributes] based on a
 configuration predicate.
 {==+==}
-`cfg_attr` 属性会根据条件断言来选择性地包含其他属性。
+`cfg_attr` [属性][attribute]会根据条件断言来选择性地包含其他属性。
 {==+==}
 
 

@@ -47,7 +47,7 @@
 > &nbsp;&nbsp; _Match分支_ `=>` [_表达式_][_Expression_] `,`<sup>?</sup>
 >
 > _Match分支_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> [_模式_][_Pattern_] _Match分支守卫_<sup>?</sup>
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> [_模式_][_Pattern_] _Match分支守卫_<sup>?</sup>
 >
 > _Match分支守卫_ :\
 > &nbsp;&nbsp; `if` [_表达式_][_Expression_]
@@ -262,7 +262,7 @@ The only attributes that have meaning on match arms are [`cfg`] and the [lint ch
 {==+==}
 ## 匹配分支上的属性
 
-可以在匹配分支上使用外部属性。
+可以在匹配分支上使用外围属性。
 在匹配分支上具有意义的属性只有 [`cfg`] 和 [代码分析检查属性][lint check attributes] 。
 [内部属性][Inner attributes] 可以直接放置在匹配表达式的左括号后面，在与 [块表达式上的属性][attributes on block expressions] 相同的表达式上下文中。
 {==+==}

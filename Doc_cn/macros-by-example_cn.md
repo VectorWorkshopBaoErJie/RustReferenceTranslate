@@ -45,21 +45,19 @@
 > _MacroTranscriber_ :\
 > &nbsp;&nbsp; [_DelimTokenTree_]
 {==+==}
-
-
 > **<sup>语法</sup>**\
 > _宏规则定义_ :\
-> &nbsp;&nbsp; `macro_rules` `!` [标识符] _实例宏规则定义_
+> &nbsp;&nbsp; `macro_rules` `!` [标识符][IDENTIFIER] _宏规则组定界_
 >
-> _实例宏规则定义_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `(` _实例宏规则组_ `)` `;`\
-> &nbsp;&nbsp; | `[` _实例宏规则组_ `]` `;`\
-> &nbsp;&nbsp; | `{` _实例宏规则组_ `}`
+> _宏规则组定界_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `(` _宏规则组_ `)` `;`\
+> &nbsp;&nbsp; | `[` _宏规则组_ `]` `;`\
+> &nbsp;&nbsp; | `{` _宏规则组_ `}`
 >
-> _实例宏规则组_ :\
-> &nbsp;&nbsp; _实例宏规则_ ( `;` _实例宏规则_ )<sup>\*</sup> `;`<sup>?</sup>
+> _宏规则组_ :\
+> &nbsp;&nbsp; _宏规则_ ( `;` _宏规则_ )<sup>\*</sup> `;`<sup>?</sup>
 >
-> _实例宏规则_ :\
+> _宏规则_ :\
 > &nbsp;&nbsp; _宏匹配器_ `=>` _宏转录器_
 >
 > _宏匹配器_ :\
@@ -68,9 +66,9 @@
 > &nbsp;&nbsp; | `{` _宏匹配_<sup>\*</sup> `}`
 >
 > _宏匹配_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_除了 `$` 和 [分隔符][delimiters] 之外的任意 token_</sub>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_不包括 `$` 和 [定界符号][delimiters] 之外的任意 token_</sub>\
 > &nbsp;&nbsp; | _宏匹配器_\
-> &nbsp;&nbsp; | `$` ( [标识符或关键字][IDENTIFIER_OR_KEYWORD] <sub>_除了 `crate` 之外的任意标识符或关键字_</sub> | [原始标识符][RAW_IDENTIFIER] | `_` ) `:` _宏片段规格_\
+> &nbsp;&nbsp; | `$` ( [标识符或关键字][IDENTIFIER_OR_KEYWORD] <sub>_不包括 `crate` 之外的任意标识符或关键字_</sub> | [原始标识符][RAW_IDENTIFIER] | `_` ) `:` _宏片段规格_\
 > &nbsp;&nbsp; | `$` `(` _宏匹配_<sup>+</sup> `)` _宏表示分割_<sup>?</sup> _宏表示操作符_
 >
 > _宏片段规格_ :\
@@ -78,7 +76,7 @@
 > &nbsp;&nbsp; | `meta` | `pat` | `pat_param` | `path` | `stmt` | `tt` | `ty` | `vis`
 >
 > _宏表示分割_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_除了 [分隔符][delimiters] 和 宏表示操作符_ 之外的任意 token_</sub>
+> &nbsp;&nbsp; [_Token_]<sub>_不包括 [定界符号][delimiters] 和 宏表示操作符_ 之外的任意 token_</sub>
 >
 > _宏表示操作符_ :\
 > &nbsp;&nbsp; `*` | `+` | `?`
@@ -107,7 +105,7 @@ items), types, or patterns.
 {==+==}
 每个宏定义都有一个名称和一个或多个 _规则_ 。
 每个规则都有两个部分：一个 _匹配器_ ，用于描述它匹配的语法，以及一个 _转录器_ ，用于描述成功匹配调用后将替换的语法。
-匹配器和转录器都必须被包含在分隔符中。
+匹配器和转录器都必须被包含在定界符号中。
 宏可以扩展为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
 {==+==}
 
@@ -187,8 +185,8 @@ fragment types are an exception, and *can* be matched by literal tokens. The
 following illustrates this restriction:
 {==+==}
 在将匹配的片段转发到另一个实例宏时，第二个宏中的匹配器将看到片段类型的不透明 AST 。
-第二个宏不能使用文本标记来匹配匹配器中的片段，只能使用相同类型的片段指定符。
- `ident` 、 `lifetime` 和 `tt` 片段类型例外，可以用文本标记匹配。以下是这个限制的示例：
+第二个宏不能使用字面 token 来匹配匹配器中的片段，只能使用相同类型的片段规格。
+ `ident` 、 `lifetime` 和 `tt` 片段类型例外，可以用字面 token 匹配。以下是这个限制的示例：
 {==+==}
 
 
@@ -243,7 +241,18 @@ macro_rules! bar {
 foo!(3);
 ```
 {==+==}
+```rust
+// 编译成功
+macro_rules! foo {
+    ($l:tt) => { bar!($l); }
+}
 
+macro_rules! bar {
+    (3) => {}
+}
+
+foo!(3);
+```
 {==+==}
 
 
@@ -332,7 +341,7 @@ specifier when it appears as a subexpression.
 >
 > 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层选项_][_PatternNoTopAlt_] ) 。
 >
-> 相关版本指 `macro_rules!` 定义生效的版本。
+> 相关版次指 `macro_rules!` 定义生效的版次。
 {==+==}
 
 
@@ -351,8 +360,8 @@ other than a delimiter or one of the repetition operators, but `;` and `,` are
 the most common. For instance, `$( $i:ident ),*` represents any number of
 identifiers separated by commas. Nested repetitions are permitted.
 {==+==}
-在匹配器和转录器中，重复的标志是通过将要重复的标记放在 `$(`…`)` 中，后跟重复运算符，可选地包括分隔符标记。
-分隔符标记可以是任何标记，除了定界符或重复运算符，但常用的是 `;` 和 `,` 。
+在匹配器和转录器中，重复的标志是通过将要重复的 token 放在 `$(`…`)` 中，后跟重复运算符，可选地包括分隔符 token 。
+分隔符 token 可以是任何 token ，除了定界符或重复运算符，但常用的是 `;` 和 `,` 。
 例如，`$( $i:ident ),*` 表示由逗号分隔的任意数量的标识符。允许嵌套重复。
 {==+==}
 
@@ -410,7 +419,6 @@ compiler knows how to expand them properly:
     `=> { $( $i );* }` is correct and replaces a comma-separated list of
     identifiers with a semicolon-separated list.
 {==+==}
-
 1.  一个匹配器中的一个重复子串，必须在转录器中以完全相同的数量、种类和嵌套顺序出现。
     因此，对于匹配器 `$( $i:ident ),*`，转录器 `=> { $i }`、`=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是不合法的，
     但是 `=> { $( $i );* }` 是正确的，并将由逗号分隔的标识符列表替换为由分号分隔的列表。
@@ -675,7 +683,7 @@ The *`macro_use` attribute* has two purposes. First, it can be used to make a
 module's macro scope not end when the module is closed, by applying it to a
 module:
 {==+==}
-*`macro_use` 属性* 有两个目的。首先，它可用于使模块的宏作用域在模块关闭后不结束，通过将其应用于一个模块：
+*`macro_use` 属性* 有两个目的。首先，通过将其应用于一个模块，使模块的宏作用域在模块关闭后不结束：
 {==+==}
 
 
@@ -706,9 +714,9 @@ can be specified using the [_MetaListIdents_] syntax; this is not supported
 when `#[macro_use]` is applied to a module.
 {==+==}
 第二个作用是将它应用于出现在 crate 的根模块中的 `extern crate` 声明，从而从另一个 crate 导入宏。
-以这种方式导入的宏被导入到 [`macro_use` 预定义][`macro_use` prelude] ，而不是文本上导入，这意味着它们可以被任何其他名称隐藏。
+以这种方式导入的宏被导入到 [`macro_use` 预定义][`macro_use` prelude] ，而不是文本中导入，这意味着它们可以被任何其他名称隐藏。
 虽然 `#[macro_use]` 导入的宏可以在导入语句之前使用，但在冲突的情况下，最后导入的宏优先。
-可选地，可以使用 [MetaListIdents] 语法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块时，不支持此功能。
+可选地，可以使用 [元列表ID组][MetaListIdents] 语法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块时，不支持此功能。
 {==+==}
 
 

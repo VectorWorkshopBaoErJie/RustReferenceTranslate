@@ -67,7 +67,7 @@ There are two ways to define new macros:
 > &nbsp;&nbsp; | `{` _Token树_<sup>\*</sup> `}`
 >
 > _Token树_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_不包括 [分隔符][delimiters]_</sub> | _定界Token树_
+> &nbsp;&nbsp; [_Token_]<sub>_不包括 [定界符号][delimiters]_</sub> | _定界Token树_
 >
 > _宏调用语句_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_简单路径_][_SimplePath_] `!` `(` _Token树_<sup>\*</sup> `)` `;`\
@@ -97,7 +97,7 @@ following situations:
 * [模式][Patterns]
 * [类型][Types]
 * [条目][Items] 包括 [关联条目][associated items]
-* [`macro_rules`] 转换器
+* [`macro_rules`] 转录器
 * [外部块][External blocks] 
 {==+==}
 
@@ -108,7 +108,7 @@ where a semicolon is required at the end when not using curly braces.
 [Visibility qualifiers] are never allowed before a macro invocation or
 [`macro_rules`] definition.
 {==+==}
-当它被用作条目或语句时，使用 `_宏调用语句_` 形式，当不使用花括号时需要在末尾加上分号。
+当它被用作条目或语句时，使用 _宏调用语句_ 形式，当不使用花括号时需要在末尾加上分号。
 在宏调用或 [`macro_rules`] 定义之前，不允许出现 [可见性限定符][Visibility qualifiers] 。
 {==+==}
 

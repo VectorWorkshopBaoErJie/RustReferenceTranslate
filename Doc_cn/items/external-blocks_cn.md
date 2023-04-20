@@ -27,7 +27,7 @@
 > &nbsp;&nbsp; `}`
 >
 > _外部条目_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_][_MacroInvocationSemi_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_可见性_][_Visibility_]<sup>?</sup> ( [_静态条目_][_StaticItem_] | [_函数_][_Function_] ) )\
 > &nbsp;&nbsp; )

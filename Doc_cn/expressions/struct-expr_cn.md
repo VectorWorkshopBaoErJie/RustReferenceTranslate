@@ -48,7 +48,7 @@
 > &nbsp;&nbsp; _结构体表达式字段_ (`,` _结构体表达式字段_)<sup>\*</sup> (`,` _结构体省略_ | `,`<sup>?</sup>)
 >
 > _结构体表达式字段_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_] <sup>\*</sup>\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [标识符][IDENTIFIER]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ([标识符][IDENTIFIER] | [元组索引][TUPLE_INDEX]) `:` [_表达式_][_Expression_]\

@@ -54,7 +54,7 @@
 > &nbsp;&nbsp; | _块表达式_
 >
 > _无块表达式_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_字面值表达式_][_LiteralExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_路径表达式_][_PathExpression_]\
@@ -80,7 +80,7 @@
 > &nbsp;&nbsp; )
 >
 > _块表达式_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_块表达式_][_BlockExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_Unsafe块表达式_][_UnsafeBlockExpression_]\
@@ -340,7 +340,7 @@ The following contexts are *place expression* contexts:
 * 任何 [隐式借用][implicit borrow] 的操作数。
 * [let 语句][let statement] 的初始化器。
 * [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配项][scrutinee] 。
-* [结构体函数式更新][functional update]表达式的基础。
+* [结构体函数式更新][functional update] 表达式的基础。
 
 > 注意: 从历史上看，占位表达式称为左值，值表达式称为右值。
 {==+==}
@@ -365,12 +365,12 @@ Arbitrary parenthesisation is permitted inside assignee expressions.
 明确地说，可赋值表达式表达式包括：
 
 - 占位表达式
-- [下划线表达式][_UnderscoreExpression_]。
-- 包含可赋值表达式的 [元组表达式][_TupleExpression_]。
-- 包含可赋值表达式的 [数组表达式][_ArrayExpression_]。
-- 包含可赋值表达式的 [元组结构体表达式][_StructExpression_]。
-- 包含可赋值表达式的 [结构体表达式][_StructExpression_] (可包含命名字段) 。
-- [单元结构体][_StructExpression_]。
+- [_下划线表达式_][_UnderscoreExpression_]。
+- 包含可赋值表达式的 [_元组表达式_][_TupleExpression_]。
+- 包含可赋值表达式的 [_数组表达式_][_ArrayExpression_]。
+- 包含可赋值表达式的 [_元组结构体表达式_][_StructExpression_]。
+- 包含可赋值表达式的 [_结构体表达式_][_StructExpression_] (可包含命名字段) 。
+- [_单元结构体_][_StructExpression_]。
 
 在可赋值表达式中允许任意括号化。
 {==+==}
@@ -444,7 +444,7 @@ The following expressions can be mutable place expression contexts:
 * [可变 `static` 条目][Mutable `static` items] 。
 * [临时值][Temporary values] 。
 * [字段][field]: 这将在可变占位表达式上下文中求出子表达式。
-* `*mut T` 指针的解引用 [dereference][deref] 。
+* `*mut T` 指针的 [解引用][deref] 。
 * 类型为 `&mut T` 的变量或变量字段的解引用。注意：这是对下一条规则的例外情况。
 * 实现 `DerefMut` 的类型的解引用: 这要求被解引用的值在可变占位表达式上下文中求值。
 * 实现 `IndexMut` 的类型的 [数组索引][Array indexing]: 这将在可变占位表达式上下文中求出被索引的值，但不包括索引。
@@ -559,7 +559,7 @@ They are never allowed before:
 {==+==}
 ## 表达式属性
 
-在表达式前面的 [_外部属性_][_OuterAttribute_] 只允许在以下几种情况下使用：
+在表达式前面的 [_外围属性_][_OuterAttribute_] 只允许在以下几种情况下使用：
 
 * 用作 [语句][statement] 的表达式之前。
 * [数组表达式][array expressions]，[元组表达式][tuple expressions]，[调用表达式][call expressions]和元组风格的 [结构体][struct] 表达式的元素。
