@@ -62,7 +62,7 @@
 > &nbsp;&nbsp; | (_Self参数_ `,`)<sup>?</sup> _函数数参数_ (`,` _函数数参数_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _Self参数_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
 >
 > _简写Self_ :\
 > &nbsp;&nbsp;  (`&` | `&` [_生命周期_][_Lifetime_])<sup>?</sup> `mut`<sup>?</sup> `self`
@@ -71,7 +71,7 @@
 > &nbsp;&nbsp; `mut`<sup>?</sup> `self` `:` [_类型_][_Type_]
 >
 > _函数参数_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> (
 >   _函数参数模式_ | `...` | [_模式_][_Type_] [^fn-param-2015]
 > )
 >
@@ -750,7 +750,7 @@ responsibility to ensure that.
 [Outer attributes][attributes] are allowed on functions. [Inner
 attributes][attributes] are allowed directly after the `{` inside its [block].
 {==+==}
-函数可以使用 [外部属性][attributes] 。 [内部属性][attributes] 可以直接在函数的 [block] 里的 `{` 后面使用。
+函数可以使用 [外围属性][attributes] 。 [内部属性][attributes] 可以直接在函数的 [block] 里的 `{` 后面使用。
 {==+==}
 
 
@@ -777,7 +777,7 @@ fn documented() {
 > Note: Except for lints, it is idiomatic to only use outer attributes on
 > function items.
 {==+==}
-> 注意: 除了用于 lint ，通常仅在函数条目上使用外部属性是惯用的。
+> 注意: 除了用于 lint ，通常仅在函数条目上使用外围属性是惯用的。
 {==+==}
 
 
@@ -804,7 +804,7 @@ attributes macros.
 permitted [built-in attributes] are restricted to `cfg`, `cfg_attr`, `allow`,
 `warn`, `deny`, and `forbid`.
 {==+==}
-函数参数上允许使用 [外部属性][attributes] ，其中允许使用的 [内置属性][built-in attributes] 仅限于 `cfg` ， `cfg_attr` ， `allow` ， `warn` ， `deny` 和 `forbid`。
+函数参数上允许使用 [外围属性][attributes] ，其中允许使用的 [内置属性][built-in attributes] 仅限于 `cfg` ， `cfg_attr` ， `allow` ， `warn` ， `deny` 和 `forbid`。
 {==+==}
 
 

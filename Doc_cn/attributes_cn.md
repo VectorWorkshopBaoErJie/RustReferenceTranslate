@@ -26,7 +26,7 @@
 > _内部属性_ :\
 > &nbsp;&nbsp; `#` `!` `[` _属性_ `]`
 >
-> _外部属性_ :\
+> _外围属性_ :\
 > &nbsp;&nbsp; `#` `[` _属性_ `]`
 >
 > _属性_ :\
@@ -44,7 +44,7 @@ to name, convention, language, and compiler version. Attributes are modeled
 on Attributes in [ECMA-335], with the syntax coming from [ECMA-334] \(C#).
 {==+==}
  _属性_ 是通用的、自由形式的元数据，根据名称、约定、语言和编译器版本来解释。
-属性以 [ECMA-335] 中的 Attributes 为模型，其语法来自 [ECMA-334] \(C#) 。
+属性以 [ECMA-335] 中的属性为模型，其语法来自 [ECMA-334] \(C#) 。
 {==+==}
 
 
@@ -53,8 +53,8 @@ _Inner attributes_, written with a bang (`!`) after the hash (`#`), apply to the
 item that the attribute is declared within. _Outer attributes_, written without
 the bang after the hash, apply to the thing that follows the attribute.
 {==+==}
- _内部属性_ ，在井号 (`#`) 后跟一个叹号 (`!`)，应用于内部声明属性的条目。
- _外部属性_ ，在哈希值后不加叹号，应用于该属性随后的事物。
+ _内部属性_ ，在井号 (`#`) 后跟一个叹号 (`!`)，使声明应用于内部。
+ _外围属性_ ，在哈希值后不加叹号，该属性应用于随后的条目。
 {==+==}
 
 
@@ -101,7 +101,7 @@ Attributes may be applied to many things in the language:
 * All [item declarations] accept outer attributes while [external blocks],
   [functions], [implementations], and [modules] accept inner attributes.
 {==+==}
-* 所有的 [条目声明][item declarations] 都接受外部属性，而 [外部块][external blocks] 、 [函数][functions] 、 [实现][implementations] 和 [模块][modules] 接受内部属性。
+* 所有的 [条目声明][item declarations] 都接受外围属性，而 [外部块][external blocks] 、 [函数][functions] 、 [实现][implementations] 和 [模块][modules] 接受内部属性。
 {==+==}
 
 
@@ -109,7 +109,7 @@ Attributes may be applied to many things in the language:
 * Most [statements] accept outer attributes (see [Expression Attributes] for
   limitations on expression statements).
 {==+==}
-* 大多数 [语句][statements] 都接受外部属性 (关于表达式语句的限制，见 [表达式属性][Expression Attributes] ) 。
+* 大多数 [语句][statements] 都接受外围属性 (关于表达式语句的限制，见 [表达式属性][Expression Attributes] ) 。
 {==+==}
 
 
@@ -118,7 +118,7 @@ Attributes may be applied to many things in the language:
   the outer expression of an [expression statement] or the final expression of
   another block expression.
 {==+==}
-* [块表达式][Block expressions] 可以接受外部和内部属性，但是只有当它们是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时才能接受。
+* [块表达式][Block expressions] 可以接受外围和内部属性，但是只有当它们是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时才能接受。
 {==+==}
 
 
@@ -127,9 +127,9 @@ Attributes may be applied to many things in the language:
 * [Match expression arms][match expressions] accept outer attributes.
 * [Generic lifetime or type parameter][generics] accept outer attributes.
 {==+==}
-* [Enum] 变体和 [struct] 和 [union] 字段接受外部属性。
-* [匹配表达式分支][match expressions] 接受外部属性。
-* [泛型生命周期或类型参数][generics] 接受外部属性。
+* [Enum] 变体和 [struct] 和 [union] 字段接受外围属性。
+* [匹配表达式分支][match expressions] 接受外围属性。
+* [泛型生命周期或类型参数][generics] 接受外围属性。
 {==+==}
 
 
@@ -137,7 +137,7 @@ Attributes may be applied to many things in the language:
 * Expressions accept outer attributes in limited situations, see [Expression
   Attributes] for details.
 {==+==}
-* 表达式在有限的情况下接受外部属性，详见 [表达式属性][Expression Attributes] 。
+* 表达式在有限的情况下接受外围属性，详见 [表达式属性][Expression Attributes] 。
 {==+==}
 
 
@@ -146,7 +146,7 @@ Attributes may be applied to many things in the language:
   parameters accept outer attributes. This includes attributes on variadic parameters
   denoted with `...` in function pointers and [external blocks][variadic functions].
 {==+==}
-* [函数][functions] 、 [闭包][closure] 和 [函数指针][function pointer] 参数接受外部属性。这包括在函数指针和 [外部块][variadic functions] 中用 `...` 表示的变量参数的属性。
+* [函数][functions] 、 [闭包][closure] 和 [函数指针][function pointer] 参数接受外围属性。这包括在函数指针和 [外部块][variadic functions] 中用 `...` 表示的变量参数的属性。
 {==+==}
 
 
@@ -189,7 +189,7 @@ fn some_unused_variables() {
 ```
 {==+==}
 ```rust
-// 应用于封闭模块或 crate 的通用 metadata 。
+// 应用于封闭模块或 crate 的通用元数据 。
 #![crate_type = "lib"]
 
 // 标记为单元测试的函数
@@ -204,7 +204,7 @@ mod bar {
     /* ... */
 }
 
-// 用于屏蔽警告/错误的 lint 属性
+// 用于屏蔽警告/错误的代码分析属性
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
@@ -355,10 +355,10 @@ forms:
 > &nbsp;&nbsp; [标识符][IDENTIFIER]
 >
 > _元名称值字符串_:\
-> &nbsp;&nbsp; [标识符][IDENTIFIER] `=` ([STRING_LITERAL] | [RAW_STRING_LITERAL])
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `=` ([字符串字面值][STRING_LITERAL] | [原始字符串字面值][RAW_STRING_LITERAL])
 >
 > _元列表路径_:\
-> &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( [_SimplePath_] (`,` [_SimplePath_])* `,`<sup>?</sup> )<sup>?</sup> `)`
+> &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( [_简单路径_][_SimplePath_] (`,` [_简单路径_][_SimplePath_])* `,`<sup>?</sup> )<sup>?</sup> `)`
 >
 > _元列表ID组_:\
 > &nbsp;&nbsp; [标识符][IDENTIFIER] `(` ( [标识符][IDENTIFIER] (`,` [标识符][IDENTIFIER])* `,`<sup>?</sup> )<sup>?</sup> `)`
@@ -562,9 +562,9 @@ The following is an index of all built-in attributes.
   - [`must_use`] — Generates a lint for unused values.
 {==+==}
 - 诊断
-  - [`allow`], [`warn`], [`deny`], [`forbid`] — 改变默认的 lint 级别。
+  - [`allow`], [`warn`], [`deny`], [`forbid`] — 改变默认的代码分析级别。
   - [`deprecated`] — 生成弃用通知
-  - [`must_use`] — 生成未使用值的 lint 。
+  - [`must_use`] — 生成未使用值的代码分析。
 {==+==}
 
 

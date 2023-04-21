@@ -90,7 +90,7 @@ Many of the features that one might expect to be language features are library f
 {==+==}
 本书也不作为语言发行版所包含 [标准库][standard library] 的参考文献。
 标准库通过从源代码中提取文档属性而单独记录。
-许多学习者所期望的语言特性在 Rust 中可能是库，因此有可能查找的内容在标准库中，而不是本书中。
+许多学习者所期望的语言特性在 Rust 中可能是库，因此有可能查找的内容在标准库中，而不在本书中。
 {==+==}
 
 
@@ -100,7 +100,7 @@ Similarly, this book does not usually document the specifics of `rustc` as a too
 Cargo has a [book][cargo book] that contains a [reference][cargo reference].
 There are a few pages such as [linkage] that still describe how `rustc` works.
 {==+==}
-同理，本书通常不会记录 `rustc` 和 Cargo 这两个工具的具体细节。
+同理，本书通常不会记录 `rustc` 和 Cargo 工具的具体细节。
 `rustc` 有其自己的 [文档][rustc book] 。
 Cargo 也有一本 [文档][cargo book] ，其中包含 [参考][cargo reference]。
 但有些页，如 [linkage] 仍然描述 `rustc` 的工作原理。
@@ -126,7 +126,7 @@ Everything that happens that way must conform to what the reference says.
 Rust 编译器，包括 `rustc` ，会执行优化操作。
 本参考手册没有明确指定允许或禁止哪些优化。
 而是，将编译后的程序视为黑盒。
-您只能通过运行程序、提供输入和观察输出的方式来探测它。
+你只能通过运行程序、提供输入和观察输出的方式来探测它。
 而，这样产生的效果应符合参考手册所阐述的内容。
 {==+==}
 
@@ -153,7 +153,7 @@ We intend to produce such a book someday, and until then, the reference is the c
 This book does not assume you are reading this book sequentially.
 Each chapter generally can be read standalone, but will cross-link to other chapters for facets of the language they refer to, but do not discuss.
 {==+==}
-本书并不假设您是顺序阅读。
+本书并不假设你是顺序阅读。
 每个章节通常可以单独阅读，在其内容涉及但未展开讨论时，会交叉链接到其他章节。
 {==+==}
 
@@ -172,11 +172,11 @@ Otherwise, you can press `s` or click the magnifying glass on the top bar to sea
 For example, say you wanted to know when a temporary value created in a let statement is dropped.
 If you didn't already know that the [lifetime of temporaries] is defined in the [expressions chapter], you could search "temporary let" and the first search result will take you to that section.
 {==+==}
-第一种是回答特定的问题。
-如果你知道哪个章节可以回答这个问题，可以在目录中跳转到该章节。
-你可以按下 `s` 键或点击顶部栏上的放大镜搜索与您的问题相关的关键词。
+一是回答特定的问题。
+如果你知道哪个章节可以回答相应问题，可以在目录中跳转到该章节。
+可以按下 `s` 键或点击顶部栏上的放大镜搜索与问题相关的关键词。
 例如，假设你想知道在 let 语句中创建的临时值何时被丢弃。
-如果你不知道 [临时值的生命周期][lifetime of temporaries] 在 [表达式章节][expressions chapter] 中定义，你可以搜索 "temporary let" ，其搜索结果就是相关章节。
+如果你不知道 [临时值的生命周期][lifetime of temporaries] 在 [表达式章节][expressions chapter] 中定义，可以搜索 "temporary let" ，其搜索结果就是相关章节。
 {==+==}
 
 
@@ -185,7 +185,7 @@ The second is to generally improve your knowledge of a facet of the language.
 In that case, just browse the table of contents until you see something you want to know more about, and just start reading.
 If a link looks interesting, click it, and read about that section.
 {==+==}
-第二种是提高对语言某个方面的了解。
+二是提高对语言某个方面的了解。
 那么，只需浏览目录，针对某一主题展开阅读。
 {==+==}
 
@@ -217,7 +217,7 @@ These conventions are documented here.
   Whenever that term is used outside of that chapter, it is usually a link to the section that has this definition.
 {==+==}
 * 定义术语的语句中，该术语会以 *斜体* 的形式出现。
-  在该章节之外的任意地方使用该术语时，通常都是指向包含此定义部分的链接。
+  在该章节之外的任意地方使用该术语时，常通过链接指向其定义部分。
 {==+==}
 
 
@@ -260,7 +260,7 @@ These conventions are documented here.
 {==+==}
 * Warnings that show unsound behavior in the language or possibly confusing interactions of language features are in a special warning box.
 {==+==}
-* 警告信息将显示为特殊的警告框，用于显示语言中的不安全行为或可能引起混淆的语言特性，作为读者间的交互。
+* 警告将显示为特殊的警告框的形式，用于显示语言中的不安全行为或可能引起混淆的语言特性。
 {==+==}
 
 
@@ -356,8 +356,8 @@ If this book does not answer your question, and you think its answer is in scope
 Knowing what people use this book for the most helps direct our attention to making those sections the best that they can be.
 We also want the reference to be as normative as possible, so if you see anything that is wrong or is non-normative but not specifically called out, please also [file an issue].
 {==+==}
-您可以通过打开一个 issue 或发送一个 pull request 到 [Rust 参考仓库][the Rust Reference repository] 做出贡献。
-如果你的问题这本书没有回答，并且你认为该问题有必要范围包含在本书中，请 [提交 issue][file an issue] 或在 [Zulip] 的 `t-lang/doc` 频道提问。
+你可以通过打开一个 issue 或发送一个 pull request 到 [Rust 参考仓库][the Rust Reference repository] 做出贡献。
+如果你的问题这本书没有回答，并且你认为该问题有必要包含在本书中，请 [提交 issue][file an issue] 或在 [Zulip] 的 `t-lang/doc` 频道提问。
 了解本书最常使用的内容，有助于集中精力使这些部分变得更好。
 我们还希望本书尽可能成为标准规范，对于发现的任何错误或不规范的问题，请 [提交 issue][file an issue] 。
 {==+==}

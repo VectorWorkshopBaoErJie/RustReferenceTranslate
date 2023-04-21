@@ -27,7 +27,7 @@
 > &nbsp;&nbsp; `}`
 >
 > _外部条目_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> (\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_宏调用语句_][_MacroInvocationSemi_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_可见性_][_Visibility_]<sup>?</sup> ( [_静态条目_][_StaticItem_] | [_函数_][_Function_] ) )\
 > &nbsp;&nbsp; )
@@ -363,7 +363,7 @@ code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
 可以在空的外部块上添加 `link` 属性。
-您可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
+你可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
 {==+==}
 
 

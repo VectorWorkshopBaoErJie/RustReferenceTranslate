@@ -43,7 +43,7 @@
 > &nbsp;&nbsp; _枚举条目_ ( `,` _枚举条目_ )<sup>\*</sup> `,`<sup>?</sup>
 >
 > _枚举条目_ :\
-> &nbsp;&nbsp; _外部属性_<sup>\*</sup> [_可见性_][_Visibility_]<sup>?</sup>\
+> &nbsp;&nbsp; _外围属性_<sup>\*</sup> [_可见性_][_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [标识符][IDENTIFIER]&nbsp;( _枚举条目元组_ | _枚举条目结构体_ )<sup>?</sup>
 >                                _枚举条目判别式_<sup>?</sup>
 >

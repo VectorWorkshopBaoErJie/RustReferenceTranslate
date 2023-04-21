@@ -27,7 +27,7 @@ types">DSTs</abbr>. Such types can only be used in certain cases:
 {==+==}
 # 动态大小类型
 
-大多数类型在编译时具有固定的大小并实现了 [`Sized`][sized] trait。大小仅在运行时已知的类型称为 _动态大小类型_ (_DST_) 或非大小类型 。
+大多数类型在编译时具有固定的大小并实现了 [`Sized`][sized] trait。大小仅在运行时已知的类型称为 _动态大小类型_ (_DST_) 或未确定大小类型 。
 [切片][Slices] 和 [trait 对象][trait objects] 是两个 <abbr title="动态大小类型">DSTs</abbr> 的例子。这样的类型只能在某些情况下使用：
 
 * 指向 <abbr title="动态大小类型">DSTs</abbr> 的指针类型是有大小的，但大小是指向大小类型的指针的两倍。

@@ -66,7 +66,7 @@
 > &nbsp;&nbsp; _结构体字段_ (`,` _结构体字段_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _结构体字段_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; [_可见性_][_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [标识符][IDENTIFIER] `:` [_类型_][_Type_]
 >
@@ -74,7 +74,7 @@
 > &nbsp;&nbsp; _元组字段_ (`,` _元组字段_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _元组字段_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup>\
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; [_可见性_][_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [_类型_][_Type_]
 {==+==}

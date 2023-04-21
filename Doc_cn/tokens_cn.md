@@ -1,7 +1,7 @@
 {==+==}
 # Tokens
 {==+==}
-
+# 令牌
 {==+==}
 
 
@@ -35,7 +35,9 @@ Token 是非递归的常规编程语言描述语法的原始制品。 Rust 源�
 Within this documentation's grammar, "simple" tokens are given in [string
 table production] form, and appear in `monospace` font.
 {==+==}
-在本文档的语法中，"简单" Token 以 [string 标记][string table production] 的形式给出，并以 `monospace` "等宽" 字体呈现。
+在本文档的语法表示部分，"简单" Token 以 [string 标记][string table production] 的形式给出，并以 `monospace` "等宽" 字体呈现。
+
+译注: 中译本无法表达等宽字体，如有必要请至译本仓库查看对应的翻译词条。
 {==+==}
 
 
@@ -86,11 +88,11 @@ Literals are tokens used in [literal expressions].
 {==+==}
 |                                              | 示例         | `#` 标记\* | 字符集  | 转义             |
 |----------------------------------------------|-----------------|------------|-------------|---------------------|
-| [字符](#character-literals)             | `'H'`           | 0          | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
-| [字符串](#string-literals)                   | `"hello"`       | 0          | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
+| [字符](#character-literals)             | `'H'`           | 0          | All Unicode | [引号](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
+| [字符串](#string-literals)                   | `"hello"`       | 0          | All Unicode | [引号](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
 | [原始字符串](#raw-string-literals)           | `r#"hello"#`    | <256       | All Unicode | `N/A`                                                      |
-| [字节](#byte-literals)                       | `b'H'`          | 0          | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
-| [字节字符串](#byte-string-literals)         | `b"hello"`      | 0          | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
+| [字节](#byte-literals)                       | `b'H'`          | 0          | All ASCII   | [引号](#quote-escapes) & [Byte](#byte-escapes)                               |
+| [字节字符串](#byte-string-literals)         | `b"hello"`      | 0          | All ASCII   | [引号](#quote-escapes) & [Byte](#byte-escapes)                               |
 | [原始字节字符串](#raw-byte-string-literals) | `br#"hello"#`   | <256       | All ASCII   | `N/A`                                                      |
 {==+==}
 
@@ -133,7 +135,7 @@ Literals are tokens used in [literal expressions].
 {==+==}
 #### Byte escapes
 {==+==}
-#### Byte 转义符
+#### 字节转义符
 {==+==}
 
 
@@ -448,7 +450,7 @@ assert_eq!(b, c);
 > See [this issue](https://github.com/rust-lang/reference/pull/1042) for more information.
 {==+==}
 > 注意: Rust 跳过额外的新行 (比如在例子 `c` 中) ，这有可能会令人困惑和意外。 
-> 在未来可能会调整这种行为。在做出决定之前，建议避免使用,也就是说，目前，会跳过多个连续的换行。
+> 在未来可能会调整这种行为。在做出决定之前，建议避免使用，也就是说，目前，会跳过多个连续的换行。
 > 更多内容见这个 [Issue](https://github.com/rust-lang/reference/pull/1042) 。
 {==+==}
 
@@ -490,7 +492,7 @@ following forms:
   (`r`), or `U+0074` (`t`), denoting the Unicode values `U+000A` (LF),
   `U+000D` (CR) or `U+0009` (HT) respectively.
 {==+==}
-* _24位编码转义_ 以 `U+0075` (`u`) 开始，后面是最多六个 _十六位数字_ ，由大括号 `U+007B` (`{`) 和 `U+007D` (`}`) 包围。它表示 Unicode 编码，等于所提供的十六进制值。
+* _24 位编码转义_ 以 `U+0075` (`u`) 开始，后面是最多六个 _十六位数字_ ，由大括号 `U+007B` (`{`) 和 `U+007D` (`}`) 包围。它表示 Unicode 编码，等于所提供的十六进制值。
 * _空白转义_ 是字符 `U+006E` (`n`) 、 `U+0072` (`r`) 或 `U+0074` (`t`) 之一，分别表示 Unicode 值 `U+000A` (LF) 、 `U+000D` (CR) 或 `U+0009` (HT) 。
 {==+==}
 
@@ -583,14 +585,14 @@ r##"foo #"# bar"##;                // foo #"# bar
 {==+==}
 ### Byte and byte string literals
 {==+==}
-### Byte 和 byte 字符串字面值
+### 字节和字节字符串字面值
 {==+==}
 
 
 {==+==}
 #### Byte literals
 {==+==}
-#### Byte 字面值
+#### 字节字面值
 {==+==}
 
 
@@ -1448,7 +1450,7 @@ usages and meanings are defined in the linked pages.
 | `#`    | 井号       | [属性][Attributes]
 | `$`    | 美元符      | [宏][Macros]
 | `?`    | 问号       | [问号运算符][question]，[大小可变][sized]，[宏重复匹配器][macros]
-| `~`    | 波浪符    | Rust 1.0 之前就已经不再使用了，但其标记仍可使用
+| `~`    | 波浪符    | Rust 1.0 之前就已经不再使用了，但其 token 仍可使用
 {==+==}
 
 
@@ -1464,7 +1466,7 @@ Bracket punctuation is used in various parts of the grammar. An open bracket
 must always be paired with a close bracket. Brackets and the tokens within
 them are referred to as "token trees" in [macros].  The three types of brackets are:
 {==+==}
-括号标点符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [宏][macros] 中被称为 "token 树" 。三种类型的括号是：
+括号符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [宏][macros] 中被称为 "token 树" 。三种类型的括号是：
 {==+==}
 
 

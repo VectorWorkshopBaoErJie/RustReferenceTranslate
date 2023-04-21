@@ -82,7 +82,17 @@ The size of most primitives is given in this table.
 | `f64`             | 8                  |
 | `char`            | 4                  |
 {==+==}
-
+| 类型              | `size_of::<Type>()`|
+|--                 |--                  |
+| `bool`            | 1                  |
+| `u8` / `i8`       | 1                  |
+| `u16` / `i16`     | 2                  |
+| `u32` / `i32`     | 4                  |
+| `u64` / `i64`     | 8                  |
+| `u128` / `i128`   | 16                 |
+| `f32`             | 4                  |
+| `f64`             | 8                  |
+| `char`            | 4                  |
 {==+==}
 
 
@@ -121,7 +131,7 @@ at least equal to the size and alignment of a pointer.
 指针和引用具有相同的布局。指针或引用的可变性不会改变其布局。指向有大小的类型的指针与 `usize` 具有相同的大小和对齐方式。
 指向无大小的类型的指针是有大小的。其大小和对齐方式保证至少等于一个指针的大小和对齐方式。
 
-> 注意: 虽然您不应该依赖此信息，但是所有指向动态大小类型的指针目前都是 `usize` 大小的两倍，并具有相同的对齐方式。
+> 注意: 虽然你不应该依赖此信息，但是所有指向动态大小类型的指针目前都是 `usize` 大小的两倍，并具有相同的对齐方式。
 {==+==}
 
 
@@ -189,11 +199,11 @@ Trait objects have the same layout as the value the trait object is of.
 > Note: This is about the raw trait object types, not pointers (`&dyn Trait`,
 > `Box<dyn Trait>`, etc.) to trait objects.
 {==+==}
-## Trait Object 布局
+## Trait 对象布局
 
 Trait 对象的布局与其包含的值相同。
 
-> 注意: 这里是指原始的 Trait Object 类型，而不是指指针 (如 `&dyn Trait` 、 `Box<dyn Trait>` 等) 到 Trait Object 的类型。
+> 注意: 这里是指原始的 Trait 对象类型，而不是指指针 (如 `&dyn Trait` 、 `Box<dyn Trait>` 等) 到 Trait 对象的类型。
 {==+==}
 
 
@@ -202,7 +212,7 @@ Trait 对象的布局与其包含的值相同。
 
 Closures have no layout guarantees.
 {==+==}
-## 闭包的布局
+## 闭包布局
 
 闭包没有布局的保证。
 {==+==}
@@ -347,7 +357,7 @@ There are no other guarantees of data layout made by this representation.
 
 没有 `repr` 属性的名义类型采用默认表示形式。非正式地说，这个表示形式也被称为 `rust` 表示形式。此表示形式所做的唯一数据布局保证是为了保持正确性。它们是:
 
-1. 字段对齐正确。
+1. 字段正确对齐。
 2. 字段不重叠。
 3. 类型的对齐方式至少是其字段的最大对齐方式。
 
@@ -745,7 +755,7 @@ struct MyBFields(f32, u64);
 #[derive(Copy, Clone)]
 struct MyCFields { x: u32, y: u8 }
 
-// 这个结构体可以省略 (它是零大小的类型) ，并且它必须在C/C++头文件中。
+// 这个结构体可以省略 (它是零大小的类型) ，并且它必须在 C/C++ 头文件中。
 #[repr(C)]
 #[derive(Copy, Clone)]
 struct MyDFields;
@@ -921,7 +931,7 @@ The discriminant enum from the example [earlier][`repr(C)`] then becomes:
 #### 将带字段的枚举的原始表示与 `#[repr(C)]` 结合使用
 
 对于带字段的枚举，还可以将 `repr(C)` 和原始表示 (例如 `repr(C, u8)`) 结合使用。这会修改 [`repr(C)`] ，将鉴别器枚举的表示方式更改为所选择的原始表示。
-因此，如果您选择了 `u8` 表示方式，则鉴别器枚举的大小和对齐方式将为 1 字节。来自 [之前][`repr(C)`] 示例的鉴别器枚举如下：
+因此，如果你选择了 `u8` 表示方式，则鉴别器枚举的大小和对齐方式将为 1 字节。来自 [之前][`repr(C)`] 示例的鉴别器枚举如下：
 {==+==}
 
 

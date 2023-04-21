@@ -246,7 +246,7 @@ is possible to declare a variable or method with the name `union`.
   lifetime parameter] or [loop label]
 {==+==}
 * `macro_rules` 用于创建自定义 [宏][macros] 。
-* `union` 用于声明 [联合体][union] ，只有在使用 union 声明时才是一个关键字。
+* `union` 用于声明 [联合体][union] ，只有在使用联合体声明时 union 才是一个关键字。
 * `'static` 用于静态生命周期，不能作为 [泛型生命周期参数][generic lifetime parameter] 或 [循环标签][loop label] 使用。
 {==+==}
 

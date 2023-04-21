@@ -29,7 +29,7 @@
 > &nbsp;&nbsp;  | `<` (_泛型参数_ `,`)<sup>\*</sup> _泛型参数_ `,`<sup>?</sup> `>`
 >
 > _泛型参数_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> ( _生命周期参数_ | _类型参数_ | _常量参数_ )
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> ( _生命周期参数_ | _类型参数_ | _常量参数_ )
 >
 > _生命周期参数_ :\
 > &nbsp;&nbsp; [生命周期或标签][LIFETIME_OR_LABEL]&nbsp;( `:` [_生命周期约束组_][_LifetimeBounds_] )<sup>?</sup>

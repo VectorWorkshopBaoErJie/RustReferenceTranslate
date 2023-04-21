@@ -116,7 +116,7 @@ fn outer() {
 {==+==}
 > **<sup>语法</sup>**\
 > _Let语句_ :\
-> &nbsp;&nbsp; [_外部属性_][_OuterAttribute_]<sup>\*</sup> `let` [_模式非顶层选项_][_PatternNoTopAlt_]
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> `let` [_模式非顶层选项_][_PatternNoTopAlt_]
 >     ( `:` [_类型_][_Type_] )<sup>?</sup> (`=` [_表达式_][_Expression_] [†](#let-else-restriction)
 >     ( `else` [_块表达式_][_BlockExpression_]) <sup>?</sup> ) <sup>?</sup> `;`
 >
@@ -166,7 +166,7 @@ let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是可变或常量
 let Some(t) = v.pop() else { // 可反驳的模式需要一个 else 块
     panic!(); // else 块必须发散
 };
-let [u, v] = [v[0], v[1]] else { // 这个模式是不可反驳的，所以编译器会作为 else 块是冗余的进行 Lint 检查
+let [u, v] = [v[0], v[1]] else { // 这个模式是不可反驳的，所以编译器会作为 else 块是冗余的进行代码分析检查
     panic!();
 };
 ```
@@ -277,8 +277,8 @@ The attributes that have meaning on a statement are [`cfg`], and [the lint check
 {==+==}
 ## 语句上的属性
 
-语句可以接受 [外部属性][outer attributes] 。
-在语句上具有意义的属性包括 [`cfg`] 和 [lint 检查属性][the lint check attributes] 。
+语句可以接受 [外围属性][outer attributes] 。
+在语句上具有意义的属性包括 [`cfg`] 和 [代码分析检查属性][the lint check attributes] 。
 {==+==}
 
 

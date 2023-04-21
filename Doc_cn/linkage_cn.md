@@ -110,7 +110,7 @@ then only those outputs will be built.
 {==+==}
 * `--crate-type=rlib`，`#![crate_type = "rlib"]` - 会生成一个 "Rust库" 文件。这是一个中间产物，可以看作是一个 "静态的Rust库" 。与 `staticlib` 文件不同，这些 `rlib` 文件将在未来的链接中由编译器进行解释。这基本上意味着， `rustc` 将像在动态库中查找元数据一样在 `rlib` 文件中查找元数据。这种输出形式用于生成静态链接的可执行文件以及 `staticlib` 输出。
 
-* `--crate-type=proc-macro` ， `#![crate_type = "proc-macro"]` - 产生的输出未指定，但如果给它提供一个 `-L` 路径，编译器将识别制品为一个宏，并且它可以被程序加载。使用这种 crate 类型编译的 crate 必须只导出 [过程宏][procedural macros] 。编译器将自动设置 `proc_macro` [配置选项][configuration option] 。这些 crate 始终使用编译器本身构建时的相同目标进行编译。例如，如果您在 Linux 上使用 `x86_64` CPU 执行编译器，则目标将为 `x86_64-unknown-linux-gnu` ，即使该 crate 是另一个 crate 正在为不同目标而构建的依赖项。
+* `--crate-type=proc-macro` ， `#![crate_type = "proc-macro"]` - 产生的输出未指定，但如果给它提供一个 `-L` 路径，编译器将识别制品为一个宏，并且它可以被程序加载。使用这种 crate 类型编译的 crate 必须只导出 [过程宏][procedural macros] 。编译器将自动设置 `proc_macro` [配置选项][configuration option] 。这些 crate 始终使用编译器本身构建时的相同目标进行编译。例如，如果你在 Linux 上使用 `x86_64` CPU 执行编译器，则目标将为 `x86_64-unknown-linux-gnu` ，即使该 crate 是另一个 crate 正在为不同目标而构建的依赖项。
 
 请注意，这些输出是可重叠的，即可指定多个，则编译器将同时生成每种形式的输出，而无需重新编译。但是，这仅适用于由同一方法指定的输出。如果仅指定 `crate_type` 属性，则所有属性都将被构建，但如果指定一个或多个 `--crate-type` 命令行标志，则仅构建那些输出。
 {==+==}
@@ -238,7 +238,7 @@ rustc -C target-feature=-crt-static foo.rs
 * `i686-unknown-linux-musl`
 * `x86_64-unknown-linux-musl`
 
-C 运行时的链接是配置为遵守 `crt-static` 目标特性的。这些目标特性通常是通过编译器本身的标志从命令行配置的。例如，要启用静态运行时，您将执行：
+C 运行时的链接是配置为遵守 `crt-static` 目标特性的。这些目标特性通常是通过编译器本身的标志从命令行配置的。例如，要启用静态运行时，你将执行：
 
 ```sh
 rustc -C target-feature=+crt-static foo.rs
@@ -262,7 +262,7 @@ example, needs to be compiled differently (e.g. with `/MT` or `/MD`) depending
 on the runtime being linked. This is exported currently through the
 [`cfg` attribute `target_feature` option]:
 {==+==}
-不支持在 C 运行时链接方式之间切换的目标将忽略此标志。建议在编译器成功后检查生成的二进制文件，确保它被链接为您所期望的方式。
+不支持在 C 运行时链接方式之间切换的目标将忽略此标志。建议在编译器成功后检查生成的二进制文件，确保它被链接为你所期望的方式。
 
 Crates 也可以了解 C 运行时的链接方式。例如，在 MSVC 上编写的代码需要根据链接的运行时以不同的方式编译 (例如使用 `/MT` 或 `/MD` ) 。这是通过 [`cfg` 属性 `target_feature` 选项][`cfg` attribute `target_feature` option] 导出的：
 {==+==}
@@ -325,7 +325,7 @@ To use this feature locally, you typically will use the `RUSTFLAGS` environment
 variable to specify flags to the compiler through Cargo. For example to compile
 a statically linked binary on MSVC you would execute:
 {==+==}
-要在本地使用此功能，通常会使用 `RUSTFLAGS` 环境变量通过 Cargo 指定编译器的标志。例如，在 MSVC 上编译静态链接的二进制文件，您可以执行：
+要在本地使用此功能，通常会使用 `RUSTFLAGS` 环境变量通过 Cargo 指定编译器的标志。例如，在 MSVC 上编译静态链接的二进制文件，你可以执行：
 {==+==}
 
 
