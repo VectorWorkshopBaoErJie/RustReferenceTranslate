@@ -113,13 +113,13 @@ Rust 的类型列表包括：
 > &nbsp;&nbsp; | [_ImplTrait类型_][_ImplTraitType_]\
 > &nbsp;&nbsp; | [_Trait对象类型_][_TraitObjectType_]
 >
-> _无边界类型组_ :\
+> _无约束类型组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_括号类型_][_ParenthesizedType_]\
 > &nbsp;&nbsp; | [_ImplTrait类型1约束_][_ImplTraitTypeOneBound_]\
 > &nbsp;&nbsp; | [_Trait对象类型1约束_][_TraitObjectTypeOneBound_]\
 > &nbsp;&nbsp; | [_类型路径_][_TypePath_]\
 > &nbsp;&nbsp; | [_元组类型_][_TupleType_]\
-> &nbsp;&nbsp; | [_空类型_][_NeverType_]\
+> &nbsp;&nbsp; | [_永不类型_][_NeverType_]\
 > &nbsp;&nbsp; | [_原始指针类型_][_RawPointerType_]\
 > &nbsp;&nbsp; | [_引用类型_][_ReferenceType_]\
 > &nbsp;&nbsp; | [_数组类型_][_ArrayType_]\
@@ -150,18 +150,18 @@ for referring to a type. It may refer to:
 {==+==}
 在上面的 _类型_ 语法规则中定义的 _类型表达式_ 是指引用类型的语法。它可以引用以下内容：
  
-* 序列类型 ( [tuple] [array] [slice] ) 。
+* 序列类型 ( [元组][tuple] [数组][array] [切片][slice] ) 。
 * [类型路径][Type paths] 可以引用：
-    * 原始类型 ( [boolean] [numeric] [textual] ) 。
-    * 对 [条目][item] 的引用 ( [struct] [enum]  [union] [type alias]  [trait] ) 。
+    * 原始类型 ( [布尔][boolean] [数值][numeric] [文本][textual] ) 。
+    * 对 [条目][item] 的引用 ( [结构体][struct] [枚举][enum] [联合体][union] [类型别名][type alias] [trait] ) 。
     * [Self 路径][`Self` path] ，其中 Self 是实现类型。
     * 泛型 [类型参数][type parameters] 。
-* 指针类型 ( [reference] [raw pointer] [function pointer] ) 。
-* [inferred type] ，请求编译器确定类型。
-* 用于消除歧义的 [Parentheses] 。
-* Trait 类型: [Trait objects] 和 [impl trait] 。
-* [never] 类型。
-* [Macros] ，它们展开为类型表达式。
+* 指针类型 ( [引用][reference] [原始指针][raw pointer] [函数指针][function pointer] ) 。
+* [推断类型][inferred type] ，请求编译器确定类型。
+* 用于消除歧义的 [括号][Parentheses] 。
+* Trait 类型: [Trait 对象][Trait objects] 和 [impl trait] 。
+* [永不类型][never] 类型。
+* [宏][Macros] ，它们展开为类型表达式。
 {==+==}
 
 
@@ -223,11 +223,11 @@ An example of a *recursive* type and its use:
 {==+==}
 ## 递归类型
 
-名义类型 - [structs] 、 [enumerations] 和 [unions] - 可以是递归的。
+用户定义类型 - [结构体][structs] 、 [枚举][enumerations] 和 [联合体][unions] - 可以是递归的。
 也就是说，每个 `enum` 变量或 `struct` 或 `union` 字段可以直接或间接地引用封闭的 `enum` 或 `struct` 类型本身。
 这种递归有限制:
 
-* 递归类型必须包含在递归中的名义类型 (不是仅仅是 [类型别名][type aliases] ，或其他结构类型，例如 [数组][arrays] 或 [元组][tuples] ) 。因此， `type Rec = &'static [Rec]` 是不允许的。
+* 递归类型必须包含在递归中的命名类型 (不是仅仅是 [类型别名][type aliases] ，或其他结构类型，例如 [数组][arrays] 或 [元组][tuples] ) 。因此， `type Rec = &'static [Rec]` 是不允许的。
 
 * 递归类型的大小必须是有限的；换句话说，类型的递归字段必须是 [指针][pointer types] 。
 
