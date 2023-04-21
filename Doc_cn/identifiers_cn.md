@@ -101,7 +101,7 @@ Zero width non-joiner (ZWNJ U+200C) and zero width joiner (ZWJ U+200D) character
 {==+==}
 Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Continue`] in the following situations:
 {==+==}
-在以下情况下，标识符受到 ASCII 子集的 [XID_起始][XID_Start] 和 [XID_继续][XID_Continue] 的限制：
+在以下情况下，标识符受到 ASCII 子集的 [`XID_起始`][`XID_Start`] 和 [`XID_继续`][`XID_Continue`] 的限制：
 {==+==}
 
 

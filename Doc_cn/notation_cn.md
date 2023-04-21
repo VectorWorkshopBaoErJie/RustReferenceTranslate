@@ -74,9 +74,8 @@ phase feeding the parser, driven by a <abbr title="Deterministic Finite
 Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
-语法中的一些规则，特别是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，采用了简化形式，以可打印的字符串列表的形式给出。
-这些情况构成了与 [token][tokens] 令牌规则相关的规则子集，假定其编译驱动为确定性有限自动机 <abbr title="Deterministic Finite Automaton">DFA</abbr>
-运行的语法分析器的词法分析阶段的结果，那么，该 DFA 操作于所有这些 `string` 表的分支上。
+在语法中，一些规则，尤其是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，以简化形式给出：作为可打印字符串的清单。
+这些情况形成了有关 [token][tokens] 规则的子集，假定它们是由一个驱动着词法分析阶段的确定性有限自动机<abbr title="Deterministic Finite Automaton">DFA</abbr>操作生成的，该操作在所有这种字符串表条目的分离分支上进行操作。
 {==+==}
 
 
