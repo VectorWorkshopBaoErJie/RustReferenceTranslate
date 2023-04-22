@@ -28,7 +28,34 @@ Feature     | Implicitly Enables | Description
 `xsaveopt`  |          | [`xsaveopt`] — Save processor extended states optimized
 `xsaves`    |          | [`xsaves`] — Save processor extended states supervisor
 {==+==}
-
+特征 | 隐式启用 | 描述
+--- | --- | ---
+`adx` | | [ADX] — 多精度加法进位指令扩展
+`aes` | `sse2` | [AES] — 高级加密标准
+`avx` | `sse4.2` | [AVX] — 高级矢量扩展
+`avx2` | `avx` | [AVX2] — 高级矢量扩展 2
+`bmi1` | | [BMI1] — 位操作指令集
+`bmi2` | | [BMI2] — 位操作指令集 2
+`cmpxchg16b` | | [`cmpxchg16b`] — 原子比较并交换 16 字节 (128 位) 数据
+`fma` | `avx` | [FMA3] — 三操作数融合乘加
+`fxsr` | | [`fxsave`] 和 [`fxrstor`] — 保存和恢复 x87 FPU、MMX 技术和 SSE 状态
+`lzcnt` | | [`lzcnt`] — 前导零计数
+`movbe` | | [`movbe`] - 字节交换后移动数据
+`pclmulqdq` | `sse2` | [`pclmulqdq`] — 打包无进位乘法 quadword
+`popcnt` | | [`popcnt`] — 计算置 1 的位数
+`rdrand` | | [`rdrand`] — 读取随机数
+`rdseed` | | [`rdseed`] — 读取随机种子
+`sha` | `sse2` | [SHA] — 安全哈希算法
+`sse` | | [SSE] — 流式 SIMD 扩展
+`sse2` | `sse` | [SSE2] — 流式 SIMD 扩展 2
+`sse3` | `sse2` | [SSE3] — 流式 SIMD 扩展 3
+`sse4.1` | `ssse3` | [SSE4.1] — 流式 SIMD 扩展 4.1
+`sse4.2` | `sse4.1` | [SSE4.2] — 流式 SIMD 扩展 4.2
+`ssse3` | `sse3` | [SSSE3] — 补充流式 SIMD 扩展 3
+`xsave` | | [`xsave`] — 保存处理器扩展状态
+`xsavec` | | [`xsavec`] — 压缩保存处理器扩展状态
+`xsaveopt` | | [`xsaveopt`] — 优化保存处理器扩展状态
+`xsaves` | | [`xsaves`] — 管理模式保存处理器扩展状态
 {==+==}
 
 

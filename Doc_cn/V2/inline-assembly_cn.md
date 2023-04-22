@@ -17,7 +17,23 @@ asm := "asm!(" format_string *("," format_string) *("," operand) [","] ")"
 global_asm := "global_asm!(" format_string *("," format_string) *("," operand) [","] ")"
 ```
 {==+==}
+## 语法
 
+以下是常规语法的 ABNF 规范：
+
+```text
+format_string := STRING_LITERAL / RAW_STRING_LITERAL
+dir_spec := "in" / "out" / "lateout" / "inout" / "inlateout"
+reg_spec := <register class> / "\"" <explicit register> "\""
+operand_expr := expr / "_" / expr "=>" expr / expr "=>" "_"
+reg_operand := [ident "="] dir_spec "(" reg_spec ")" operand_expr
+clobber_abi := "clobber_abi(" <abi> *("," <abi>) [","] ")"
+option := "pure" / "nomem" / "readonly" / "preserves_flags" / "noreturn" / "nostack" / "att_syntax" / "raw"
+options := "options(" option *("," option) [","] ")"
+operand := reg_operand / clobber_abi / options
+asm := "asm!(" format_string *("," format_string) *("," operand) [","] ")"
+global_asm := "global_asm!(" format_string *("," format_string) *("," operand) [","] ")"
+```
 {==+==}
 
 
@@ -49,7 +65,29 @@ Further constraints on the directives used by inline assembly are indicated by [
 [format-syntax]: ../std/fmt/index.html#syntax
 [rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
 {==+==}
+## 模板字符串参数
 
+汇编模板使用与 [格式化字符串][format-syntax] 相同的语法 (即由大括号指定占位符) 。
+相应的参数按顺序、索引或名称访问。但是，不支持隐式命名参数 (由 [RFC #2795][rfc-2795] 引入) 。
+
+`asm!` 调用可能有一个或多个模板字符串参数；具有多个模板字符串参数的 `asm!` 被视为所有字符串在它们之间用 `\n` 连接。
+预期的用法是，每个模板字符串参数对应于一个汇编代码行。所有模板字符串参数必须出现在任何其他参数之前。
+
+与格式化字符串一样，位置参数必须出现在命名参数和显式 [寄存器操作数](#register-operands) 之前。
+
+模板字符串中的占位符不能使用显式寄存器操作数。所有其他命名和位置操作数必须至少在模板字符串中出现一次，否则会生成编译器错误。
+
+除了用于将操作数替换为传递给汇编器的代码的方式之外，确切的汇编代码语法是特定于目标的，并且对编译器不透明。
+
+目前，所有受支持的目标都遵循LLVM内部汇编器使用的汇编代码语法，这通常对应于GNU汇编器 (GAS)的语法。
+在x86上，默认情况下使用 GAS 的 `.intel_syntax noprefix` 模式。
+在ARM上，使用 `.syntax unified` 模式。
+
+这些目标对汇编代码施加了一个额外的限制: 必须在 asm 字符串的末尾将任何汇编器状态 (例如可以使用 `.section` 更改的当前部分) 恢复为其原始值。
+不符合 GAS 语法的汇编代码将导致汇编器特定的行为。关于内联汇编使用的指令的进一步约束在 [指令支持](#directives-support) 中指示。
+
+[format-syntax]: ../std/fmt/index.html#syntax
+[rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
 {==+==}
 
 
@@ -77,7 +115,20 @@ and the rules for assembly may include thousands of pages of architectural refer
 Programmers should exercise appropriate care, as invoking this `unsafe` capability comes with
 assuming the responsibility of not violating rules of both the compiler or the architecture.
 {==+==}
+### 正确性和有效性
 
+除了之前的所有规则之外， `asm!` 的字符串参数在所有其他参数求值、格式化和操作数翻译后，必须最终成为对于目标架构既具有语法正确性又具有语义有效性的汇编代码。
+格式化规则允许编译器生成正确语法的汇编代码。有关操作数的规则允许 Rust 操作数与 `asm!` 中的操作数之间有效的转换。
+遵循这些规则是必要的，但不足以保证最终扩展的汇编代码是正确且有效的。例如：
+
+- 参数可能被放置在格式化后语法上不正确的位置。
+- 一个指令可能被正确书写，但给定不符合架构的操作数。
+- 一个架构未指定的指令可能会被汇编成未指定的代码。
+- 一组指令，每个指令都正确且有效，如果放置在紧接着的位置，可能会导致未定义行为。
+
+因此，这些规则是 "非穷尽" 的。编译器不需要检查最终汇编代码的正确性和有效性。汇编器可以检查正确性和有效性，但并不是必需的。
+当使用 `asm!` 时，一个排版错误就足以使程序不安全，并且汇编规则可能包括数千页的架构参考手册。
+程序员应该谨慎使用，因为使用这种 "不安全" 功能意味着承担不违反编译器或架构规则的责任。
 {==+==}
 
 

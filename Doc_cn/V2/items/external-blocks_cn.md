@@ -1,7 +1,7 @@
 {==+==}
 * `extern "efiapi"` -- The ABI used for [UEFI] functions.
 {==+==}
-
+* `extern "efiapi"` -- 用于 [UEFI] 函数的 ABI。
 {==+==}
 
 

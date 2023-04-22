@@ -61,8 +61,8 @@ For example, the Reference for Rust 1.49.0 is located at <https://doc.rust-lang.
 本书原版新版本与最新的 Rust 版本匹配，可在 <https://doc.rust-lang.org/reference/> 找到。之前版本可通过在 "reference" 前添加 Rust 版本号找到。
 例如 <https://doc.rust-lang.org/1.49.0/reference/> 。
 
-【矢量工坊宝儿姐】注：当前的中文译本以2023年1月25日源为基础，虽然当前使用的翻译工作流十分有效，但中文译本的更新周期也不会太过频繁。如有贡献、建议和问题，请移步译本仓库
-<https://github.com/VectorWorkshopBaoErJie/RustReferenceTranslate/>
+【矢量工坊宝儿姐】注：当前的中文译本以2023年4月9日源 (Rust 1.69) 为基础，虽然当前使用的翻译工作流十分有效，但中文译本的更新周期也不会太过频繁。
+如有贡献、建议和问题，请移步译本仓库<https://github.com/VectorWorkshopBaoErJie/RustReferenceTranslate/>
 {==+==}
 
 
