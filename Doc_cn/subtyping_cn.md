@@ -14,7 +14,7 @@ lifetime. Nevertheless, we can assign `s` to `t`:
 
 子类型是隐式的，并且可以在类型检查或推断的任意阶段产生。
 子类型仅限于两种情况:
-与生命周期相关的协变性和具有更高层生命周期的类型之间的协变性。
+与生命周期相关的协变性和具有更高阶生命周期的类型之间的协变性。
 如果我们从类型中抹去生命周期，那么唯一的子类型就是由于类型相等而产生的。
 
 考虑以下示例: 字符串字面值始终具有 `'static` 生命周期。尽管如此，我们可以将 `s` 分配给 `t` :
@@ -44,7 +44,7 @@ the higher-ranked lifetimes. Some examples:
 由于 `'static` 寿命超过了生命周期参数 `'a`，因此 `&'static str` 是 `&'a str` 的子类型。
 
 [高阶][Higher-ranked] 函数指针和 [trait 对象][trait objects] 具有另一种子类型关系。
-它们是由更高层生命周期的替换所给出的类型的子类型。以下是一些例子:
+它们是由高阶生命周期的替换所给出的类型的子类型。以下是一些例子:
 {==+==}
 
 
@@ -72,7 +72,7 @@ let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
 let subtype: &(dyn for<'a> Fn(&'a i32) -> &'a i32) = &|x| x;
 let supertype: &(dyn Fn(&'static i32) -> &'static i32) = subtype;
 
-// 我们还可以将一个高层生命周期替换为另一个
+// 我们还可以将一个高阶生命周期替换为另一个
 let subtype: &(for<'a, 'b> fn(&'a i32, &'b i32))= &((|x, y| {}) as fn(&_, &_));
 let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 ```

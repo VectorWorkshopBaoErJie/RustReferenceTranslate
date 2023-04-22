@@ -109,7 +109,7 @@ For unions, this means all variants have to be `Copy`.
 {==+==}
 ## `PhantomData<T>`
 
-[`std::marker::PhantomData<T>`] 是一种零大小、最小对齐方式的类型。从 [variance]、[drop check] 和 [auto traits](#auto-traits) 的角度来看，它被视为拥有一个类型为 `T` 的实例。
+[`std::marker::PhantomData<T>`] 是一种零大小、最小对齐方式的类型。从 [协变性][variance]、[丢弃检查][drop check] 和 [自动 trait][auto traits](#auto-traits) 的角度来看，它被视为拥有一个类型为 `T` 的实例。
 
 ## 运算符 trait
 

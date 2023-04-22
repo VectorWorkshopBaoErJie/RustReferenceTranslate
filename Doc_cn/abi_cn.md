@@ -22,7 +22,7 @@ output object file.
 
 本节记录了影响创建的编译结果的 ABI 的功能。
 
-有关指定导出函数的 ABI 的信息，请参见 *[extern functions]* 。 有关指定链接外部库的 ABI 的信息，请参见 *[external blocks]* 。
+有关指定导出函数的 ABI 的信息，请参见 *[外部函数][extern functions]* 。 有关指定链接外部库的 ABI 的信息，请参见 *[外部块][external blocks]* 。
 
 ## `used`属性
 

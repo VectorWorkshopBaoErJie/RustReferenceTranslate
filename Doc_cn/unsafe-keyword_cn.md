@@ -34,7 +34,7 @@ Such a function must be prefixed with the keyword `unsafe` and can only be calle
 不安全函数是在所有上下文和/或所有可能的输入上都不安全的函数。我们说它们具有 *额外安全条件* ，这些条件是所有调用者必须满足的要求，编译器不会检查。
 例如， [`get_unchecked`] 具有额外的安全条件，即索引必须在边界内。不安全函数应该配有说明文档，解释这些额外的安全条件。
 
-这样的函数必须以关键字 `unsafe` 为前缀，并且只能从 `unsafe` 块内部调用，或者在没有 [`unsafe_op_in_unsafe_fn`] lint 的情况下在 `unsafe fn` 中调用。
+这样的函数必须以关键字 `unsafe` 为前缀，并且只能从 `unsafe` 块内部调用，或者在没有 [`unsafe_op_in_unsafe_fn`] 代码分析的情况下在 `unsafe fn` 中调用。
 {==+==}
 
 

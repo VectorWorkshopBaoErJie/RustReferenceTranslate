@@ -68,7 +68,7 @@ to be run.
 * [loop], [while] and [`while let`] expressions.
 * [if], [`if let`] and [match] expressions.
 {==+==}
-* [字面量][Literals]。
+* [字面值][Literals]。
 * [常量参数][Const parameters]。
 * [函数][functions] 和 [常量][constants] 的 [路径][Paths] 。不允许递归定义常量。
 * [静态变量][statics] 的路径。这些只允许在静态变量的初始化器中使用。

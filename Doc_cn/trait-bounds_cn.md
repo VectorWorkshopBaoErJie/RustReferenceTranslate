@@ -36,9 +36,9 @@
 >
 > _Trait约束_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `?`<sup>?</sup>
-> [_对于生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_]\
+> [_For生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_]\
 > &nbsp;&nbsp; | `(` `?`<sup>?</sup>
-> [_对于生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_] `)`
+> [_For生命周期_](#higher-ranked-trait-bounds)<sup>?</sup> [_类型路径_][_TypePath_] `)`
 >
 > _生命周期约束_ :\
 > &nbsp;&nbsp; ( _生命周期_ `+` )<sup>\*</sup> _生命周期_<sup>?</sup>
@@ -158,10 +158,10 @@ It is an error for such a bound to be false.
 It is an error to have `Copy` or `Clone` as a bound on a mutable reference, [trait object], or [slice].
 It is an error to have `Sized` as a bound on a trait object or slice.
 {==+==}
-不涉及该条目参数或 [高层生命周期][higher-ranked lifetimes] 的约束在定义该条目时进行检查。如果这样的约束为假，就会出现错误。
+不涉及该条目参数或 [高阶生命周期][higher-ranked lifetimes] 的约束在定义该条目时进行检查。如果这样的约束为假，就会出现错误。
 
 对于某些泛型类型，即使使用时不提供具体类型，也会对 [`Copy`] ， [`Clone`] 和 [`Sized`] 约束进行检查。
-在可变引用， [trait 对象][trait object] 或 [slice] 上使用 `Copy` 或 `Clone`  作为约束是错误的。在 [trait 对象][trait object] 或 [slice] 上使用 `Sized` 作为限制也是错误的。
+在可变引用， [trait 对象][trait object] 或 [slice] 上使用 `Copy` 或 `Clone`  作为约束是错误的。在 [trait 对象][trait object] 或 [切片][slice] 上使用 `Sized` 作为限制也是错误的。
 {==+==}
 
 
@@ -184,8 +184,8 @@ struct A<'a, T>
 where
     i32: Default,           // 允许，但不实用
     i32: Iterator,          // 错误： `i32` 不是迭代器
-    &'a mut T: Copy,        // （在使用时）错误：无法满足 trait 约束
-    [T]: Sized,             // （在使用时）错误：大小无法在编译时确定
+    &'a mut T: Copy,        // (在使用时) 错误：无法满足 trait 约束
+    [T]: Sized,             // (在使用时) 错误：大小无法在编译时确定
 {
     f: &'a T,
 }
@@ -262,7 +262,7 @@ PartialEq<i32>` would require an implementation like
 {==+==}
 ## 高阶 trait 约束
 
-> _for生命周期_ :\
+> _For生命周期_ :\
 > &nbsp;&nbsp; `for` [_泛型参数组_][_GenericParams_]
 
 Trait 约束可以对生命周期进行 *提阶* ，这些约束指定了一个对于 *所有* 生命周期都成立的约束。
@@ -290,7 +290,7 @@ Only a higher-ranked bound can be used here, because the lifetime of the referen
 {==+==}
 可以用它来将一个 `&'a T` 的生命周期与任意的 `i32` 进行比较。
 
-只有一个更高层的约束可以在这里使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
+只有一个更高阶的约束可以在这里使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
 {==+==}
 
 
@@ -312,7 +312,7 @@ difference is the scope of the lifetime parameter, which extends only to the
 end of the following trait instead of the whole bound. This function is
 equivalent to the last one.
 {==+==}
-更高层的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。这个函数与上一个函数是等价的。
+更高阶的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。这个函数与上一个函数是等价的。
 {==+==}
 
 

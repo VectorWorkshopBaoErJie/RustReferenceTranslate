@@ -34,7 +34,8 @@ be ignored in favor of only building the artifacts specified by command line.
 在一次编译会话中，编译器可以通过使用命令行标志或 `crate_type` 属性生成多个制品。
 如果指定了一个或多个命令行标志，则忽略所有 `crate_type` 属性，仅构建由命令行指定制品。
 
-* `--crate-type=bin` ， `#![crate_type = "bin"]` - 将生成可运行的可执行文件。在 crate 中需要有一个 `main` 函数，程序开始执行时首先运行。这将链接所有的 Rust 和本地依赖项，生成一个可分发的单个二进制文件。是默认的 crate 类型。
+* `--crate-type=bin` ， `#![crate_type = "bin"]` - 将生成可运行的可执行文件。在 crate 中需要有一个 `main` 函数，程序开始执行时首先运行。
+这将链接所有的 Rust 和本地依赖项，生成一个可分发的单个二进制文件。是默认的 crate 类型。
 {==+==}
 
 

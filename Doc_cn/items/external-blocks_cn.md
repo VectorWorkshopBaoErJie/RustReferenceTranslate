@@ -39,7 +39,7 @@ External blocks provide _declarations_ of items that are not _defined_ in the
 current crate and are the basis of Rust's foreign function interface. These are
 akin to unchecked imports.
 {==+==}
-外部块提供了在当前 crate 中未定义的项的 _声明_ ，并且是 Rust 实现外部函数接口 (FFI) 的基础。这类似于未经检查的导入。
+外部块提供了在当前 crate 中未定义的条目的 _声明_ ，并且是 Rust 实现外部函数接口 (FFI) 的基础。这类似于未经检查的导入。
 {==+==}
 
 
@@ -363,7 +363,7 @@ code (including upstream crates) instead of adding the attribute to each extern
 block.
 {==+==}
 可以在空的外部块上添加 `link` 属性。
-你可以使用它来满足代码中其他地方 (包括上游 crates) 的 extern 块的链接要求，而不是为每个 extern 块都添加属性。
+你可以使用它来满足代码中其他地方 (包括上游 crates) 的外部块的链接要求，而不是为每个外部块都添加属性。
 {==+==}
 
 

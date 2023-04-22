@@ -178,7 +178,7 @@ If neither of those rules apply, then the bounds on the trait are used:
 {==+==}
 ## 默认trait对象生命周期
 
-由 [trait 对象] 持有的引用的假定生命周期称为其 "默认对象生命周期限制" 。这些在 [RFC 599] 中定义并在 [RFC 1156] 中进行了修改。
+由 [trait 对象][trait object] 持有的引用的假定生命周期称为其 "默认对象生命周期限制" 。这些在 [RFC 599] 中定义并在 [RFC 1156] 中进行了修改。
 
 这些默认对象生命周期限制在完全省略生命周期限制时使用，而不是使用上述省略生命周期参数的规则。如果将 `'_` 用作生命周期限制，则该限制遵循通常的省略规则。
 
@@ -347,7 +347,7 @@ references, which themselves include references, the compiler will first try
 the standard elision rules. If it is unable to resolve the lifetimes by its
 usual rules, then it will error. By way of example:
 {==+==}
-请注意，如果 `static` 或 `const` 项包含函数或闭包引用，这些引用本身又包含引用，编译器将首先尝试标准省略规则。
+请注意，如果 `static` 或 `const` 条目包含函数或闭包引用，这些引用本身又包含引用，编译器将首先尝试标准省略规则。
 如果它无法通过通常的规则解析生命周期，则会出现错误。以以下示例说明：
 {==+==}
 
