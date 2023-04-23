@@ -122,7 +122,7 @@ These operators cannot be overloaded.
 `&` (共享借用) 和 `&mut` (可变借用) 运算符是一元前缀运算符。
 当应用于一个 [占位表达式][place expression] 时，该表达式产生一个指向该值引用的位置的引用 (指针) 。
 在引用的持续时间内，该内存位置也被置于借用状态。对于共享借用 ( `&` ) ，这意味着该位置可能不能被修改，但可以被读取或再次共享。
-对于可变借用 ( `&mut` ) ，在借用过期之前，该位置可能不能以任何方式访问。
+对于可变借用 (`&mut`) ，在借用过期之前，该位置可能不能以任何方式访问。
 `&mut` 在可变位置表达式上下文中评估其操作数。如果 `&` 或 `&mut` 运算符应用于一个 [值表达式][value expression] ，则将创建一个 [临时值][temporary value]。
 
 这些运算符不能被重载。
@@ -176,7 +176,16 @@ let a = && && mut 10;
 let a = & & & & mut 10;
 ```
 {==+==}
+```rust
+// 同样的含义:
+let a = &&  10;
+let a = & & 10;
 
+// 同样的含义:
+let a = &&&&  mut 10;
+let a = && && mut 10;
+let a = & & & & mut 10;
+```
 {==+==}
 
 
@@ -273,11 +282,11 @@ struct Demo {
 }
 
 let mut uninit = MaybeUninit::<Demo>::uninit();
-// &uninit.as_mut().field将创建对未初始化的'bool'的引用，因此为Undefined Behavior!
+// &uninit.as_mut().field 将创建对未初始化的  `bool` 的引用，因此为未定义行为!
 let f1_ptr = unsafe { ptr::addr_of_mut!((*uninit.as_mut_ptr()).field) };
-// 将'true'写入先前未初始化的字段。
+// 将 'true' 写入先前未初始化的字段。
 unsafe { f1_ptr.write(true); }
-// 因为'uninit'已在上面初始化，所以是安全的。
+// 因为 'uninit' 已在上面初始化，所以是安全的。
 let init = unsafe { uninit.assume_init() };
 ```
 {==+==}
@@ -822,8 +831,8 @@ Any cast that does not fit either a coercion rule or an entry in the table is a 
 Here `*T` means either `*const T` or `*mut T`. `m` stands for optional `mut` in
 reference types and `mut` or `const` in pointer types.
 {==+==}
-`as` 可以用于显式执行 [coercions](../type-coercions.md) ，以及以下附加转换。
-任何不符合 coercion 规则或表中条目的转换都是编译器错误。
+`as` 可以用于显式执行 [强转](../type-coercions.md) ，以及以下附加转换。
+任何不符合强转规则或表中条目的转换都是编译器错误。
 这里的 `*T` 表示 `*const T` 或 `*mut T`。
 在引用类型中， `m` 表示可选的 `mut` ，在指针类型中表示 `mut` 或 `const` 。
 {==+==}

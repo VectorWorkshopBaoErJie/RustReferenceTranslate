@@ -620,7 +620,7 @@ For example:
 {==+==}
 ## `break` 和循环值
 
-在Rust中，当与 `loop` 关键字相关联时，可以使用 `break` 表达式通过 `break EXPR` 或 `break 'label EXPR` 的形式从循环中返回一个值，其中 `EXPR` 是返回给 `loop` 的表达式结果。
+在 Rust 中，当与 `loop` 关键字相关联时，可以使用 `break` 表达式通过 `break EXPR` 或 `break 'label EXPR` 的形式从循环中返回一个值，其中 `EXPR` 是返回给 `loop` 的表达式结果。
 例如:
 {==+==}
 
@@ -641,16 +641,16 @@ assert_eq!(result, 13);
 ```
 {==+==}
 ```rust
-let (mut a, mut b) = (1, 1); // 初始化a和b为1
+let (mut a, mut b) = (1, 1); // 初始化 a 和 b 为 1
 let result = loop { // 进入循环
-    if b > 10 { // 如果b大于10
-        break b; // 跳出循环并返回b的值
+    if b > 10 { // 如果 b 大于 10
+        break b; // 跳出循环并返回 b 的值
     }
-    let c = a + b; // 计算c
-    a = b; // 将a赋值为上一个b的值
-    b = c; // 将b赋值为上一个c的值
+    let c = a + b; 
+    a = b; // 将 a 赋值为上一个 b 的值
+    b = c; // 将 b 赋值为上一个 c 的值
 };
-// 斐波那契数列中第一个大于10的数是13:
+// 斐波那契数列中第一个大于 10 的数是 13 :
 assert_eq!(result, 13);
 ```
 {==+==}
