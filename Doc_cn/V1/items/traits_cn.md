@@ -94,7 +94,7 @@ trait Example {
 ```
 {==+==}
 ```rust
-// 有定义和无定义的关联trait条目的示例。
+// 有定义和无定义的关联 trait 条目的示例。
 trait Example {
     const CONST_NO_DEFAULT: i32;
     const CONST_WITH_DEFAULT: i32 = 99;
@@ -158,7 +158,7 @@ Object safe traits can be the base trait of a [trait object]. A trait is
 {==+==}
 ## 对象安全
 
-对象安全的 trait 可以是一个 [trait对象][trait object] 的基础 trait 。
+对象安全的 trait 可以是一个 [trait 对象][trait object] 的基础 trait 。
 一个 trait 是 *对象安全* 的，如果它具有以下 trait (在[RFC 255]中定义):
 {==+==}
 
@@ -183,14 +183,14 @@ Object safe traits can be the base trait of a [trait object]. A trait is
     * Explicitly non-dispatchable functions require:
         * Have a `where Self: Sized` bound (receiver type of `Self` (i.e. `self`) implies this).
 {==+==}
-* 所有的 [supertraits] 也必须是对象安全的。
+* 所有的 [超级trait][supertraits] 也必须是对象安全的。
 * `Sized` 不能是 [超级trait][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
 * 不能有任何关联常量。
 * 不能有任何泛型关联类型。
 * 所有关联函数必须是可从 trait 对象中可派发的，或者是明确不可派发的。
     * 可派发函数要求:
         * 没有任何类型参数 (允许生命周期参数),
-        * 是除接收者类型，不使用 `Self` 的 [method] 。
+        * 是除接收者类型，不使用 `Self` 的 [方法][method] 。
         * 有具有以下类型的接收器:
             * `&Self` (即 `&self`)
             * `&mut Self` (即 `&mut self`)
@@ -272,11 +272,11 @@ obj.typed(1);  // ERROR: cannot call with generic type
 ```
 {==+==}
 ```rust,compile_fail
-// 这个trait是对象安全的，但这些方法不能在 trait 对象上派发。
+// 这个 trait 是对象安全的，但这些方法不能在 trait 对象上派发。
 trait NonDispatchable {
     // 非方法，不能被派发。
     fn foo() where Self: Sized {}
-    // Self类型只有在运行时才知道。
+    // Self 类型只有在运行时才知道。
     fn returns(&self) -> Self where Self: Sized;
     // `other` 可能是接收者的不同的具体类型。
     fn param(&self, other: Self) where Self: Sized {}
@@ -396,7 +396,7 @@ implement a specific trait. Furthermore, anywhere a [generic][generics] or [trai
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
 **超级trait** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
-此外，在泛型或 trait 对象受到一个 trait 限定时，它可以访问其超级 trait 的关联条目。
+此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到一个 trait 限定时，它可以访问其超级 trait 的关联条目。
 {==+==}
 
 
@@ -670,7 +670,7 @@ unified syntax across different contexts where they are used. As an example,
 an empty `vis` macro fragment specifier can be used for trait items, where the
 macro rule may be used in other situations where visibility is allowed.
 {==+==}
-Trait中的条目在语法上允许添加 [_可见性_][_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
+Trait 中的条目在语法上允许添加 [_可见性_][_Visibility_] 注解，但是当验证该 trait 时，这些注解会被拒绝。
 这使得在使用这些条目的不同上下文中，可以使用统一的语法进行解析。
 例如，可以使用一个空的 `vis` 宏片段规格来表示 trait 条目，在其他允许使用可见性的情况下使用该宏规则。
 {==+==}

@@ -45,7 +45,7 @@ address will have elided lifetimes where applicable, otherwise – in most cases
 elision].) The compiler is, however, still at liberty to translate the constant
 many times, so the address referred to may not be stable.
 {==+==}
-常量可以引用其他常量的地址，在这种情况下，地址将省略适用的生命周期，否则 (在大多数情况下) 默认为 `static`  生命周期 (请参见 [static lifetime elision] ) 。
+常量可以引用其他常量的地址，在这种情况下，地址将省略适用的生命周期，否则 (在大多数情况下) 默认为 `static`  生命周期 (请参见 [静态生命周期省略][static lifetime elision] ) 。
 但编译器仍然有自由将常量翻译为多个值，因此引用的地址可能不稳定。
 {==+==}
 
@@ -127,7 +127,7 @@ const ZERO_WITH_DESTRUCTOR: TypeWithDestructor = TypeWithDestructor(0);
 
 fn create_and_drop_zero_with_destructor() {
     let x = ZERO_WITH_DESTRUCTOR;
-    // x 在函数结束时丢弃，调用drop。
+    // x 在函数结束时丢弃，调用 drop。
     // prints "Dropped. Held 0.".
 }
 ```
@@ -145,7 +145,7 @@ fn create_and_drop_zero_with_destructor() {
 Unlike an [associated constant], a [free] constant may be unnamed by using
 an underscore instead of the name. For example:
 {==+==}
-与 [关联常量][associated constant] 不同，可以使用下划线代替名称来表示 [自由][free] 常量无名称。例如:
+与 [关联常量][associated constant] 不同，可以使用下划线代替名称来表示 [自由][free] 未命名常量。例如:
 {==+==}
 
 

@@ -175,7 +175,7 @@ unsafe {
 Commonly, code using unions will provide safe wrappers around unsafe union
 field accesses.
 {==+==}
-通常，使用联合体的代码会在不安全的联合体字段访问周围提供安全的包装器。
+通常，使用联合体的代码会在不安全的联合体字段访问外围提供安全的包装器。
 {==+==}
 
 
@@ -232,8 +232,8 @@ Pattern matching may match a union as a field of a larger structure. In
 particular, when using a Rust union to implement a C tagged union via FFI, this
 allows matching on the tag and the corresponding field simultaneously:
 {==+==}
-模式匹配可能将联合体作为更大结构体的字段进行匹配。
-特别是在使用 Rust 联合体通过 FFI 实现 C 标记联合时，这允许同时匹配标记和相应字段:
+模式匹配可能将联合体作为较大结构的字段进行匹配。
+特别地，当使用 Rust 联合体通过 FFI 实现 C 中的标记 union 时，得以同时匹配标记和相应的字段：
 {==+==}
 
 
