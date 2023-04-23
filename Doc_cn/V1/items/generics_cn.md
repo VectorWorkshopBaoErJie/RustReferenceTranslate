@@ -328,7 +328,7 @@ fn double<const N: i32>() {
 const SOME_CONST: i32 = 12;
 
 fn example() {
-    // const参数的使用示例。
+    // const 参数的使用示例。
     double::<9>();
     double::<-123>();
     double::<{7 + 8}>();

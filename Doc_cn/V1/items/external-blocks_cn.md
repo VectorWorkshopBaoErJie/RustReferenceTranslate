@@ -277,7 +277,7 @@ specifies the kind of library with the following possible values:
 {==+==}
 *`link` 属性* 指定编译器为 `extern` 块中的条目链接的本地库的名称。
 它使用 [_元列表名称值字符串_][_MetaListNameValueStr_] 语法来指定其输入。
-`name` 键是要链接的本地库的名称。`kind` 键是可选值，用于指定以下可能值的库类型:
+`name` 键是要链接的本地库的名称。 `kind` 键是可选值，用于指定以下可能值的库类型:
 {==+==}
 
 
@@ -294,7 +294,7 @@ specifies the kind of library with the following possible values:
 - `dylib` - 表示动态库。如果未指定 `kind` ，则为默认值。
 - `static` - 表示静态库。
 - `framework` - 表示 macOS 框架。仅适用于 macOS 目标。
-- `raw-dylib` - 表示动态库，其中编译器将生成要链接的导入库 (详情请参见 [`dylib` versus `raw-dylib`] )。仅适用于 Windows 目标。
+- `raw-dylib` - 表示动态库，其中编译器将生成要链接的导入库 (详情参见 [`dylib` 对比 `raw-dylib`][`dylib` versus `raw-dylib`] )。仅适用于 Windows 目标。
 {==+==}
 
 
@@ -400,14 +400,14 @@ into the archive and some higher level build system will need to add it later du
 the final binary.
 {==+==}
 在构建 rlib 时， `-bundle` 表示本地静态库以名称的方式注册为该 rlib 的依赖项，并且其中的目标文件仅在链接最终二进制文件时包含，文件搜索也在最终链接期间按该名称执行。\
-在构建 staticlib 时， `-bundle` 表示本地静态库不会被包含在档案中，某些更高级别的构建系统需要在链接最终二进制文件时稍后添加它。
+在构建 staticlib 时， `-bundle` 表示本地静态库不会被包含在档案中，某些更高级别的构建系统需要在链接最终二进制文件时随后添加它。
 {==+==}
 
 
 {==+==}
 This modifier has no effect when building other targets like executables or dynamic libraries.
 {==+==}
-当构建其他目标(如可执行文件或动态库)时，此修饰符不起作用。
+当构建其他目标 (如可执行文件或动态库) 时，此修饰符不起作用。
 {==+==}
 
 
@@ -505,7 +505,7 @@ More implementation details about this modifier can be found in
 {==+==}
 #### `dylib` versus `raw-dylib`
 {==+==}
-#### `dylib` 相比 `raw-dylib`
+#### `dylib` 对比 `raw-dylib`
 {==+==}
 
 
@@ -536,7 +536,7 @@ during compilation and provide that to the linker instead.
 (`target_arch="x86"`). Using it when targeting other platforms or
 x86 on Windows will result in a compiler error.
 {==+==}
-只有在 Windows 上才支持 `raw-dylib`，不支持 32 位 x86 ( `target_arch="x86"` ) 。将其用于针对其他平台或 Windows 上的 x86 时将导致编译器错误。
+只有在 Windows 上才支持 `raw-dylib` ，不支持 32 位 x86 ( `target_arch="x86"` ) 。将其用于针对其他平台或 Windows 上的 x86 时将导致编译器错误。
 {==+==}
 
 

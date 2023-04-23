@@ -103,7 +103,7 @@ implementing type.  Inherent implementations can contain [associated
 functions] (including [methods]) and [associated constants]. They cannot
 contain associated type aliases.
 {==+==}
-内部实现将包含的条目与实现类型关联。内部实现可以包含关联函数(包括[方法][methods])和[关联常量][associated constants]。它们不能包含关联类型别名。
+内部实现将包含的条目与实现类型关联。内部实现可以包含关联函数 (包括 [方法][methods] ) 和 [关联常量][associated constants] 。它们不能包含关联类型别名。
 {==+==}
 
 
@@ -578,8 +578,8 @@ attributes must come before any associated items. The attributes that have
 meaning here are [`cfg`], [`deprecated`], [`doc`], and [the lint check
 attributes].
 {==+==}
-实现可以在 `impl` 关键字之前包含外部 [属性][attributes] ，在包含关联条目的括号内部包含内部 [属性][attributes] 。
-内部属性必须在任何关联条目之前。在这里有意义的属性是 [`cfg`] ， [`deprecated`] ， [`doc`] 和 [检查属性][the lint check attributes] 。
+实现可以在 `impl` 关键字之前包含外围 [属性][attributes] ，在包含关联条目的括号内部包含内部 [属性][attributes] 。
+内部属性必须在任何关联条目之前。在这里有意义的属性是 [`cfg`] ， [`deprecated`] ， [`doc`] 和 [代码分析][the lint check attributes] 。
 {==+==}
 
 

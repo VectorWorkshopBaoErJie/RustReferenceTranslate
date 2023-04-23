@@ -577,7 +577,7 @@ fn main() {
 {==+==}
 An example of associated types with generics and where clauses:
 {==+==}
-带有泛型和 where子句 的关联类型的示例:
+带有泛型和 where 子句的关联类型的示例:
 {==+==}
 
 
@@ -714,7 +714,14 @@ trait Example {
 }
 ```
 {==+==}
+在这个例子中:
 
+```rust
+# use std::fmt::Debug;
+trait Example {
+    type Output<T>: Ord where T: Debug;
+}
+```
 {==+==}
 
 
@@ -751,7 +758,7 @@ proven to hold* on functions (using the parameters of the function or trait)
 where a GAT appears as an input or output must also be written on the GAT itself.
 {==+==}
 简而言之，这些 `where` 子句是必需的，以便最大限度允许在 impls 中定义关联类型的范围。
-为了做到这一点，在任何出现 GAT 作为输入或输出的函数 (使用函数或trait的参数) 上，任何 *可以证明持有* 子句也必须写在 GAT 本身上。
+为了做到这一点，在任何出现 GAT 作为输入或输出的函数 (使用函数或 trait 的参数) 上，任何 *可以证明持有* 子句也必须写在 GAT 本身上。
 {==+==}
 
 
@@ -993,7 +1000,23 @@ fn main() {
 }
 ```
 {==+==}
+一个基本的例子:
 
+```rust
+trait ConstantId {
+    const ID: i32;
+}
+
+struct Struct;
+
+impl ConstantId for Struct {
+    const ID: i32 = 1;
+}
+
+fn main() {
+    assert_eq!(1, Struct::ID);
+}
+```
 {==+==}
 
 
