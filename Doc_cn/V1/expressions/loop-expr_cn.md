@@ -306,7 +306,7 @@ If the iterator yields a value, that value is matched against the irrefutable pa
 If the iterator is empty, the `for` expression completes.
 {==+==}
 `for` 表达式是一种语法结构，用于循环遍历 `std::iter::IntoIterator` 的实现提供的元素。
-如果迭代器产生一个值，那么该值将与不可反驳的模式匹配，执行循环体，然后控制返回到 `for` 循环的开头。
+如果迭代器产生一个值，那么该值将与不可拒绝的模式匹配，执行循环体，然后控制返回到 `for` 循环的开头。
 如果迭代器为空，则 `for` 表达式完成。
 {==+==}
 

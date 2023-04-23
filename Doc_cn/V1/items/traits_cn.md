@@ -634,7 +634,7 @@ longer optional. Also, all irrefutable patterns are allowed as long as there
 is a body. Without a body, the limitations listed above are still in effect.
 {==+==}
 从 2018 版开始，函数或方法参数模式不再是可选的。
-此外，只要有函数体，所有不可反驳模式都是允许的。
+此外，只要有函数体，所有不可拒绝模式都是允许的。
 如果没有函数体，则仍然受到上述限制。
 {==+==}
 

@@ -45,7 +45,7 @@
 > _枚举条目_ :\
 > &nbsp;&nbsp; _外围属性_<sup>\*</sup> [_可见性_][_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [标识符][IDENTIFIER]&nbsp;( _枚举条目元组_ | _枚举条目结构体_ )<sup>?</sup>
->                                _枚举条目判别式_<sup>?</sup>
+>                                _枚举条目判别值_<sup>?</sup>
 >
 > _枚举条目元组_ :\
 > &nbsp;&nbsp; `(` [_元组字段组_][_TupleFields_]<sup>?</sup> `)`
@@ -53,7 +53,7 @@
 > _枚举条目结构体_ :\
 > &nbsp;&nbsp; `{` [_结构体字段组_][_StructFields_]<sup>?</sup> `}`
 >
-> _枚举条目判别式_ :\
+> _枚举条目判别值_ :\
 > &nbsp;&nbsp; `=` [_表达式_][_Expression_]
 {==+==}
 
@@ -63,7 +63,8 @@ An *enumeration*, also referred to as an *enum*, is a simultaneous definition of
 nominal [enumerated type] as well as a set of *constructors*, that can be used
 to create or pattern-match values of the corresponding enumerated type.
 {==+==}
-一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组构造器 *constructors* 的命名类型。这些构造器可以用来创建或者匹配相应枚举类型的值。
+一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组构造器 *constructors* 的命名类型。
+这些构造器可以用来创建或者匹配相应枚举类型的值。
 {==+==}
 
 
@@ -173,7 +174,7 @@ enum Enum {
 ## Discriminants
 {==+==}
 <span id="custom-discriminant-values-for-fieldless-enumerations"></span>
-## 鉴别值
+## 判别值
 {==+==}
 
 
@@ -181,7 +182,7 @@ enum Enum {
 Each enum instance has a _discriminant_: an integer logically associated to it
 that is used to determine which variant it holds.
 {==+==}
-每个枚举实例都有一个 _鉴别值_ ：一个逻辑上与之关联的整数，用来确定它持有的变体。
+每个枚举实例都有一个 _判别值_ ：一个逻辑上与之关联的整数，用来确定它持有的变体。
 {==+==}
 
 
@@ -190,7 +191,7 @@ Under the [default representation], the discriminant is interpreted as
 an `isize` value. However, the compiler is allowed to use a smaller type (or
 another means of distinguishing variants) in its actual memory layout.
 {==+==}
-在 [默认表示][default representation] 下，鉴别值解释为 `isize` 值。
+在 [默认表示][default representation] 下，判别值解释为 `isize` 值。
 然而，编译器允许在实际内存布局中使用较小的类型 (或其他区分变体的方式) 。
 {==+==}
 
@@ -198,14 +199,14 @@ another means of distinguishing variants) in its actual memory layout.
 {==+==}
 ### Assigning discriminant values
 {==+==}
-### 分配鉴别值
+### 分配判别值
 {==+==}
 
 
 {==+==}
 #### Explicit discriminants
 {==+==}
-#### 显式鉴别值
+#### 显式判别值
 {==+==}
 
 
@@ -220,14 +221,14 @@ following the variant name with `=` and a [constant expression]:
 {==+==}
 1. if the enumeration is "[unit-only]".
 {==+==}
-1. 如果该枚举是 "[unit-only]" 单元枚举 。
+1. 如果该枚举是 "[单元枚举][unit-only]" 。
 {==+==}
 
 
 {==+==}
 2. if a [primitive representation] is used. For example:
 {==+==}
-2. 如果使用 [原始表示] [primitive representation] 。例如：
+2. 如果使用 [原始表示][primitive representation] 。例如：
 {==+==}
 
 
@@ -251,7 +252,7 @@ following the variant name with `=` and a [constant expression]:
 {==+==}
 #### Implicit discriminants
 {==+==}
-#### 隐式鉴别值
+#### 隐式判别值
 {==+==}
 
 
@@ -261,7 +262,7 @@ than the discriminant of the previous variant in the declaration. If the
 discriminant of the first variant in the declaration is unspecified, then
 it is set to zero.
 {==+==}
-如果枚举变体的鉴别值没有指定，则它被设置为在声明中前一个变体的鉴别值加1。如果第一个变体的鉴别值未指定，则设置为零。
+如果枚举变体的判别值没有指定，则它被设置为在声明中前一个变体的判别值加1。如果第一个变体的判别值未指定，则设置为零。
 {==+==}
 
 
@@ -301,7 +302,7 @@ assert_eq!(baz_discriminant, 123);
 {==+==}
 It is an error when two variants share the same discriminant.
 {==+==}
-当两个变体鉴别值相同时，是一个错误。
+当两个变体判别值相同时，是一个错误。
 {==+==}
 
 
@@ -327,7 +328,7 @@ enum SharedDiscriminantError2 {
 It is also an error to have an unspecified discriminant where the previous
 discriminant is the maximum value for the size of the discriminant.
 {==+==}
-如果先前枚举的鉴别值达到了其类型能够表示的最大值，那么下一个没有指定鉴别值的项将导致错误。
+如果先前枚举的判别值达到了其类型能够表示的最大值，那么下一个没有指定判别值的项将导致错误。
 {==+==}
 
 
@@ -351,14 +352,14 @@ enum OverflowingDiscriminantError2 {
 #[repr(u8)]
 enum OverflowingDiscriminantError {
     Max = 255,
-    MaxPlusOne // 将是256，但那会使枚举溢出。
+    MaxPlusOne // 将是 256 ，但那会使枚举溢出。
 }
 
 #[repr(u8)]
 enum OverflowingDiscriminantError2 {
     MaxMinusOne = 254, // 254
     Max,               // 255
-    MaxPlusOne         // 将是256，但那会使枚举溢出。
+    MaxPlusOne         // 将是 256 ，但那会使枚举溢出。
 }
 ```
 {==+==}
@@ -367,7 +368,7 @@ enum OverflowingDiscriminantError2 {
 {==+==}
 ### Accessing discriminant
 {==+==}
-### 访问鉴别值
+### 访问判别值
 {==+==}
 
 
@@ -383,7 +384,7 @@ enum OverflowingDiscriminantError2 {
 an enum value which can be compared. This cannot be used to get the value
 of the discriminant.
 {==+==}
-[`mem::discriminant`] 返回一个不透明的引用，指向枚举值的鉴别值，可以进行比较。但不能用于获取鉴别值。
+[`mem::discriminant`] 返回一个不透明的引用，指向枚举值的判别值，可以进行比较。但不能用于获取判别值。
 {==+==}
 
 
@@ -398,7 +399,7 @@ of the discriminant.
 If an enumeration is [unit-only] (with no tuple and struct variants), then its
 discriminant can be directly accessed with a [numeric cast]; e.g.:
 {==+==}
-如果一个枚举类型是 [unit-only]  (没有元组和结构的变体) ，那么它的鉴别值可以通过 [数字强制转换][numeric cast] 直接访问；比如:
+如果一个枚举类型是 [单元枚举][unit-only] ，那么它的判别值可以通过 [数字强转][numeric cast] 直接访问；比如:
 {==+==}
 
 
@@ -422,7 +423,7 @@ assert_eq!(2, Enum::Baz as isize);
 {==+==}
 [Field-less enums] can be casted if they do not have explicit discriminants, or where only unit variants are explicit.
 {==+==}
-[无成员的枚举][Field-less enums] 可以被强制类型转换，如果它们没有显式的鉴别值，或者只有单元变体是显式的。
+[无成员的枚举][Field-less enums] 可以被强制类型转换，如果它们没有显式的判别值，或者只有单元变体是显式的。
 {==+==}
 
 
@@ -469,7 +470,7 @@ assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
 If the enumeration specifies a [primitive representation], then the
 discriminant may be reliably accessed via unsafe pointer casting:
 {==+==}
-如果枚举指定了 [原始表示][primitive representation] ，那么可以通过不安全的指针转换来可靠地访问鉴别值:
+如果枚举指定了 [原始表示][primitive representation] ，那么可以通过不安全的指针转换来可靠地访问判别值:
 {==+==}
 
 

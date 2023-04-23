@@ -76,7 +76,7 @@ to be run.
 * [数组表达式][Array expressions] 。
 * [结构体][Struct] 表达式。
 * [块表达式][Block expressions] ，包括 `unsafe` 块。
-    * [let语句][let statements] 和因此不可反驳的 [模式][patterns] ，包括可变绑定。
+    * [let语句][let statements] 和因此不可拒绝的 [模式][patterns] ，包括可变绑定。
     * [赋值表达式][assignment expressions]
     * [复合赋值表达式][compound assignment expressions]
     * [表达式语句][expression statements]

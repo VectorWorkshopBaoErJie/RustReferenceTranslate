@@ -49,7 +49,7 @@
 > &nbsp;&nbsp; _函数修饰符组_ `fn` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` _函数参数组_<sup>?</sup> `)`\
 > &nbsp;&nbsp; &nbsp;&nbsp; _函数返回类型_<sup>?</sup> [_Where子句_][_WhereClause_]<sup>?</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; ( [_块表达式_] | `;` )
+> &nbsp;&nbsp; &nbsp;&nbsp; ( [_块表达式_][_BlockExpression_] | `;` )
 >
 > _函数修饰符组_ :\
 > &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
@@ -103,7 +103,7 @@ Functions are declared with the keyword `fn`.
 Functions may declare a set of *input* [*variables*][variables] as parameters, through which the caller passes arguments into the function, and the *output* [*type*][type] of the value the function will return to its caller on completion.
 If the output type is not explicitly stated, it is the [unit type].
 {==+==}
-一个函数包括一个 [代码块][block] ，以及一个名称、一组参数和一个输出类型。
+一个函数包括一个 [块][block] ，以及一个名称、一组参数和一个输出类型。
 除名称外，其他是可选的。函数是用关键字 `fn` 声明。
 函数可以声明一组 *输入* [变量][variables] 作为参数，通过这些变量，调用者将参数传递给函数，并且函数的 *输出* 类型为函数完成时将返回给其调用者的 [类型][type] 。
 如果未显式指定输出类型，则为 [单元类型][unit type] 。
@@ -113,7 +113,7 @@ If the output type is not explicitly stated, it is the [unit type].
 {==+==}
 When referred to, a _function_ yields a first-class *value* of the corresponding zero-sized [*function item type*], which when called evaluates to a direct call to the function.
 {==+==}
-当引用一个函数时，它会产生一个相应的零大小的 [*函数条目类型*][*function item type*] 的一类 *值* ，当调用它时会直接调用该函数。
+当引用一个函数时，它会产生一个相应的零大小的 [*函数条目类型*][*function item type*] 的第一类 *值* ，当调用它时会直接调用该函数。
 {==+==}
 
 
@@ -145,7 +145,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 Function parameters are irrefutable [patterns], so any pattern that is valid in
 an else-less `let` binding is also valid as a parameter:
 {==+==}
-函数参数是不可拒绝的 [模式][patterns] ，因此任何在没有 else-less `let` 绑定中有效的模式在参数中也是有效的:
+函数参数是不可拒绝的 [模式][patterns] ，因此任何在没有其他附加的 `let` 绑定中有效的模式在参数中也是有效的:
 {==+==}
 
 
@@ -217,7 +217,7 @@ return {
 {==+==}
 <!-- ignore: example expansion -->
 ```rust,ignore
-// argument_0是调用者实际传递的第一个参数。
+// argument_0 是调用者实际传递的第一个参数。
 let (value, _) = argument_0;
 return {
     value
@@ -246,7 +246,7 @@ A _generic function_ allows one or more _parameterized types_ to appear in its
 signature. Each type parameter must be explicitly declared in an
 angle-bracket-enclosed and comma-separated list, following the function name.
 {==+==}
-一种 _泛型函数_ 允许其签名中出现一个或多个 _参数化类型_ 。
+ _泛型函数_ 允许其签名中出现一个或多个 _参数化类型_ 。
 每个类型参数必须在一个尖括号包围的、由逗号分隔的列表中显式声明，在函数名之后。
 {==+==}
 
@@ -316,7 +316,7 @@ foo(&[1, 2]);
 {==+==}
 will instantiate type parameter `T` with `i32`.
 {==+==}
-将用 `i32` 实例化类型参数 `T` 。
+将类型参数 `T` 用实例化为 `i32` 。
 {==+==}
 
 
@@ -326,7 +326,7 @@ component after the function name. This might be necessary if there is not
 sufficient context to determine the type parameters. For example,
 `mem::size_of::<u32>() == 4`.
 {==+==}
-函数的类型参数还可以在函数名后跟一个后缀 [path] 组件来明确指定。
+函数的类型参数还可以在函数名后跟一个后缀 [路径][path] 组件来明确指定。
 如果没有足够的上下文来确定类型参数，则可能需要这样做。例如，`mem::size_of::<u32>() == 4`。
 {==+==}
 
@@ -342,7 +342,7 @@ sufficient context to determine the type parameters. For example,
 The `extern` function qualifier allows providing function _definitions_ that can
 be called with a particular ABI:
 {==+==}
-`extern` 函数修饰符允许提供函数 _定义组_ ，这些函数可以使用特定的 ABI 进行调用：
+`extern` 函数修饰符允许提供函数 _定义组_ ，这些函数可以使用特定的 ABI 进行调用:
 {==+==}
 
 
@@ -361,7 +361,7 @@ These are often used in combination with [external block] items which provide
 function _declarations_ that can be used to call functions without providing
 their _definition_:
 {==+==}
-这些通常与 [外部块][external block] 条目结合使用，后者提供可以用来调用函数而不提供其定义的函数声明:
+这些通常与 [外部块][external block] 条目结合使用，后者可以提供用来调用函数的声明，而不必提供其函数 _定义_ :
 {==+==}
 
 
@@ -414,7 +414,7 @@ Functions can be called by foreign code, and using an ABI that
 differs from Rust allows, for example, to provide functions that can be
 called from other programming languages like C:
 {==+==}
-函数可以被外部代码调用，使用与 Rust 不同的 ABI 允许提供可以从其他编程语言 (如C) 调用的函数:
+ ABI 使用非 "Rust" 的函数，允许其他编程语言调用该函数，比如 C 语言:
 {==+==}
 
 
@@ -429,10 +429,10 @@ extern "stdcall" fn new_i32_stdcall() -> i32 { 0 }
 ```
 {==+==}
 ```rust
-// 用 "C" ABI声明函数
+// 用 "C" ABI 声明函数
 extern "C" fn new_i32() -> i32 { 0 }
 
-// 用 "stdcall" ABI声明函数
+// 用 "stdcall" ABI 声明函数
 # #[cfg(target_arch = "x86_64")]
 extern "stdcall" fn new_i32_stdcall() -> i32 { 0 }
 ```
@@ -443,7 +443,7 @@ extern "stdcall" fn new_i32_stdcall() -> i32 { 0 }
 Just as with [external block], when the `extern` keyword is used and the `"ABI"`
 is omitted, the ABI used defaults to `"C"`. That is, this:
 {==+==}
-与 [external block] 类似，当使用 `extern` 关键字但省略了 `"ABI"` 时，使用的 ABI 默认为 `"C"` 。例如：
+与 [外部块][external block] 类似，当使用 `extern` 关键字但省略了 `"ABI"` 时，使用的 ABI 默认为 `"C"` 。例如：
 {==+==}
 
 
@@ -479,7 +479,7 @@ Functions with an ABI that differs from `"Rust"` do not support unwinding in the
 exact same way that Rust does. Therefore, unwinding past the end of functions
 with such ABIs causes the process to abort.
 {==+==}
-函数的 ABI (应用程序二进制接口) 和 Rust 不同的函数的 ABI 不能像 Rust 一样支持展开 (unwind) 方式，因此尝试在这些 ABI 中展开超过函数末尾的部分会导致进程中止。
+非 "Rust" 函数的 ABI (应用程序二进制接口) 不能像 Rust 一样支持栈回退，因此尝试在这些 ABI 中回退超过函数末尾的部分会导致进程中止。
 {==+==}
 
 
@@ -512,6 +512,7 @@ Const functions may use the [`extern`] function qualifier, but only with the `"R
 {==+==}
 `const` 函数可以使用 [`extern`] 函数限定符，但是只能使用 `"Rust"` 和 `"C"` ABI。
 {==+==}
+
 
 
 {==+==}
@@ -551,7 +552,7 @@ Async functions do no work when called: instead, they
 capture their arguments into a future. When polled, that future will
 execute the function's body.
 {==+==}
-异步函数可以标记为 `async` 。在调用时，异步函数不会立即执行，而是将其参数捕获为一个 future 。当该 future 被轮询时，它会执行函数的主体。
+异步函数在调用时，不会立即执行，而是将其参数捕获为一个 "future" 。当该 future 被轮询时，它会执行函数的主体。
 {==+==}
 
 
@@ -560,7 +561,7 @@ An async function is roughly equivalent to a function
 that returns [`impl Future`] and with an [`async move` block][async-blocks] as
 its body:
 {==+==}
-一个 async 异步函数大致等同于一个返回 [`impl Future`] 的函数，并且具有一个 [`async move` 块][async-blocks]作为函数体:
+一个 async 异步函数大致等同于一个返回 [`impl Future`] 的函数，并且具有一个 [`async move` 块][async-blocks] 作为函数体:
 {==+==}
 
 
@@ -750,7 +751,7 @@ responsibility to ensure that.
 [Outer attributes][attributes] are allowed on functions. [Inner
 attributes][attributes] are allowed directly after the `{` inside its [block].
 {==+==}
-函数可以使用 [外围属性][attributes] 。 [内部属性][attributes] 可以直接在函数的 [block] 里的 `{` 后面使用。
+函数可以使用 [外围属性][attributes] 。 [内部属性][attributes] 可以直接在函数的 [块][block] 里的 `{` 后面使用。
 {==+==}
 
 
@@ -777,7 +778,7 @@ fn documented() {
 > Note: Except for lints, it is idiomatic to only use outer attributes on
 > function items.
 {==+==}
-> 注意: 除了用于 lint ，通常仅在函数条目上使用外围属性是惯用的。
+> 注意: 除了用于代码分析 ，通常仅在函数条目上使用外围属性是惯用的。
 {==+==}
 
 
@@ -788,7 +789,7 @@ attributes], [`must_use`], [the procedural macro attributes], [the testing
 attributes], and [the optimization hint attributes]. Functions also accept
 attributes macros.
 {==+==}
-函数可用的属性包括 [`cfg`] 、 [`cfg_attr`] 、 [`deprecated`] 、 [`doc`] 、 [`export_name`] 、 [`link_section`] 、 [`no_mangle`] 、[代码分析检查属性][the lint check attributes] 、 [`must_use`] 、 [过程宏属性][the procedural macro attributes] 、 [测试属性][the testing attributes] 和 [优化提示属性][the optimization hint attributes] 。此外，函数还接受属性宏。
+函数可用的属性包括 [`cfg`] 、 [`cfg_attr`] 、 [`deprecated`] 、 [`doc`] 、 [`export_name`] 、 [`link_section`] 、 [`no_mangle`] 、[代码分析][the lint check attributes] 、 [`must_use`] 、 [过程宏属性][the procedural macro attributes] 、 [测试][the testing attributes] 和 [优化提示][the optimization hint attributes] 。此外，函数还接受属性宏。
 {==+==}
 
 

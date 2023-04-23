@@ -49,7 +49,7 @@ Just like a [`let` binding], the closure parameters are irrefutable [patterns], 
 Each closure expression has a unique, anonymous type.
 {==+==}
 闭包表达式表示一个函数，该函数将一系列参数映射到跟随参数的表达式。
-就像 [`let` 绑定][`let` binding] 一样，闭包参数是无法反驳的 [模式][patterns] ，其类型注解是可选的，如果未给出，将从上下文中推断。
+就像 [`let` 绑定][`let` binding] 一样，闭包参数是无法拒绝的 [模式][patterns] ，其类型注解是可选的，如果未给出，将从上下文中推断。
 每个闭包表达式都具有一个唯一的、匿名的类型。
 {==+==}
 

@@ -149,7 +149,7 @@ if let ("Ham", b) = dish { // 在dish上应用模式匹配，如果dish与("Ham"
     println!("Ham is served with {}", b); // 打印"Ham is served with Eggs"
 }
 
-if let _ = 5 { // 对5应用不可反驳的模式，始终为真，执行代码块
+if let _ = 5 { // 对5应用不可拒绝的模式，始终为真，执行代码块
     println!("Irrefutable patterns are always true"); // 打印"Irrefutable patterns are always true"
 }
 ```

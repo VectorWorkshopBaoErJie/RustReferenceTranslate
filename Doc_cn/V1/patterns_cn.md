@@ -176,9 +176,9 @@ A pattern is said to be *refutable* when it has the possibility of not being mat
 *Irrefutable* patterns, on the other hand, always match the value they are being matched against.
 Examples:
 {==+==}
-## 可反驳性
+## 可拒绝性
 
-当模式可能无法匹配其所匹配的值时，该模式被称为 *可反驳的* 。相反， *不可反驳* 模式总是与其所匹配的值匹配。例如：
+当模式可能无法匹配其所匹配的值时，该模式被称为 *可拒绝的* 。相反， *不可拒绝* 模式总是与其所匹配的值匹配。例如：
 {==+==}
 
 
@@ -194,11 +194,11 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" is refutable, and will not match
 ```
 {==+==}
 ```rust
-let (x, y) = (1, 2);               // "(x, y)" 是一个不可反驳的模式
+let (x, y) = (1, 2);               // "(x, y)" 是一个不可拒绝的模式
 
-if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳的，将不匹配
+if let (a, 3) = (1, 2) {           // "(a, 3)" 是可拒绝的，将不匹配
     panic!("不应该到达这里");
-} else if let (a, 4) = (3, 4) {    // "(a, 4)" 是可反驳的，并将匹配
+} else if let (a, 4) = (3, 4) {    // "(a, 4)" 是可拒绝的，并将匹配
     println!("匹配到 ({}, 4)", a);
 }
 ```
@@ -290,7 +290,7 @@ for i in -2..5 {
 }
 ```
 {==+==}
-字面值模式总是可反驳的。
+字面值模式总是可拒绝的。
 
 例如:
 
@@ -470,7 +470,7 @@ Identifier patterns are irrefutable if the `@` subpattern is irrefutable or the 
 
 [路径模式](#path-patterns) 优先于标识符模式。如果指定了 `ref` 或 `ref mut` ，并且标识符遮蔽了一个常量，则会出现错误。
 
-如果子模式是不可反驳的或未指定子模式，则标识符模式是不可反驳的。
+如果子模式是不可拒绝的或未指定子模式，则标识符模式是不可拒绝的。
 {==+==}
 
 
@@ -661,7 +661,7 @@ if let Some(_) = x {}
 {==+==}
 The wildcard pattern is always irrefutable.
 {==+==}
-通配符模式始终是不可反驳的。
+通配符模式始终是不可拒绝的。
 {==+==}
 
 
@@ -694,7 +694,7 @@ _剩余模式_ (`..` 符号) 作为一个可变长度的模式，用于匹配在
 它只能在 [元组模式](#tuple-patterns) 、 [元组结构体模式](#tuple-struct-patterns) 和 [切片模式](#slice-patterns) 中使用，并且只能出现一次作为这些模式中的一个元素。
 在 [切片模式](#slice-patterns) 中，它也允许出现在 [标识符模式](#identifier-patterns) 中。
 
-剩余模式始终是不可反驳的。
+剩余模式始终是不可拒绝的。
 {==+==}
 
 
@@ -1020,8 +1020,8 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 > **Note**: Although range patterns use the same syntax as [range expressions], there are no exclusive range patterns.
 > That is, neither `x .. y` nor `.. x` are valid range patterns.
 {==+==}
-固定宽度整数类型和 `char` 类型的区间模式在它们跨越类型的所有可能值时是不可反驳的。
-例如，`0u8..=255u8` 是不可反驳的。
+固定宽度整数类型和 `char` 类型的区间模式在它们跨越类型的所有可能值时是不可拒绝的。
+例如，`0u8..=255u8` 是不可拒绝的。
 整数类型的值区间是从最小值到最大值的闭合区间。
 `char` 类型的值区间恰好包含所有 Unicode 标量值的区间：`'\U{0000}'..='\U{D7FF}'` 和 `'\U{E000}'..='\U{10FFFF}'`。
 
@@ -1088,7 +1088,7 @@ Reference patterns are always irrefutable.
 添加 `mut` 关键字会对可变引用进行解引用。
 可变性必须与引用的可变性相匹配。
 
-引用模式始终是不可反驳的。
+引用模式始终是不可拒绝的。
 {==+==}
 
 
@@ -1261,7 +1261,7 @@ let Struct{a: x, b: y, c: z} = struct_value;          // destructure all fields
 {==+==}
 A struct pattern is refutable when one of its subpatterns is refutable.
 {==+==}
-当结构体模式的任何子模式都是可反驳的时，结构体模式就是可反驳的。
+当结构体模式的任何子模式都是可拒绝的时，结构体模式就是可拒绝的。
 {==+==}
 
 
@@ -1297,7 +1297,7 @@ A tuple struct pattern is refutable when one of its subpatterns is refutable.
 {==+==}
 元组结构体模式匹配元组结构体和枚举值，匹配所有符合其子模式定义的条件。它们还可用于 [解构](#destructuring) 元组结构体或枚举值。
 
-当子模式中有不可反驳模式时，元组结构体模式就是可反驳的。
+当子模式中有不可拒绝模式时，元组结构体模式就是可拒绝的。
 {==+==}
 
 
@@ -1342,7 +1342,7 @@ An example of using tuple patterns:
 元组模式匹配满足其子模式定义的所有条件的元组值。它们也用于 [解构](#destructuring) 元组。
 形式为 `(..)` 且具有单个 [_剩余模式_][_RestPattern_] 的是一种特殊形式，它不需要逗号，可以匹配任意大小的元组。
 
-当其子模式中有一个可反驳时，元组模式是可反驳的。
+当其子模式中有一个可拒绝时，元组模式是可拒绝的。
 
 以下是使用元组模式的示例：
 {==+==}
@@ -1475,8 +1475,8 @@ When matching a slice, it is irrefutable only in the form with a single `..` [re
 
 Within a slice, a half-open range pattern like `a..` must be enclosed in parentheses, as in `(a..)`, to clarify it is intended to match a single value.
 {==+==}
-切片模式在匹配数组时是不可反驳的，只要每个元素都是不可反驳的即可。
-在匹配切片时，只有在使用单个 `..` [剩余模式](#rest-patterns) 或使用 `..` 剩余模式作为子模式的 [标识符模式](#identifier-patterns) 时才是不可反驳的。
+切片模式在匹配数组时是不可拒绝的，只要每个元素都是不可拒绝的即可。
+在匹配切片时，只有在使用单个 `..` [剩余模式](#rest-patterns) 或使用 `..` 剩余模式作为子模式的 [标识符模式](#identifier-patterns) 时才是不可拒绝的。
 
 在一个切片内，半开区间模式如 `a..` 必须用括号括起来，例如 `(a..)`，以明确其意图是匹配单个值。
 {==+==}
@@ -1529,7 +1529,7 @@ _路径模式_ 是指引用常量值或没有字段的结构体或枚举变体�
 * 关联常量
   
 修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` (而不是仅实现) 。
-当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可反驳类型的常量时，路径模式是不可反驳的。当路径模式引用可反驳的常量或具有多个变体的枚举变体时，它们是可反驳的。
+当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可拒绝类型的常量时，路径模式是不可拒绝的。当路径模式引用可拒绝的常量或具有多个变体的枚举变体时，它们是可拒绝的。
 {==+==}
 
 

@@ -109,8 +109,8 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 > **Note**: Although range patterns use the same syntax as [range expressions], there are no exclusive range patterns.
 > That is, neither `x .. y` nor `.. x` are valid range patterns.
 {==+==}
-固定宽度整数和 `char` 类型的区间模式在它们 span 类型的所有可能值时是不可反驳的。
-例如， `0u8..=255u8` 是不可反驳的。
+固定宽度整数和 `char` 类型的区间模式在它们 span 类型的所有可能值时是不可拒绝的。
+例如， `0u8..=255u8` 是不可拒绝的。
 整数类型的值区间是从其最小值到最大值的闭区间。
 `char` 类型的值区间恰好包含所有 Unicode 标量值的区间: `'\U{0000}'..='\U{D7FF}'` 和 `'\U{E000}'..='\U{10FFFF}'` 。
 
@@ -131,8 +131,8 @@ When matching a slice, it is irrefutable only in the form with a single `..` [re
 Within a slice, a range pattern without both lower and upper bound must be enclosed in parentheses, as in `(a..)`, to clarify it is intended to match against a single slice element.
 A range pattern with both lower and upper bound, like `a..=b`, is not required to be enclosed in parentheses.
 {==+==}
-切片模式在匹配数组时是不可反驳的，只要每个元素都是不可反驳的。
-在匹配切片时，只有在形式为单个 `..` 的 [剩余模式](#rest-patterns) 或 [标识符模式](#identifier-patterns) 时才是不可反驳的，其中 `..` 剩余模式作为子模式。
+切片模式在匹配数组时是不可拒绝的，只要每个元素都是不可拒绝的。
+在匹配切片时，只有在形式为单个 `..` 的 [剩余模式](#rest-patterns) 或 [标识符模式](#identifier-patterns) 时才是不可拒绝的，其中 `..` 剩余模式作为子模式。
 
 在切片内，没有同时具有下限和上限的区间模式必须用括号括起来，例如 `(a..)`，以明确其意图是匹配单个切片元素。
 同时具有下限和上限的区间模式，例如 `a..=b` ，不需要用括号括起来。
