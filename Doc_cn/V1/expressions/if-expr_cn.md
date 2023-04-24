@@ -134,19 +134,19 @@ if let _ = 5 {
 ```
 {==+==}
 ```rust
-let dish = ("Ham", "Eggs"); // 定义一个元组dish，包含两个字符串"Ham"和"Eggs"
+let dish = ("Ham", "Eggs"); // 定义一个元组 dish ，包含两个字符串 "Ham" 和 "Eggs" 
 
 // 由于模式不匹配，这个代码块将被跳过
-if let ("Bacon", b) = dish { // 在dish上应用模式匹配，如果dish与("Bacon", b)相同，则执行代码块
+if let ("Bacon", b) = dish { // 在 dish上应用模式匹配，如果 dish 与("Bacon", b)相同，则执行代码块
     println!("Bacon is served with {}", b);
 } else { 
     // 否则执行这个代码块
-    println!("No bacon will be served"); // 打印"No bacon will be served"
+    println!("No bacon will be served"); // 打印 "No bacon will be served"
 }
 
 // 由于模式匹配，这个代码块将被执行
-if let ("Ham", b) = dish { // 在dish上应用模式匹配，如果dish与("Ham", b)相同，则执行代码块
-    println!("Ham is served with {}", b); // 打印"Ham is served with Eggs"
+if let ("Ham", b) = dish { // 在 dish 上应用模式匹配，如果 dish 与 ("Ham", b) 相同，则执行代码块
+    println!("Ham is served with {}", b); // 打印 "Ham is served with Eggs"
 }
 
 if let _ = 5 { // 对5应用不可拒绝的模式，始终为真，执行代码块
@@ -252,7 +252,7 @@ The expression cannot be a [lazy boolean operator expression][_LazyBooleanOperat
 Use of a lazy boolean operator is ambiguous with a planned feature change of the language (the implementation of if-let chains - see [eRFC 2947][_eRFCIfLetChain_]).
 When lazy boolean operator expression is desired, this can be achieved by using parenthesis as below:
 {==+==}
-该表达式不能是一个 [惰性布尔运算符表达式][_LazyBooleanOperatorExpression_]。
+该表达式不能是一个 [_惰性布尔运算符表达式_][_LazyBooleanOperatorExpression_]。
 使用惰性布尔运算符会与语言计划更改的特性产生歧义 (即 if-let 链的实现 - 请参见 [eRFC 2947][_eRFCIfLetChain_] )。
 当需要惰性布尔运算符表达式时，可以通过如下方式使用括号来实现：
 {==+==}

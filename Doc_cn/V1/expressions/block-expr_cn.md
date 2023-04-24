@@ -53,7 +53,7 @@ The type of a block is the type of the final operand, or `()` if the final opera
 {==+==}
 *块表达式* 或 *块* 是一个控制流表达式和用于条目和变量声明的匿名命名空间作用域。
 作为控制流表达式，块按顺序执行其组成的非条目声明语句，然后执行其最后的可选表达式。
-作为匿名命名空间作用域，仅在块内部声明的条目声明在块本身中可用，而由 `let` 语句声明的变量从下一条语句开始在块结束之前处于作用域中。
+作为匿名命名空间作用域，在块内部声明的条目声明在块本身中可用，而由 `let` 语句声明的变量从下一条语句开始在块结束之前处于作用域中。
 
 块的语法是 `{` ，然后是任何 [内部属性][inner attributes] ，然后是任意数量的 [语句][statements] ，然后是一个可选的表达式，称为最后的操作数，最后是一个 `}` 。
 
@@ -207,7 +207,7 @@ Async contexts are established by async blocks as well as the bodies of async fu
 {==+==}
 ### 异步上下文
 
-由于异步块构造了一个future，它们定义了一个 **异步上下文** ，这个上下文可以包含 [`await` 表达式][`await` expressions] 。
+由于异步块构造了一个 future ，其定义了一个 **异步上下文** ，这个上下文可以包含 [`await` 表达式][`await` expressions] 。
 异步上下文由异步块以及异步函数的函数体建立，后者的语义是以异步块为基础定义的。
 {==+==}
 
@@ -234,9 +234,9 @@ loop {
 ### 控制流运算符
 
 异步块类似于函数约束，就像闭包一样。
-因此， `?` 运算符和 `return` 表达式都会影响未来的输出，而不是封闭函数或其他上下文。
-也就是说，从异步块中的 `return <expr>` 将返回 `<expr>` 的结果作为未来的输出。
-同样，如果 `<expr>?` 传播错误，则该错误将作为未来的结果传播。
+因此， `?` 运算符和 `return` 表达式都会影响 future 的输出，而不是封闭函数或其他上下文。
+也就是说，从异步块中的 `return <expr>` 将返回 `<expr>` 的结果作为 future 的输出。
+同样，如果 `<expr>?` 传播错误，则该错误将作为 future 的结果传播。
 
 最后， `break` 和 `continue` 关键字不能用于从异步块中分支跳出。
 因此以下代码是非法的:
@@ -269,7 +269,7 @@ Examples:
 > _Unsafe块表达式_ :\
 > &nbsp;&nbsp; `unsafe` _块表达式_
 
-在需要进行 [unsafe 操作][unsafe operations] 时，可以在一段代码块前加上 `unsafe` 关键字。详见 [`unsafe` block](../unsafe-blocks.md) 。
+在需要进行 [unsafe 操作][unsafe operations] 时，可以在一段代码块前加上 `unsafe` 关键字。详见 [`unsafe` 块](../unsafe-blocks.md) 。
 示例:
 {==+==}
 
@@ -330,7 +330,7 @@ For example, this function returns `true` on unix platforms and `false` on other
 * 另一个块表达式的尾表达式是块表达式。
 <!-- Keep list in sync with expressions.md -->
 
-具有在块表达式上的含义的属性包括 [`cfg`] 和 [lint 检查属性][the lint check attributes] 。
+具有在块表达式上的含义的属性包括 [`cfg`] 和 [代码分析检查属性][the lint check attributes] 。
 
 例如，这个函数在 Unix 平台上返回 `true` ，在其他平台上返回 `false` 。
 {==+==}

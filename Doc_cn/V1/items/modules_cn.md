@@ -303,7 +303,7 @@ The built-in attributes that have meaning on a module are [`cfg`],
 [`deprecated`], [`doc`], [the lint check attributes], [`path`], and
 [`no_implicit_prelude`]. Modules also accept macro attributes.
 {==+==}
-内置的对模块有意义的属性包括 [`cfg`] 、 [`deprecated`] 、 [`doc`] 、 [lint 检查属性][the lint check attributes] 、 [`path`] 和 [`no_implicit_prelude`] 。模块还接受宏属性。
+内置的对模块有意义的属性包括 [`cfg`] 、 [`deprecated`] 、 [`doc`] 、 [代码分析检查属性][the lint check attributes] 、 [`path`] 和 [`no_implicit_prelude`] 。模块还接受宏属性。
 {==+==}
 
 

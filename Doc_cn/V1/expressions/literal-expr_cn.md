@@ -39,8 +39,10 @@ A literal is a form of [constant expression], so is evaluated (primarily) at com
 
 Each of the lexical [literal][literal tokens] forms described earlier can make up a literal expression, as can the keywords `true` and `false`.
 {==+==}
-字面值表达式，由一个单独的标记组成，而不是一系列标记，它直接指示其计算结果的值，而不是通过名称或其他计算规则引用它。
-字面值是 [常量表达式] 的一种形式，因此主要在编译时计算。
+_字面值表达式_ 由一个单独的标记组成，而不是一系列标记，它直接指示其计算结果的值，而不是通过名称或其他计算规则引用它。 
+
+字面值是 [常量表达式][constant expression] 的一种形式，因此主要在编译时计算。
+
 每个先前描述的词法 [字面值][literal tokens] 形式都可以组成一个字面表达式，关键字 `true` 和 `false` 也可以。
 {==+==}
 
@@ -214,11 +216,11 @@ If the value does not fit in `u128`, it is a compiler error.
 
 * 将字符串转换为 `u128` 值，就像通过 [`u128::from_str_radix`] 选择的基数一样。如果值不适合 `u128`，则会出现编译器错误。
 
-* 通过 [数字类型转换][numeric cast] 将 `u128` 值转换为表达式的类型。
+* 通过 [数字转换][numeric cast] 将 `u128` 值转换为表达式的类型。
 
-> **注意**: 如果该字面值的值超出了该类型的表示范围，最终转换将截断该字面值。 `rustc` 包括一个名为 `overflowing_literals` 的 [lint check] ，默认为 `deny`，拒绝其中出现的表达式。
+> **注意**: 如果该字面值的值超出了该类型的表示范围，最终转换将截断该字面值。 `rustc` 包括一个名为 `overflowing_literals` 的 [代码分析检查] [lint check] ，默认为 `deny`，拒绝其中出现的表达式。
 
-> **注意**: 例如， `-1i8` 是对字面值表达式 `1i8` 应用了 [取反运算符][negation operator] ，而不是一个整数字面值表达式。有关表示有符号类型的最负值的注释，请参见 [Overflow] 。
+> **注意**: 例如， `-1i8` 是对字面值表达式 `1i8` 应用了 [取反运算符][negation operator] ，而不是一个整数字面值表达式。有关表示有符号类型的最负值的注释，请参见 [溢出][Overflow] 。
 {==+==}
 
 
@@ -301,7 +303,7 @@ The value of the expression is determined from the string representation of the 
 
 > **注意**: `inf` 和 `NaN` 不是字面值令牌。
 > 可以使用 [`f32::INFINITY`] 、 [`f64::INFINITY`] 、 [`f32::NAN`] 和 [`f64::NAN`] 常量来代替字面值表达式。
-> 在 `rustc` 中，被评估为无限大的字面值将触发 `overflowing_literals` lint 检查。
+> 在 `rustc` 中，被评估为无限大的字面值将触发 `overflowing_literals` 代码分析检查。
 {==+==}
 
 
