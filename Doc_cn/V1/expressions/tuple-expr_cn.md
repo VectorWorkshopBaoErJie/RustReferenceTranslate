@@ -110,15 +110,15 @@ Examples of tuple indexing expressions:
 {==+==}
 *元组索引表达式* 用于访问 [元组][tuple type] 和 [元组结构体][tuple struct] 中的字段。
 
-元组索引表达式的语法是一个表达式，即 *元组操作数* ，后跟一个点号 ( `.` ) ，最后是一个元组索引。
+元组索引表达式的语法是一个表达式，即 *元组操作* ，后跟一个点号 ( `.` ) ，最后是一个元组索引。
 元组索引的语法是一个 [十进制字面值][decimal literal] ，没有前导零、下划线或后缀。
 例如，`0` 和 `2` 是有效的元组索引，但  `01` 、 `0_` 和 `0i32` 不是。
 
-元组操作数的类型必须是 [元组类型][tuple type] 或 [元组结构体][tuple struct] 的一种。
-元组索引必须是元组操作数类型中与之同名的字段。
+元组操作的类型必须是 [元组类型][tuple type] 或 [元组结构体][tuple struct] 的一种。
+元组索引必须是元组操作类型中与之同名的字段。
 
-求值元组索引表达式除了求值其元组操作数之外没有任何副作用。
-作为 [占位表达式][place expression] ，它将求值元组操作数中与元组索引同名的字段的位置。
+求值元组索引表达式除了求值其元组操作之外没有任何副作用。
+作为 [占位表达式][place expression] ，它将求值元组操作中与元组索引同名的字段的位置。
 
 元组索引表达式的示例如下:
 {==+==}
@@ -156,7 +156,7 @@ assert_eq!(point.1, 0.0);
 
 > **Note**: Although arrays and slices also have elements, you must use an [array or slice indexing expression] or a [slice pattern] to access their elements.
 {==+==}
-> **注意**: 与字段访问表达式不同，元组索引表达式可以作为 [调用表达式][call expression] 的函数操作数，因为它不能与方法调用混淆，因为方法名称不能是数字。
+> **注意**: 与字段访问表达式不同，元组索引表达式可以作为 [调用表达式][call expression] 的函数操作，因为它不能与方法调用混淆，因为方法名称不能是数字。
 
 > **注意**: 尽管数组和切片也有元素，但必须使用 [数组或切片索引表达式][array or slice indexing expression] 或 [切片模式][slice pattern] 来访问它们的元素。
 {==+==}

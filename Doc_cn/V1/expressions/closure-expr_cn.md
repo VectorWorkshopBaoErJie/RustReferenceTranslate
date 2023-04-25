@@ -39,7 +39,7 @@ The optional type after each pattern is a type annotation for the pattern.
 If there is a return type, the closure body must be a [block].
 {==+==}
 *闭包表达式* ，也称为 lambda 表达式或 lambda ，定义一个 [闭包类型][closure type] 并求值为该类型的值。
-闭包表达式的语法是一个可选的 `move` 关键字，然后是一个由管道符号分隔 (`|`) 的逗号分隔的 [模式][patterns] 列表，称为*闭包参数*，每个参数后面可选地跟随一个 `:` 和一个类型，然后是一个可选的 `->` 和类型，称为 *返回类型* ，然后是一个表达式，称为 *闭包体操作数* 。每个模式后面的可选类型是该模式的类型注解。如果存在返回类型，则闭包体必须是一个 [块][block] 。
+闭包表达式的语法是一个可选的 `move` 关键字，然后是一个由管道符号分隔 (`|`) 的逗号分隔的 [模式][patterns] 列表，称为*闭包参数*，每个参数后面可选地跟随一个 `:` 和一个类型，然后是一个可选的 `->` 和类型，称为 *返回类型* ，然后是一个表达式，称为 *闭包体操作* 。每个模式后面的可选类型是该模式的类型注解。如果存在返回类型，则闭包体必须是一个 [块][block] 。
 {==+==}
 
 
@@ -79,7 +79,7 @@ The closure type implements [`Send`] and [`Sync`] if the type of every captured 
 ## 闭包类型实现的 trait
 
 闭包类型实现哪些 trait 取决于如何捕获变量和捕获的变量的类型。
-请参考 [调用 trait 和强制转换][call traits and coercions] 章节了解闭包实现 `Fn` 、 `FnMut` 和 `FnOnce` 的情况和时间。
+请参考 [调用 trait 和强转][call traits and coercions] 章节了解闭包实现 `Fn` 、 `FnMut` 和 `FnOnce` 的情况和时间。
 如果每个捕获的变量的类型也实现了 trait ，闭包类型实现 [`Send`] 和 [`Sync`] 。
 {==+==}
 

@@ -11,7 +11,7 @@ that cannot be written out. A closure type is approximately equivalent to a
 struct which contains the captured variables. For instance, the following
 closure:
 {==+==}
-[闭包表达式][closure expression] 生成一个闭包值，具有独特的匿名类型，无法显式书写。
+[闭包表达式][closure expression] 生成一个闭包值，具有独特匿名的类型，无法显式书写。
 闭包类型类似于包含捕获变量的结构体。例如，以下闭包:
 {==+==}
 
@@ -102,7 +102,7 @@ order to capture a single field:
 {==+==}
 ## 捕获模式
 
-编译器优先选择对闭合变量进行不可变借用，然后是唯一不可变借用 (参见下文) ，然后是可变借用，最后才是移动方式。
+编译器优先选择对闭合变量进行不可变借用，然后是唯一不可变借用 (参见下文) ，然后是可变借用，最后才是移动的方式。
 编译器将选择与在闭包体内使用捕获变量的方式兼容的这些选项中的第一个。编译器不考虑周围的代码，比如涉及变量的生命周期或闭包本身的生命周期。
 
 如果使用了 `move` 关键字，则所有的捕获都是通过移动，或者对于 `Copy` 类型是通过复制，而不管是否可以使用借用。

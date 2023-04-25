@@ -1,7 +1,7 @@
 {==+==}
 # Range expressions
 {==+==}
-# 范围表达式
+# 区间表达式
 {==+==}
 
 
@@ -137,7 +137,7 @@ assert_eq!(x, y);
 {==+==}
 Ranges can be used in `for` loops:
 {==+==}
-Ranges可以在 `for` 循环中使用:
+区间可以在 `for` 循环中使用:
 {==+==}
 
 

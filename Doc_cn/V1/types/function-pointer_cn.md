@@ -38,7 +38,7 @@
 > &nbsp;&nbsp; `unsafe`<sup>?</sup> (`extern` [_Abi_]<sup>?</sup>)<sup>?</sup>
 >
 > _裸函数返回类型_:\
-> &nbsp;&nbsp; `->` [_TypeNoBounds_]
+> &nbsp;&nbsp; `->` [_无约束类型组_][_TypeNoBounds_]
 >
 > _函数参数可能命名为可变参数_ :\
 > &nbsp;&nbsp; _可能命名函数参数组_ | _可能命名函数参数可变_

@@ -34,7 +34,7 @@ The boolean type is the type of many operands in various [expressions]:
 
 可以使用关键字 `true` 和 `false` 创建此类型的值，通过 [字面值表达式][literal expression] 生成。
 
-此类型是 [language prelude] 的一部分，其 [name] 为 `bool` 。
+此类型是 [语言预定义][language prelude] 的一部分，其 [name] 为 `bool` 。
 
 具有布尔类型的对象每个都具有 [大小和对齐方式][size and alignment] 1 。
 值 false 的位模式为 `0x00` ，值 true 的位模式为 `0x01` 。

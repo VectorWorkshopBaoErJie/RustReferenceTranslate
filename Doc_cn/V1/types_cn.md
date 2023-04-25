@@ -115,8 +115,8 @@ Rust 的类型列表包括：
 >
 > _无约束类型组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_括号类型_][_ParenthesizedType_]\
-> &nbsp;&nbsp; | [_ImplTrait类型1约束_][_ImplTraitTypeOneBound_]\
-> &nbsp;&nbsp; | [_Trait对象类型1约束_][_TraitObjectTypeOneBound_]\
+> &nbsp;&nbsp; | [_ImplTrait类型单约束_][_ImplTraitTypeOneBound_]\
+> &nbsp;&nbsp; | [_Trait对象类型单约束_][_TraitObjectTypeOneBound_]\
 > &nbsp;&nbsp; | [_类型路径_][_TypePath_]\
 > &nbsp;&nbsp; | [_元组类型_][_TupleType_]\
 > &nbsp;&nbsp; | [_永不类型_][_NeverType_]\

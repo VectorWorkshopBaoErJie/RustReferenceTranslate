@@ -17,7 +17,7 @@
 > _Trait对象类型_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_类型参数约束组_]
 >
-> _Trait对象类型1约束_ :\
+> _Trait对象类型单约束_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_Trait约束_][_TraitBound_]
 {==+==}
 
@@ -38,12 +38,12 @@ paths to traits may be parenthesized.
 
 For example, given a trait `Trait`, the following are all trait objects:
 {==+==}
-一个 *trait 对象* 是另一个类型的不透明值，该类型实现了一组 trait 。trait 集由一个 [object safe] 的 *base trait* 和任意数量的 [auto trait] 组成。
+一个 *trait 对象* 是另一个类型的不透明值，该类型实现了一组 trait 。trait 集由一个 [对象安全][object safe] 的 *base trait* 和任意数量的 [auto trait] 组成。
 
 Trait 对象实现了 base trait ，它的 auto traits 以及 base trait 的任何 [超级 Trait][supertraits] 。
 
  Trait 对象写作关键字 `dyn` 后跟一组 trait 约束 ，但对 trait 约束有以下限制。
-除了第一个 trait 之外的所有 trait 都必须是 auto trait ，不能有多个 lifetime ，并且不允许 opt-out bounds (例如 `?Sized` )。
+除了第一个 trait 之外的所有 trait 都必须是 auto trait ，不能有多个生命周期，并且不允许可选附加约束 (例如 `?Sized` )。
 此外，路径到 traits 可以括在括号中。
 
 例如，给定 `Trait` ，以下都是 trait 对象:
@@ -110,7 +110,7 @@ behind some type of pointer; for example `&dyn SomeTrait` or
 {==+==}
 如果 base trait 相互为别名， auto trait 集相同且生命周期约束相同，则两个 trait 对象类型为别名。例如， `dyn Trait + Send + UnwindSafe` 与 `dyn Trait + UnwindSafe + Send` 是相同的。
 
-由于值的具体类型的不透明性，trait对象是 [动态大小类型] 。与所有 <abbr title="dynamically sized types">DSTs</abbr> 一样，trait 对象在某种类型的指针后面使用，例如 `&dyn SomeTrait` 或 `Box<dyn SomeTrait>` 。
+由于值的具体类型的不透明性，trait 对象是 [动态大小类型][dynamically sized types] 。与所有 <abbr title="dynamically sized types">DSTs</abbr> 一样，trait 对象在某种类型的指针后面使用，例如 `&dyn SomeTrait` 或 `Box<dyn SomeTrait>` 。
 指向 trait 对象的指针实例包括：
 
 - 指向实现 `SomeTrait` 的类型 `T` 的实例的指针

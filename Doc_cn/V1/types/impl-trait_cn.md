@@ -72,7 +72,7 @@ For example, these two forms are almost equivalent:
 
 > 注意: 这经常被称为 "参数位置的impl Trait"。 (这里更准确的术语是 "参数"，但 "参数位置的impl Trait" 是这个特性开发期间使用的措辞，而且它仍然在实现的某些部分中保留着。)
 
-函数可以使用 `impl` ，后面跟一组 trait bound，来声明一个参数为匿名类型。调用方必须提供一个满足匿名类型参数所声明的 trait bound 的类型，而函数只能使用匿名类型参数的 trait bound 可用的方法。
+函数可以使用 `impl` ，后面跟一组 trait 约束，来声明一个参数为匿名类型。调用方必须提供一个满足匿名类型参数所声明的 trait 约束的类型，而函数只能使用匿名类型参数的 trait 约束可用的方法。
 
 例如，以下这两种形式几乎是等价的:
 {==+==}
@@ -116,11 +116,11 @@ This includes generic arguments for the return type or any const generics.
 >
 > Therefore, changing the function signature from either one to the other can constitute a breaking change for the callers of a function.
 {==+==}
-换句话说， `impl Trait` 作为函数参数是一种语法糖，用于泛型类型参数 `<T: Trait>` ，只不过该类型是匿名的并且不出现在 [_GenericParams_] 列表中。
+换句话说， `impl Trait` 作为函数参数是一种语法糖，用于泛型类型参数 `<T: Trait>` ，只不过该类型是匿名的并且不出现在 [_泛型参数组_][_GenericParams_] 列表中。
 
 > **注意：**
 > 对于函数参数而言，泛型类型参数和 `impl Trait` 并不完全等效。
-> 对于泛型参数如 `<T: Trait>` ，调用方可以在调用时使用 [_GenericArgs_] 显式指定 `T` 的泛型参数，例如 `foo::<usize>(1)` 。
+> 对于泛型参数如 `<T: Trait>` ，调用方可以在调用时使用 [_泛型实参组_][_GenericArgs_] 显式指定 `T` 的泛型参数，例如 `foo::<usize>(1)` 。
 > 如果 `impl Trait` 是 *任何* 函数参数的类型，那么调用方在调用该函数时永远不能提供任何泛型参数。
 > 这包括返回类型或任何常量泛型参数。
 >
@@ -171,7 +171,7 @@ It wasn't possible to fully specify the type of the closure, only to use the `Fn
 That means that the trait object is necessary.
 However, with `impl Trait`, it is possible to write this more simply:
 {==+==}
-这可能会导致堆分配和动态分派的性能惩罚。
+这可能会导致堆分配和动态分派的性能损失。
 无法完全指定闭包的类型，只能使用 `Fn` trait。
 这意味着 trait 对象是必需的。
 但是，使用 `impl Trait` 可以更简单地编写此代码:
@@ -263,7 +263,7 @@ It cannot appear inside implementations of traits, nor can it be the type of a l
 
 ## 限制
 
-`impl Trait` 只能出现在自由函数或固有函数的参数或返回类型中。它不能出现在 trait 的实现内部，也不能是 let 绑定的类型或出现在类型别名中。
+`impl Trait` 只能出现在自由函数或内部函数的参数或返回类型中。它不能出现在 trait 的实现内部，也不能是 let 绑定的类型或出现在类型别名中。
 {==+==}
 
 
