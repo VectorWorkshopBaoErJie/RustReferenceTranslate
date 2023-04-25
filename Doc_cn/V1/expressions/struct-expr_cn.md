@@ -37,15 +37,15 @@
 {==+==}
 > **<sup>语法</sup>**\
 > _结构体表达式_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _结构体表达式结构体_\
+> &nbsp;&nbsp; &nbsp;&nbsp; _结构体表达式结构_\
 > &nbsp;&nbsp; | _结构体表达式元组_\
 > &nbsp;&nbsp; | _结构体表达式单元_
 >
-> _结构体表达式结构体_ :\
-> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `{` (_结构体表达式字段组_ | _结构体省略_)<sup>?</sup> `}`
+> _结构体表达式结构_ :\
+> &nbsp;&nbsp; [_表达式中路径_][_PathInExpression_] `{` (_结构体表达式字段组_ | _结构省略_)<sup>?</sup> `}`
 >
 > _结构体表达式字段组_ :\
-> &nbsp;&nbsp; _结构体表达式字段_ (`,` _结构体表达式字段_)<sup>\*</sup> (`,` _结构体省略_ | `,`<sup>?</sup>)
+> &nbsp;&nbsp; _结构体表达式字段_ (`,` _结构体表达式字段_)<sup>\*</sup> (`,` _结构省略_ | `,`<sup>?</sup>)
 >
 > _结构体表达式字段_ :\
 > &nbsp;&nbsp; [_外围属性_][_OuterAttribute_] <sup>\*</sup>\
@@ -54,7 +54,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ([标识符][IDENTIFIER] | [元组索引][TUPLE_INDEX]) `:` [_表达式_][_Expression_]\
 > &nbsp;&nbsp; )
 >
-> _结构体省略_ :\
+> _结构省略_ :\
 > &nbsp;&nbsp; `..` [_表达式_][_Expression_]
 >
 > _结构体表达式元组_ :\
@@ -74,7 +74,8 @@ There are three forms of struct expressions: struct, tuple, and unit.
 The following are examples of struct expressions:
 {==+==}
 *结构体表达式* 用于创建结构体、枚举或联合体值。
-它由指向 [结构体][struct] 、 [枚举变体][enum variant] 或 [联合体][union] 条目的路径，以及该条目字段的值组成。结构体表达式有三种形式：结构体、元组和单元结构体。
+它由指向 [结构体][struct] 、 [枚举变体][enum variant] 或 [联合体][union] 条目的路径，以及该条目字段的值组成。
+结构体表达式有三种形式：结构体、元组和单元结构体。
 
 以下是结构体表达式的示例：
 {==+==}
@@ -138,8 +139,8 @@ As with all struct expressions, all of the fields of the struct must be [visible
 {==+==}
 ## 函数式更新语法
 
-用于构造结构体类型值的结构体表达式可以以 `..` 语法结尾，后跟表达式，表示函数式更新。
-`..` 后面的表达式（基表达式）必须与新结构体类型相同。
+用于构造结构体类型值的结构体表达式可以用 `..` 语法结尾，后跟表达式，表示函数式更新。
+`..` 后面的表达式 (基表达式) 必须与新结构体类型相同。
 
 整个表达式使用给定值填充指定的字段，并将其余字段从基表达式中移动或复制。
 与所有结构体表达式一样，结构体的所有字段都必须是 [可见的][visible] ，即使未显式命名。
@@ -188,7 +189,7 @@ let c3 = Color{1: 0, ..c2};  // Fill out all other fields using a base struct.
 ```
 {==+==}
 ```rust
-struct Color(u8, u8, u8); // 定义一个名为Color的元组结构体
+struct Color(u8, u8, u8); // 定义一个名为 Color 的元组结构体
 let c1 = Color(0, 0, 0); // 创建元组结构体实例的一般方式
 let c2 = Color{0: 255, 1: 127, 2: 0}; // 按索引指定结构体字段的值
 let c3 = Color{1: 0, ..c2}; // 使用基础结构体填充所有其他字段
