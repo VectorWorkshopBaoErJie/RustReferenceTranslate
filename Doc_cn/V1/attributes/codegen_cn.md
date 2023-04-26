@@ -26,12 +26,12 @@ have no effect on a trait function without a body.
 {==+==}
 ## 优化提示
 
- `cold` 和 `inline` [属性][attributes] 给出一些建议，以便生成比没有提示更快的代码。
-这些属性仅是提示，可能会被忽略。
+ `cold` 和 `inline` [属性][attributes] 给出一些编译建议，期望生成更快的代码。
+但仅是提示，可能会被编译器忽略。
 
-这两个属性可以用于 [函数][functions] 。
-当应用于 [trait] 中的函数时，它们仅适用于该函数作为默认函数用于 trait 实现时，而不是所有 trait 实现。
-这些属性对于没有函数体的 trait 函数没有影响。
+这两个属性可应用于 [函数][functions] 。
+当应用于 [trait] 中的函数时，仅适用于作为 trait 实现默认函数，而不是所有 trait 实现。
+这些属性对于没有函数体的 trait 函数没有效果。
 {==+==}
 
 
@@ -50,11 +50,11 @@ There are three ways to use the inline attribute:
 {==+==}
 ### `inline` 属性
 
-* `inline` 属性* 建议将带有该属性的函数的副本放置在调用者中，而不是在定义的地方生成调用该函数的代码。
+* `inline` 属性* 建议将函数副本放置于调用者中，而不是在相应位置生成调用该函数的代码。
 
-> ***注意***: `rustc` 编译器基于内部启发式算法自动内联函数。不正确地内联函数可能会使程序变慢，因此应谨慎使用此属性。
+> ***注意***: `rustc` 编译器基于内部启发式算法自动内联函数。不正确地内联函数可能会使程序变慢，因而此属性应谨慎使用。
 
-有三种使用 `inline` 属性的方法:
+有三种使用 `inline` 属性的方式:
 {==+==}
 
 
@@ -72,7 +72,7 @@ There are three ways to use the inline attribute:
 * `#[inline(always)]` *建议* 总是进行内联展开。
 * `#[inline(never)]` *建议* 永远不进行内联展开。
 
-> ***注意***: 无论形式如何， `#[inline]` 都是一个提示，对于将带有该属性的函数的副本放置在调用者中没有任何 *强制* 。
+> ***注意***: 无论形式如何， `#[inline]` 都是一个提示，对于是否将带有该属性的函数副本放置在调用者中，并不作 *强制* 。
 {==+==}
 
 
@@ -141,9 +141,9 @@ does not support the given features. The `#[inline(always)]` attribute may not
 be used with a `target_feature` attribute.
 {==+==}
 每个 [目标架构][target architecture] 都有一组可启用的特性。
-对于正在编译的 crate，如果指定了未被支持的目标架构的特性，则会出现错误。
+对于进行编译的 crate，如果指定了不受支持的目标架构特性，则会出现错误。
 
-对于使用不被当前平台支持的特性进行编译的函数进行调用是 [未定义行为][undefined behavior] ，除非平台明确说明这是安全的。
+对于使用不受当前平台支持的特性进行编译的函数，进行调用是 [未定义行为][undefined behavior] ，除非平台明确说明这是安全的。
 
 使用 `target_feature` 标注的函数不会被内联到不支持所给定特性的上下文中。
  `#[inline(always)]` 属性不能与 `target_feature` 属性一起使用。
