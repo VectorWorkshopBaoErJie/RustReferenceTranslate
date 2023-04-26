@@ -91,7 +91,7 @@ previous attribute on the same entity as listed in left-to-right source order.
 This example shows how one can use `allow` and `warn` to toggle a particular
 check on and off:
 {==+==}
-Lint属性可以覆盖先前属性中指定的级别，只要级别不会试图更改禁止的lint。
+代码分析属性可以覆盖先前属性中指定的级别，只要级别不会试图更改禁止的代码分析。
 先前的属性来自语法树中更高级别的属性，或者是源代码中左到右的先前属性。
 
 以下示例展示了如何使用 `allow` 和 `warn` 来打开和关闭特定检查:
@@ -143,7 +143,7 @@ pub mod m2 {
 This example shows how one can use `forbid` to disallow uses of `allow` for
 that lint check:
 {==+==}
-这个例子展示了如何使用 `forbid` 禁止对某个 lint 检查使用 `allow` :
+这个例子展示了如何使用 `forbid` 禁止对某个代码分析检查使用 `allow` :
 {==+==}
 
 
@@ -210,15 +210,15 @@ fn example() {
 ```
 {==+==}
 ```rust,compile_fail
-// 这允许所有 "unused" 组中的 lint。
+// 这允许所有 "unused" 组中的代码分析。
 #[allow(unused)]
-// 这将 "unused" 组中的 "unused_must_use" lint 改为了 "deny"。
+// 这将 "unused" 组中的 "unused_must_use" 代码分析改为了 "deny"。
 #[deny(unused_must_use)]
 fn example() {
-    // 这不会生成警告，因为 "unused_variables" lint 在 "unused" 组中。
+    // 这不会生成警告，因为 "unused_variables" 代码分析在 "unused" 组中。
     let x = 1;
     // 这会生成一个错误，因为结果未使用且 "unused_must_use" 被标记为 "deny"。
-    std::fs::remove_file("some_file"); // ERROR: unused `Result` that must be used
+    std::fs::remove_file("some_file"); // ERROR: 必须使用的未使用的 `Result` 
 }
 ```
 {==+==}
@@ -252,11 +252,11 @@ fn example_err() {
 # unsafe fn an_unsafe_fn() {}
 // 这两个属性的顺序无关紧要。
 #[deny(warnings)]
-// unsafe_code lint 通常默认为 "allow"。
+// unsafe_code 代码分析通常默认为 "allow"。
 #[warn(unsafe_code)]
 fn example_err() {
     // 这是一个错误，因为 `unsafe_code` 警告已经被提升到了 "deny"。
-    unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
+    unsafe { an_unsafe_fn() } // ERROR: 使用 `unsafe` 块
 }
 ```
 {==+==}
@@ -364,7 +364,7 @@ items inherit the deprecation attribute.
 
 - `deprecated` — 发出一条通用信息。
 - `deprecated = "message"` — 在弃用消息中包含给定的字符串。
-- [_MetaListNameValueStr_] 语法有两个可选字段:
+- [_无列表名称值字符串_][_MetaListNameValueStr_] 语法有两个可选字段:
   - `since` — 指定条目被弃用的版本号。 `rustc` 目前不解释该字符串，但像 [Clippy] 这样的外部工具可能会检查值的有效性。
   - `note` — 指定应在弃用消息中包含的字符串。通常用于提供有关弃用和首选替代方法的解释。
 
@@ -569,7 +569,7 @@ impl Trait for i32 {
     fn use_me(&self) -> i32 { 0i32 }
 }
 
-// 违反了 `unused_must_use` lint.
+// 违反了 `unused_must_use` 代码分析。
 5i32.use_me();
 ```
 {==+==}
@@ -617,7 +617,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 > #[must_use]
 > fn five() -> i32 { 5i32 }
 >
-> // 这些都不违反 unused_must_use lint 。
+> // 这些都不违反 unused_must_use 代码分析。
 > (five(),);
 > Some(five());
 > { five() };
@@ -633,7 +633,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 > #[must_use]
 > fn five() -> i32 { 5i32 }
 >
-> // 不违反 unused_must_use lint 。
+> // 不违反 unused_must_use 代码分析。
 > let _ = five();
 > ```
 {==+==}

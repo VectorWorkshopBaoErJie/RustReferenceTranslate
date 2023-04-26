@@ -79,7 +79,7 @@ The *`automatically_derived` attribute* is automatically added to
 has no direct effect, but it may be used by tools and diagnostic lints to
 detect these automatically generated implementations.
 {==+==}
-自动生成的实现由 `derive` 属性自动添加了 `automatically_derived` 属性，它本身没有直接作用，但是可以被工具和诊断lint用来检测这些自动生成的实现。
+自动生成的实现由 `derive` 属性自动添加了 `automatically_derived` 属性，它本身没有直接作用，但是可以被工具和代码分析诊断用来检测这些自动生成的实现。
 {==+==}
 
 

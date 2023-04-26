@@ -233,10 +233,10 @@ match message {
 {==+==}
 <!-- ignore: requires external crates -->
 ```rust, ignore
-// `Config` ， `Error` 和 `Message` 是在上游 crate 中定义的类型，已经被注释为 `#[non_exhaustive]`。
+// `Config` ， `Error` 和 `Message` 是在上游 crate 中定义的类型，已经被注解为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
-// 无法在非枚举穷尽(enum non-exhaustive)上进行匹配而不包括通配符分支。
+// 无法在非穷尽枚举上进行匹配，除非使用通配符。
 match error {
 Error::Message(ref s) => {},
 Error::Other => {},
