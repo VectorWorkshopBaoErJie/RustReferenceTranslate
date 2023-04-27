@@ -83,7 +83,7 @@
 Comments follow the general C++ style of line (`//`) and
 block (`/* ... */`) comment forms. Nested block comments are supported.
 {==+==}
-注释遵循 C++ 风格的行 (`//`) 和 (`/* ... */`) 块注释的一般形式。支持嵌套的块注释。
+注释遵循 C++ 风格的行 (`//`) 和块 (`/* ... */`) 注释的一般形式。支持嵌套的块注释。
 {==+==}
 
 

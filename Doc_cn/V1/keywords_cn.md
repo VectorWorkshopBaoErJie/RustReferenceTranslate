@@ -13,14 +13,14 @@ Rust 关键字分为三类:
 
 
 {==+==}
-* [strict](#strict-keywords)
-* [reserved](#reserved-keywords)
-* [weak](#weak-keywords)
-{==+==}
-* [严格字](#strict-keywords)
-* [保留字](#reserved-keywords)
-* [松散字](#weak-keywords)
-{==+==}
+- [Keywords](#keywords)
+- [关键字](#关键字)
+  - [Strict keywords](#strict-keywords)
+  - [严格字](#严格字)
+  - [Reserved keywords](#reserved-keywords)
+  - [保留字](#保留字)
+  - [Weak keywords](#weak-keywords)
+  - [松散字](#松散字)
 
 
 {==+==}
@@ -170,7 +170,7 @@ current programs forward compatible with future versions of Rust by forbidding
 them to use these keywords.
 {==+==}
 这些关键字目前还没有被使用，但是它们被保留以供将来使用。
-它们的使用规则与严格关键字相同。
+它们的使用规则与严格字相同。
 这样做的原因是通过禁止当前程序使用这些关键字，从而，使其与 Rust 的将来版本保持向前兼容。
 {==+==}
 
@@ -272,7 +272,7 @@ is possible to declare a variable or method with the name `union`.
 {==+==}
   Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
 {==+==}
-  从 2018 版开始， `dyn` 已提升为严格关键词。
+  从 2018 版开始， `dyn` 已提升为严格字。
 {==+==}
 
 

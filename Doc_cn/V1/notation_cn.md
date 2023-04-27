@@ -75,7 +75,7 @@ Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
 在语法中，一些规则，尤其是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，以简化形式给出：作为可打印字符串的清单。
-这些情况形成了有关 [token][tokens] 规则的子集，假定它们是由一个驱动着词法分析阶段的确定性有限自动机<abbr title="Deterministic Finite Automaton">DFA</abbr>操作生成的，该操作在所有这种字符串表条目的分离分支上进行操作。
+这些情况形成了相关 [token][tokens] 规则的子集，假定它们是由一个驱动着词法分析阶段的确定性有限自动机<abbr title="Deterministic Finite Automaton">DFA</abbr>操作生成的，则在所有此类字符串表条目的分离分支上进行操作。
 {==+==}
 
 

@@ -80,14 +80,14 @@ with the additional constraint that a single underscore character is not an iden
 {==+==}
 > **Note**: Identifiers starting with an underscore are typically used to indicate an identifier that is intentionally unused, and will silence the unused warning in `rustc`.
 {==+==}
-> **注意**: 以下划线开头的标识符通常用于指示有意未使用的标识符，并将消除 `rustc` 中的未使用警告。
+> **注意**: 标识符以下划线开头通常用于指示该标识符有意未使用，并将消除 `rustc` 中的未使用警告。
 {==+==}
 
 
 {==+==}
 Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix described below in [raw identifiers](#raw-identifiers).
 {==+==}
-标识符不能是 [严格][strict] 或 [保留][reserved] 的关键词，可以是下面 `r#` 前缀的 [原始标识符](#raw-identifiers) 。
+标识符不能是 [严格][strict] 或 [保留][reserved] 的关键字，可以是下面 `r#` 前缀的 [原始标识符](#raw-identifiers) 。
 {==+==}
 
 
