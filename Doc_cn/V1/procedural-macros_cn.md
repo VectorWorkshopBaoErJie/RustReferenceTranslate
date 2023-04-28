@@ -435,7 +435,7 @@ attached to [items], including items in [`extern` blocks], inherent and trait
 [implementations], and [trait definitions].
 {==+==}
 *属性宏* 定义了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
-包括 [`extern` 块][`extern` blocks] 外部块中的条目，内部 和 trait 的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
+包括 [`extern` 块][`extern` blocks] 外部块中的条目，内部的和 trait 的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 

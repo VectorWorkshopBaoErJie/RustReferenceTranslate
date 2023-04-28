@@ -388,7 +388,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 ------|--------
 _元字_ | `no_std`
 _元名称值字符串_ | `doc = "example"`
-_元列表路径_ | `allow(unused, clippy::inline_always)`
+_元列表路径组_ | `allow(unused, clippy::inline_always)`
 _元列表ID组_ | `macro_use(foo, bar)`
 _元列表名称值字符串_ | `link(name = "CoreFoundation", kind = "framework")`
 {==+==}

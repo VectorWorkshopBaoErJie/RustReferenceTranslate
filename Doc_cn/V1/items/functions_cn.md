@@ -76,7 +76,7 @@
 > )
 >
 > _函数参数模式_ :\
-> &nbsp;&nbsp; [_模式非顶层选项_][_PatternNoTopAlt_] `:` ( [_类型_][_Type_] | `...` )
+> &nbsp;&nbsp; [_模式非顶层项_][_PatternNoTopAlt_] `:` ( [_类型_][_Type_] | `...` )
 >
 > _函数返回类型_ :\
 > &nbsp;&nbsp; `->` [_类型_][_Type_]

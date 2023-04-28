@@ -116,7 +116,7 @@ fn outer() {
 {==+==}
 > **<sup>语法</sup>**\
 > _Let语句_ :\
-> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> `let` [_模式非顶层选项_][_PatternNoTopAlt_]
+> &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> `let` [_模式非顶层项_][_PatternNoTopAlt_]
 >     ( `:` [_类型_][_Type_] )<sup>?</sup> (`=` [_表达式_][_Expression_] [†](#let-else-restriction)
 >     ( `else` [_块表达式_][_BlockExpression_]) <sup>?</sup> ) <sup>?</sup> `;`
 >

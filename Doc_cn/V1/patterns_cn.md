@@ -30,9 +30,9 @@
 {==+==}
 > **<sup>语法</sup>**\
 > _模式_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `|`<sup>?</sup> _模式非顶层选项_  ( `|` _模式非顶层选项_ )<sup>\*</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; `|`<sup>?</sup> _模式非顶层项_  ( `|` _模式非顶层项_ )<sup>\*</sup>
 >
-> _模式非顶层选项_ :\
+> _模式非顶层项_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _无区间模式_\
 > &nbsp;&nbsp; | [_区间模式_][_RangePattern_]
 >
@@ -321,7 +321,7 @@ for i in -2..5 {
 {==+==}
 > **<sup>语法</sup>**\
 > _标识符模式_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [标识符][IDENTIFIER] (`@` [_模式非顶层选项_][_PatternNoTopAlt_] ) <sup>?</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [标识符][IDENTIFIER] (`@` [_模式非顶层项_][_PatternNoTopAlt_] ) <sup>?</sup>
 {==+==}
 
 
@@ -747,28 +747,37 @@ match tuple {
 match slice {
     [] => println!("slice is empty"),
     [one] => println!("single element {}", one),
-    [head, tail @ ..] => println!("head={} tail={:?}", head, tail), // 匹配第一个元素和其余元素
+    // 匹配第一个元素和其余元素
+    [head, tail @ ..] => println!("head={} tail={:?}", head, tail), 
 
 }
 
 match slice {
-    [.., "!"] => println!("!!!"), // 忽略除了最后一个元素之外的所有元素，最后一个元素必须是 "!" 
-    [start @ .., "z"] => println!("starts with: {:?}", start), // `start` 是除了最后一个元素之外的所有元素，最后一个元素必须是 "z" 
-    ["a", end @ ..] => println!("ends with: {:?}", end), // `end` 是除了第一个元素之外的所有元素，第一个元素必须是"a"
-    whole @ [.., last] => println!("the last element of {:?} is {}", whole, last), // 'whole' 是整个切片， `last` 是最后一个元素
+    // 忽略除了最后一个元素之外的所有元素，最后一个元素必须是 "!" 
+    [.., "!"] => println!("!!!"), 
+    // `start` 是除了最后一个元素之外的所有元素，最后一个元素必须是 "z" 
+    [start @ .., "z"] => println!("starts with: {:?}", start), 
+    // `end` 是除了第一个元素之外的所有元素，第一个元素必须是"a"
+    ["a", end @ ..] => println!("ends with: {:?}", end), 
+    // 'whole' 是整个切片， `last` 是最后一个元素
+    whole @ [.., last] => println!("the last element of {:?} is {}", whole, last), 
     rest => println!("{:?}", rest),
 }
 
 if let [.., penultimate, _] = slice {
-    println!("next to last is {}", penultimate); // 获取倒数第二个元素
+    // 获取倒数第二个元素
+    println!("next to last is {}", penultimate); 
 }
 
 # let tuple = (1, 2, 3, 4, 5);
 // 剩余模式也可以用于元组和元组结构体模式。
 match tuple {
-    (1, .., y, z) => println!("y={} z={}", y, z), // 匹配第一个元素和其余元素，但是只保留最后两个元素
-    (.., 5) => println!("tail must be 5"), // 必须以 5 结尾
-    (..) => println!("matches everything else"), // 匹配所有其他情况
+    // 匹配第一个元素和其余元素，但是只保留最后两个元素
+    (1, .., y, z) => println!("y={} z={}", y, z), 
+    // 必须以 5 结尾
+    (.., 5) => println!("tail must be 5"), 
+    // 匹配所有其他情况
+    (..) => println!("matches everything else"), 
 }
 ```
 {==+==}
@@ -1132,8 +1141,8 @@ Reference patterns are always irrefutable.
 > &nbsp;&nbsp; `}`
 >
 > _结构体模式组_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _结构体模式字段组_ (`,` | `,` _结构体模式符加_)<sup>?</sup>\
-> &nbsp;&nbsp; | _结构体模式符加_
+> &nbsp;&nbsp; &nbsp;&nbsp; _结构体模式字段组_ (`,` | `,` _结构体模式附加_)<sup>?</sup>\
+> &nbsp;&nbsp; | _结构体模式附加_
 >
 > _结构体模式字段组_ :\
 > &nbsp;&nbsp; _结构体模式字段_ (`,` _结构体模式字段_) <sup>\*</sup>
@@ -1146,7 +1155,7 @@ Reference patterns are always irrefutable.
 > &nbsp;&nbsp; &nbsp;&nbsp; | `ref`<sup>?</sup> `mut`<sup>?</sup> [标识符][IDENTIFIER]\
 > &nbsp;&nbsp; )
 >
-> _结构体模式符加_ :\
+> _结构体模式附加_ :\
 > &nbsp;&nbsp; [_外围属性_][_OuterAttribute_] <sup>\*</sup>\
 > &nbsp;&nbsp; `..`
 {==+==}
@@ -1543,7 +1552,7 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
 ## 或模式
 
 _或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。它们可以任意嵌套。
-从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 生成式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层选项_ 产生式表示) 。
+从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 生成式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层项_ 产生式表示) 。
 {==+==}
 
 

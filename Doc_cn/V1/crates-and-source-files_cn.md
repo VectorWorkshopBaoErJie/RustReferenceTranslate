@@ -88,7 +88,7 @@ result in other source files being loaded as modules. Source files have the
 extension `.rs`.
 {==+==}
 Rust 编译器总是使用单个源文件作为输入，并始终产生单个输出 crate 。
-处理该源文件可能会导致其他源文件作为模块被加载。源文件的扩展名为`.rs`。
+处理该源文件可能会导致其他源文件作为模块被加载。源文件的扩展名为 `.rs`。
 {==+==}
 
 
@@ -340,7 +340,7 @@ crate 的名称不能为空，只能包含 [Unicode 字母数字][Unicode alphan
     Static checks like syntactic analysis, type checking, and lints should
     happen before the program is executed regardless of when it is executed.
 {==+==}
-[^phase-distinction]: 在一个解释器中，这种区别也会存在。无论何时执行程序，静态检查，例如语法分析、类型检查和 lints 应该先发生，然后才执行程序。
+[^phase-distinction]: 在一个解释器中，这种区别也会存在。无论何时执行程序，静态检查，例如语法分析、类型检查和代码分析应该先发生，然后才执行程序。
 {==+==}
 
 

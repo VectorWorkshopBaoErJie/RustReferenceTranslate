@@ -292,8 +292,8 @@ fragment specifiers are:
   * `item`: [_条目_][_Item_] 
   * `block`: [_块表达式_][_BlockExpression_] 
   * `stmt`: [_语句_][_Statement_] 不含尾部分号 (需要分号的条目语句除外)
-  * `pat_param`: [_模式非顶层选项_][_PatternNoTopAlt_]
-  * `pat`: 至少在任何 [_模式非顶层选项_][_PatternNoTopAlt_], 可能更多，取决于版本
+  * `pat_param`: [_模式非顶层项_][_PatternNoTopAlt_]
+  * `pat`: 至少在任何 [_模式非顶层项_][_PatternNoTopAlt_], 可能更多，取决于版本
   * `expr`: [_表达式_][_Expression_] 
   * `ty`: [_类型_][_Type_] 
   * `ident`: 一个 [标识符或关键字][IDENTIFIER_OR_KEYWORD] 或 [原始标识符][RAW_IDENTIFIER]
@@ -339,7 +339,7 @@ specifier when it appears as a subexpression.
 {==+==}
 > **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [_模式_][_Pattern_]) 。
 >
-> 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层选项_][_PatternNoTopAlt_] ) 。
+> 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层项_][_PatternNoTopAlt_] ) 。
 >
 > 相关版次指 `macro_rules!` 定义生效的版次。
 {==+==}
