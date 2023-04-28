@@ -472,7 +472,7 @@ results, then it is looked up in path-based scoping. If the macro's name is
 qualified with a path, then it is only looked up in path-based scoping.
 {==+==}
 当宏被未限定的标识符 (不是多部分路径的一部分) 调用时，它首先在文本作用域中查找。
-如果这没有产生任何结果，那么它将在基于路径的作用域中查找。
+如果这没有得到任何结果，那么它将在基于路径的作用域中查找。
 如果宏的名称带有路径限定符，则仅在基于路径的作用域中查找。
 {==+==}
 

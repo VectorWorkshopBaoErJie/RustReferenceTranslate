@@ -30,7 +30,7 @@ Procedural macros allow you to run code at compile time that operates over Rust
 syntax, both consuming and producing Rust syntax. You can sort of think of
 procedural macros as functions from an AST to another AST.
 {==+==}
-过程宏允许你在编译时运行代码，对 Rust 句法进行操作，既消耗并产生 Rust 句法。
+过程宏允许你在编译时运行代码，对 Rust 语法进行操作，既消耗并产生 Rust 语法。
 你可以把过程宏想象成从一个 AST 到另一个 AST 的函数。
 {==+==}
 
@@ -69,8 +69,8 @@ syntax either replaces or adds the syntax depending on the kind of procedural
 macro. Panics are caught by the compiler and are turned into a compiler error.
 Endless loops are not caught by the compiler which hangs the compiler.
 {==+==}
-作为函数，其必须要么返回句法，要么恐慌，要么无休止地循环。
-返回的句法要么替换要么增加句法，这取决于过程宏的种类。
+作为函数，其必须要么返回语法，要么恐慌，要么无休止地循环。
+返回的语法要么替换要么增加语法，这取决于过程宏的种类。
 编译器会捕获恐慌，并变成编译器错误。
 编译器不会捕获无休止循环，从而会挂起编译器。
 {==+==}
@@ -101,7 +101,7 @@ second is to emit a [`compile_error`] macro invocation.
 {==+==}
 ### The `proc_macro` crate
 {==+==}
-
+### `proc_macro` crate
 {==+==}
 
 
@@ -196,7 +196,7 @@ These macros are defined by a [public]&#32;[function] with the `proc_macro`
 [`TokenStream`] is what is inside the delimiters of the macro invocation and the
 output [`TokenStream`] replaces the entire macro invocation.
 {==+==}
-这些宏是由一个具有 `proc_macro` [attribute] 和 `(TokenStream) -> TokenStream` 签名的 [public]&#32;[function] 定义的。
+这些宏是由一个具有 `proc_macro` [属性][attribute] 和 `(TokenStream) -> TokenStream` 签名的 [pub][public]&#32;[函数][function] 定义的。
 输入 [`TokenStream`] 是宏调用式的定界符号内的内容，输出 [`TokenStream`] 则是整个宏调用式的内容。
 {==+==}
 
@@ -283,7 +283,7 @@ They can also define [derive macro helper attributes].
 Custom derive macros are defined by a [public]&#32;[function] with the
 `proc_macro_derive` attribute and a signature of `(TokenStream) -> TokenStream`.
 {==+==}
-自定义衍生宏是由一个 [public]&#32;[function] 定义的，其属性为 `proc_macro_derive` ，签名为 `(TokenStream) -> TokenStream` 。
+自定义衍生宏是由一个 [pub][public]&#32;[函数][function] 定义的，其属性为 `proc_macro_derive` ，签名为 `(TokenStream) -> TokenStream` 。
 {==+==}
 
 
@@ -435,7 +435,7 @@ attached to [items], including items in [`extern` blocks], inherent and trait
 [implementations], and [trait definitions].
 {==+==}
 *属性宏* 定义了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
-包括 [`extern` 块][`extern` blocks] 外部块中的条目，内部 和 trait的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
+包括 [`extern` 块][`extern` blocks] 外部块中的条目，内部 和 trait 的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
 
@@ -449,7 +449,7 @@ the attribute is written as a bare attribute name, the attribute
 including other [attributes] on the [item]. The returned [`TokenStream`]
 replaces the [item] with an arbitrary number of [items].
 {==+==}
-属性宏是由带有 `proc_macro_attribute` [attribute] 的 [public]&#32;[function] 定义的，其签名为 `(TokenStream, TokenStream) -> TokenStream` 。
+属性宏是由带有 `proc_macro_attribute` [属性][attribute] 的 [pub][public]&#32;[函数][function] 定义的，其签名为 `(TokenStream, TokenStream) -> TokenStream` 。
 第一个 [`TokenStream`] 是属性名称后面的分隔的 token 树，不包括外部定界符号。
 如果属性被写成裸属性名，则属性 [`TokenStream`] 是空的。
 第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属性][attributes] 。

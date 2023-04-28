@@ -27,8 +27,8 @@ There are two ways to define new macros:
 * [Procedural Macros] define function-like macros, custom derives, and custom
   attributes using functions that operate on input tokens.
 {==+==}
-* [实例宏][Macros by Example] 以更高级、声明式的方式定义新的语法。
-* [过程宏][Procedural Macros] 通过在输入 Token 上操作的函数，定义函数式宏、自定义衍生和自定义属性。
+* [实例宏][Macros by Example] 定义新的语法，以更高层、声明式的方式。
+* [过程宏][Procedural Macros] 定义函数式宏、自定义衍生和自定义属性，以函数操作输入的 Token 。
 {==+==}
 
 
@@ -81,7 +81,7 @@ A macro invocation expands a macro at compile time and replaces the
 invocation with the result of the macro. Macros may be invoked in the
 following situations:
 {==+==}
-在编译时展开宏并用宏的结果替换调用时，发生宏调用。宏可以在以下情况下被调用：
+在编译期展开宏并用宏的结果替换调用时，发生宏调用。宏可以在以下情况下被调用：
 {==+==}
 
 
