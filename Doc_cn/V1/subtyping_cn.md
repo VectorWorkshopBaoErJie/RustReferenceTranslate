@@ -10,14 +10,13 @@ would be due to type equality.
 Consider the following example: string literals always have `'static`
 lifetime. Nevertheless, we can assign `s` to `t`:
 {==+==}
-# 子类型和协变性
+# 子类型化和协变
 
-子类型是隐式的，并且可以在类型检查或推断的任意阶段产生。
-子类型仅限于两种情况:
-与生命周期相关的协变性和具有更高阶生命周期的类型之间的协变性。
-如果我们从类型中抹去生命周期，那么唯一的子类型就是由于类型相等而产生的。
+子类型化是隐式的，可以在类型检查或推断的任何阶段发生。子类型化只限于两种情况：
+在生命周期方面和在具有更高阶生命周期之间的类型方面的协变。
+如果我们从类型中抹去生命周期，则唯一的子类型化将是类型相等。
 
-考虑以下示例: 字符串字面值始终具有 `'static` 生命周期。尽管如此，我们可以将 `s` 分配给 `t` :
+考虑以下示例: 字符串字面量始终具有 `'static` 生命周期。尽管如此，我们仍然可以将 `s` 分配给 `t` :
 {==+==}
 
 
@@ -41,10 +40,10 @@ subtype of `&'a str`.
 subtype relation. They are subtypes of types that are given by substitutions of
 the higher-ranked lifetimes. Some examples:
 {==+==}
-由于 `'static` 寿命超过了生命周期参数 `'a`，因此 `&'static str` 是 `&'a str` 的子类型。
+由于 `'static` 生命周期超过了生命周期参数 `'a` ，因此 `&'static str` 是 `&'a str` 的子类型。
 
-[高阶][Higher-ranked] 函数指针和 [trait 对象][trait objects] 具有另一种子类型关系。
-它们是由高阶生命周期的替换所给出的类型的子类型。以下是一些例子:
+[高阶][Higher-ranked] 函数指针和 [trait 对象][trait objects] 有另一种子类型关系。
+它们是由高阶生命周期取代所给定的类型的子类型。一些例子：
 {==+==}
 
 
@@ -64,7 +63,7 @@ let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 ```
 {==+==}
 ```rust
-// 这里将 'a 替换为 'static
+// 这里将 'a 取代为 'static
 let subtype: &(for<'a> fn(&'a i32) -> &'a i32) = &((|x| x) as fn(&_) -> &_);
 let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
 
@@ -72,7 +71,7 @@ let supertype: &(fn(&'static i32) -> &'static i32) = subtype;
 let subtype: &(dyn for<'a> Fn(&'a i32) -> &'a i32) = &|x| x;
 let supertype: &(dyn Fn(&'static i32) -> &'static i32) = subtype;
 
-// 我们还可以将一个高阶生命周期替换为另一个
+// 我们还可以将一个高阶生命周期取代为另一个
 let subtype: &(for<'a, 'b> fn(&'a i32, &'b i32))= &((|x, y| {}) as fn(&_, &_));
 let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 ```
@@ -95,15 +94,15 @@ parameter affects the subtyping of the type.
 
 Variance of types is automatically determined as follows
 {==+==}
-## 协变性
+## 协变
 
-协变性是泛型类型相对于其参数具有的属性。泛型类型在参数上的 *协变性* 是参数的子类型化如何影响类型的子类型化。
+协变是泛型类型与其参数相关的一个特性。泛型类型在参数上的 *协变* 表示参数的子类型化如何影响类型的子类型化。
 
-* 如果 `T` 是 `U` 的子类型，那么 `F<T>` 是 `F<U>` 的子类型，`F<T>` 对 `T` 是 *协变的* (covariant) ( "通过" 子类型化)
-* 如果 `T` 是 `U` 的子类型，那么 `F<U>` 是 `F<T>` 的子类型，`F<T>` 对 `T` 是 *逆变的* (contravariant)
-* 否则，`F<T>` 对 `T` 是 *不变的* (invariant) (不能推导出子类型关系)
+* 如果 `T` 是 `U` 的子类型，则 `F<T>` 是 *协变的* 的，这意味着 `F<T>` 是 `F<U>` 的子类型 ( 子类型关系"传递" )。
+* 如果 `T` 是 `U` 的子类型，则 `F<T>` 是 *逆变的* 的，这意味着 `F<U>` 是 `F<T>` 的子类型。
+* 否则，`F<T>` 是 *不变的* 的，没有任何子类型关系可以被推导出。
 
-类型的协变性是按以下方式自动确定的:
+类型的协变性可以按照以下方式自动确定：
 {==+==}
 
 
@@ -121,20 +120,18 @@ Variance of types is automatically determined as follows
 | `std::marker::PhantomData<T>` |                   | covariant         |
 | `dyn Trait<T> + 'a`           | covariant         | invariant         |
 {==+==}
-
-
-| 类型                          | `'a` 的变化     | `T` 的变化     |
+| 类型                          | 在 `'a` 上协变     | 在 `T` 上协变     |
 |-------------------------------|----------------|----------------|
-| `&'a T`                       | 协变           | 协变           |
-| `&'a mut T`                   | 协变           | 不变           |
-| `*const T`                    |                | 协变           |
-| `*mut T`                      |                | 不变           |
-| `[T]` 和 `[T; n]`             |                | 协变           |
-| `fn() -> T`                   |                | 协变           |
-| `fn(T) -> ()`                 |                | 逆变           |
-| `std::cell::UnsafeCell<T>`    |                | 不变           |
-| `std::marker::PhantomData<T>` |                | 协变           |
-| `dyn Trait<T> + 'a`           | 协变           | 不变           |
+| `&'a T`                       | 协变的           | 协变的           |
+| `&'a mut T`                   | 协变的           | 不变的           |
+| `*const T`                    |                  | 协变的           |
+| `*mut T`                      |                  | 不变的           |
+| `[T]` 和 `[T; n]`             |                  | 协变的           |
+| `fn() -> T`                   |                  | 协变的           |
+| `fn(T) -> ()`                 |                  | 逆变的           |
+| `std::cell::UnsafeCell<T>`    |                  | 不变的           |
+| `std::marker::PhantomData<T>` |                  | 协变的           |
+| `dyn Trait<T> + 'a`           | 协变的           | 不变的           |
 {==+==}
 
 
@@ -145,8 +142,8 @@ in positions with different variances then the parameter is invariant. For
 example the following struct is covariant in `'a` and `T` and invariant in `'b`, `'c`,
 and `U`.
 {==+==}
-其他的 `struct` ， `enum` 和 `union` 类型的协变性由它们字段的类型的协变性来决定。
-如果参数在不同协变性的位置被使用，则参数是不变的。例如，以下的 `struct` 在 `'a` 和 `T` 上是协变的，在 `'b` ， `'c` 和 `U` 上是不变的。
+其他 `struct` 、 `enum` 和 `union` 类型的协变性是通过查看它们字段类型的协变性来决定的。
+如果在不同协变位置使用了参数，则该参数是不变的。例如，下面的结构体在 `'a` 和 `T` 上是协变的，在 `'b`、`'c` 和 `U` 上是不变的。
 {==+==}
 
 
@@ -168,12 +165,13 @@ struct Variance<'a, 'b, 'c, T, U: 'a> {
 ```rust
 use std::cell::UnsafeCell;
 struct Variance<'a, 'b, 'c, T, U: 'a> {
-    x: &'a U,               // 这使得 'a 上的 `Variance` 逆变，也使 U 上的 `Variance` 逆变，但是 U 在后面被使用了，所以它的 `Variance` 是不确定的。
-    y: *const T,            // T 上的 `Variance` 是协变的
-    z: UnsafeCell<&'b f64>, // 'b 上的 `Variance` 是不变的
-    w: *mut U,              // U 上的 `Variance` 是不变的，使整个结构体是不变的。
+    x: &'a U,               // 这使得 `Variance` 在 'a 上是协变的，也会
+                            // 使得在 U 上是协变的，但 U 在后面使用了
+    y: *const T,            // 在 T 上是协变的
+    z: UnsafeCell<&'b f64>, // 在 'b 上是不变的
+    w: *mut U,              // 在 U 上是不变的，使整个结构体不变
 
-    f: fn(&'c ()) -> &'c () // 在协变和逆变方向上都是的，使得 'c 在结构体中是不变的。
+    f: fn(&'c ()) -> &'c () // 同时是逆变和协变的，在结构体中使 'c 不变
 }
 ```
 {==+==}
@@ -182,7 +180,7 @@ struct Variance<'a, 'b, 'c, T, U: 'a> {
 {==+==}
 When used outside of an `struct`, `enum`, or `union`, the variance for parameters is checked at each location separately.
 {==+==}
-当在 `struct`  `enum` 或 `union` 之外使用参数时，每个位置的参数的协变性是单独检查的。
+当在 `struct` 、 `enum` 或 `union` 之外使用时，参数的协变性在每个位置上分别进行检查。
 {==+==}
 
 
@@ -212,21 +210,21 @@ fn takes_fn_ptr<'short, 'middle: 'short>(
 ```rust
 # use std::cell::UnsafeCell;
 fn generic_tuple<'short, 'long: 'short>(
-    // `'long` 在元组中同时用于协变和不变位置。
+    // `'long` 在元组中同时用于协变位置和不变位置。
     x: (&'long u32, UnsafeCell<&'long u32>),
 ) {
-    // 因为这些位置上的 variance 是单独计算的，
-    // 所以我们可以在协变位置上自由缩小 'long 生命周期。
+    // 因为这些位置上的协变性是分别计算的，
+    // 所以我们可以在协变位置上自由缩小 'long。
     let _: (&'short u32, UnsafeCell<&'long u32>) = x;
 }
 
 fn takes_fn_ptr<'short, 'middle: 'short>(
-    // 'middle 生命周期在协变和逆变位置上都被使用。
+    // `'middle` 在一个协变位置和一个逆变位置上同时使用。
     f: fn(&'middle ()) -> &'middle (),
 ) {
-    // 因为这些位置上的 variance 是单独计算的，
-    // 所以我们可以在协变位置上自由缩小 'middle 生命周期，
-    // 在逆变位置上自由扩展 'middle 生命周期。
+    // 因为这些位置上的协变性是分别计算的，
+    // 所以我们可以在协变位置上自由缩小 'middle，
+    // 在逆变位置上扩展它。
     let _: fn(&'static ()) -> &'short () = f;
 }
 ```

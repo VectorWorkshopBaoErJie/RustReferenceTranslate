@@ -65,12 +65,14 @@ The pattern in the following example does four things:
   The remaining fields can have any value and are not bound to any variables.
 {==+==}
 模式用于将值与结构进行匹配，并在这些结构内将变量绑定到值(可选)。
-它们还用于函数和闭包的变量声明和参数。以下示例中的模式执行四个操作：
+它们还用于函数和闭包的变量声明及参数。以下示例中的模式执行四个操作：
 
 * 检查 `person` 是否有填充了某些内容的 `car` 字段。
 * 检查 `person` 的 `age` 字段是否在 13 到 19 之间，并将其值绑定到 `person_age` 变量。
 * 将 `name` 字段的引用绑定到变量 `person_name` 。
 * 忽略 `person` 的其余字段。剩余字段可以具有任何值，并且不会绑定到任何变量。
+
+译注: 模式会产生 "匹配" 与 "绑定" 两个行为，主要会进行匹配操作，某些情况下进行值的绑定。
 {==+==}
 
 
@@ -138,7 +140,7 @@ When destructuring a data structure with named (but not numbered) fields, it is 
 {==+==}
 ## 解构
 
-模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构将一个值分解成其组成部分。
+模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构是将一个值分解成其组成部分。
 使用的语法与创建这些值时几乎相同。在一个模式中，其 [被匹配项][scrutinee] 表达式具有 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 代表 *单个* 数据字段，而通配符 `..` 代表 *特定变体的所有* 其余字段。
 当解构具有命名字段 (但未编号) 的数据结构时，允许将 `fieldname` 写成 `fieldname: fieldname` 的简写形式。
 在 Rust 中，解构是一种方便的工具，可用于从结构化数据类型中提取所需数据。
@@ -178,7 +180,11 @@ Examples:
 {==+==}
 ## 可拒绝性
 
-当模式可能无法匹配其所匹配的值时，该模式被称为 *可拒绝的* 。相反， *不可拒绝* 模式总是与其所匹配的值匹配。例如：
+当模式可能无法匹配其所匹配的值时，该模式被称为 *可拒绝的* 。相反， *不可拒绝* 模式总是与其所匹配的值匹配。
+
+译注: 是否可拒绝性只针对 "匹配" 而言。同时需要注意 "可拒绝的" 依然可以匹配，"不可拒绝" 则总是匹配。
+
+例如:
 {==+==}
 
 
@@ -382,7 +388,7 @@ match x {
 By default, identifier patterns bind a variable to a copy of or move from the matched value depending on whether the matched value implements [`Copy`].
 This can be changed to bind to a reference by using the `ref` keyword, or to a mutable reference using `ref mut`. For example:
 {==+==}
-默认情况下，标识符模式将根据匹配的值是否实现了 [`Copy`] ，绑定一个变量到匹配值的复制或移动。
+默认情况下，标识符模式将根据匹配的值是否实现了 [`Copy`] ，从而确定绑定一个变量到匹配值是复制或移动。
 可以使用 `ref` 关键字将其更改为绑定到一个引用，或使用 `ref mut` 更改为可变引用。例如:
 {==+==}
 
@@ -412,7 +418,7 @@ This syntax is needed because in destructuring subpatterns the `&` operator can'
 For example, the following is not valid:
 {==+==}
 在第一个 match 表达式中，该值被复制 (或移动) 。在第二个 match 中，对同一内存位置的引用被绑定到变量值。
-这种语法是必要的，因为在解构子模式中， `&` 操作符不能应用于值的字段。
+这种语法是必要的，因为在解构子模式中， `&` 操作符不能应用于 value 的字段。
 例如，以下是无效的:
 {==+==}
 
@@ -443,7 +449,7 @@ To make it valid, write the following:
 if let Person {name: ref person_name, age: 18..=150 } = value { }
 ```
 {==+==}
-要使其有效，请写如下代码:
+要使其有效，请如下书写:
 
 ```rust
 # struct Person {
@@ -466,9 +472,9 @@ It is an error if `ref` or `ref mut` is specified and the identifier shadows a c
 Identifier patterns are irrefutable if the `@` subpattern is irrefutable or the subpattern is not specified.
 {==+==}
 因此， `ref` 不是被匹配的内容。
-它的目的仅仅是将匹配的绑定作为引用而不是复制或移动匹配的内容。
+它的目的仅仅是将匹配的绑定作为引用，而不是复制或移动匹配的内容。
 
-[路径模式](#path-patterns) 优先于标识符模式。如果指定了 `ref` 或 `ref mut` ，并且标识符遮蔽了一个常量，则会出现错误。
+[路径模式](#path-patterns) 优先于标识符模式。如果指定了 `ref` 或 `ref mut` ，并且标识符隐藏了一个常量，则会出现错误。
 
 如果子模式是不可拒绝的或未指定子模式，则标识符模式是不可拒绝的。
 {==+==}
@@ -481,9 +487,9 @@ To service better ergonomics, patterns operate in different *binding modes* in o
 When a reference value is matched by a non-reference pattern, it will be automatically treated as a `ref` or `ref mut` binding.
 Example:
 {==+==}
-### 绑定模式
+### 绑定形式
 
-为了提供更好的人机交互，模式运行在不同的 *绑定模式* 中，以便更容易地将引用绑定到值。
+为了提供更好的人机交互，模式运行在不同的 *绑定形式* 中，以便更容易地将引用绑定到值。
 当引用值被非引用模式匹配时，它会自动被视为 `ref` 或 `ref mut` 绑定。
 例如：
 {==+==}
@@ -526,17 +532,17 @@ Trying to use `person` as a whole or `person.name` would result in an error beca
 {==+==}
 *非引用模式* 包括除绑定、 [通配符模式](#wildcard-pattern) (`_`)、引用类型的 [`const` 模式](#path-patterns) 和 [引用模式](#reference-patterns) 之外的所有模式。
 
-如果一个绑定模式没有明确指定 `ref` 、 `ref mut` 或 `mut` ，则会使用 *默认绑定模式* 来确定变量如何被绑定。
-默认绑定模式开始于 "移动" 模式，使用移动语义。
+如果一个绑定形式没有明确指定 `ref` 、 `ref mut` 或 `mut` ，则会使用 *默认绑定形式* 来确定变量如何被绑定。
+默认绑定形式开始于 "移动" 形式，使用移动语义。
 匹配模式时，编译器从外向内开始。
-每次使用非引用模式匹配引用时，它将自动解引用该值并更新默认绑定模式。
-引用将默认绑定模式设置为 `ref` 。
-可变引用将模式设置为 `ref mut` ，除非模式已经是 `ref` ，否则它将保持为 `ref` 。
+每次使用非引用模式匹配引用时，它将自动解引用该值并更新默认绑定形式。
+引用将默认绑定形式设置为 `ref` 。
+可变引用将形式设置为 `ref mut` ，除非形式已经是 `ref` ，否则它将保持为 `ref` 。
 如果自动解引用的值仍然是引用，则解引用该值并重复此过程。
 
 移动绑定和引用绑定可以混合在同一个模式中。
 这样做将导致对象的部分移动绑定，并且之后无法再使用该对象。
-如果类型不能复制，则适用此规则。
+如果类型不可复制，则适用此规则。
 
 在下面的示例中， `name` 从 `person` 中移动出来。试图将 `person` 作为整体或 `person.name` 使用会导致错误，因为存在 *部分移动* 。
 {==+==}
@@ -1537,7 +1543,7 @@ _路径模式_ 是指引用常量值或没有字段的结构体或枚举变体�
 * 常量
 * 关联常量
   
-修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` (而不是仅实现) 。
+修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` (不仅仅实现) 。
 当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可拒绝类型的常量时，路径模式是不可拒绝的。当路径模式引用可拒绝的常量或具有多个变体的枚举变体时，它们是可拒绝的。
 {==+==}
 
