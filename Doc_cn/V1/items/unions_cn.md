@@ -45,7 +45,7 @@ As a result, writes to one field of a union can overwrite its other fields, and
 size of a union is determined by the size of its largest field.
 {==+==}
 联合体的关键特性是，所有的字段共享相同的存储空间。
-因此，对联合体的一个字段的写操作可能会覆盖其它字段的值，而联合的大小则由其最大字段的大小决定。
+因此，对联合体的一个字段的写操作可能会覆盖其它字段的值，而联合体的大小则由其最大字段的大小决定。
 {==+==}
 
 
@@ -175,7 +175,7 @@ unsafe {
 Commonly, code using unions will provide safe wrappers around unsafe union
 field accesses.
 {==+==}
-通常，使用联合体的代码会在不安全的联合体字段访问外围提供安全的包装器。
+通常，使用联合体的代码会在不安全的联合体字段访问外围提供安全的包装。
 {==+==}
 
 

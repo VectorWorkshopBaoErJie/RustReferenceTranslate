@@ -11,8 +11,8 @@ Two examples of simple paths consisting of only identifier segments:
 {==+==}
 # 路径
 
-*路径* 是一个由一个或多个路径段 _逻辑上_ 由命名空间 <span class="parenthetical">限定符(`::`)</span> 分隔的序列。
-如果路径只包含一个段，则它引用一个局部控制作用域中的 [条目][item] 或 [变量][variable] 。如果路径有多个段，它总是引用一个条目。
+*路径* 是由一个或多个路径段 _逻辑上_ 由命名空间 <span class="parenthetical">限定符(`::`)</span> 分隔的序列。
+如果路径只包含一个段，则它引用局部作用域中的 [条目][item] 或 [变量][variable] 。如果路径有多个段，则总是引用一个条目。
 
 以下是由标识符段组成的简单路径的两个示例：
 {==+==}
@@ -58,9 +58,9 @@ mod m {
 
 > **<sup>语法</sup>**\
 > _简单路径_ :\
-> &nbsp;&nbsp; `::`<sup>?</sup> _简单路径语句_ (`::` _简单路径语句_)<sup>\*</sup>
+> &nbsp;&nbsp; `::`<sup>?</sup> _简单路径片段_ (`::` _简单路径片段_)<sup>\*</sup>
 >
-> _简单路径语句_ :\
+> _简单路径片段_ :\
 > &nbsp;&nbsp; [标识符][IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
 简单路径在 [可见性][visibility] 标记， [属性][attributes] ， [宏][macros] 和 [`use`] 条目中使用。
@@ -112,12 +112,12 @@ mod m {
 {==+==}
 > **<sup>语法</sup>**\
 > _表达式中路径_ :\
-> &nbsp;&nbsp; `::`<sup>?</sup> _路径表达式语句_ (`::` _路径表达式语句_)<sup>\*</sup>
+> &nbsp;&nbsp; `::`<sup>?</sup> _路径表达式片段_ (`::` _路径表达式片段_)<sup>\*</sup>
 >
-> _路径表达式语句_ :\
-> &nbsp;&nbsp; _路径ID语句_ (`::` _泛型参数组_)<sup>?</sup>
+> _路径表达式片段_ :\
+> &nbsp;&nbsp; _路径ID片段_ (`::` _泛型参数组_)<sup>?</sup>
 >
-> _路径ID语句_ :\
+> _路径ID片段_ :\
 > &nbsp;&nbsp; [标识符][IDENTIFIER] | `super` | `self` | `Self` | `crate` | `$crate`
 >
 > _泛型参数组_ :\
@@ -131,7 +131,7 @@ mod m {
 > &nbsp;&nbsp; &nbsp;&nbsp; [_块表达式_][_BlockExpression_]\
 > &nbsp;&nbsp; | [_字面值表达式_][_LiteralExpression_]\
 > &nbsp;&nbsp; | `-` [_字面值表达式_][_LiteralExpression_]\
-> &nbsp;&nbsp; | [_简单路径语句_][_SimplePathSegment_]
+> &nbsp;&nbsp; | [_简单路径片段_][_SimplePathSegment_]
 >
 > _泛型参数组绑定_ :\
 > &nbsp;&nbsp; [标识符][IDENTIFIER]`=` [_类型_][_Type_]
@@ -203,15 +203,16 @@ supports using the type syntax specified below.
 {==+==}
 > **<sup>语法</sup>**\
 > _表达式中的限定路径_ :\
-> &nbsp;&nbsp; _限定路径类型_ (`::` _路径表达式语句_)<sup>+</sup>
+> &nbsp;&nbsp; _限定路径类型_ (`::` _路径表达式片段_)<sup>+</sup>
 >
 > _限定路径类型_ :\
 > &nbsp;&nbsp; `<` [_Type_] (`as` _类型路径_)<sup>?</sup> `>`
 >
 > _类型中限定路径_ :\
-> &nbsp;&nbsp; _限定路径类型_ (`::` _类型路径语句_)<sup>+</sup>
+> &nbsp;&nbsp; _限定路径类型_ (`::` _类型路径片段_)<sup>+</sup>
 
-完全限定路径用于在 [trait 实现][trait implementations] 中消除歧义，并用于指定 [规范路径](#canonical-paths) 。在类型规范中使用时，它支持使用下面指定的类型语法。
+完全限定路径用于在 [trait 实现][trait implementations] 中消除歧义，并用于指定 [规范路径](#canonical-paths) 。
+在类型规范中使用时，它支持使用下面指定的类型语法。
 {==+==}
 
 
@@ -277,15 +278,15 @@ S::f();  // 调用内部 impl.
 {==+==}
 > **<sup>语法</sup>**\
 > _类型路径_ :\
-> &nbsp;&nbsp; `::`<sup>?</sup> _类型路径语句_ (`::` _类型路径语句_)<sup>\*</sup>
+> &nbsp;&nbsp; `::`<sup>?</sup> _类型路径片段_ (`::` _类型路径片段_)<sup>\*</sup>
 >
-> _类型路径语句_ :\
-> &nbsp;&nbsp; _类型ID语句_ `::`<sup>?</sup> ([_泛型参数_][_GenericArgs_] | _类型路径Fn_)<sup>?</sup>
+> _类型路径片段_ :\
+> &nbsp;&nbsp; _类型ID片段_ `::`<sup>?</sup> ([_泛型参数_][_GenericArgs_] | _类型路径Fn_)<sup>?</sup>
 >
 > _类型路径Fn_ :\
-> `(` _类型路径Fn输入_<sup>?</sup> `)` (`->` [_类型_][_Type_])<sup>?</sup>
+> `(` _类型路径Fn输入组_<sup>?</sup> `)` (`->` [_类型_][_Type_])<sup>?</sup>
 >
-> _类型路径Fn输入_ :\
+> _类型路径Fn输入组_ :\
 > [_类型_][_Type_] (`,` [_类型_][_Type_])<sup>\*</sup> `,`<sup>?</sup>
 {==+==}
 
@@ -299,7 +300,7 @@ because there is no ambiguity like there is in _PathInExpression_.
 {==+==}
 类型路径在类型定义、trait 约束、类型参数约束和限定路径中使用。
 
-虽然 `::` 令牌在泛型参数之前是允许的，但不是必须的，因为与在 _表达式中路径_ 的情况不同，这里没有歧义。
+虽然 `::` token 在泛型参数之前是允许的，但不是必须的，因为与在 _表达式中路径_ 的情况不同，这里没有歧义。
 {==+==}
 
 
@@ -352,7 +353,7 @@ the path must resolve to an item.
 
 以 `::` 开头的路径被认为是 *全局路径* ，路径中的段从不同的起点开始解析，这个起点是根据版本不同而不同。路径中的每个标识符都必须解析为一个条目。
 
-> **版本差异**：在 2015 版本中，标识符从 "crate root" 开始解析 (在 2018 版本中是 `crate::`) ，其中包含各种不同的项，包括外部 crate、默认的 crate (如 `std` 或 `core`) 以及 crate 顶级的条目 (包括 `use` 导入) 。
+> **版本差异**：在 2015 版本中，标识符从 "crate root" 开始解析 (在 2018 版本中是 `crate::`) ，其中包括各种不同的条目，包括外部 crate、默认的 crate (如 `std` 或 `core`) 以及 crate 顶级的条目 (包括 `use` 导入) 。
 >
 > 从 2018 版本开始，以 `::` 开头的路径从 [extern prelude] 中的 crate 解析。也就是说，它们必须跟随一个 crate 的名称。
 {==+==}
@@ -503,7 +504,7 @@ segments of the path, possibly after an initial `self` segment.
 {==+==}
 ### `super`
 
-`super` 在路径中解析为父模块。它只能在路径的前导段中使用，可能在一个初始的 `self` 段之后。
+`super` 在路径中解析为父模块。它只能在路径的前导段中使用，可能在起始 `self` 段之后。
 {==+==}
 
 
@@ -575,7 +576,7 @@ first segment, without a preceding `::`.
 {==+==}
 ### `crate`
 
-`crate` 用于解析与当前 crate 相关的路径。 `crate` 只能用作路径的第一个标识符，不能在其前面加上 `::` 。
+`crate` 用于解析与当前 crate 相对路径。 `crate` 只能用作路径的第一个标识符，不能在其前面加上 `::` 。
 {==+==}
 
 
@@ -604,7 +605,8 @@ invoked.
 {==+==}
 ### `$crate`
 
-`$crate` 仅在 [宏转录器][macro transcribers] 中使用，且只能用作第一个段，没有前置 `::` 。 `$crate` 将扩展为一个路径，以访问在定义宏的 crate 顶层的条目，而不管宏被调用的 crate 是哪个。
+`$crate` 仅在 [宏转录器][macro transcribers] 中使用，且只能用作第一个段，没有前置 `::` 。
+`$crate` 将展开为路径，以访问在定义宏的 crate 顶层的条目，而不管宏被调用的 crate 是哪个。
 {==+==}
 
 

@@ -63,7 +63,7 @@ An *enumeration*, also referred to as an *enum*, is a simultaneous definition of
 nominal [enumerated type] as well as a set of *constructors*, that can be used
 to create or pattern-match values of the corresponding enumerated type.
 {==+==}
-一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组构造器 *constructors* 的命名类型。
+一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组 *构造器* 的命名类型。
 这些构造器可以用来创建或者匹配相应枚举类型的值。
 {==+==}
 
@@ -214,7 +214,7 @@ another means of distinguishing variants) in its actual memory layout.
 In two circumstances, the discriminant of a variant may be explicitly set by
 following the variant name with `=` and a [constant expression]:
 {==+==}
-在两种情况下，可以通过在变体名称后跟 `=` 和 [常量表达式][constant expression] 来明确设置变体的判别式 :
+在两种情况下，可以通过在变体名称后跟 `=` 和 [常量表达式][constant expression] 来明确设置变体的判别值 :
 {==+==}
 
 
@@ -262,7 +262,7 @@ than the discriminant of the previous variant in the declaration. If the
 discriminant of the first variant in the declaration is unspecified, then
 it is set to zero.
 {==+==}
-如果枚举变体的判别值没有指定，则它被设置为在声明中前一个变体的判别值加1。如果第一个变体的判别值未指定，则设置为零。
+如果枚举变体的判别值没有指定，则它被设置为在声明中前一个变体的判别值加 1 。如果第一个变体的判别值未指定，则设置为零。
 {==+==}
 
 

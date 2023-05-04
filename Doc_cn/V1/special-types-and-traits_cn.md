@@ -162,7 +162,7 @@ The [`Termination`] trait indicates the acceptable return types for the [main fu
 {==+==}
 ## `Clone`
 
-[`Clone`] trait 是 `Copy` 的超级 trait ，因此它也需要编译器生成的实现。编译器为以下类型实现了此 trait：
+[`Clone`] trait 是 `Copy` 的 supertrait ，因此它也需要编译器生成的实现。编译器为以下类型实现了此 trait：
 
 * 有内置 `Copy` 实现的类型 (见上文)
 * [`Clone`] 类型的元组

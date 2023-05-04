@@ -11,7 +11,7 @@ exactly what is done, we only document what is guaranteed today.
 # 类型布局
 
 一个类型的布局包括其大小、对齐方式以及其字段的相对偏移量。
-对于枚举类型，判别标志的布局和解释方式也是类型布局的一部分。
+对于枚举类型，判别值的布局和解释方式也是类型布局的一部分。
 每次编译都可以更改类型布局。为了避免尝试记录确切的变化，我们只记录目前的可以保证的部分。
 {==+==}
 
@@ -800,7 +800,7 @@ inclusive.
 #### 无字段枚举的原始表示
 
 对于 [无字段枚举][field-less enums] ，原始表示将大小和对齐方式设置为与同名的原始类型相同。
-例如，具有 `u8` 表示的无字段枚举只能具有 0 到 255 之间 (包括 0 和 255 ) 的鉴别标志。
+例如，具有 `u8` 表示的无字段枚举只能具有 0 到 255 之间 (包括 0 和 255 ) 的判别值。
 {==+==}
 
 
@@ -886,7 +886,7 @@ union MyEnumRepr {
     D: MyVariantD,
 }
 
-// 这是鉴别器枚举。
+// 这是判别值枚举。
 #[repr(u8)]
 #[derive(Copy, Clone)]
 enum MyEnumDiscriminant { A, B, C, D }
@@ -930,8 +930,8 @@ The discriminant enum from the example [earlier][`repr(C)`] then becomes:
 {==+==}
 #### 将带字段的枚举的原始表示与 `#[repr(C)]` 结合使用
 
-对于带字段的枚举，还可以将 `repr(C)` 和原始表示 (例如 `repr(C, u8)`) 结合使用。这会修改 [`repr(C)`] ，将鉴别器枚举的表示方式更改为所选择的原始表示。
-因此，如果你选择了 `u8` 表示方式，则鉴别器枚举的大小和对齐方式将为 1 字节。来自 [之前][`repr(C)`] 示例的鉴别器枚举如下：
+对于带字段的枚举，还可以将 `repr(C)` 和原始表示 (例如 `repr(C, u8)`) 结合使用。这会修改 [`repr(C)`] ，将判别值枚举的表示方式更改为所选择的原始表示。
+因此，如果你选择了 `u8` 表示方式，则判别值枚举的大小和对齐方式将为 1 字节。来自 [之前][`repr(C)`] 示例的判别值枚举如下：
 {==+==}
 
 
@@ -980,7 +980,7 @@ will compile without any problems.
 Using a primitive representation in addition to `repr(C)` can change the size of
 an enum from the `repr(C)` form:
 {==+==}
-例如，对于一个 `repr(C, u8)` 枚举，不可能有 257 个唯一的鉴别器 ("标签") ，而只有一个 `repr(C)` 属性的相同枚举将在没有任何问题的情况下编译。
+例如，对于一个 `repr(C, u8)` 枚举，不可能有 257 个唯一的判别值 ("标签") ，而只有一个 `repr(C)` 属性的相同枚举将在没有任何问题的情况下编译。
 
 在 `repr(C)` 之外使用原始表示方式可能会改变枚举的大小:
 {==+==}
@@ -1036,9 +1036,9 @@ enum Enum16 {
 
 // C 表示方式的大小取决于平台
 assert_eq!(std::mem::size_of::<EnumC>(), 8);
-// Enum8::Variant0 中鉴别器和值各占 1 个字节
+// Enum8::Variant0 中判别值和值各占 1 个字节
 assert_eq!(std::mem::size_of::<Enum8>(), 2);
-// Enum16::Variant0 中鉴别器和值各占 1 个字节，再加上 1 个字节的填充
+// Enum16::Variant0 中判别值和值各占 1 个字节，再加上 1 个字节的填充
 assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ```
 {==+==}

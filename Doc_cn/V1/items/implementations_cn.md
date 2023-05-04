@@ -53,7 +53,7 @@ that belong to an instance of the type that is being implemented or to the
 type statically.
 {==+==}
 一个 _实现_ 是将条目与 _实现类型_ 相关联的一个条目。
-实现是使用关键字 `impl` 定义的，并包含属于正在被实现的类型实例或静态类型的函数。
+实现使用关键字 `impl` 定义，并包含被实现类型实例或静态类型的函数。
 {==+==}
 
 
@@ -85,7 +85,7 @@ An inherent implementation is defined as the sequence of the `impl` keyword,
 generic type declarations, a path to a nominal type, a where clause, and a
 bracketed set of associable items.
 {==+==}
-一份内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向命名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
+内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向命名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
 {==+==}
 
 

@@ -70,7 +70,7 @@ Use 声明支持许多方便的快捷方式:
 * 使用类似通配符的花括号语法同时绑定具有相同前缀的路径列表，例如 `use a::b::{c, d, e::f, g::h::i};` 。
 * 使用 `self` 关键字同时绑定具有相同前缀和共同父模块的路径列表，例如 `use a::b::{self, c, d::e};` 。
 * 重新将目标名称绑定为新的本地名称，使用语法 `use p::q::r as x;` 。这也可以与前两个功能一起使用: `use a::b::{self as ab, c as abc}` 。
-* 使用 星号通配符语法绑定与给定前缀匹配的所有路径，例如 `use a::b::*;` 。
+* 使用星号通配符语法绑定与给定前缀匹配的所有路径，例如 `use a::b::*;` 。
 * 多次嵌套前面的功能组合，例如 `use a::b::{self as ab, c, d::{*, e::f}};` 。
 {==+==}
 
@@ -143,9 +143,9 @@ inside a different module. If a sequence of such redirections form a cycle or
 cannot be resolved unambiguously, they represent a compile-time error.
 {==+==}
 和条目一样，默认情况下， `use` 声明只在其所在的模块中可见。
-同样地，如果在 `use` 声明前加上 `pub` 关键字，那么 `use` 声明就是公共的。
+同样地，如果在 `use` 声明前加上 `pub` 关键字，那么 `use` 声明就是公开的。
 这样的 `use` 声明就可以用来 _重新导出_ 一个名称。
-因此，公共的 `use` 声明可以将某个公共名称重定向到一个不同的目标定义：甚至是定义在不同模块中的私有规范路径。
+因此，公开的 `use` 声明可以将某个公开名称重定向到一个不同的目标定义：甚至是定义在不同模块中的私有规范路径。
 如果这样的重定向序列形成了一个循环或无法消除歧义，那么就会导致编译时错误。
 {==+==}
 
@@ -181,7 +181,7 @@ fn main() {
 In this example, the module `quux` re-exports two public names defined in
 `foo`.
 {==+==}
-在这个例子中，模块 `quux` 重新导出了在 `foo` 中定义的两个公共名称。
+在这个例子中，模块 `quux` 重新导出了在 `foo` 中定义的两个公开名称。
 {==+==}
 
 
@@ -275,7 +275,7 @@ fn main() {}
 > `use` paths work in 2015 but not 2018:
 >
 {==+==}
-> **版次差异**: 在2015版本中， `use` 路径还允许访问 crate 根中的条目。使用上面的例子，以下 `use` 路径在2015版中可以使用但在2018版中无法使用:
+> **版次差异**: 在2015版本中， `use` 路径还允许访问 crate 根中的条目。使用上面的例子，以下 `use` 路径在 2015 版中可以使用但在 2018 版中无法使用:
 >
 {==+==}
 
@@ -304,7 +304,7 @@ fn main() {}
 > way `extern crate` can.
 >
 {==+==}
-> 2015版不允许 `use` 声明引用 [extern 预定义][extern prelude] 。因此，在2015中，仍需要使用 [`extern crate`] 声明来引用 `use` 声明中的外部 crate。从 2018 版开始， `use` 声明可以像 `extern crate` 一样指定一个外部 crate 依赖。
+> 2015 版不允许 `use` 声明引用 [extern 预定义][extern prelude] 。因此，在 2015 中，仍需要使用 [`extern crate`] 声明来引用 `use` 声明中的外部 crate。从 2018 版开始， `use` 声明可以像 `extern crate` 一样指定一个外部 crate 依赖。
 >
 {==+==}
 
