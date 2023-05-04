@@ -109,7 +109,7 @@ contents are in a file with the name of the module plus the `.rs` extension.
 For example, the following module structure can have this corresponding
 filesystem structure:
 {==+==}
-一个没有主体的模块将从外部文件加载。
+没有实体的模块将从外部 '文件' 加载。
 当模块没有 `path` 属性时，文件的路径与逻辑 [模块路径][module path] 相同。
 祖先模块路径组件是目录，而模块的内容在一个名为该模块加上 `.rs` 扩展名的文件中。
 例如，下面的模块结构可以有如下的文件系统结构：
@@ -149,7 +149,7 @@ alternately be expressed with `crate::util`'s contents in a file named
 > convention as it is more consistent, and avoids having many files named
 > `mod.rs` within a project.
 {==+==}
-> **注意**: 注意：在 Rust 1.30 之前，使用 `mod.rs` 文件是一种加载具有嵌套子项模块的方法。推荐使用新的命名约定，因为它更一致，并避免在项目中有许多名为 `mod.rs` 的文件。
+> **注意**: 注意：在 Rust 1.30 之前，使用 `mod.rs` 文件是一种加载具有嵌套子模块的方法。推荐使用新的命名约定，因为它更一致，并避免在项目中有许多名为 `mod.rs` 的文件。
 {==+==}
 
 
@@ -293,8 +293,8 @@ Modules, like all items, accept outer attributes. They also accept inner
 attributes: either after `{` for a module with a body, or at the beginning of the
 source file, after the optional BOM and shebang.
 {==+==}
-模块和所有条目一样，可以接受外围属性 (outer attributes) ，同时也可以接受内部属性 (inner attributes) ，
-内部属性可以出现在模块主体的左括号 `{` 之后，也可以出现在源文件的开头，在可选的 BOM 和 shebang 之后。
+模块和所有条目一样，可以接受外围属性，同时也可以接受内部属性，
+内部属性可以出现在模块主体的左括号 `{` 之后，也可以出现在源文件的开头，在可选的 BOM 和执行注解之后。
 {==+==}
 
 

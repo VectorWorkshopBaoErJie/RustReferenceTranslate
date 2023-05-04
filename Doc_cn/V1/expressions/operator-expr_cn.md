@@ -976,10 +976,10 @@ Casting is limited to the following kinds of enumerations:
 {==+==}
 #### 枚举转换
 
-将枚举转换为其判别式，然后根据需要使用数值转换。转换仅限于以下种类的枚举:
+将枚举转换为其判别值，然后根据需要使用数值转换。转换仅限于以下种类的枚举:
 
 * [仅单元元素的枚举][Unit-only enums]
-* [没有字段的枚举][Field-less enums] 且没有 [显式判别式][explicit discriminants] ，或者只有单元元素有显式判别式
+* [没有字段的枚举][Field-less enums] 且没有 [显式判别值][explicit discriminants] ，或者只有单元元素有显式判别值
 {==+==}
 
 

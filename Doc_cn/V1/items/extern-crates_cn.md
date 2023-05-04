@@ -122,7 +122,7 @@ extern crate hello_world; // hyphen replaced with an underscore
 {==+==}
 <!-- ignore: requires external crates -->
 ```rust,ignore
-// 导入Cargo package hello-world
+// 导入Cargo 包 hello-world
 extern crate hello_world; // 连字符替换为下划线
 ```
 {==+==}

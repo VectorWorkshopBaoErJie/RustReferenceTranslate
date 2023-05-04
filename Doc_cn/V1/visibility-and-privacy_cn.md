@@ -47,12 +47,12 @@ it can be thought of as being accessible to the outside world. For example:
 这两个术语经常被交替使用，它们试图表达 "此条目是否可在此位置使用？" 的答案。
 
 Rust 的名称解析是在全局层次结构的命名空间中运行的。层次结构中的每个级别都可以被视为某个条目。
-这些条目是上面提到的其中之一，但也包括外部 crate 。声明或定义新模块可以被视为在定义位置将一个新树插入层次结构中。
+这些条目是上面提到的其中之一，也包括外部 crate 。声明或定义新模块可以被视为在定义位置将一个新树插入层次结构中。
 
 为了控制接口是否可以跨模块使用， Rust 检查每个条目的使用情况，以确定是否允许使用。
-这就是产生隐私警告的地方，从而提示 "你使用了另一个模块的私有条目，但未被允许" 。
+从而会产生隐私警告，会有 "你使用了另一个模块的私有条目，但不允许" 的提示。
 
-默认情况下，所有内容都是 *私有的* ，有两个例外: 在 `pub` Trait 中的关联条目默认是公共的；在 `pub` 枚举中的枚举变量也默认是公共的。
+默认情况下，所有内容都是 *私有的* ，有两个例外: 在 `pub` Trait 中的关联条目默认是公开的；在 `pub` 枚举中的枚举变量也默认是公开的。
 当一个条目被声明为 `pub` 时，可以将其视为对外界可访问的。例如:
 {==+==}
 
@@ -80,12 +80,12 @@ pub enum State {
 // 声明一个私有结构体
 struct Foo;
 
-// 声明一个公共结构体，其中有一个私有字段
+// 声明一个公开结构体，其中有一个私有字段
 pub struct Bar {
     field: i32,
 }
 
-// 声明一个公共枚举类型，其中有两个公共变体
+// 声明一个公开枚举类型，其中有两个公开变体
 pub enum State {
     PubliclyAccessibleState,
     PubliclyAccessibleState2,
@@ -127,15 +127,15 @@ explain, here's a few use cases and what they would entail:
   that internal implementation details could also be seamlessly tested from the
   child module.
 {==+==}
-在 Rust 中，通过将条目定义为公共或私有，允许在以下两种情况下访问条目：
+在 Rust 中，通过将条目定义为公开或私有，允许在以下两种情况下访问条目：
 
-1. 如果条目是公共的，则可以从一些模块 `m` 外部访问它，如果你可以从 `m` 访问所有条目的祖先模块，则还可以通过重新导出的方式命名该条目。
-2. 如果条目是私有的，则当前模块及其后代可以访问它。
+1. 如果条目是公开的，则可以从一些模块 `m` 外部访问它，如果你可以从 `m` 访问所有条目的祖先模块，则还可以通过重新导出的方式命名该条目。
+2. 如果条目是私有的，则当前模块及其子代可以访问它。
 
 这两种情况对于创建公开 API 的模块层次结构并隐藏内部实现细节非常有用。以下是一些用例及其含义：
 
 * 库开发人员需要向链接其库的 crate 公开功能。作为第一种情况的结果，这意味着任何可在外部使用的内容必须从根到目标条目都是 `pub` 的。链中的任何私有条目都将禁止外部访问。
-* 一个 crate 需要一个仅对自己可用的全局 "帮助模块" ，但它不想将该模块公开为公共 API 。为此，crate 层次结构的根将具有一个私有模块，该模块内部具有 "公共 API" 。由于整个 crate 是根的后代，因此整个本地 crate 可以通过第二种情况访问此私有模块。
+* 一个 crate 需要一个仅对自己可用的全局 "帮助模块" ，但它不想将该模块公开为公开 API 。为此，crate 层次结构的根将具有一个私有模块，该模块内部具有 "公开 API" 。由于整个 crate 是根的子代，因此整个本地 crate 可以通过第二种情况访问此私有模块。
 * 在为模块编写单元测试时，通常的惯用语法是让待测试的模块的直接子条目命名为 `mod test`。此模块可以通过第二种情况访问父模块的任何条目，从而可以轻松测试内部实现细节。
 {==+==}
 
@@ -153,7 +153,7 @@ scope.
 Here's an example of a program which exemplifies the three cases outlined
 above:
 {==+==}
-在第二种情况中，它提到了私有条目可以被当前模块和其子孙模块 "访问" ，但是访问条目的确切含义取决于该条目是什么。
+在第二种情况中，它提到了私有条目可以被当前模块和其子代模块 "访问" ，但是访问条目的确切含义取决于该条目是什么。
 例如，访问模块将意味着查看其中的内容 (以导入更多条目) 。另一方面，访问函数将意味着调用它。
 此外，路径表达式和导入语句被认为是访问条目，因为只有在目标在当前可见范围内时，导入/表达式才是有效的。
 
@@ -223,15 +223,15 @@ mod crate_helper_module {
     fn implementation_detail() {}
 }
 
-// 这个函数是 "对根可见的公共"，这意味着它可以在链接到这个 crate 的外部 crate 中使用。
+// 这个函数是 "对根可见的公开"，这意味着它可以在链接到这个 crate 的外部 crate 中使用。
 pub fn public_api() {}
 
-// 类似于 'public_api'，这个模块是公共的，因此外部 crate 可以查看其内部。
+// 类似于 'public_api'，这个模块是公开的，因此外部 crate 可以查看其内部。
 pub mod submodule {
     use crate::crate_helper_module;
 
     pub fn my_method() {
-        // 通过上述两条规则的组合，本地 crate 中的任何条目都可以调用辅助模块的公共接口。
+        // 通过上述两条规则的组合，本地 crate 中的任何条目都可以调用辅助模块的公开接口。
         crate_helper_module::crate_helper();
     }
 
@@ -282,7 +282,7 @@ Here's an example:
 
 ## `pub(in path)` , `pub(crate)` , `pub(super)` , 和 `pub(self)` 
 
-除了 public 和 private 之外， Rust 还允许用户将一个条目声明为仅在给定范围内可见。 `pub` 限制的规则如下：
+除了 '公开' 和 '私有' 之外， Rust 还允许用户将一个条目声明为仅在给定范围内可见。 `pub` 限制的规则如下：
 - `pub(in path)` 使得一个条目在提供的 `path` 中可见。 `path` 必须是正在声明其可见性的条目的祖先模块。
 - `pub(crate)` 使得一个条目在当前 crate 内可见。
 - `pub(super)` 使得一个条目对其父模块可见。这等价于 `pub(in super)` 。
@@ -415,8 +415,8 @@ re-exported item. For example, this program is valid:
 
 ## 重新导出和可见性
 
-Rust 允许通过 `pub use` 指令公开重新导出条目。因为这是一个公共指令，这允许通过上面的规则在当前模块中使用该条目。
-这实际上允许了对重新导出的条目的公共访问。例如，这个程序是有效的：
+Rust 允许通过 `pub use` 公开且重新导出条目。因为这是一个使其公开的指令，从而允许通过上面的规则在当前模块中使用该条目。
+这实际上允许了对重新导出的条目的公开访问。例如，这个程序是有效的：
 {==+==}
 
 
@@ -445,9 +445,9 @@ When re-exporting a private item, it can be thought of as allowing the "privacy
 chain" being short-circuited through the reexport instead of passing through
 the namespace hierarchy as it normally would.
 {==+==}
-这意味着，任何引用 `implementation::api::f` 的外部 crate 都将遭受隐私侵犯，而路径 `api::f` 将被允许。
+这意味着，外部 crate 通过 `implementation::api::f` 引用将违反私有性，而允许以路径 `api::f` 引用。
 
-当重新导出一个私有条目时，可以将其视为通过重新导出而允许 "隐私链" 短路，而不是像通常一样通过命名空间层次结构传递。
+当重新导出一个私有条目时，可以将其视为通过重新导出 "私有链条" 的快捷路径，而不是像通常一样通过命名空间层次结构传递。
 {==+==}
 
 

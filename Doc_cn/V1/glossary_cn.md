@@ -107,7 +107,7 @@ root, including through [paths] of public modules.
 
 ### Crate
 
-Crate (箱体) 是编译和链接的基本单位。它有不同的类型，例如库或可执行文件。 Crate 可以链接和引用其他库 Crate ，称为外部 Crate 。 Crate 具有一个自包含的模块树，从一个未命名的根模块开始，称为 Crate 根。通过在 Crate 根中将条目标记为公共的，包括公共模块的路径，可以使这些条目对其他 Crate 可见。请参考 [Rust文档][crate] 以了解更多信息。
+Crate (箱体) 是编译和链接的基本单位。它有不同的类型，例如库或可执行文件。 Crate 可以链接和引用其他库 Crate ，称为外部 Crate 。 Crate 具有一个自包含的模块树，从一个未命名的根模块开始，称为 Crate 根。通过在 Crate 根中将条目标记为公开的，包括公开模块的路径，可以使这些条目对其他 Crate 可见。请参考 [Rust文档][crate] 以了解更多信息。
 {==+==}
 
 

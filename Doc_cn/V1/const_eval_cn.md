@@ -116,7 +116,7 @@ _常量上下文_ 是以下情况之一:
 
 * [数组类型长度表达式][Array type length expressions]
 * [数组重复长度表达式][array expressions]
-* [常量][constants] 、 [静态变量][statics] 或 [枚举判别式][enum discriminants] 的初始化器
+* [常量][constants] 、 [静态变量][statics] 或 [枚举判别值][enum discriminants] 的初始化器
 * [常量泛型参数][const generic argument]
 {==+==}
 
@@ -155,7 +155,7 @@ discriminants depend on floating point computations.
 常量函数有各种限制，以确保它们可以在编译时求值。例如，不可能将随机数生成器编写为常量函数。
 在编译时调用常量函数将始终产生与在运行时调用它相同的结果，即使调用多次也是如此。
 有一个例外：如果在极端情况下进行复杂的浮点数运算，则可能会得到(极微小的)不同结果。
-建议不要使数组长度和枚举判别式依赖于浮点数计算。
+建议不要使数组长度和枚举判别值依赖于浮点数计算。
 {==+==}
 
 

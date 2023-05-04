@@ -391,9 +391,9 @@ expressions considered thus far have implicit coercions.)
 在某些情况下，编译器必须将多个类型强转在一起，以尝试找到最通用的类型。
 这被称为 "最小上界强转" (Least Upper Bound coercion，简称LUB 强转) 。LUB 强转仅在以下情况下使用：
 
-+ 为一系列 if 分支查找公共类型。
-+ 为一系列 match 分支查找公共类型。
-+ 为数组元素查找公共类型。
++ 为一系列 if 分支查找公开类型。
++ 为一系列 match 分支查找公开类型。
++ 为数组元素查找公开类型。
 + 为带有多个返回语句的闭包查找返回类型。
 + 检查带有多个返回语句的函数的返回类型。
 
