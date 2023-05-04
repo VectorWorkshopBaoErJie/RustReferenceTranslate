@@ -46,7 +46,7 @@ elision].) The compiler is, however, still at liberty to translate the constant
 many times, so the address referred to may not be stable.
 {==+==}
 常量可以引用其他常量的地址，在这种情况下，地址将省略适用的生命周期，否则 (在大多数情况下) 默认为 `static`  生命周期 (请参见 [静态生命周期省略][static lifetime elision] ) 。
-但编译器仍然有自由将常量翻译为多个值，因此引用的地址可能不稳定。
+但编译器仍然有自由将常量解释为多个值，因此引用的地址可能不稳定。
 {==+==}
 
 

@@ -109,7 +109,7 @@ trait Example {
 {==+==}
 Trait functions are not allowed to be [`async`] or [`const`].
 {==+==}
-Trait 函数不允许为 [`async`] 或 [`const`] 。
+Trait 函数不允许 [`async`] 或 [`const`] 。
 {==+==}
 
 
@@ -183,8 +183,8 @@ Object safe traits can be the base trait of a [trait object]. A trait is
     * Explicitly non-dispatchable functions require:
         * Have a `where Self: Sized` bound (receiver type of `Self` (i.e. `self`) implies this).
 {==+==}
-* 所有的 [超级trait][supertraits] 也必须是对象安全的。
-* `Sized` 不能是 [超级trait][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
+* 所有的 [supertraits] 也必须是对象安全的。
+* `Sized` 不能是 [supertraits] 。换句话说，必须不要求 `Self: Sized` 。
 * 不能有任何关联常量。
 * 不能有任何泛型关联类型。
 * 所有关联函数必须是可从 trait 对象中可派发的，或者是明确不可派发的。
@@ -386,7 +386,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 {==+==}
 ## Supertraits
 {==+==}
-## 超级trait
+
 {==+==}
 
 
@@ -395,8 +395,8 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object]
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
-**超级trait** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
-此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到一个 trait 限定时，它可以访问其超级 trait 的关联条目。
+**Supertraits** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
+此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到一个 trait 限定时，它可以访问其 supertrait 的关联条目。
 {==+==}
 
 
@@ -405,21 +405,21 @@ Supertraits are declared by trait bounds on the `Self` type of a trait and
 transitively the supertraits of the traits declared in those trait bounds. It is
 an error for a trait to be its own supertrait.
 {==+==}
-超级 trait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而超级 trait 的 trait 约束将在其内部声明的 trait 的超级 trait 中传递。trait 不能是自己的超级 trait，这是一个错误。
+supertrait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而 supertrait 的 trait 约束将在其内部声明的 trait 的 supertrait 中传递。trait 不能是自己的 supertrait ，这是一个错误。
 {==+==}
 
 
 {==+==}
 The trait with a supertrait is called a **subtrait** of its supertrait.
 {==+==}
-具有超级 trait 的 trait 被称为其超级 trait 的 **子trait** 。
+具有 supertrait 的 trait 被称为其 supertrait 的 **子trait** 。
 {==+==}
 
 
 {==+==}
 The following is an example of declaring `Shape` to be a supertrait of `Circle`.
 {==+==}
-以下是将 `Shape` 声明为 `Circle` 的超级 trait 的示例。
+以下是将 `Shape` 声明为 `Circle` 的 supertrait 的示例。
 {==+==}
 
 
@@ -488,7 +488,7 @@ trait Circle where Self: Shape {
 {==+==}
 This next example calls a supertrait method on a generic parameter.
 {==+==}
-这个例子展示了在一个泛型参数上调用超级 trait 方法。
+这个例子展示了在一个泛型参数上调用 supertrait 方法。
 {==+==}
 
 
@@ -507,7 +507,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 # trait Shape { fn area(&self) -> f64; }
 # trait Circle : Shape { fn radius(&self) -> f64; }
 fn print_area_and_radius<C: Circle>(c: C) {
-    // 这里从 `Circle` 的超级trait `Shape` 中调用 area 方法。
+    // 这里从 `Circle` 的 supertrait `Shape` 中调用 area 方法。
     println!("Area: {}", c.area());
     println!("Radius: {}", c.radius());
 }
@@ -518,7 +518,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 {==+==}
 Similarly, here is an example of calling supertrait methods on trait objects.
 {==+==}
-类似地，以下是在 trait 对象上调用超级 trait 方法的示例。
+类似地，以下是在 trait 对象上调用 supertrait 方法的示例。
 {==+==}
 
 
