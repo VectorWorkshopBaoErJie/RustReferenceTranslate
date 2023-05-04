@@ -75,7 +75,7 @@ trait is implemented for a type. For example, given `Ty: Trait`
   being used for `T`.
 {==+==}
 [Trait] 和生命周期约束提供了一种方式，让 [泛型条目][generic] 可以限制使用哪些类型和生命周期作为它们的参数。
-约束可以在 [where 子句][where clause] 中对任何类型提供。对于某些常见情况，也有更短的形式：
+可以在 [where 子句][where clause] 中对任何类型提供约束。对于某些常见情况，也有更短的形式：
 
 * 在声明 [泛型参数][generic] 之后写入约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。
 * 在 trait 声明中作为 [supertraits] : `trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}` 。
@@ -83,7 +83,7 @@ trait is implemented for a type. For example, given `Ty: Trait`
 
 在使用条目时必须满足条目上的约束。在对泛型条目进行类型检查和借用检查时，可以使用约束来确定类型是否实现了 trait 。例如，给定 `Ty: Trait` 
 
-* 在泛型函数的主体中，可以在 `Ty` 值上调用 `Trait` 的方法。同样，可以使用 `Trait` 上的关联常量。
+* 在泛型函数体中，可以在 `Ty` 值上调用 `Trait` 的方法。同样，可以使用 `Trait` 上的关联常量。
 * 可以使用 `Trait` 的关联类型。
 * 可以将具有 `T: Trait` 约束的泛型函数和类型用于 `T` 使用 `Ty` 。
 {==+==}
@@ -158,10 +158,11 @@ It is an error for such a bound to be false.
 It is an error to have `Copy` or `Clone` as a bound on a mutable reference, [trait object], or [slice].
 It is an error to have `Sized` as a bound on a trait object or slice.
 {==+==}
-不涉及该条目参数或 [高阶生命周期][higher-ranked lifetimes] 的约束在定义该条目时进行检查。如果这样的约束为假，就会出现错误。
+当定义条目时，不使用条目参数或更 [高阶生命周期][higher-ranked lifetimes] 的约束将被检查。这样的约束如果为 false ，则会报错。
 
-对于某些泛型类型，即使使用时不提供具体类型，也会对 [`Copy`] ， [`Clone`] 和 [`Sized`] 约束进行检查。
-在可变引用， [trait 对象][trait object] 或 [slice] 上使用 `Copy` 或 `Clone`  作为约束是错误的。在 [trait 对象][trait object] 或 [切片][slice] 上使用 `Sized` 作为限制也是错误的。
+对于某些泛型类型，在使用该条目时还会检查 [`Copy`] 、 [`Clone`] 和 [`Sized`] 约束，即使使用时没有提供具体类型。
+在可变引用、 [trait 对象][trait object] 或 [切片][slice] 上将 `Copy` 或 `Clone` 作为约束是错误的。
+在 [trait 对象][trait object] 或 [切片][slice] 上使用 `Sized` 作为约束也是错误的。
 {==+==}
 
 
@@ -197,7 +198,7 @@ struct UsesA<'a, T>(A<'a, T>);
 {==+==}
 Trait and lifetime bounds are also used to name [trait objects].
 {==+==}
-Trait 和 生命周期限制还用于命名 [trait 对象][trait objects] 。
+Trait 和 生命周期约束还用于命名 [trait 对象][trait objects] 。
 {==+==}
 
 
@@ -215,11 +216,12 @@ The bound `'a: 'b` is usually read as `'a` *outlives* `'b`.
 {==+==}
 ## `?Sized`
 
-`?` 仅用于为 [类型参数][type parameters] 或 [关联类型][associated types] 放宽隐含的 [`Sized`] trait 约束。 `?Sized` 不能用作其他类型的约束。
+`?` 仅用于放宽 [类型参数][type parameters] 或 [关联类型][associated types] 隐含的 [`Sized`] trait 约束。
+`?Sized` 不能用作其他类型的约束。
 
 ## 生命周期约束
 
-生命周期限制可以应用于类型或其他生命周期。约束 `'a: 'b` 通常被读作 `'a` *比* `'b` 活得更久。
+生命周期约束可以应用于类型或其他生命周期。约束 `'a: 'b` 通常被读作 `'a` *比* `'b` 活得更久。
 `'a: 'b` 意味着 `'a` 至少和 `'b` 一样长，因此当 `&'b ()` 有效时，引用 `&'a ()` 也是有效的。
 {==+==}
 
@@ -234,7 +236,7 @@ fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
 {==+==}
 ```rust
 fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
-    y = x;                      // `&'a i32` 是 `&'b i32` 的亚类型，因为 `'a: 'b` 。
+    y = x;                      // `&'a i32` 是 `&'b i32` 的子类型，因为 `'a: 'b` 。
     let r: &'b &'a i32 = &&0;   // `&'b &'a i32` 是良好形式的，因为 `'a: 'b` 。
 }
 ```
@@ -265,7 +267,7 @@ PartialEq<i32>` would require an implementation like
 > _For生命周期_ :\
 > &nbsp;&nbsp; `for` [_泛型参数组_][_GenericParams_]
 
-Trait 约束可以对生命周期进行 *提阶* ，这些约束指定了一个对于 *所有* 生命周期都成立的约束。
+Trait 约束可以对生命周期进行 *提阶* ，该约束指示 *对于所有* 生命周期都成立的约束。
 例如， `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个这样的实现:
 {==+==}
 
@@ -290,7 +292,7 @@ Only a higher-ranked bound can be used here, because the lifetime of the referen
 {==+==}
 可以用它来将一个 `&'a T` 的生命周期与任意的 `i32` 进行比较。
 
-只有一个更高阶的约束可以在这里使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
+仅一个更高阶的约束可以在此使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
 {==+==}
 
 

@@ -228,9 +228,9 @@ UnwindSafe>` is a valid type.
 * 如果它们捕获的所有值的类型都实现了该 trait ，则闭包会实现该 trait 。
 
 捕获一个 `T` 的共享引用和一个 `U` 的值的闭包会实现两个 `&T` 和 `U` 都实现的自动 trait 。
-对于泛型类型 (将上面内置类型视为泛型的 `T` )，如果有通用实现，则编译器不会自动实现该 trait ，而是根据需要的 trait 限制为没有达到 trait 限制的类型实现。例如，标准库为所有 `T` 是 `Sync` 的 `&T` 实现了 `Send` ；这意味着，如果 `T` 是 `Send` 但不是 `Sync` ，则编译器不会为 `&T` 实现 `Send` 。
+对于泛型类型 (将上面内置类型视为泛型的 `T` )，如果有通用实现，则编译器不会自动实现该 trait ，而是根据需要的 trait 约束为没有达到 trait 约束的类型实现。例如，标准库为所有 `T` 是 `Sync` 的 `&T` 实现了 `Send` ；这意味着，如果 `T` 是 `Send` 但不是 `Sync` ，则编译器不会为 `&T` 实现 `Send` 。
 自动 trait 也可以有负实现，在标准库文档中表示为 `impl !AutoTrait for T` ，它们覆盖了自动实现。例如， `*mut T` 有一个 `Send` 的负实现，因此即使 `T` 是 `Send` ， `*mut T` 也不是 `Send` 。
-目前没有稳定的方法指定额外的负实现；它们只存在于标准库中。自动 trait 可以作为 [trait 对象][trait object] 的附加限制添加到任何 trait 中，尽管通常只允许一个 trait 。
+目前没有稳定的方法指定额外的负实现；它们只存在于标准库中。自动 trait 可以作为 [trait 对象][trait object] 的附加约束添加到任何 trait 中，尽管通常只允许一个 trait 。
 例如，`Box<dyn Debug + Send + UnwindSafe>`是一个有效的类型。
 {==+==}
 

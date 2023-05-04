@@ -35,7 +35,7 @@ pointer, [`std::ptr::drop_in_place`] can be used.
 1. 如果 `T: Drop` ，则调用 [`<T as std::ops::Drop>::drop`] 
 2. 递归运行其所有字段的析构函数。
      * [结构体][struct] 的字段按声明顺序被销毁。
-     * [枚举类型][enum variant] 的活动变量的字段按声明顺序被销毁。
+     * [枚举类型][enum variant] 的活动变体字段按声明顺序被销毁。
      * [元组][tuple] 的字段按顺序被销毁。
      * [数组][array] 或拥有的 [切片][slice] 的元素从第一个元素到最后一个元素被销毁。
      * [闭包][closure] 通过移动捕获的变量按未指定的顺序被销毁。

@@ -7,7 +7,7 @@ can be evaluated at compile-time.
 {==+==}
 # 常量求值
 
-常量求值是在编译期间计算 [表达式][expressions] 结果的过程。只有所有表达式的一个子集能够在编译时进行求值。
+常量求值是在编译期间计算 [表达式][expressions] 结果的过程。仅有所有表达式的子集能够在编译时进行求值。
 {==+==}
 
 
@@ -30,7 +30,7 @@ to be run.
 ## 常量表达式
 
 某些形式的表达式被称为常量表达式，可以在编译时求值。在 [常量上下文](#const-context) 中，这些是唯一允许的表达式，并且始终在编译时求值。
-在其他地方，如 [let语句][let statements] 中，常量表达式可能会被求值，但不能保证在编译时求值。
+在其他位置，如 [let 语句][let statements] 中，常量表达式可能会被求值，但不能保证在编译时求值。
 如果必须在编译时求值 (即在常量上下文中) ，则越界的 [数组索引][array indexing] 或 [溢出][overflow] 等行为会导致编译器错误。
 否则，这些行为会导致警告，但可能会在运行时崩溃。
 
@@ -76,13 +76,13 @@ to be run.
 * [数组表达式][Array expressions] 。
 * [结构体][Struct] 表达式。
 * [块表达式][Block expressions] ，包括 `unsafe` 块。
-    * [let语句][let statements] 和因此不可拒绝的 [模式][patterns] ，包括可变绑定。
+    * [let 语句][let statements] 和因此不可拒绝的 [模式][patterns] ，包括可变绑定。
     * [赋值表达式][assignment expressions]
     * [复合赋值表达式][compound assignment expressions]
     * [表达式语句][expression statements]
 * [字段][Field] 表达式。
 * 索引表达式，使用 `usize` 的 [数组索引][array indexing] 或 [切片][slice] 。
-* [范围表达式][Range expressions] 。
+* [区间表达式][Range expressions] 。
 * 不捕获环境变量的 [闭包表达式][Closure expressions] 。
 * 在整数和浮点数类型、 `bool` 和 `char` 上使用的内置 [否定][negation] 、 [算术][arithmetic] 、 [逻辑][logical] 、 [比较][comparison] 或 [惰性布尔][lazy boolean] 运算符。
 * 共享 [借用][borrow] ，除非应用于具有 [内部可变性][interior mutability] 的类型。

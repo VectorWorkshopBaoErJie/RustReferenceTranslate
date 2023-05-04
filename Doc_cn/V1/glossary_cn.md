@@ -211,7 +211,7 @@ An [implementation] that applies to a nominal type, not to a trait-type pair.
 
 如果一个类型具有构造函数并且因此可以被实例化，则称其为 "有实例" 。有实例的类型不是 "空的" ，因为它可以有值。与 [无实例](#uninhabited) 相对。
 
-### 内在实现
+### 内部实现
 
 适用于命名类型而不是 trait-类型对的 [实现][implementation] 。 [更多][inherent implementation] 。
 {==+==}
@@ -235,9 +235,9 @@ A `trait` which was defined in the current crate. A trait definition is local
 or not independent of applied type arguments. Given `trait Foo<T, U>`,
 `Foo` is always local, regardless of the types substituted for `T` and `U`.
 {==+==}
-### 内在方法
+### 内部方法
 
-在内在实现中定义的方法，而不是在 trait 实现中定义的方法。
+在内部实现中定义的方法，而不是在 trait 实现中定义的方法。
 
 ### 初始化
 
@@ -389,7 +389,7 @@ platform (similar to how `usize` varies per-platform).
 
 ### 被匹配项
 
-被匹配项是在 `match` 表达式和类似的模式匹配结构中被匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是被匹配对象。
+被匹配项是在 `match` 表达式和类似的模式匹配结构中被匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是被匹配项。
 
 ### 值大小
 
@@ -470,7 +470,7 @@ As such, this syntax is colloquially referred to as turbofish syntax.
 
 字符串切片是 Rust 中最原始的字符串类型，写作 `str` 。它经常以其借用形式出现，可以是可变的或共享的。共享字符串切片类型是 `&str` ，而可变字符串切片类型是 `&mut str` 。
 
-字符串切片始终有效的UTF-8。
+字符串切片始终有效的 UTF-8。
 
 ### Trait
 
@@ -538,7 +538,7 @@ example of an uninhabited type is the [never type] `!`, or an enum with no varia
 
 ### 无法驻留的
 
-如果一个类型没有构造函数，因此永远无法被实例化，则该类型是无法驻留的。一个无法驻留的类型在某种意义上是 "空的" ，因为该类型没有值。无法居住类型的典型示例是 [永不类型][never type] `!` ，或者没有变体的枚举 `enum Never { }` 。与 [驻留](#inhabited) 相对。
+如果一个类型没有构造函数，因此永远无法被实例化，则该类型是无法驻留的。一个无法驻留的类型在某种意义上是 "空的" ，因为该类型没有值。无法驻留类型的典型示例是 [永不类型][never type] `!` ，或者没有变体的枚举 `enum Never { }` 。与 [驻留](#inhabited) 相对。
 {==+==}
 
 
