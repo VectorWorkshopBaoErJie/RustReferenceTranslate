@@ -469,7 +469,7 @@ An *associated type definition* defines a type alias for the implementation
 of a trait on a type. They are written similarly to an *associated type declaration*,
 but cannot contain `Bounds`, but instead must contain a `Type`:
 {==+==}
-*关联类型定义* 为类型别名，用于为类型上的 trait 实现定义类型。它们的书写方式与 *关联类型声明* 类似，但不能包含 `Bounds`，而是必须包含一个 `Type` :
+*关联类型定义* 为类型别名。它们的书写方式与 *关联类型声明* 相似，而不能包含 `Bounds` ，必须包含一个 `Type` :
 {==+==}
 
 
@@ -498,7 +498,7 @@ If a type `Item` has an associated type `Assoc` from a trait `Trait`, then
 associated type definition. Furthermore, if `Item` is a type parameter, then
 `Item::Assoc` can be used in type parameters.
 {==+==}
-如果一个类型 `Item` 拥有一个从 trait `Trait` 中获取的关联类型 `Assoc`，那么 `<Item as Trait>::Assoc` 就是一个类型，它是关联类型定义中指定的类型的别名。此外，如果 `Item` 是一个类型参数，那么 `Item::Assoc` 可以在类型参数中使用。
+如果 `Item` 类型拥有一个从 `Trait` 中获取的关联类型 `Assoc`，即 `<Item as Trait>::Assoc` 。此外，如果 `Item` 是类型参数，那么类型参数中可以使用 `Item::Assoc` 。
 {==+==}
 
 
@@ -510,13 +510,13 @@ type can be named like `<Thing as Trait>::Item<'x>`, where `'x` is some lifetime
 in scope. In this case, `'x` will be used wherever `'a` appears in the associated
 type definitions on impls.
 {==+==}
-关联类型可以包括 [泛型参数][generic parameters] 和 [where 约束][where clauses] ；这些通常被称为 *泛型关联类型* 或 *GATs* 。
-如果类型 `Thing` 从 trait `Trait` 中具有泛型 `<'a>` 的关联类型 `Item`，则该类型可以命名为 `<Thing as Trait>::Item<'x>`，其中 `'x` 是作用域内的某个生命周期。
-在这种情况下，无论何时出现在 impl 上的关联类型定义中的 `'a` 都将使用 `'x` 。
+关联类型可以包含 [泛型参数][generic parameters] 和 [where 约束][where clauses] ；这些通常被称为 *泛型关联类型* 或 *GATs* 。
+如果类型 `Thing` 从 `Trait` 中具有泛型 `<'a>` 的关联类型 `Item`，则该类型可以命名为 `<Thing as Trait>::Item<'x>` ，其中 `'x` 是作用域内的某个生命周期。
+此时，无论何时出现在 impl 上的关联类型定义中的 `'a` 都将使用 `'x` 。
 
 关联类型可能包含 [泛型参数][generic parameters] 和 [where 约束][where clauses] ；这些通常被称为 *泛型关联类型* 或 GAT。
 如果类型 `Thing` 有一个来自 `Trait` 的关联类型 `Item` ，具有泛型 `<'a>` ，则可以像 `<Thing as Trait> ::Item<'x>` 这样命名该类型，其中 `'x` 是某个有效作用域内的生命周期。
-在这种情况下，`'x` 将在实现中的关联类型定义中的 `'a` 处使用。
+此时，`'x` 将在实现中的关联类型定义中的 `'a` 处使用。
 {==+==}
 
 
@@ -782,8 +782,8 @@ In the above, on the `next` function, we can prove that `Self: 'a`, because of
 the implied bounds from `&'a mut self`; therefore, we must write the equivalent
 bound on the GAT itself: `where Self: 'x`.
 {==+==}
-在上面的例子中，在 `next` 函数中，我们可以证明 `Self: 'a`，因为我们从 `&'a mut self` 推导出了这个隐含的限制。
-因此，我们必须在 GAT 自身上写出等效的限制: `where Self: 'x` 。
+在上面的例子中，在 `next` 函数中，我们可以证明 `Self: 'a`，因为我们从 `&'a mut self` 推导出了这个隐含的约束。
+因此，我们必须在 GAT 自身上写出等效的约束: `where Self: 'x` 。
 {==+==}
 
 
@@ -792,7 +792,7 @@ When there are multiple functions in a trait that use the GAT, then the
 *intersection* of the bounds from the different functions are used, rather than
 the union.
 {==+==}
-当 trait 中有多个函数使用 GAT 时，会使用不同函数的边界的 *交集* ，而不是并集。
+当 trait 中有多个函数使用 GAT 时，会使用不同函数的约束的 *交集* ，而不是并集。
 {==+==}
 
 
@@ -888,7 +888,7 @@ An *associated constant declaration* declares a signature for associated
 constant definitions. It is written as `const`, then an identifier,
 then `:`, then a type, finished by a `;`.
 {==+==}
- *关联常量声明* 声明了关联常量定义的签名。它写为 `const` ，然后是标识符，然后是 `:` ，然后是类型，最后以 `;` 结束。
+ *关联常量声明* 是签名。它写为 `const` ，然后是标识符，然后是 `:` ，然后是类型，最后以 `;` 结束。
 {==+==}
 
 
@@ -913,7 +913,7 @@ Associated constant definitions undergo [constant evaluation] only when
 referenced. Further, definitions that include [generic parameters] are
 evaluated after monomorphization.
 {==+==}
-关联常量定义仅在被引用时才会经过 [常量求值][constant evaluation] 。
+关联常量定义仅在被引用时才会进行 [常量求值][constant evaluation] 。
 此外，包括 [泛型参数][generic parameters] 的定义会在单态化后进行求值。
 {==+==}
 
@@ -952,12 +952,12 @@ struct Struct;
 struct GenericStruct<const ID: i32>;
 
 impl Struct {
-    // 定义没有立即评估
+    // 定义没有立即求值
     const PANIC: () = panic!("compile-time panic");
 }
 
 impl<const ID: i32> GenericStruct<ID> {
-    // 定义没有立即评估
+    // 定义没有立即求值
     const NON_ZERO: () = if ID == 0 {
         panic!("contradiction")
     };
@@ -970,7 +970,7 @@ fn main() {
     // 可以, ID 不是 0
     let _ = GenericStruct::<1>::NON_ZERO;
 
-    // 在 ID=0 的情况下评估 NON_ZERO 是编译错误
+    // 在 ID=0 的情况下求值 NON_ZERO 是编译错误
     let _ = GenericStruct::<0>::NON_ZERO;
 }
 ```
@@ -1055,9 +1055,9 @@ trait ConstantIdDefault {
     const ID: i32 = 1;
 }
 
-// 定义结构体 `Struct`
+
 struct Struct;
-// 定义结构体 `OtherStruct`
+
 struct OtherStruct;
 
 // 为结构体 `Struct` 实现 `ConstantIdDefault` trait
@@ -1068,7 +1068,7 @@ impl ConstantIdDefault for OtherStruct {
     const ID: i32 = 5;
 }
 
-// 程序入口函数
+
 fn main() {
     // 断言结构体 `Struct` 的 `ID` 常量值为 `1`
     assert_eq!(1, Struct::ID);

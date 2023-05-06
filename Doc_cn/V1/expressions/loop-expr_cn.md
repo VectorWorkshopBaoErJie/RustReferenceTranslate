@@ -96,7 +96,7 @@ A `loop` expression containing associated [`break` expression(s)](#break-express
 `loop { println!("I live."); }` 。
 
 没有相关的 `break` 表达式的 `loop` 表达式是发散的，并且具有 [`!`](../types/never.md) 类型。
-包含相关 [`break` 表达式(s)](#break-expressions) 的 `loop` 表达式可能会终止，并且必须具有与 `break` 表达式的值兼容的类型。
+包含相关 [`break` 表达式](#break-expressions) 的 `loop` 表达式可能会终止，并且必须具有与 `break` 表达式的值兼容的类型。
 {==+==}
 
 
@@ -179,7 +179,7 @@ A `while let` loop is semantically similar to a `while` loop but in place of a c
 If the value of the scrutinee matches the pattern, the loop body block executes then control returns to the pattern matching statement.
 Otherwise, the while expression completes.
 {==+==}
-一个 `while let` 循环在语义上类似于一个 `while` 循环，但是在条件表达式的位置，它需要关键字 `let` ，后面跟着一个模式、一个等号、一个 [被匹配项][scrutinee] 和一个代码块表达式。
+ `while let` 循环在语义上类似于 `while` 循环，但是在条件表达式的位置，它需要关键字 `let` ，后面跟着模式、等号、 [被匹配项][scrutinee] 和块表达式。
 如果被匹配的表达式的值与模式匹配，那么循环体代码块就会被执行，然后控制流会返回到匹配模式的语句处。
 否则， `while` 表达式会结束。
 {==+==}
@@ -604,8 +604,8 @@ In the case of a `for` loop, the head is the call-expression controlling the loo
 Like `break`, `continue` is normally associated with the innermost enclosing loop, but `continue 'label` may be used to specify the loop affected.
 A `continue` expression is only permitted in the body of a loop.
 {==+==}
-当遇到 `continue` 关键字时，与其相关联的循环体的当前迭代会立即终止，控制权返回到循环 *头* 。
-在 `while` 循环中，头是控制循环的条件表达式。在 `for` 循环中，头是控制循环的调用表达式。
+当遇到 `continue` 关键字时，与其相关联的循环体的当前迭代会立即终止，控制权返回到循环 *头部* 。
+在 `while` 循环中，头部是控制循环的条件表达式。在 `for` 循环中，头部是控制循环的调用表达式。
 
 与 `break` 类似，`continue` 通常与最内层的封闭循环相关联，但可以使用 `continue 'label` 指定受影响的循环。
 `continue` 表达式只允许出现在循环体中。
@@ -661,7 +661,7 @@ In the case a `loop` has an associated `break`, it is not considered diverging, 
 `break` without an expression is considered identical to `break` with expression `()`.
 {==+==}
 在 `loop` 语句中，如果有关联的 `break` 语句，它就不被视为发散，而且 `loop` 语句必须与每个 `break` 表达式兼容的类型。
-如果没有表达式的 `break` 语句被视为与表达式为 `()` 的 `break` 语句相同。
+未表明表达式的 `break` 语句的表达式被视为 `()` 。
 {==+==}
 
 
