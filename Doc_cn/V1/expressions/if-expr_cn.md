@@ -39,12 +39,12 @@ An if expression evaluates to the same value as the executed block, or `()` if n
 An `if` expression must have the same type in all situations.
 {==+==}
 `if` 表达式是程序控制流中的条件分支。
-`if` 表达式的语法是一个条件操作数，后面跟着一个结果块，任意数量的 `else if` 条件和块，以及一个可选的末尾 `else` 块。条件操作数必须具有 [布尔类型][boolean type] 。
+`if` 表达式的语法是一个条件操作数，后面跟着一个结果块，任意数量的 `else if` 条件和块，以及一个可选的末尾 `else` 块。条件操作数必须为 [布尔类型][boolean type] 。
 如果条件操作数计算结果为 `true` ，则执行结果块，跳过任何后续的 `else if` 或 `else` 块。
 如果条件操作数计算结果为 `false` ，则跳过结果块，评估任何后续的 `else if` 条件。
-如果所有 `if` 和 `else if` 条件都计算结果为 `false` ，则执行任何 `else` 块。
+如果所有 `if` 和 `else if` 条件都计算结果为 `false` ，则执行其 `else` 块。
 `if` 表达式的计算结果与执行的块相同，如果没有执行块，则为 `()` 。
-`if` 表达式在所有情况下必须具有相同的类型。
+`if` 表达式在所有情况必须具有相同的类型。
 {==+==}
 
 
@@ -90,7 +90,7 @@ assert_eq!(y, "Bigger");
 {==+==}
 > **<sup>语法</sup>**\
 > _IfLet表达式_ :\
-> &nbsp;&nbsp; `if` `let` [_模式_][_Pattern_] `=` [_被匹配项_][_Scrutinee_]<sub>_包括惰性布尔运算符表达式_</sub>
+> &nbsp;&nbsp; `if` `let` [_模式_][_Pattern_] `=` [_被匹配项_][_Scrutinee_]<sub>_不包括惰性布尔运算符表达式_</sub>
 >              [_块表达式_][_BlockExpression_]\
 > &nbsp;&nbsp; (`else` (
 >   [_块表达式_][_BlockExpression_]
@@ -185,7 +185,7 @@ assert_eq!(a, 3);
 {==+==}
 An `if let` expression is equivalent to a [`match` expression] as follows:
 {==+==}
-一个 `if let` 表达式等价于一个如下所示的 [`match` 表达式][`match` expression] :
+一个 `if let` 表达式等价于如下所示的 [`match` 表达式][`match` expression] :
 {==+==}
 
 
