@@ -60,7 +60,7 @@ the syntax and make use of the `unsafe` keyword, before removing it from the
 token stream.
 {==+==}
 `unsafe` 关键字在 `extern` 关键字之前语法上是被允许的，但是在语义层面上会被拒绝。
-这使得宏可以消耗语法并使用 `unsafe` 关键字，然后从令牌流中删除。
+因而宏可以从语法上使用 `unsafe` 关键字，然后从令牌流中移除。
 {==+==}
 
 
@@ -121,8 +121,8 @@ not it's mutable, because there is nothing guaranteeing that the bit pattern at 
 memory is valid for the type it is declared with, since some arbitrary (e.g. C) code is in charge
 of initializing the static.
 {==+==}
-在外部块中声明的静态变量的方式与 [静态变量][statics] 在外部块之外声明的方式相同，但它们没有表达式来初始化其值。
-访问在外部块中声明的静态条目是不安全的，无论它是否可变，因为无法保证静态内存中的位模式是否有效，因为一些不确定的 (例如 C 语言) 代码负责初始化该静态。
+在外部块中声明的静态变量的方式与 [静态变量][statics] 在外部块之外声明的方式相同，但没有初始化表达式。
+访问在外部块中声明的静态条目是不安全的，无论它是否可变，因为无法保证静态内存中的位模式是否有效，因为负责初始化该静态的代码是不确定的 (例如 C 语言) 。
 {==+==}
 
 
@@ -132,7 +132,7 @@ An immutable static *must* be initialized before any Rust code is executed. It i
 the static to be initialized before Rust code reads from it.
 {==+==}
 就像 [静态变量][statics] 在外部块之外声明一样，外部静态变量可以是不可变的也可以是可变的。
-在执行任何 Rust 代码之前， *必须* 先初始化不可变的静态。仅在 Rust 代码读取它之前，将其初始化是不够的。
+在执行任何 Rust 代码之前， *必须* 先初始化不可变的静态。仅在 Rust 代码读取它之前，才将其初始化是不够的。
 {==+==}
 
 
@@ -170,7 +170,7 @@ extern "stdcall" { }
 There are three ABI strings which are cross-platform, and which all compilers
 are guaranteed to support:
 {==+==}
-有三个跨平台的 ABI 字符串，保证所有编译器都支持:
+有三个跨平台的 ABI 字符串，以确保所有编译器支持:
 {==+==}
 
 

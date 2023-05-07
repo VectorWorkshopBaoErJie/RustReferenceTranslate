@@ -52,8 +52,8 @@ Implementations are defined with the keyword `impl` and contain functions
 that belong to an instance of the type that is being implemented or to the
 type statically.
 {==+==}
-一个 _实现_ 是将条目与 _实现类型_ 相关联的一个条目。
-实现使用关键字 `impl` 定义，并包含被实现类型实例或静态类型的函数。
+ _实现_ 条目将 _实现类型_ 与其中条目相关联。
+实现使用关键字 `impl` 定义，其包含被实现类型实例或静态类型的函数。
 {==+==}
 
 
@@ -93,7 +93,7 @@ bracketed set of associable items.
 The nominal type is called the _implementing type_ and the associable items are
 the _associated items_ to the implementing type.
 {==+==}
-命名类型被称为 _实现类型_ ，可关联的条目是实现类型的 _关联条目_ 。
+该命名类型被称为 _实现类型_ ，所包含的条目是该实现类型的 _关联条目_ 。
 {==+==}
 
 
@@ -112,7 +112,7 @@ The [path] to an associated item is any path to the implementing type,
 followed by the associated item's identifier as the final path
 component.
 {==+==}
-到关联条目的 [路径][path] 是指到实现类型的任何路径，后面跟着关联条目的标识符作为最终路径组件。
+到关联条目的 [路径][path] 是到实现类型路径，而后跟随关联条目的标识符。
 {==+==}
 
 
@@ -120,7 +120,7 @@ component.
 A type can also have multiple inherent implementations. An implementing type
 must be defined within the same crate as the original type definition.
 {==+==}
-一个类型也可以有多个内部实现。一个实现类型必须在与原始类型定义相同的 crate 中被定义。
+一个类型也可以有多个内部实现。实现类型必须与原始类型定义在相同的 crate 中。
 {==+==}
 
 
@@ -210,7 +210,7 @@ by the keyword `for`, followed by a path to a nominal type.
 The trait is known as the _implemented trait_. The implementing type
 implements the implemented trait.
 {==+==}
-该 trait 被称为 _实现 trait_ 。实现类型实现了实现 trait 。
+该 trait 被称为 _实现 trait_ 。实现类型实现其实现 trait 。
 {==+==}
 
 
@@ -219,7 +219,7 @@ A trait implementation must define all non-default associated items declared
 by the implemented trait, may redefine default associated items defined by the
 implemented trait, and cannot define any other items.
 {==+==}
-一个 trait 的实现必须定义实现的 trait 声明的所有非默认关联条目，可以重新定义实现的 trait 定义的默认关联条目，但不能定义任何其他条目。
+ trait 所有非默认关联条目必须实现，可以重新定义其定义的默认关联条目，但无法定义任何其他条目。
 {==+==}
 
 
@@ -280,7 +280,7 @@ impl Shape for Circle {
 {==+==}
 ### Trait Implementation Coherence
 {==+==}
-### Trait 实现一致
+### Trait 实现一致性
 {==+==}
 
 
@@ -288,7 +288,7 @@ impl Shape for Circle {
 A trait implementation is considered incoherent if either the orphan rules check fails
 or there are overlapping implementation instances.
 {==+==}
-如果孤儿规则检查失败，存在重复的实现实例，则认为 Trait 实现不连贯的。
+如果孤儿规则检查失败，存在重复的实现实例，则认为 Trait 实现不一致。
 {==+==}
 
 

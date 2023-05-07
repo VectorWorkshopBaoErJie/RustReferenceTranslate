@@ -50,7 +50,7 @@ usually immediately after the name of the item and before its definition. For
 implementations, which don't have a name, they come directly after `impl`.
 The order of generic parameters is restricted to lifetime parameters and then type and const parameters intermixed.
 {==+==}
-[函数][Functions]、 [类型别名][type aliases] 、 [结构体][structs] 、 [枚举][enumerations] 、 [联合体][unions] 、 [traits]和 [实现][implementations] 可以通过类型、常量和生命周期参数 *泛型化* 。这些参数在尖括号 <span class="parenthetical"> (`<...>`) </span> 中列出，通常紧跟在条目名称之后，在其定义之前。对于没有名称的实现，它们直接在 `impl` 之后。泛型参数的顺序仅限于先生命周期参数，然后交替出现类型和常量参数。
+[函数][Functions]、 [类型别名][type aliases] 、 [结构体][structs] 、 [枚举][enumerations] 、 [联合体][unions] 、 [traits]和 [实现][implementations] 可以通过类型、常量和生命周期参数 *泛型化* 。这些参数在尖括号 <span class="parenthetical"> (`<...>`) </span> 中列出，通常紧跟在条目名称之后，在其定义之前。对于没有名称的实现，它们直接在 `impl` 之后。泛型参数的顺序仅限于首先为生命周期参数，然后交替出现类型和常量参数。
 {==+==}
 
 
@@ -194,7 +194,7 @@ fn foo<const N: usize>(arr: [i32; N]) {
     println!("{}", N * 2);
 }
 
-// 用作结构的字段。
+// 用作结构体的字段。
 struct Foo<const N: usize>([i32; N]);
 
 impl<const N: usize> Foo<N> {
@@ -498,7 +498,7 @@ parameters.
 The `for` keyword can be used to introduce [higher-ranked lifetimes]. It only
 allows [_LifetimeParam_] parameters.
 {==+==}
- `for` 关键字可用于引入 [更高级的生命周期][higher-ranked lifetimes] 。它仅允许 [_生命周期参数_][_LifetimeParam_] 参数。
+ `for` 关键字可用于引入 [更高阶生命周期][higher-ranked lifetimes] 。它仅允许 [_生命周期参数_][_LifetimeParam_] 。
 {==+==}
 
 
