@@ -20,8 +20,8 @@
 A _method call_ consists of an expression (the *receiver*) followed by a single dot, an expression path segment, and a parenthesized expression-list.
 Method calls are resolved to associated [methods] on specific traits, either statically dispatching to a method if the exact `self`-type of the left-hand-side is known, or dynamically dispatching if the left-hand-side expression is an indirect [trait object](../types/trait-object.md).
 {==+==}
-一个 _方法调用_ 由一个表达式 (即 *接收者* ) 加上一个点 ( `.` ) 、一个表达式路径段和一个带括号的表达式列表组成。
-方法调用会解析到特定 trait 上关联的方法，如果左侧表达式的确切 `self` 类型已知，则静态地调度到方法，否则，如果左侧表达式是一个间接的 trait 对象，则动态地调度。
+ _方法调用_ 由一个表达式 (即 *接收者* ) 加上一个点 ( `.` ) 、一个表达式路径段和一个带括号的表达式列表组成。
+方法调用会解析到特定 trait 上关联的方法，如果左侧表达式的确切 `self` 类型已知，则静态调用方法，如果左侧表达式是一个间接的 trait 对象，则动态调用。
 {==+==}
 
 
@@ -54,13 +54,14 @@ Then, for each candidate type `T`, search for a [visible] method with a receiver
    If `T` is a type parameter, methods provided by trait bounds on `T` are looked up first.
    Then all remaining methods in scope are looked up.
 {==+==}
-在查找方法调用时，为了调用方法，接收者可能会自动解引用或借用。与其他函数相比，这需要更复杂的查找过程，因为可能有许多可能要调用的方法。使用以下过程:
+在查找方法调用时，为了调用方法，接收者可能会自动解引用或借用。与其他函数相比，这需要更复杂的查找过程，因为可能有许多可以调用的方法。
+因而将使用以下过程:
 
-第一步是构建候选接收者类型列表。通过重复 [解引用][dereference] 接收者表达式的类型，将遇到的每种类型添加到列表中，然后在最后尝试 [不确定大小的强制转换][unsized coercion] ，如果成功，则添加结果类型。然后，对于每个候选项 `T` ，在 `T` 之后立即添加 `&T` 和 `&mut T` 。
+第一步是构建候选接收者类型列表。通过重复 [解引用][dereference] 接收者表达式的类型，将遇到的每种类型添加到列表中，然后尝试 [不确定大小的强制转换][unsized coercion] ，如果成功，则添加转换结果类型。然后，对于每个候选项 `T` ，在 `T` 之前紧接着添加 `&T` 和 `&mut T` 。
 
-例如，如果接收者的类型为 `Box<[i32;2]>` ，则候选类型将是 `Box<[i32;2]>` 、 `&Box<[i32;2]>` 、 `&mut Box<[i32;2]>` 、 `[i32;2]` (通过解引用) 、 `&[i32;2]` 、`&mut [i32;2]` 、 `[i32]` (通过不可缩放强制转换) 、 `&[i32]` 和最后的 `&mut [i32]` 。
+例如，如果接收者的类型为 `Box<[i32;2]>` ，则候选类型将是 `Box<[i32;2]>` 、 `&Box<[i32;2]>` 、 `&mut Box<[i32;2]>` 、 `[i32;2]` (通过解引用) 、 `&[i32;2]` 、`&mut [i32;2]` 、 `[i32]` (通过不可缩放强制转换) 、 `&[i32]` 和 `&mut [i32]` 。
 
-然后，对于每个候选类型 `T` ，在以下位置搜索具有该类型接收者的 [可见][visible] 方法:
+然后，对于每个候选类型 `T` ，在以下位置搜索具有该类型接收者 [可见][visible] 的方法:
 
 1. `T` 的内部方法 (直接在 `T` 上实现的方法)。
 2. 由 `T` 实现的 [可见][visible] trait 提供的任何方法。如果 `T` 是类型参数，则首先查找 `T` 的 trait 约束提供的方法，然后查找所有剩余的作用域内方法。
@@ -129,7 +130,7 @@ These cases require a [disambiguating function call syntax] for method and funct
 
 > **版本差异**: 在 2021 版本之前，寻找可见方法时，如果候选接收者类型是 [数组类型][array type] ，则忽略标准库 [`IntoIterator`] trait 提供的方法。
 > 
-> 用于此目的的版本由表示方法名称的令牌确定。
+> 用于此目的的版本由表示方法名称的 token 确定。
 > 
 > 这种特殊情况可能会在将来被删除。
 {==+==}
@@ -143,7 +144,8 @@ Just don't define inherent methods on trait objects with the same name as a trai
 {==+==}
 ***警告:*** 对于 [trait 对象][trait objects] ，如果存在与 trait 方法同名的内部方法，在方法调用表达式中尝试调用该方法会导致编译器错误。
 相反，可以使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用该方法，这样会调用 trait 方法而不是内部方法。
-没有方法可以调用内部方法。不要在具有与 trait 方法同名的内部方法的 trait 对象上定义内部方法，这样就不会出现问题。
+没有可以调用内部方法的形式。
+不在具有与 trait 方法同名的内部方法的 trait 对象上定义内部方法，就不会出现问题。
 {==+==}
 
 

@@ -25,7 +25,7 @@ Await expressions are legal only within an [async context], like an [`async fn`]
 
 More specifically, an await expression has the following effect.
 {==+==}
-`await` 表达式是一个语法结构，用于暂停一个由实现了 `std::future::IntoFuture` 的计算，直到给定的 future 准备好产生一个值。
+`await` 表达式是语法结构，用于暂停由实现了 `std::future::IntoFuture` 的计算，直到给定的 future 准备好产生一个值。
 `await` 表达式的语法是一个实现了 [`IntoFuture`] trait 的表达式，称为 *future 操作数* ，后跟一个 `.` 和 `await` 关键字。
 `await` 表达式只能在 [async 上下文][async context] 中使用，比如 [`async fn`] 或 [`async` 块][`async` block] 。更具体来说，`await` 表达式具有以下效果。
 {==+==}
