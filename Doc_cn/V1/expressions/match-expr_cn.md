@@ -60,8 +60,9 @@ The exact form of matching that occurs depends on the [pattern].
 A `match` expression has a *[scrutinee] expression*, which is the value to compare to the patterns.
 The scrutinee expression and the patterns must have the same type.
 {==+==}
-一个 *`match` 表达式* 会根据一个模式进行分支。匹配所发生的确切形式取决于 [模式][pattern] 。
-一个 `match` 表达式有一个 *[被匹配项][scrutinee] 表达式*，它是要与模式进行比较的值。被匹配表达式和模式必须具有相同的类型。
+ *`match` 表达式* 根据模式而分支。匹配所发生的确切形式取决于 [模式][pattern] 。
+ `match` 表达式有一个 *[被匹配项][scrutinee] 表达式*，它是要与模式进行比较的值。
+被匹配表达式和模式必须类型相同。
 {==+==}
 
 
@@ -72,7 +73,7 @@ The first arm with a matching pattern is chosen as the branch target of the `mat
 {==+==}
 `match` 的行为取决于被匹配表达式是一个 [占位表达式还是值表达式][place expression]。
 如果被匹配表达式是一个 [值表达式][value expression] ，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
-第一个具有匹配模式的分支被选择作为 `match` 的分支目标，任何由模式绑定的变量都分配到分支的块中的本地变量中，并且控制进入块中。
+第一个具有匹配模式的分支被选择作为 `match` 的目标分支，任何由模式绑定的变量都分配到分支的块中的本地变量中，并且控制进入块中。
 {==+==}
 
 
@@ -83,8 +84,8 @@ When possible, it is preferable to match on place expressions, as the lifetime o
 
 An example of a `match` expression:
 {==+==}
-当被匹配表达式是一个 [占位表达式][place expression] 时，`match` 不会分配临时位置；但是，按值绑定可能会从内存位置复制或移动。
-如果可能的话，最好匹配占位表达式，因为这些匹配的生命周期继承了占位表达式的生命周期，而不是被限制在 `match` 内部。
+当被匹配表达式是一个 [占位表达式][place expression] 时，`match` 不会分配临时位置；但是，按值绑定时可能会从内存位置复制或移动。
+如果可能的话，最好匹配占位表达式，因为这些匹配项的生命周期继承了占位表达式的生命周期，而不是被限制在 `match` 内部。
 
 下面是一个 `match` 表达式的示例：
 {==+==}
@@ -171,9 +172,9 @@ match S(1, 2) {
 Every binding in each `|` separated pattern must appear in all of the patterns in the arm.
 Every binding of the same name must have the same type, and have the same binding mode.
 {==+==}
-> 注意: `2..=9` 是 [区间模式][Range Pattern] ，不是 [区间表达式][Range Expression] 。因此，在匹配分支中只能使用由区间模式支持的这些类型的范围。
+> 注意: `2..=9` 是 [区间模式][Range Pattern] ，不是 [区间表达式][Range Expression] 。因此，在匹配分支中只能使用由区间模式支持的这些类型的区间。
 
-每个 `|` 分隔的模式中的所有绑定都必须出现在分支的所有模式中。每个同名绑定必须具有相同的类型，并且具有相同的绑定模式。
+每个 `|` 分隔的模式中的所有绑定都必须出现在分支的所有模式中。每个同名绑定必须类型相同，且绑定模式相同。
 {==+==}
 
 

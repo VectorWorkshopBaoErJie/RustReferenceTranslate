@@ -39,11 +39,11 @@ A literal is a form of [constant expression], so is evaluated (primarily) at com
 
 Each of the lexical [literal][literal tokens] forms described earlier can make up a literal expression, as can the keywords `true` and `false`.
 {==+==}
-_字面值表达式_ 由一个单独的标记组成，而不是一系列标记，它直接指示其计算结果的值，而不是通过名称或其他计算规则引用它。 
+_字面值表达式_ 仅由一个单独的 token 组成，其直接指示计算结果值，而不是通过名称或其他计算规则的间接引用。 
 
-字面值是 [常量表达式][constant expression] 的一种形式，因此主要在编译时计算。
+字面值是 [常量表达式][constant expression] 的其中一种形式，因此在编译时计算 (主要) 。
 
-每个先前描述的词法 [字面值][literal tokens] 形式都可以组成一个字面表达式，关键字 `true` 和 `false` 也可以。
+先前描述的词法 [字面值][literal tokens] 每种形式都可以形成字面值表达式，关键字 `true` 和 `false` 也可以。
 {==+==}
 
 
@@ -89,25 +89,25 @@ A string literal expression consists of a single [BYTE_STRING_LITERAL] or [RAW_B
 {==+==}
 ## 字符字面量表达式
 
-字符字面量表达式由一个 [字符字面值][CHAR_LITERAL] 令牌构成。
+字符字面量表达式由一个 [字符字面值][CHAR_LITERAL] token 构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字符串字面量表达式
 
-字符串字面量表达式由一个 [字符串字面值][STRING_LITERAL] 或 [原始字符串字面值][RAW_STRING_LITERAL] 令牌构成。
+字符串字面量表达式由一个 [字符串字面值][STRING_LITERAL] 或 [原始字符串字面值][RAW_STRING_LITERAL] token 构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字节字面量表达式
 
-字节字面量表达式由一个 [字节字面值][BYTE_LITERAL] 令牌构成。
+字节字面量表达式由一个 [字节字面值][BYTE_LITERAL] token 牌构成。
 
 > **注意**: 此部分内容不完整。
 
 ## 字节字符串字面量表达式
 
-字节字符串字面量表达式由一个 [字节字符串字面值][BYTE_STRING_LITERAL] 或 [原始字节字符串字面值][RAW_BYTE_STRING_LITERAL] 令牌构成。
+字节字符串字面量表达式由一个 [字节字符串字面值][BYTE_STRING_LITERAL] 或 [原始字节字符串字面值][RAW_BYTE_STRING_LITERAL] token 构成。
 
 > **注意**: 此部分内容不完整。
 {==+==}
@@ -132,11 +132,11 @@ Examples of integer literal expressions:
 {==+==}
 ## 整型字面值表达式
 
-整型字面值表达式由一个 [整数字面值][INTEGER_LITERAL] 令牌组成。
+整型字面值表达式由一个 [整数字面值][INTEGER_LITERAL] token 组成。
 
-如果令牌有 [后缀][suffix] ，则后缀必须是 [基本整数类型][numeric types] 中的一个名称： `u8` 、 `i8` 、 `u16` 、 `i16` 、 `u32` 、 `i32` 、 `u64` 、 `i64` 、 `u128` 、 `i128` 、 `usize` 或 `isize` ，并且表达式具有该类型。
+如果 token 有 [后缀][suffix] ，则后缀必须是 [基本整数类型][numeric types] 中的一个名称： `u8` 、 `i8` 、 `u16` 、 `i16` 、 `u32` 、 `i32` 、 `u64` 、 `i64` 、 `u128` 、 `i128` 、 `usize` 或 `isize` ，且表达式具有该类型。
 
-如果令牌没有后缀，则该表达式的类型由类型推断确定：
+如果 token 没有后缀，则该表达式的类型由类型推断确定:
 
 * 如果整型类型可以从周围的程序上下文中确定，则表达式具有该类型。
 
@@ -144,7 +144,7 @@ Examples of integer literal expressions:
 
 * 如果程序上下文中的整型类型过多，则被视为静态类型错误。
 
-整型字面量表达式的例子：
+整型字面量表达式的例子:
 {==+==}
 
 
@@ -199,7 +199,7 @@ If the value does not fit in `u128`, it is a compiler error.
 > **Note**: `-1i8`, for example, is an application of the [negation operator] to the literal expression `1i8`, not a single integer literal expression.
 > See [Overflow] for notes on representing the most negative value for a signed type.
 {==+==}
-该表达式的值根据令牌的字符串表示如下确定：
+该表达式的值根据 token 的字符串表示如下确定：
 
 * 通过检查字符串的前两个字符，选择整数基数，如下：
 
@@ -220,7 +220,7 @@ If the value does not fit in `u128`, it is a compiler error.
 
 > **注意**: 如果该字面值的值超出了该类型的表示范围，最终转换将截断该字面值。 `rustc` 包括一个名为 `overflowing_literals` 的 [代码分析检查] [lint check] ，默认为 `deny`，拒绝其中出现的表达式。
 
-> **注意**: 例如， `-1i8` 是对字面值表达式 `1i8` 应用了 [取反运算符][negation operator] ，而不是一个整数字面值表达式。有关表示有符号类型的最负值的注释，请参见 [溢出][Overflow] 。
+> **注意**: 例如， `-1i8` 是对字面值表达式 `1i8` 应用了 [取反运算符][negation operator] ，而不是一个整数字面值表达式。有关表示有符号类型的最大负值的注解，请参见 [溢出][Overflow] 。
 {==+==}
 
 
@@ -247,18 +247,18 @@ Examples of floating-point literal expressions:
 
 浮点数字面值表达式具有以下两种形式:
 
- * 单个 [浮点数字面值][FLOAT_LITERAL] 标记
- * 单个 [整数字面值][INTEGER_LITERAL] 标记，该标记具有后缀但没有基数指示符
+ * 单个 [浮点数字面值][FLOAT_LITERAL] token
+ * 单个 [整数字面值][INTEGER_LITERAL] token，该 token 具有后缀但没有基数指示符
 
-如果标记具有 [后缀][suffix] ，则后缀必须是 [原始浮点类型][floating-point types] 之一的名称： `f32` 或 `f64` ，并且表达式具有该类型。
+如果 token 具有 [后缀][suffix] ，则后缀必须是 [浮点类型][floating-point types] `f32` 或 `f64` 之一，且表达式具有该类型。
 
-如果标记没有后缀，则表达式的类型由类型推断确定：
+如果 token 没有后缀，则表达式的类型由类型推断确定：
 
 * 如果可以从周围的程序上下文中 _唯一_ 确定浮点类型，则表达式具有该类型。
 
-* 如果程序上下文不够确定类型，则默认为 `f64` 。
+* 如果程序上下文不足以确定类型，则默认为 `f64` 。
 
-* 如果程序上下文过度约束类型，则被视为静态类型错误。
+* 如果程序上下文类型约束冲突，则被视为静态类型错误。
 
 浮点数字面值表达式的示例:
 {==+==}
@@ -293,15 +293,15 @@ The value of the expression is determined from the string representation of the 
 > The [`f32::INFINITY`], [`f64::INFINITY`], [`f32::NAN`], and [`f64::NAN`] constants can be used instead of literal expressions.
 > In `rustc`, a literal large enough to be evaluated as infinite will trigger the `overflowing_literals` lint check.
 {==+==}
-表达式的值根据令牌的字符串表示形式确定，具体如下:
+表达式的值根据 token 的字符串表示形式确定，具体如下:
 
 * 从字符串中删除任何后缀。
 * 从字符串中删除任何下划线。
-* 将字符串转换为表达式的类型，如同通过 [`f32::from_str`] 或 [`f64::from_str`] 。
+* 将字符串转换为表达式的类型，如同通过 [`f32::from_str`] 或 [`f64::from_str`] 处理。
 
 > **注意**: 例如， `-1.0` 是对字面表达式 `1.0` 应用 [取反运算符][negation operator] ，而不是单个浮点字面值表达式。
 
-> **注意**: `inf` 和 `NaN` 不是字面值令牌。
+> **注意**: `inf` 和 `NaN` 不是字面值 token 。
 > 可以使用 [`f32::INFINITY`] 、 [`f64::INFINITY`] 、 [`f32::NAN`] 和 [`f64::NAN`] 常量来代替字面值表达式。
 > 在 `rustc` 中，被评估为无限大的字面值将触发 `overflowing_literals` 代码分析检查。
 {==+==}
