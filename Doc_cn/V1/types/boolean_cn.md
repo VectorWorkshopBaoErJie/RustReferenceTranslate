@@ -30,7 +30,7 @@ any other bit pattern.
 
 The boolean type is the type of many operands in various [expressions]:
 {==+==}
-*布尔类型* 或 *bool* 是一种原始数据类型，可以取两个值之一，称为 *true* 和 *false* 。
+*布尔类型* 或 *bool* 是一种原始数据类型，可以取两个值之一，为 *true* 和 *false* 。
 
 可以使用关键字 `true` 和 `false` 创建此类型的值，通过 [字面值表达式][literal expression] 生成。
 
@@ -77,7 +77,7 @@ boolean type for its operands, they evaluate using the rules of [boolean logic].
 {==+==}
 ## 布尔值的操作
 
-<!-- This is washy wording --> 当使用特定的运算符表达式作为布尔类型的操作数时，它们会根据 [布尔逻辑][boolean logic] 的规则进行评估。
+<!-- This is washy wording --> 当使用特定的运算符表达式作为布尔类型的操作数时，根据 [布尔逻辑][boolean logic] 规则进行计算。
 {==+==}
 
 

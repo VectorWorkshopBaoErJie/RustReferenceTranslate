@@ -54,7 +54,7 @@ Edition | `no_std` not applied        | `no_std` applied
 {==+==}
 ## 标准库预定义
 
-每个crate都有一个标准库预定义，其中包括来自单个标准库模块的名称。所使用的模块取决于 crate 的版本，以及是否应用了 [`no_std`属性][`no_std` attribute] ：
+每个 crate 都有一个标准库预定义，其中包括来自单个标准库模块的名称。所使用的模块取决于 crate 的版本，以及是否应用了 [`no_std`属性][`no_std` attribute] ：
 
 版本 | 未应用`no_std` | 应用`no_std`
 --------| --------------------------- | ----------------------------
@@ -112,9 +112,9 @@ alloc/test limitation.
 
 [`core`] crate 始终会被添加到外部预定义中。只要在 crate 根中未指定 [`no_std`属性] ， [`std`] crate 也会被添加到预定义中。
 
-> **版本差异**: 在 2015 版中，外部预定义中的 crate 不能通过 [use 声明][use declarations] 引用，因此通常的做法是使用`extern crate`声明将它们引入作用域。
+> **版本差异**: 在 2015 版中，外部预定义中的 crate 不能通过 [use 声明][use declarations] 引用，因此通常的做法是使用 `extern crate` 声明将它们引入作用域。
 >
-> 从 2018 年版开始， [use声明][use declarations] 可以引用外部预定义中的 crate ，因此使用 `extern crate` 被认为不符合惯例。
+> 从 2018 年版开始， [use 声明][use declarations] 可以引用外部预定义中的 crate ，因此使用 `extern crate` 被认为不符合惯例。
 
 > **注意**: 随 `rustc` 一起提供的其他 crate ，例如 [`alloc`] 和 [`test`] ，在使用 Cargo 时不会自动包含在 `--extern` 标志中。它们必须通过 `extern crate` 声明引入作用域，即使在 2018 年版中也是如此。
 >

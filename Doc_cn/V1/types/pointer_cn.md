@@ -9,7 +9,7 @@
 All pointers are explicit first-class values.
 They can be moved or copied, stored into data structs, and returned from functions.
 {==+==}
-所有指针都是显式的一等值。它们可以移动或复制，存储到数据结构中，并从函数返回。
+所有指针都是显式的第一类值。它们可以移动或复制，存储到数据结构中，并从函数返回。
 {==+==}
 
 
