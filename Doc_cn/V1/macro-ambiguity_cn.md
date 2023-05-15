@@ -12,7 +12,7 @@ This page documents the formal specification of the follow rules for [Macros
 By Example]. They were originally specified in [RFC 550], from which the bulk
 of this text is copied, and expanded upon in subsequent RFCs.
 {==+==}
-本页面记录了 [示例宏][Macros By Example] 的正式规范，其中包括以下规则。
+本页面记录了 [实例宏][Macros By Example] 的正式规范，其中包括以下规则。
 这些规则最初在 [RFC 550] 中进行了规定，本文大部分内容均来自该规范，并在随后的 RFC 中进行了扩展。
 {==+==}
 

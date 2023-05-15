@@ -20,8 +20,8 @@
 {==+==}
 > **<sup>词法:<sup>**\
 > 标识符或关键字 :\
-> &nbsp;&nbsp; &nbsp;&nbsp; XID_起始 XID_继续<sup>\*</sup>\
-> &nbsp;&nbsp; | `_` XID_继续<sup>+</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; XID_起始 XID_延续<sup>\*</sup>\
+> &nbsp;&nbsp; | `_` XID_延续<sup>+</sup>
 >
 > 原始标识符 : `r#` 标识符或关键字 <sub>*不包括 `crate`, `self`, `super`, `Self`*</sub>
 >
@@ -37,7 +37,8 @@
 Identifiers follow the specification in [Unicode Standard Annex #31][UAX31] for Unicode version 15.0, with the additions described below. Some examples of identifiers:
 {==+==}
 <!-- 更新版本时，也要更新 UAX 链接。 -->
-标识符遵循 [Unicode 标准附录 #31][UAX31] 的规范，使用的是 Unicode 15.0 版本，此外还有下面的增强规则。以下是一些标识符的例子：
+标识符遵循 [Unicode 标准附录 #31][UAX31] 的规范，使用的是 Unicode 15.0 版本，此外还有下面的增强规则。
+以下是一些标识符的例子：
 {==+==}
 
 
@@ -65,7 +66,7 @@ UAX #31 使用的编译设置是:
 * Medial := empty
 {==+==}
 * 起始 := [`XID_起始`][`XID_Start`], 加下划线字符 (U+005F)
-* 继续 := [`XID_继续`][`XID_Continue`]
+* 延续 := [`XID_延续`][`XID_Continue`]
 * 中间 := 空白
 {==+==}
 
@@ -87,7 +88,7 @@ with the additional constraint that a single underscore character is not an iden
 {==+==}
 Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix described below in [raw identifiers](#raw-identifiers).
 {==+==}
-标识符不能是 [严格][strict] 或 [保留][reserved] 的关键字，可以是下面 `r#` 前缀的 [原始标识符](#raw-identifiers) 。
+标识符不能是 [严格字][strict] 或 [保留字][reserved] 关键字，可以是下面所述的 `r#` 前缀的 [原始标识符](#raw-identifiers) 。
 {==+==}
 
 
@@ -101,7 +102,7 @@ Zero width non-joiner (ZWNJ U+200C) and zero width joiner (ZWJ U+200D) character
 {==+==}
 Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Continue`] in the following situations:
 {==+==}
-在以下情况下，标识符受到 ASCII 子集的 [`XID_起始`][`XID_Start`] 和 [`XID_继续`][`XID_Continue`] 的限制：
+在以下情况，标识符受到 ASCII 子集的 [`XID_起始`][`XID_Start`] 和 [`XID_延续`][`XID_Continue`] 的限制：
 {==+==}
 
 
@@ -156,7 +157,7 @@ keyword except the ones listed above for `RAW_IDENTIFIER`.
 {==+==}
 原始标识符类似于普通标识符，但带有 `r#` 前缀。
 (注意，实际的标识符不包括 `r#` 。)
-与普通标识符不同，原始标识符可以是任何严格字或保留字，除了列在 `原始标识符` 中的那些关键字。
+与普通标识符不同，原始标识符可以是任意严格字或保留字，除了词法中 `原始标识符` 不包括的关键字。
 {==+==}
 
 

@@ -68,7 +68,7 @@
 > &nbsp;&nbsp; | 内部块文档
 >
 > _孤立CR_ :\
-> &nbsp;&nbsp; _ `\r` 不紧随 `\n`_
+> &nbsp;&nbsp; _`\r` 不紧随 `\n`_
 {==+==}
 
 
@@ -109,7 +109,7 @@ special syntax for [`doc` attributes]. That is, they are equivalent to writing
 `#[doc="Foo"]` and `/** Bar */` turns into `#[doc="Bar"]`.
 {==+==}
 以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` 属性][`doc` attributes] 的特殊语法。
-也就是说，它们相当于在注释主体的周围写上 `#[doc="..."]` ，即， `/// Foo` 和 `/** Bar */` 转换成 `#[doc="Bar"]` 。
+相当于在注释主体的周围写上 `#[doc="..."]` ，即 `/// Foo` 和 `/** Bar */` 会转换成 `#[doc="Bar"]` 。
 {==+==}
 
 
@@ -120,8 +120,8 @@ that follows.  That is, they are equivalent to writing `#![doc="..."]` around
 the body of the comment. `//!` comments are usually used to document
 modules that occupy a source file.
 {==+==}
-以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，应用于父级，而不是之后条目。
-也就是说，相当于在注释位置写上 `#![doc="..."]` 。 `//!` 注释通常用于拥有源文件的模块。
+以 `//!` 开头的行注释和 `/*! ... */` 块注释也是文档注释，其应用于父级，而不是之后条目。
+相当于在注释位置写上 `#![doc="..."]` 。 `//!` 注释通常用于拥有源文件的模块。
 {==+==}
 
 

@@ -79,7 +79,7 @@ The `..` and `..=` operators will construct an object of one of the `std::ops::R
 | _RangeInclusiveExpr_   | start`..=`end | [std::ops::RangeInclusive]   | start &le; x &le; end |
 | _RangeToInclusiveExpr_ | `..=`end      | [std::ops::RangeToInclusive] |            x &le; end |
 {==+==}
-| 生产                | 语法           | 类型                      | 区间                  |
+| 产生式                | 语法           | 类型                      | 区间                  |
 |------------------------|---------------|------------------------------|-----------------------|
 | _区间式_            | 头`..`尾  | [std::ops::Range]            | 头 ≤ x < 尾      |
 | _区间From表达式_        | 头`..`     | [std::ops::RangeFrom]        | 头 ≤ x            |

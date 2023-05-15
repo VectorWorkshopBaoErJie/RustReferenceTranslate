@@ -1,7 +1,7 @@
 {==+==}
 # Notation
 {==+==}
-# 符号
+# 符号约定
 {==+==}
 
 
@@ -15,7 +15,7 @@
 {==+==}
 The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 {==+==}
-以下符号在 "词法" 和 "语法" 的代码表示段中使用：
+以下符号约定在 "词法" 和 "语法" 的代码表示段中使用：
 {==+==}
 
 
@@ -37,10 +37,10 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 | ~`string`         | ~`\n`, ~`*/`                  | Any characters, except this sequence      |
 | ( )               | (`,` _Parameter_)<sup>?</sup> | Groups items                              |
 {==+==}
-| 符号              | 示例                               | 意义                                     |
+| 符号约定           | 示例                               | 意义                                     |
 |-------------------|------------------------------------|------------------------------------------|
-| 大写字母           | KW_IF，INTEGER_LITERAL            | 表示词法分析器所生成的标记                |
-| _驼峰斜体_        | _LetStatement_，_Item_             | 表示语法标记                              |
+| 大写字母           | KW_IF，INTEGER_LITERAL            | 表示词法分析器所生成的 token                |
+| _驼峰斜体_        | _LetStatement_，_Item_             | 表示语法产生式                              |
 | `string`          | `x`，`while`，`*`                  | 表示精确的字符                            |
 | \\x               | \\n，\\r，\\t，\\0                 | 表示此转义字符所代表的字符                |
 | x<sup>?</sup>     | `pub`<sup>?</sup>                  | 表示可选项                                |
@@ -61,7 +61,7 @@ The following notations are used by the *Lexer* and *Syntax* grammar snippets:
 {==+==}
 ## String table productions
 {==+==}
-## `string` 标记
+## 表中 `string` 产生式
 {==+==}
 
 
@@ -74,8 +74,8 @@ phase feeding the parser, driven by a <abbr title="Deterministic Finite
 Automaton">DFA</abbr>, operating over the disjunction of all such string table
 entries.
 {==+==}
-在语法中，一些规则，尤其是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，以简化形式给出：作为可打印字符串的清单。
-这些情况形成了相关 [token][tokens] 规则的子集，假定它们是由一个驱动着词法分析阶段的确定性有限自动机<abbr title="Deterministic Finite Automaton">DFA</abbr>操作生成的，则在所有此类字符串表条目的分离分支上进行操作。
+在语法中，一些规则，尤其是 [一元运算符][unary operators] 、 [二元运算符][binary operators] 和 [关键字][keywords] ，用简化表示：以易阅读的字符串清单的形式。
+这些情况形成了有关 [token][tokens] 规则的子集，假定它们是由一个驱动着词法分析阶段的确定性有限自动机<abbr title="Deterministic Finite Automaton">DFA</abbr>操作生成的，则在所有此类表中字符串词条的分离分支上进行操作。
 {==+==}
 
 
@@ -84,7 +84,7 @@ When such a string in `monospace` font occurs inside the grammar,
 it is an implicit reference to a single member of such a string table
 production. See [tokens] for more information.
 {==+==}
-当在语法中看到用 `monospace` 等宽字体显示的字符串时，它隐式地引用了该 `string` 表标记的一个成员。有关更多信息，请参见 [令牌][tokens] 。
+当在语法中看到用 `monospace` 等宽字体显示的字符串时，它隐式地指代表中 `string` 产生式的一个成员。有关更多信息，请参见 [令牌][tokens] 。
 {==+==}
 
 

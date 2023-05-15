@@ -17,8 +17,8 @@ Rust 关键字分为三类:
 * [reserved](#reserved-keywords)
 * [weak](#weak-keywords)
 {==+==}
-* [关键字](#strict-keywords)
-* [严格字](#reserved-keywords)
+* [严格字](#strict-keywords)
+* [保留字](#reserved-keywords)
 * [松散字](#weak-keywords)
 {==+==}
 
@@ -34,7 +34,8 @@ Rust 关键字分为三类:
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
 {==+==}
-这些关键字只能在其正确的上下文中使用。不能用作以下内容的名称：
+这些关键字只能用在上下文的正确的位置。
+不能用作以下内容的名称：
 {==+==}
 
 
@@ -169,9 +170,8 @@ the same restrictions as strict keywords. The reasoning behind this is to make
 current programs forward compatible with future versions of Rust by forbidding
 them to use these keywords.
 {==+==}
-这些关键字目前还没有被使用，但是它们被保留以供将来使用。
-它们的使用规则与严格字相同。
-这样做的原因是通过禁止当前程序使用这些关键字，从而，使其与 Rust 的将来版本保持向前兼容。
+以下关键字目前还未使用，但保留以供将来使用，使用规则与严格字相同。
+这是为了使当前程序与未来版本向前兼容。
 {==+==}
 
 
@@ -233,8 +233,8 @@ The following keywords are reserved beginning in the 2018 edition.
 These keywords have special meaning only in certain contexts. For example, it
 is possible to declare a variable or method with the name `union`.
 {==+==}
-这些关键字只有在特定上下文中才具有特殊意义。
-例如，可以使用名称 `union` 声明变量或方法。
+以下关键字只有在特定上下文中才具有关键字的含义。
+因而，比如可以使用名称 `union` 声明变量或方法。
 {==+==}
 
 
@@ -246,7 +246,7 @@ is possible to declare a variable or method with the name `union`.
   lifetime parameter] or [loop label]
 {==+==}
 * `macro_rules` 用于创建自定义 [宏][macros] 。
-* `union` 用于声明 [联合体][union] ，只有在使用联合体声明时 union 才是一个关键字。
+* `union` 用于声明 [联合体][union] 。
 * `'static` 用于静态生命周期，不能作为 [泛型生命周期参数][generic lifetime parameter] 或 [循环标签][loop label] 使用。
 {==+==}
 
@@ -265,7 +265,7 @@ is possible to declare a variable or method with the name `union`.
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
 {==+==}
-* 在 2015 版中，[`dyn`] 当用在类型位置且随后的路径不以 `::` 开头时，是一个关键字。
+* 在 2015 版中，[`dyn`] 为松散字，当用在类型位置且随后的路径不以 `::` 开头时，才解析为关键字。
 {==+==}
 
 

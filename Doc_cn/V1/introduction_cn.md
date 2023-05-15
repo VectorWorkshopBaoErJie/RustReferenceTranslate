@@ -9,7 +9,7 @@
 This book is the primary reference for the Rust programming language.
 It provides three kinds of material:
 {==+==}
-本书是 Rust 编程语言的主要参考资料，提供了三种类型的内容：
+本书是 Rust 编程语言的主要参考资料，所提供的内容为三类：
 {==+==}
 
 
@@ -61,15 +61,14 @@ For example, the Reference for Rust 1.49.0 is located at <https://doc.rust-lang.
 本书原版新版本与最新的 Rust 版本匹配，可在 <https://doc.rust-lang.org/reference/> 找到。之前版本可通过在 "reference" 前添加 Rust 版本号找到。
 例如 <https://doc.rust-lang.org/1.49.0/reference/> 。
 
-【矢量工坊宝儿姐】注：当前的中文译本以2023年4月9日源 (Rust 1.69) 为基础，虽然当前使用的翻译工作流十分有效，但中文译本的更新周期也不会太过频繁。
-如有贡献、建议和问题，请移步译本仓库<https://github.com/VectorWorkshopBaoErJie/RustReferenceTranslate/>
+【矢量工坊宝儿姐】注：当前的中文译本以2023年4月9日源 (Rust 1.69) 为基础，如有贡献、建议和问题，请至译本仓库<https://github.com/VectorWorkshopBaoErJie/RustReferenceTranslate/>
 {==+==}
 
 
 {==+==}
 ## What *The Reference* is not
 {==+==}
-## *参考* 中没有的内容
+## *参考* 不记录的内容
 {==+==}
 
 
@@ -78,8 +77,7 @@ This book does not serve as an introduction to the language.
 Background familiarity with the language is assumed.
 A separate [book] is available to help acquire such background familiarity.
 {==+==}
-本书不是 Rust 语言的入门教程，假定读者已经对 Rust 有一定的了解。
-如果有需要可以查阅 Rust 官方提供的入门教程 [文档][book] 。
+本书不是语言的简要介绍，如有需要，可以阅读 Rust 官方提供的 [入门文档][book] 。
 {==+==}
 
 
@@ -88,9 +86,9 @@ This book also does not serve as a reference to the [standard library] included 
 Those libraries are documented separately by extracting documentation attributes from their source code.
 Many of the features that one might expect to be language features are library features in Rust, so what you're looking for may be there, not here.
 {==+==}
-本书也不作为语言发行版所包含 [标准库][standard library] 的参考文献。
-标准库通过从源代码中提取文档属性而单独记录。
-许多学习者所期望的语言特性在 Rust 中可能是库，因此有可能查找的内容在标准库中，而不在本书中。
+本书中也没有语言发行版所包含 [标准库][standard library] 的参考内容。
+标准库的参考是通过从源代码中提取文档属性，而单独记录。
+许多 Rust 学习者所期望的语言特性可能包含于库中，因此可能要去标准库的参考中查找。
 {==+==}
 
 
@@ -100,10 +98,10 @@ Similarly, this book does not usually document the specifics of `rustc` as a too
 Cargo has a [book][cargo book] that contains a [reference][cargo reference].
 There are a few pages such as [linkage] that still describe how `rustc` works.
 {==+==}
-同理，本书通常不会记录 `rustc` 和 Cargo 工具的具体细节。
+本书也通常不会记录 `rustc` 和 Cargo 工具的具体细节。
 `rustc` 有其自己的 [文档][rustc book] 。
 Cargo 也有一本 [文档][cargo book] ，其中包含 [参考][cargo reference]。
-但有些页，如 [linkage] 仍然描述 `rustc` 的工作原理。
+但有些，如 [链接][linkage] 页仍然对 `rustc` 的工作机制有所描述。
 {==+==}
 
 
@@ -111,8 +109,7 @@ Cargo 也有一本 [文档][cargo book] ，其中包含 [参考][cargo reference
 This book also only serves as a reference to what is available in stable Rust.
 For unstable features being worked on, see the [Unstable Book].
 {==+==}
-本书仅作为 Rust 稳定版本可用功能的参考。
-对于正在开发中的不稳定特性，请参见 [未稳定性文档][Unstable Book]。
+本书仅作为 Rust 稳定版本的参考，对于正在开发中的特性，请参见 [未稳定性文档][Unstable Book]。
 {==+==}
 
 
@@ -124,10 +121,8 @@ You can only probe by running it, feeding it input and observing its output.
 Everything that happens that way must conform to what the reference says.
 {==+==}
 Rust 编译器，包括 `rustc` ，会执行优化操作。
-本参考手册没有明确指定允许或禁止哪些优化。
-而是，将编译后的程序视为黑盒。
-你只能通过运行程序、提供输入和观察输出的方式来探测它。
-而，这样产生的效果应符合参考手册所阐述的内容。
+本书没有明确说明允许或禁止哪些优化。
+对于编译后的程序，你需要通过运行程序、提供输入和观察输出的方式做 "黑盒" 测试，这样产生的效果应符合手册所阐述的内容。
 {==+==}
 
 
@@ -136,9 +131,8 @@ Finally, this book is not normative.
 It may include details that are specific to `rustc` itself, and should not be taken as a specification for the Rust language.
 We intend to produce such a book someday, and until then, the reference is the closest thing we have to one.
 {==+==}
-当前，本书还没有达到完全规范的标准。
-还可能包含一些依赖于特定 `rustc` 的细节，这些不应将其视为 Rust 语言的规范。
-我们打算有一天出版这样的书，但在那之前，本参考是最接近规范的。
+当前，本书还没有达到完全规范和标准，还包含着一些依赖于 `rustc` 的特定细节，这些不应当成语言部分的规范。
+我们打算在未来发布更加规范的参考。
 {==+==}
 
 
@@ -153,15 +147,15 @@ We intend to produce such a book someday, and until then, the reference is the c
 This book does not assume you are reading this book sequentially.
 Each chapter generally can be read standalone, but will cross-link to other chapters for facets of the language they refer to, but do not discuss.
 {==+==}
-本书并不假设你是顺序阅读。
-每个章节通常可以单独阅读，在其内容涉及但未展开讨论时，会交叉链接到其他章节。
+本书并不需要顺序阅读。
+通常可以去单独阅读每个章节，其中未展开讨论的内容通常会交叉链接到其他章节。
 {==+==}
 
 
 {==+==}
 There are two main ways to read this document.
 {==+==}
-本文有两种主要的阅读方式。
+建议阅读本书的方式主要有两种。
 {==+==}
 
 
@@ -172,11 +166,8 @@ Otherwise, you can press `s` or click the magnifying glass on the top bar to sea
 For example, say you wanted to know when a temporary value created in a let statement is dropped.
 If you didn't already know that the [lifetime of temporaries] is defined in the [expressions chapter], you could search "temporary let" and the first search result will take you to that section.
 {==+==}
-一是回答特定的问题。
-如果你知道哪个章节可以回答相应问题，可以在目录中跳转到该章节。
+一、查找特定的问题的答案。
 可以按下 `s` 键或点击顶部栏上的放大镜搜索与问题相关的关键词。
-例如，假设你想知道在 let 语句中创建的临时值何时被丢弃。
-如果你不知道 [临时值的生命周期][lifetime of temporaries] 在 [表达式章节][expressions chapter] 中定义，可以搜索 "temporary let" ，其搜索结果就是相关章节。
 {==+==}
 
 
@@ -185,8 +176,8 @@ The second is to generally improve your knowledge of a facet of the language.
 In that case, just browse the table of contents until you see something you want to know more about, and just start reading.
 If a link looks interesting, click it, and read about that section.
 {==+==}
-二是提高对语言某个方面的了解。
-那么，只需浏览目录，针对某一主题展开阅读。
+二、提高对语言某个方面的了解。
+那么，只需浏览目录，展开阅读某一主题。
 {==+==}
 
 
@@ -208,7 +199,7 @@ That said, there is no wrong way to read this book. Read it however you feel hel
 Like all technical books, this book has certain conventions in how it displays information.
 These conventions are documented here.
 {==+==}
-本书作为技术书籍，在信息表达上有一些约定。
+本书作为技术类书籍，信息表达方式上有一些约定。
 {==+==}
 
 
@@ -216,15 +207,15 @@ These conventions are documented here.
 * Statements that define a term contain that term in *italics*.
   Whenever that term is used outside of that chapter, it is usually a link to the section that has this definition.
 {==+==}
-* 定义术语的语句中，该术语会以 *斜体* 的形式出现。
-  在该章节之外的任意地方使用该术语时，常通过链接指向其定义部分。
+* 定义术语的语言句子中，该术语会以 *斜体* 的形式出现。
+  在该章节之外的位置使用该术语时，通常以链接指向其定义部分。
 {==+==}
 
 
 {==+==}
   An *example term* is an example of a term being defined.
 {==+==}
-  如 *示例术语* 这样的术语定义。
+  如 *某某术语* 是指......这样的术语定义。
 {==+==}
 
 
@@ -232,7 +223,7 @@ These conventions are documented here.
 * Differences in the language by which edition the crate is compiled under are in a blockquote that start with the words "Edition Differences:" in **bold**.
 
 {==+==}
-* 在以 **粗体** 标识的块引用中，使用 "版次差异:" 这样的字眼来说明不同版本中编译 crate 的差异。
+* 在以 **粗体** 标识的块中，使用 "版次差异:" 这样的字眼来说明不同版本中编译的差异。
 {==+==}
 
 
@@ -246,21 +237,21 @@ These conventions are documented here.
 {==+==}
 * Notes that contain useful information about the state of the book or point out useful, but mostly out of scope, information are in blockquotes that start with the word "Note:" in **bold**.
 {==+==}
-* "注意:" 为粗体的块引用，包含有关书的状态，或者指出有用而超出本书范围的信息。
+* "注意:" 为粗体的块，通常来注明关于书的状态，或者指出一些有用的而超出本书范围的信息。
 {==+==}
 
 
 {==+==}
   > **Note**: This is an example note.
 {==+==}
-  > **注意**: 这是一个说明示例。
+  > **注意**: 这是一个标注的示例。
 {==+==}
 
 
 {==+==}
 * Warnings that show unsound behavior in the language or possibly confusing interactions of language features are in a special warning box.
 {==+==}
-* 警告将显示为特殊的警告框的形式，用于显示语言中的不安全行为或可能引起混淆的语言特性。
+* 警告将显示为特殊的警告框的形式，用于标注语言中的不安全行为或可能引起混淆的语言特性。
 {==+==}
 
 
@@ -281,7 +272,7 @@ These conventions are documented here.
 {==+==}
   Longer code examples are in a syntax highlighted box that has controls for copying, executing, and showing hidden lines in the top right corner.
 {==+==}
-  更长的代码示例在一个语法高亮的框中展示，该框右上角有复制、执行和显示隐藏行的控制按钮。
+  较长的代码示例会在一个语法高亮的框中展示，该框右上角有复制、执行和显示隐藏行的控制按钮。
 {==+==}
 
 
@@ -305,14 +296,14 @@ These conventions are documented here.
 {==+==}
   All examples are written for the latest edition unless otherwise stated.
 {==+==}
-  所有的示例都是针对最新版本的 Rust 编写的，除非另有说明。
+  所有的示例都是针对 Rust 最新版本编写的，除非另有说明。
 {==+==}
 
 
 {==+==}
 * The grammar and lexical structure is in blockquotes with either "Lexer" or "Syntax" in <sup>**bold superscript**</sup> as the first line.
 {==+==}
-* 语法和词法结构出现在引用块中，第一行以 <sup>**粗体上标**</sup> 的形式显示 "词法" 或 "语法" 。
+* 语法和词法结构包含在块中，第一行以 <sup>**粗体上标**</sup> 的形式标注 "词法" 或 "语法" 。
 {==+==}
 
 
@@ -332,7 +323,7 @@ These conventions are documented here.
 {==+==}
   See [Notation] for more detail.
 {==+==}
-  更多信息参见 [符号][Notation] 。
+  更多信息参见 [符号约定][Notation] 。
 {==+==}
 
 
@@ -356,10 +347,9 @@ If this book does not answer your question, and you think its answer is in scope
 Knowing what people use this book for the most helps direct our attention to making those sections the best that they can be.
 We also want the reference to be as normative as possible, so if you see anything that is wrong or is non-normative but not specifically called out, please also [file an issue].
 {==+==}
-你可以通过打开一个 issue 或发送一个 pull request 到 [Rust 参考仓库][the Rust Reference repository] 做出贡献。
-如果你的问题这本书没有回答，并且你认为该问题有必要包含在本书中，请 [提交 issue][file an issue] 或在 [Zulip] 的 `t-lang/doc` 频道提问。
-了解本书最常使用的内容，有助于集中精力使这些部分变得更好。
-我们还希望本书尽可能成为标准规范，对于发现的任何错误或不规范的问题，请 [提交 issue][file an issue] 。
+你可以向 [Rust 参考仓库][the Rust Reference repository] 提交内容。对于发现的任何错误或不规范的问题，请 [提交 issue][file an issue] 。
+如果你的问题在本书中没有得到解答，你认为该问题有必要包含在本书中，请 [提交 issue][file an issue] 或在 [Zulip] 的 `t-lang/doc` 频道提问。
+通过这样的方式来了解本书最常使用的内容，有助于集中精力使这些部分变得更好。
 {==+==}
 
 

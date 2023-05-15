@@ -1098,7 +1098,7 @@ Adding the `mut` keyword dereferences a mutable reference. The mutability must m
 
 Reference patterns are always irrefutable.
 {==+==}
-引用模式的语法规则必须匹配标记 `&&` 来匹配引用到引用，因为它本身是一个标记，不是两个 `&` 标记。
+引用模式的语法产生式必须匹配标记 `&&` 来匹配引用到引用，因为它本身是一个标记，不是两个 `&` 标记。
 
 添加 `mut` 关键字会对可变引用进行解引用。
 可变性必须与引用的可变性相匹配。
@@ -1558,7 +1558,7 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
 ## 或模式
 
 _或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。它们可以任意嵌套。
-从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 生成式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层项_ 产生式表示) 。
+从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 产生式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层项_ 产生式表示) 。
 {==+==}
 
 
