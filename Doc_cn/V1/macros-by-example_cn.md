@@ -90,8 +90,8 @@
 `macro_rules` allows users to define syntax extension in a declarative way.  We
 call such extensions "macros by example" or simply "macros".
 {==+==}
-`macro_rules` 允许用户以声明的方式定义语法扩展。
-我们把这样的扩展称为 "宏" 或者 "实例宏" 。
+允许用户以 `macro_rules` 声明的方式定义语法扩展。
+这种语法扩展称为 "实例宏" ，或者简单的称为 "宏" 。
 {==+==}
 
 
@@ -103,10 +103,10 @@ the matcher and the transcriber must be surrounded by delimiters. Macros can
 expand to expressions, statements, items (including traits, impls, and foreign
 items), types, or patterns.
 {==+==}
-每个宏定义都有一个名称和一个或多个 _规则_ 。
-每个规则都有两个部分：一个 _匹配器_ ，用于描述它匹配的语法，以及一个 _转录器_ ，用于描述成功匹配调用后将替换的语法。
-匹配器和转录器都必须被包含在定界符号中。
-宏可以扩展为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
+每个实例宏的定义都要有一个名称和一个以上 _规则_ 。
+每个规则都有两个部分：一个 _匹配器_ 部分，用于描述匹配语法，另一个 _转录器_ 部分，用于描述成功匹配并调用后将替换的语法。
+匹配器和转录器都必须被包裹在定界符号中。
+宏可以展开为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
 {==+==}
 
 
@@ -127,10 +127,10 @@ following example, the compiler does not look ahead past the identifier to see
 if the following token is a `)`, even though that would allow it to parse the
 invocation unambiguously:
 {==+==}
-当宏被调用时，宏展开器通过名称查找宏调用，并依次尝试每个宏规则。
-它会转录第一个成功的匹配；如果这导致错误，则不会尝试后续匹配。
-在匹配时，不会进行前瞻；如果编译器不能逐个 Token 地明确定义如何解析宏调用，则会出错。
-在下面的示例中，编译器不会向前查看标识符，不会查看下一个 Token 是否为 `)` ，尽管这能够更明确地解析调用:
+当宏被调用时，宏展开器通过名称查找宏调用，并依次尝试匹配包含的宏规则。
+在首个成功匹配处转录，如果导致错误，则不会尝试后续的规则。
+在进行匹配时，不会对 Token 进行前瞻，如果编译器无法逐个明确如何解析，则会出错。
+在下面的示例中，编译器不会前瞻标识符 $j ，不会前瞻是否已至 `)` 定界位置，虽然这能够更明确地解析:
 {==+==}
 
 
@@ -162,10 +162,9 @@ delimiters for the matcher will match any pair of delimiters. Thus, for
 instance, the matcher `(())` will match `{()}` but not `{{}}`. The character
 `$` cannot be matched or transcribed literally.
 {==+==}
-在匹配器和转录器中， `$` 符号用于从宏引擎中调用特殊行为 (在 [元变量][Metavariables] 和 [重复][Repetitions] 中描述)。
-不属于这种调用的标记会被字面匹配和转录，除了一个例外。
-该例外是匹配器的外部定界符将匹配任意一对定界符。
-因此，例如，匹配器 `(())` 将匹配 `{()}` 但不匹配 `{{}}`。字符 `$` 不能按字面匹配或转录。
+在匹配器和转录器中， `$` 符号用于宏引擎实现调用的特定行为 (具体在 [元变量][Metavariables] 和 [重复][Repetitions] 中描述)。
+非该符号标记的 Token 会按字面进行匹配和转录，特例是匹配器的外部定界符将匹配任意一对定界符，
+例如，匹配器 `(())` 将匹配 `{()}` ，但是不匹配 `{{}}` 。字符 `$` 不能按字面匹配或转录。
 {==+==}
 
 
@@ -184,9 +183,10 @@ fragment specifier of the same type. The `ident`, `lifetime`, and `tt`
 fragment types are an exception, and *can* be matched by literal tokens. The
 following illustrates this restriction:
 {==+==}
-在将匹配的片段转发到另一个实例宏时，第二个宏中的匹配器将看到片段类型的不透明 AST 。
-第二个宏不能使用字面 token 来匹配匹配器中的片段，只能使用相同类型的片段规格。
- `ident` 、 `lifetime` 和 `tt` 片段类型例外，可以用字面 token 匹配。以下是这个限制的示例：
+在将匹配后的片段转发给内部的实例宏时，内部宏的匹配器将只能看到类型化的不透明 AST 片段。
+内部宏无法简单通过字面 token 来匹配这个片段，只能使用相同类型规格的片段接收。
+ `ident` 、 `lifetime` 和 `tt` 片段类型例外，可以按照字面 token 的方式匹配。
+以下是一个示例：
 {==+==}
 
 
@@ -206,8 +206,9 @@ foo!(3);
 {==+==}
 ```rust,compile_fail
 macro_rules! foo {
+    // expr 表达式片段与 3 的字面值规则不匹配，虽然此表达式是 3 的字面值表达式。
     ($l:expr) => { bar!($l); }
-// ERROR:               ^^ 在宏调用中这个 token 没有预期的规则
+// ERROR:               ^^ 在宏调用中这个 token 没有预期的规则，
 }
 
 macro_rules! bar {
@@ -223,7 +224,7 @@ foo!(3);
 The following illustrates how tokens can be directly matched after matching a
 `tt` fragment:
 {==+==}
-以下是演示如何在匹配 `tt` 片段后直接匹配 Token 的示例：
+以下是在匹配 `tt` Token 树片段后内部规则通过字面匹配 Token 的一个示例：
 {==+==}
 
 
@@ -244,6 +245,7 @@ foo!(3);
 ```rust
 // 编译成功
 macro_rules! foo {
+    // `tt` Token 树片段直接作为字面 Token 与 3 的字面值表达式成功匹配。
     ($l:tt) => { bar!($l); }
 }
 
@@ -268,7 +270,10 @@ In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax
 fragment of the kind specified and binds it to the metavariable `$`_name_. Valid
 fragment specifiers are:
 {==+==}
-在匹配器中， `$` _名称_ `:` _片段规格_ 用于匹配指定类型的 Rust 语法片段，并将其绑定到名为 `$`_name_ 的元变量中。有效的片段规格包括：
+在匹配器中， `$` _名称_ `:` _片段规格_ 定义元变量，用于匹配指定类型的语法片段，并与语法片段绑定。
+有效的片段规格包括：
+
+译注：这里 '片段规格' 的概念实际上与 '片段类型' 等价，使用规格这个词是与 rust 中的类型系统有所区分。
 {==+==}
 
 
@@ -291,9 +296,9 @@ fragment specifiers are:
 {==+==}
   * `item`: [_条目_][_Item_] 
   * `block`: [_块表达式_][_BlockExpression_] 
-  * `stmt`: [_语句_][_Statement_] 不含尾部分号 (需要分号的条目语句除外)
+  * `stmt`: [_语句_][_Statement_] 不含尾部分号 (即，不包括需要分号的条目语句)
   * `pat_param`: [_模式非顶层项_][_PatternNoTopAlt_]
-  * `pat`: 至少在任何 [_模式非顶层项_][_PatternNoTopAlt_], 可能更多，取决于版本
+  * `pat`: 至少是任意 [_模式非顶层项_][_PatternNoTopAlt_], 更多取决于版次
   * `expr`: [_表达式_][_Expression_] 
   * `ty`: [_类型_][_Type_] 
   * `ident`: 一个 [标识符或关键字][IDENTIFIER_OR_KEYWORD] 或 [原始标识符][RAW_IDENTIFIER]
@@ -301,7 +306,7 @@ fragment specifiers are:
   * `tt`: [_Token树_][_TokenTree_]&nbsp; (简单 [token] 或匹配在定界符号 `()` 、 `[]` 、 `{}` 中 token)
   * `meta`: 一个 [_Attr_], 属性的内容
   * `lifetime`:  [生命周期TOKEN][LIFETIME_TOKEN]
-  * `vis`: 一个可能是空的 [_可见性_][_Visibility_] 限定词
+  * `vis`: 一个可空的 [_可见性_][_Visibility_] 限定词
   * `literal`: 匹配的 `-`<sup>?</sup>[_字面值表达式_][_LiteralExpression_]
 {==+==}
 
@@ -313,10 +318,10 @@ the syntax element that matched them. The keyword metavariable `$crate` can be
 used to refer to the current crate; see [Hygiene] below. Metavariables can be
 transcribed more than once or not at all.
 {==+==}
-在转录器中，可以通过 `$`_名称_ 的形式引用元变量，因为片段类型已经在匹配器中被指定了。
-元变量被替换为匹配到的语法元素。
-关键字元变量 `$crate` 可以用于引用当前的 crate。可以将元变量多次或不进行转录。
-参见下面的 [卫生性][Hygiene] .
+元变量的片段类型在匹配器中已被指定，在转录器中可以用 `$`_名称_ 来引用。关键字元变量 `$crate` 用于引用当前的 crate。
+转录器中元变量将替换为匹配到的语法片段。
+可以将元变量多次转录，或者并不进行转录。
+参阅下面的 [卫生性][Hygiene] 。
 {==+==}
 
 
@@ -326,7 +331,7 @@ expression][_UnderscoreExpression_], a standalone underscore is not matched by
 the `expr` fragment specifier. However, `_` is matched by the `expr` fragment
 specifier when it appears as a subexpression.
 {==+==}
-出于向后兼容的原因，虽然 `_` [也是一个表达式][_UnderscoreExpression_]，但单独的下划线不会被 `expr` 片段匹配。但是，当它出现为子表达式时，`_` 将被 `expr` 片段匹配。
+出于向后兼容的原因，单独的 `_` [下划线表达式][_UnderscoreExpression_] 不会被 `expr` 片段匹配。当 `_` 做为子表达式时可被 `expr` 片段匹配。
 {==+==}
 
 
@@ -337,11 +342,11 @@ specifier when it appears as a subexpression.
 >
 > The relevant edition is the one in effect for the `macro_rules!` definition.
 {==+==}
-> **版次差异**: 从 2021 版本开始，`pat` 片段匹配符匹配顶层或模式 (即它们接受 [_模式_][_Pattern_]) 。
+> **版次差异**: 从 2021 版本开始，`pat` 规格片段可以匹配顶层或模式 (即它们接受 [_模式_][_Pattern_]) 。
 >
-> 在 2021 版本之前，它们完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层项_][_PatternNoTopAlt_] ) 。
+> 在 2021 版本之前，则完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层项_][_PatternNoTopAlt_] ) 。
 >
-> 相关版次指 `macro_rules!` 定义生效的版次。
+> 这与 `macro_rules!` 定义生效的版次相关联。
 {==+==}
 
 
@@ -360,16 +365,16 @@ other than a delimiter or one of the repetition operators, but `;` and `,` are
 the most common. For instance, `$( $i:ident ),*` represents any number of
 identifiers separated by commas. Nested repetitions are permitted.
 {==+==}
-在匹配器和转录器中，重复的标志是通过将要重复的 token 放在 `$(`…`)` 中，后跟重复运算符，可选地包括分隔符 token 。
-分隔符 token 可以是任何 token ，除了定界符或重复运算符，但常用的是 `;` 和 `,` 。
-例如，`$( $i:ident ),*` 表示由逗号分隔的任意数量的标识符。允许嵌套重复。
+在匹配器和转录器中，重复语法是通过将要重复的 token 放在 `$(`…`)` 中，后跟重复运算符，可选地包含分隔符 token 。
+分隔符 token 可以是除定界符或重复运算符外的任意 token ，但常用的是 `;` 和 `,` 。
+例如， `$( $i:ident ),*` 表明由逗号分隔的任意数量的标识符。重复允许嵌套。
 {==+==}
 
 
 {==+==}
 The repetition operators are:
 {==+==}
-重复运算符是:
+重复运算符有:
 {==+==}
 
 
@@ -378,9 +383,9 @@ The repetition operators are:
 - `+` — indicates any number but at least one.
 - `?` — indicates an optional fragment with zero or one occurrences.
 {==+==}
-- `*` — 表示任何数量的重复。
-- `+` — 表示任何数字，但至少是 1 。
-- `?` — 表示有 0 或 1 个出现的可选片段。
+- `*` — 表示任意数量的重复。
+- `+` — 表示任意数字，但至少是 1 。
+- `?` — 表示有 0 或 1 个产生的可选片段。
 {==+==}
 
 
@@ -398,8 +403,8 @@ the fragment, separated by the separator token. Metavariables are matched to
 every repetition of their corresponding fragment. For instance, the `$( $i:ident
 ),*` example above matches `$i` to all of the identifiers in the list.
 {==+==}
-重复的片段同时匹配和转换成指定数量的该片段，由分隔符隔开。
-元变量将匹配到其对应片段的每个重复。例如，上面的 `$( $i:ident ),*` 示例将 `$i` 匹配到列表中的所有标识符。
+重复的片段同时匹配和转录成指定数量的该片段，并由分隔符隔开。
+元变量将匹配到对应片段的每个重复项。例如，上面示例的 `$( $i:ident ),*` 中元变量 `$i` 将匹配到列表中的所有标识符。
 {==+==}
 
 
@@ -407,7 +412,7 @@ every repetition of their corresponding fragment. For instance, the `$( $i:ident
 During transcription, additional restrictions apply to repetitions so that the
 compiler knows how to expand them properly:
 {==+==}
-在转录过程中，重复操作受到额外的限制，以便编译器知道如何正确地展开它们：
+在转录过程中，重复操作受到额外的限制，以便能够正确地展开：
 {==+==}
 
 
@@ -419,9 +424,9 @@ compiler knows how to expand them properly:
     `=> { $( $i );* }` is correct and replaces a comma-separated list of
     identifiers with a semicolon-separated list.
 {==+==}
-1.  一个匹配器中的一个重复子串，必须在转录器中以完全相同的数量、种类和嵌套顺序出现。
-    因此，对于匹配器 `$( $i:ident ),*`，转录器 `=> { $i }`、`=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是不合法的，
-    但是 `=> { $( $i );* }` 是正确的，并将由逗号分隔的标识符列表替换为由分号分隔的列表。
+1.  匹配器中的 '重复' ，在转录器中出现时，必须具有完全相同的数量、种类和嵌套顺序。
+    因此，对于匹配器中 `$( $i:ident ),*` '重复' ，转录器中 `=> { $i }` 、`=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 不一致的形式是不合法的，
+    对于 `=> { $( $i );* }` 是正确的，这里只是将由逗号分隔的标识符列表替换为了分号分隔。
 {==+==}
 
 
@@ -436,10 +441,11 @@ compiler knows how to expand them properly:
     not have the same number. This requirement applies to every layer of nested
     repetitions.
 {==+==}
-2.  在转录器中，每个重复部分必须至少包含一个元变量，以决定扩展它的次数。
-    如果同一个重复部分中出现了多个元变量，它们必须绑定相同数量的片段。
-    例如，`( $( $i:ident ),* ; $( $j:ident ),* ) => (( $( ($i,$j) ),* ))` 必须绑定与 `$i` 片段相同数量的 `$j` 片段。
-    这意味着，使用 `(a, b, c; d, e, f)` 调用宏是合法的，并扩展为 `((a,d), (b,e), (c,f))` ，但 `(a, b, c; d, e)` 是不合法的，因为它们的数量不同。这个要求适用于每个嵌套重复层。
+2.  在转录器中，每个重复部分必须至少包含一个元变量，以决定展开它的次数。
+    如果同一个重复部分中出现多个元变量时，则它们绑定的片段数量必须相同。
+    例如，`( $( $i:ident ),* ; $( $j:ident ),* ) => (( $( ($i,$j) ),* ))` 其 `$i` 和 `$j` 必须绑定相同数量的片段。
+    所以，以 `(a, b, c; d, e, f)` 这样的内容调用宏是合法的，将展开为 `((a,d), (b,e), (c,f))` ，但 `(a, b, c; d, e)` 却不行，因为数量不同。
+    这个要求对于嵌套的重复同样适用。
 {==+==}
 
 
@@ -458,9 +464,9 @@ across multiple files, and is the default scoping. It is explained further below
 Path-based scope works exactly the same way that item scoping does. The scoping,
 exporting, and importing of macros is controlled largely by attributes.
 {==+==}
-由于历史原因，实例宏的作用域并不完全像条目那样工作。
+由于历史原因，实例宏的作用域机制与条目并不完全相同。
 宏有两种作用域形式：文本作用域和基于路径的作用域。
-文本作用域是基于事物在源文件中的顺序，甚至跨越多个文件，并且是默认作用域。下面将进一步解释它。
+文本作用域是基于宏在源文件中的顺序，甚至会跨越多个文件，并且这是默认的作用域。在下面会进一步解释。
 基于路径的作用域与条目的作用域完全相同。宏的作用域、导出和导入主要由属性控制。
 {==+==}
 
@@ -471,8 +477,8 @@ path), it is first looked up in textual scoping. If this does not yield any
 results, then it is looked up in path-based scoping. If the macro's name is
 qualified with a path, then it is only looked up in path-based scoping.
 {==+==}
-当宏被未限定的标识符 (不是多部分路径的一部分) 调用时，它首先在文本作用域中查找。
-如果这没有得到任何结果，那么它将在基于路径的作用域中查找。
+当以未限定的标识符 (指宏不是多部分组成的路径的一部分) 形式调用宏时，则首先在文本作用域中查找宏。
+如果未找到结果，那么将按路径作用域查找。
 如果宏的名称带有路径限定符，则仅在基于路径的作用域中查找。
 {==+==}
 
@@ -494,12 +500,12 @@ self::lazy_static!{} // Path-based lookup ignores our macro, finds imported one.
 ```rust,ignore
 use lazy_static::lazy_static; // 基于路径导入。
 
-macro_rules! lazy_static { // 文本定义。
+macro_rules! lazy_static { // 定义文本。
     (lazy) => {};
 }
 
-lazy_static!{lazy} // 文本查找首先找到我们的宏。
-self::lazy_static!{} // 基于路径的查找忽略我们的宏，找到导入的宏。
+lazy_static!{lazy} // 首先在文本中找到了宏。
+self::lazy_static!{} // 基于路径的查找忽略了文本中的宏，找到导入的宏。
 ```
 {==+==}
 
@@ -520,9 +526,9 @@ be used recursively, since names are looked up from the invocation site), up
 until its surrounding scope, typically a module, is closed. This can enter child
 modules and even span across multiple files:
 {==+==}
-文本作用域在很大程度上基于事物在源文件中出现的顺序，类似于使用 `let` 声明的局部变量的作用域，但也适用于模块级别。
-当使用 `macro_rules!` 定义宏时，宏在定义后进入作用域 (请注意，由于名称是从调用位置查找的，因此仍然可以递归使用) 。
-在其周围的作用域 (通常是模块) 关闭之前，它可以进入子模块，甚至跨越多个文件：
+文本作用域主要基于宏在源文件中出现的顺序，机制与 `let` 声明的局部变量的作用域类似，但宏文本作用域将应用于模块级别。
+当使用 `macro_rules!` 定义了宏，则宏在定义的以下部分进入作用域。需注意的是，由于名称是从调用位置查找，因而可以递归。 
+在其围绕的作用域 (通常是模块) 关闭之前，宏可以进入子模块，甚至跨越多个文件：
 {==+==}
 
 
@@ -575,7 +581,7 @@ m!{} // OK: 在 src/lib.rs 中出现在 m 的声明之后。
 It is not an error to define a macro multiple times; the most recent declaration
 will shadow the previous one unless it has gone out of scope.
 {==+==}
-宏被多次定义不会出错；最近的声明会隐藏先前的声明，除非它已经超出作用域。
+多次定义宏不会产生错误，如果未超出作用域，最近一次的声明会隐藏先前的声明。
 {==+==}
 
 
@@ -618,7 +624,7 @@ mod inner {
     macro_rules! m {
         (2) => {};
     }
-    // m!(1); // Error: 没有规则匹配 '1'
+    // m!(1); // Error: 没有规则可以匹配 '1'
     m!(2);
 
     macro_rules! m {
@@ -636,7 +642,7 @@ m!(1);
 Macros can be declared and used locally inside functions as well, and work
 similarly:
 {==+==}
-宏也可以在函数内部声明和使用，并且工作方式类似：
+宏也可以在函数内部声明和使用，工作方式与模块中声明类似:
 {==+==}
 
 
@@ -683,7 +689,7 @@ The *`macro_use` attribute* has two purposes. First, it can be used to make a
 module's macro scope not end when the module is closed, by applying it to a
 module:
 {==+==}
-*`macro_use` 属性* 有两个目的。首先，通过将其应用于一个模块，使模块的宏作用域在模块关闭后不结束：
+*`macro_use` 属性* 有两个用法。一是，应用于模块后，使模块中宏的作用域在模块关闭后仍不结束:
 {==+==}
 
 
@@ -699,7 +705,17 @@ mod inner {
 m!();
 ```
 {==+==}
+```rust
+#[macro_use]
+mod inner {
+    macro_rules! m {
+        () => {};
+    }
+}
 
+// 这里使 m 的作用域延长到了模块之外
+m!();
+```
 {==+==}
 
 
@@ -713,10 +729,10 @@ conflict, the last macro imported wins. Optionally, a list of macros to import
 can be specified using the [_MetaListIdents_] syntax; this is not supported
 when `#[macro_use]` is applied to a module.
 {==+==}
-第二个作用是将它应用于出现在 crate 的根模块中的 `extern crate` 声明，从而从另一个 crate 导入宏。
-以这种方式导入的宏被导入到 [`macro_use` 预定义][`macro_use` prelude] ，而不是文本中导入，这意味着它们可以被任何其他名称隐藏。
-虽然 `#[macro_use]` 导入的宏可以在导入语句之前使用，但在冲突的情况下，最后导入的宏优先。
-可选地，可以使用 [元列表ID组][MetaListIdents] 语法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块时，不支持此功能。
+二是，应用于 crate 根模块中的 `extern crate` 声明，从而从另一个 crate 导入宏。
+这种方式会将宏导入到 [`macro_use` 预定义][`macro_use` prelude] 中，而不是文本形式的导入，这表示可在任意位置隐藏此宏名称。
+虽然 `#[macro_use]` 导入的宏可以在导入语句之前使用，但名称冲突时，最后导入的宏优先。
+可选语法是，可以使用 [元标识符列表][MetaListIdents] 指定要导入的宏列表。当将 `#[macro_use]` 应用于模块时，不支持此功能。
 {==+==}
 
 
@@ -732,7 +748,7 @@ lazy_static!{}
 {==+==}
 <!-- ignore: requires external crates -->
 ```rust,ignore
-#[macro_use(lazy_static)] // 或 #[macro_use] 导入所有宏。
+#[macro_use(lazy_static)] // 仅 #[macro_use] 表示导入所有宏。
 extern crate lazy_static;
 
 lazy_static!{}
@@ -745,7 +761,7 @@ lazy_static!{}
 Macros to be imported with `#[macro_use]` must be exported with
 `#[macro_export]`, which is described below.
 {==+==}
-使用 `#[macro_use]` 导入的宏必须使用 `#[macro_export]` 导出，下面将对此进行描述。
+使用 `#[macro_use]` 导入的宏导出时必须使用 `#[macro_export]` ，下面将对此进行描述。
 {==+==}
 
 
@@ -761,7 +777,7 @@ By default, a macro has no path-based scope. However, if it has the
 `#[macro_export]` attribute, then it is declared in the crate root scope and can
 be referred to normally as such:
 {==+==}
-默认情况，宏没有基于路径的作用域。然而，如果它有 `#[macro_export]` 属性，那么它就被声明在 crate 根作用域内，并可正常引用:
+默认情况，宏没有基于路径的作用域。然而，如果赋予 `#[macro_export]` 属性，那么宏就被声明在 crate 根作用域内:
 {==+==}
 
 
@@ -785,7 +801,7 @@ mod mac {
 {==+==}
 ```rust
 self::m!();
-m!(); // OK: 基于路径的查找在当前模块中查找 m 。
+m!(); // OK: 基于路径方式查找，在当前模块中找到了 m 。
 
 mod inner {
     super::m!();
@@ -806,7 +822,7 @@ mod mac {
 Macros labeled with `#[macro_export]` are always `pub` and can be referred to
 by other crates, either by path or by `#[macro_use]` as described above.
 {==+==}
-标有 `#[macro_export]` 的宏总是 `pub` 的，可以通过路径或像上面描述的 `#[macro_use]` 在其他 crate 中引用。
+ `#[macro_export]` 标记的宏总是 `pub` 的，可以通过路径或以上面描述的 `#[macro_use]` 方式引入其他 crate 中。
 {==+==}
 
 
@@ -824,9 +840,9 @@ refers to an item or macro which isn't in scope at the invocation site. To
 alleviate this, the `$crate` metavariable can be used at the start of a path to
 force lookup to occur inside the crate defining the macro.
 {==+==}
-默认情况下，在宏中引用的所有标识符都会按原样扩展，并在宏调用的地方查找。
-如果宏引用了在调用位置不在作用域内的条目或宏，则可能会出现问题。
-为了缓解这个问题，可以在路径的开头使用 `$crate` 元变量，以强制在定义宏的 crate 内部进行查找。
+默认情况下，在宏中引用的所有标识符都会按原样展开，并从宏调用的位置查找。
+如果宏引用的条目或宏，在调用位置不在作用域内，则可能会出现问题。
+为了缓解这个问题，可以在路径中使用 `$crate` 元变量，以强制在定义宏的 crate 内部进行查找。
 {==+==}
 
 
@@ -869,7 +885,7 @@ macro_rules! helper {
 }
 
 //// 在另一个 crate 里使用。
-// 请注意，没有导入 `helper_macro::helper` !
+// 请注意，未导入 `helper_macro::helper` 。
 use helper_macro::helped;
 
 fn unit() {
@@ -910,8 +926,9 @@ referred to must still be visible from the invocation site. In the following
 example, any attempt to invoke `call_foo!()` from outside its crate will fail
 because `foo()` is not public.
 {==+==}
-此外，尽管 `$crate` 允许宏在展开时引用其所在 crate 内的条目，但它对可见性没有影响。
-被引用的条目或宏仍必须从调用点可见。在下面的示例中，从 crate 外部尝试调用 `call_foo!()` 将失败，因为 `foo()` 不是公开的。
+此外，尽管 `$crate` 允许宏在展开时引用其所在 crate 内的条目，但并不会影响被引用项的可见性。
+被引用的条目或宏必须从调用位置可见。
+在下面的示例中，从 crate 外部尝试调用 `call_foo!()` 将失败，因为 `foo()` 不是公开的。
 {==+==}
 
 
@@ -938,9 +955,9 @@ fn foo() {}
 > modified to use `$crate` or `local_inner_macros` to work well with path-based
 > imports.
 {==+==}
-> 在 Rust 1.30 之前， `$crate` 和 `local_inner_macros`  (下面会描述) 是不支持的。
-> 它们与基于路径导入宏的引入一起添加，以确保辅助宏不需要由宏导出 crate 的用户手动导入。
-> 使用辅助宏的早期 Rust 版本编写的 crate 需要修改以使用 `$crate` 或 `local_inner_macros` 以便与基于路径导入一起使用。
+> 在 Rust 1.30 之前，不支持 `$crate` 和 `local_inner_macros` (下面会描述) 。
+> 这两个语法与基于路径导入宏的语法一起添加，是为保证一些辅助宏不需要用户手动导入。
+> 使用辅助宏的早期 Rust 版本编写的 crate 需要进行修改后，以使用 `$crate` 或 `local_inner_macros` 。
 {==+==}
 
 
@@ -952,7 +969,8 @@ code written before `$crate` was added to the language to work with Rust 2018's
 path-based imports of macros. Its use is discouraged in new code.
 {==+==}
 当一个宏被导出时，可以在 `#[macro_export]` 属性中添加 `local_inner_macros` 关键字，以自动在所有包含的宏调用中添加 `$crate::` 前缀。
-这主要是为了迁移在 `$crate` 添加到语言之前编写的代码，使其能够与 Rust 2018 的基于路径的宏导入一起使用。不建议在新代码中使用此功能。
+这主要是为了迁移在 `$crate` 添加到语言之前编写的代码，使其能够与 Rust 2018 的基于路径的宏导入一起使用。
+不建议在新代码中使用此功能。
 {==+==}
 
 
@@ -997,8 +1015,8 @@ particular, in addition to the rule about ambiguous expansions, a nonterminal
 matched by a metavariable must be followed by a token which has been decided can
 be safely used after that kind of match.
 {==+==}
-宏系统使用的解析器相当强大，但出于防止当前或未来版本的语言存在歧义的考虑，它是有限制的。
-特别是，除了有关模糊扩展的规则之外，由元变量匹配的非终端符号必须后跟一个已决定可以安全地在该类型的匹配之后使用的标记。
+宏系统使用的解析器相当强大，但出于防止当前或未来版本的语言产生歧义的考虑，对于宏有一些限制。
+特别是，除了有关模糊展开的规则之外，由元变量匹配的非终端符号必须后跟一个 token ，此 token 已决定可以安全地在该类型的匹配之后使用。
 {==+==}
 
 
@@ -1012,10 +1030,11 @@ matcher would become ambiguous or would misparse, breaking working code.
 Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
 `;` are legal expression separators. The specific rules are:
 {==+==}
-作为一个例子，像 `$i:expr [ , ]` 这样的宏匹配器在 Rust 中在理论上是可以被接受的，因为 `[,]` 不能成为合法表达式的一部分，因此解析总是不会存在歧义。
-但是，由于 `[` 可以作为尾随表达式的开始，因此 `[` 不是一个可以安全地在表达式之后排除的字符。
+举例来说，像 `$i:expr [ , ]` 这样的宏匹配器理论上是可以接受的，因为 `[,]` 不能成为合规的表达式的一部分，因此解析不会有歧义。
+但是，由于 `[` 可以作为尾随的表达式的开始，因此 `[` 不是一个可以安全地在表达式之后排除的字符。
 如果在以后的 Rust 版本中接受了 `[,]` ，这个匹配器就会变成有歧义或者解析错误，从而破坏工作中的代码。
-然而，像 `$i:expr,` 或 `$i:expr;` 这样的匹配器是合法的，因为 `,` 和 `;` 是合法的表达式分隔符。具体的规则如下：
+对于，像 `$i:expr,` 或 `$i:expr;` 这样的匹配器是合规的，因为 `,` 和 `;` 是合规的表达式分隔符。
+具体的规则如下：
 {==+==}
 
 
@@ -1034,16 +1053,16 @@ Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
   * `expr` 和 `stmt` 后面只能跟着一个: `=>` 、 `,`、 `;` 。
   * `pat_param` 后面只能跟着一个: `=>` 、 `,` 、 `=` 、 `|` 、 `if` 、 `in` 。
   * `pat` 后面只能跟着一个: `=>` 、 `,` 、 `=` 、 `if` 、 `in` 。
-  * `path` 和 `ty` 后面只能跟着一个: `=>` 、 `,` 、 `=` 、 `|` 、 `;` 、 `:` 、 `>` 、 `>>` 、 `[` 、 `{` 、 `as` 、 `where` ， 或 `block` 片段指定符的宏变量 。
-  * `vis` 后面只能跟着一个: `,`, 一个非原始的 `priv` 以外的标识符，任何可以开始一个类型的标记，或者一个带有 `ident` 、 `ty` 或 `path` 片段指定符的元变量。
-  * 对所有其他片段指定符没有限制。
+  * `path` 和 `ty` 后面只能跟着一个: `=>` 、 `,` 、 `=` 、 `|` 、 `;` 、 `:` 、 `>` 、 `>>` 、 `[` 、 `{` 、 `as` 、 `where` ， 或 `block` 片段规格的元变量 。
+  * `vis` 后面只能跟着一个: `,`, 一个非原始的 `priv` 以外的标识符，任何可以开始一个类型的标记，或者一个带有 `ident` 、 `ty` 或 `path` 片段规格的元变量。
+  * 对所有其他片段规格没有限制。
 {==+==}
 
 
 {==+==}
 > **Edition Differences**: Before the 2021 edition, `pat` may also be followed by `|`.
 {==+==}
-> **版次差异**: 在 2021 版之前， `pat` 后面还可以加上 `|`。
+> **版次差异**: 在 2021 版之前， `pat` 后面还可以跟着 `|`。
 {==+==}
 
 
@@ -1051,7 +1070,7 @@ Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
 When repetitions are involved, then the rules apply to every possible number of
 expansions, taking separators into account. This means:
 {==+==}
-当涉及到重复时，规则适用于每次可能的扩展，同时要考虑分隔符。这意味着：
+当涉及到重复时，规则适用于每次可能的展开，同时要考虑分隔符。这意味着：
 {==+==}
 
 

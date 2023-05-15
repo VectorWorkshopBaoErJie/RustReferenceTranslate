@@ -27,8 +27,8 @@ There are two ways to define new macros:
 * [Procedural Macros] define function-like macros, custom derives, and custom
   attributes using functions that operate on input tokens.
 {==+==}
-* [实例宏][Macros by Example] 定义新的语法，以更高层、声明式的方式。
-* [过程宏][Procedural Macros] 定义函数式宏、自定义衍生和自定义属性，以函数操作输入的 Token 。
+* [实例宏][Macros by Example] 以高阶的声明方式定义新的语法。
+* [过程宏][Procedural Macros] 以定义操作输入 Token 的函数，实现自定义函数式宏、衍生和属性。
 {==+==}
 
 
@@ -81,7 +81,8 @@ A macro invocation expands a macro at compile time and replaces the
 invocation with the result of the macro. Macros may be invoked in the
 following situations:
 {==+==}
-在编译期展开宏并用宏的结果替换调用时，发生宏调用。宏可以在以下情况下被调用：
+宏调用是在编译期发生，将展开宏，用宏的结果替换调用。
+可以在以下语法调用宏：
 {==+==}
 
 
@@ -108,8 +109,8 @@ where a semicolon is required at the end when not using curly braces.
 [Visibility qualifiers] are never allowed before a macro invocation or
 [`macro_rules`] definition.
 {==+==}
-当它被用作条目或语句时，使用 _宏调用语句_ 形式，当不使用花括号时需要在末尾加上分号。
-在宏调用或 [`macro_rules`] 定义之前，不允许出现 [可见性限定符][Visibility qualifiers] 。
+当宏用作条目或语句时，使用 _宏调用语句_ 语法，当未使用花括号时需要在末尾加上分号。
+在宏调用或 [`macro_rules`] 定义之前，拒绝 [可见性限定符][Visibility qualifiers] 。
 {==+==}
 
 
@@ -196,7 +197,7 @@ trait T {
 macro_rules! example {
     () => { println!("Macro call in a macro!") };
 }
-// 外部宏 `example` 被展开，然后内部宏 `println` 被展开。
+// 首先展开外部宏 `example` ，然后展开内部宏 `println` 。
 example!();
 ```
 {==+==}
