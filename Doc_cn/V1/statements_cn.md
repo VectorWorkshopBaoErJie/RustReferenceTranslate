@@ -26,7 +26,7 @@ A *statement* is a component of a [block], which is in turn a component of an ou
 
 Rust has two kinds of statement: [declaration statements](#declaration-statements) and [expression statements](#expression-statements).
 {==+==}
-*语句* 是 [块][block] 的组成部分，而块又是之外 [表达式][expression] 或 [函数][function] 的组成部分。
+*语句* 是 [块][block] 的组成部分，而块又是 [表达式][expression] 或 [函数][function] 的组成部分。这同样形成了 '树' 的组织结构。
 
 Rust 有两种语句：[声明语句](#declaration-statements) 和 [表达式语句](#expression-statements) 。
 {==+==}
@@ -64,12 +64,12 @@ For example, `inner` may not access `outer_var`.
 ### 条目声明
 
 *条目声明语句* 的语法形式与 [模块][module] 中的 [条目声明][item] 相同。
-在语句块中声明一个条目，将其作用域限制为包含该语句的块。
+在语句块中声明一个条目，将被限制在包含该语句的块作用域中。
 该条目不会被赋予 [规范路径][canonical path] ，也不会声明任何子条目。
-唯一的例外是通过 [实现][implementations] 定义的关联条目，只要该条目和 (如果适用) trait 可访问，它们仍然可以在外部作用域中访问。
-否则，它与在模块中声明该条目的含义相同。
+唯一的例外是通过 [实现][implementations] 定义的关联条目，只要该条目和 (如果适用) trait 可访问，则可以在外部访问。
+否则，与在模块中声明该条目的含义相同。
 
-不会隐式捕获包含函数的泛型参数、参数和局部变量。
+不会隐式捕获包含它的函数的泛型参数、参数和局部变量。
 例如， `inner` 无法访问 `outer_var` 。
 {==+==}
 
@@ -89,7 +89,7 @@ fn outer() {
 fn outer() {
   let outer_var = true;
 
-  fn inner() { /* outer_var 在这里不在作用域内。 */ }
+  fn inner() { /* outer_var 不在作用域中。 */ }
 
   inner();
 }
@@ -135,17 +135,18 @@ If an `else` block is present, the pattern may be refutable.
 If the pattern does not match (this requires it to be refutable), the `else` block is executed.
 The `else` block must always diverge (evaluate to the [never type]).
 {==+==}
-`let` 语句引入了一组由 [模式][pattern] 给定的新 [变量][variables] 。模式可选地后跟一个类型注释，然后以初始化表达式结束，或者跟随可选的 `else` 块。
+`let` 语句引入了一组由 [模式][pattern] 给定的新 [变量][variables] 。
+模式可选地后跟一个类型注释，然后以初始化表达式结束，或者跟随可选的 `else` 块。
 当没有给出类型注释时，编译器将推断类型，如果没有足够的类型信息进行明确推断，则会发出错误信号。
-任何由变量声明引入的变量在声明点到包含块范围的结尾之间都可见，除非它们被另一个变量声明隐藏。
+任何由变量声明引入的变量在声明处到包含块范围的结尾处之间可见，除非该变量被另一个同名变量声明隐藏。
 
 如果不存在 `else` 块，则模式必须是不可拒绝的。
 如果存在 `else` 块，则模式可以是可拒绝的。
 如果模式不匹配 (这需要它是可拒绝的) ，则执行 `else` 块。
 `else` 块必须始终发散 (求值为 [永不类型][never type] )。
 
-译注："拒绝" (refutable) 和 "不可拒绝" (irrefutable) 表示模式是否能够在任何情况下都成功匹配。
-"发散" (diverge) 指的是一个表达式无法正常终止并返回值的情况。
+译注：'拒绝' 和 '不可拒绝' 表示模式是否能够在任何情况下都成功匹配。
+'发散' 指的是一个表达式是否无法正常终止并返回值。
 {==+==}
 
 
@@ -166,7 +167,7 @@ let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是可变或常量
 let Some(t) = v.pop() else { // 可拒绝的模式需要一个 else 块
     panic!(); // else 块必须发散
 };
-let [u, v] = [v[0], v[1]] else { // 这个模式是不可拒绝的，所以编译器会作为 else 块是冗余的进行代码分析检查
+let [u, v] = [v[0], v[1]] else { // 这个模式是不可拒绝的，所以编译器会认为 else 块是冗余的进行代码分析检查
     panic!();
 };
 ```
@@ -196,11 +197,12 @@ The type of [_ExpressionWithBlock_][expression] expressions when used as stateme
 > &nbsp;&nbsp; &nbsp;&nbsp; [_无块表达式_][expression] `;`\
 > &nbsp;&nbsp; | [_块表达式_][expression] `;`<sup>?</sup>
 
-一个表达式语句是指执行一个表达式并忽略其结果的语句。通常，表达式语句的目的是触发其表达式的副作用。
+ *表达式语句* 是指仅执行表达式并忽略其结果的语句。
+通常，此表达式语句的是为了触发其表达式的副作用。
 
-如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中使用，它可以省略尾随的分号。
-这会导致在将其解析为独立语句和作为另一个表达式的一部分之间产生歧义。在这种情况下，它会被解析为语句。
-当作为语句使用时，[_块表达式_][expression] 表达式的类型必须是单元类型。
+如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中，则可以省略分号。
+这会有可能在解析时，是作为独立语句，还是作为另一个表达式的一部分，而产生歧义。这时，会被解析为语句。
+当 [_块表达式_][expression] 作为语句时，其类型必须是单元类型。
 {==+==}
 
 
@@ -218,13 +220,13 @@ if v.is_empty() {
 {==+==}
 ```rust
 let mut v = vec![1, 2, 3];
-v.pop();          // 忽略 pop 返回的元素
+v.pop();          // 忽略 pop 返回值
 if v.is_empty() {
     v.push(5);
 } else {
     v.remove(0);
 }                 // 分号可以省略。
-[1];              // 独立的表达式语句，不是索引表达式。
+[1];              // 是独立的表达式语句。
 ```
 {==+==}
 
@@ -232,7 +234,7 @@ if v.is_empty() {
 {==+==}
 When the trailing semicolon is omitted, the result must be type `()`.
 {==+==}
-当省略了语句结尾的分号时，其结果必须是类型为 `()`。
+if 表达式语句省略了结尾的分号，其结果类型为 `()` 。
 {==+==}
 
 

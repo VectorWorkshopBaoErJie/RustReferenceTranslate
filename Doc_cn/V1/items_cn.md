@@ -70,8 +70,8 @@ nested set of [modules]. Every crate has a single "outermost" anonymous module;
 all further items within the crate have [paths] within the module tree of the
 crate.
 {==+==}
-_条目_ 是 crate 的组成部分。条目通过一组嵌套的 [模块][modules] 组织在 crate 中。
-每个 crate 都有一个 "最外层" 的匿名模块；crate 中的所有其他条目都在这个模块树中，有自己的 [路径][paths]。
+_条目_ 是 crate 的具体组件。条目在 [模块][modules] 中排列。
+所有条目都有自己的 [路径][paths] 以决定处在模块树的位置。
 {==+==}
 
 
@@ -79,7 +79,7 @@ _条目_ 是 crate 的组成部分。条目通过一组嵌套的 [模块][module
 Items are entirely determined at compile-time, generally remain fixed during
 execution, and may reside in read-only memory.
 {==+==}
-条目是在编译时完全确定，通常在执行期间保持不变，并可能驻留在只读内存中。
+条目在编译时将完全确定，在运行时通常静态不变，且在内存中只读。
 {==+==}
 
 
@@ -110,7 +110,7 @@ There are several kinds of items:
 * [`use` 声明][`use` declarations] 
 * [函数定义][function definitions] 
 * [类型定义][type definitions] 
-* [结构定义][struct definitions] 
+* [结构体定义][struct definitions] 
 * [枚举定义][enumeration definitions] 
 * [联合体定义][union definitions] 
 * [常量条目][constant items] 
@@ -132,10 +132,10 @@ qualified by the name of the enclosing item, or is private to the enclosing
 item (in the case of functions). The grammar specifies the exact locations in
 which sub-item declarations may appear.
 {==+==}
-某些条目为声明子条目形成了隐式作用域。
-换句话说，在函数或模块内，条目的声明 (在许多情况下) 可以与语句、控制块和类似的结构混合在一起，
-其含义与在作用域外部声明该条目的含义相同 &mdash; 它仍然是静态条目 &mdash; 除了该条目在模块命名空间内的 *路径名称* 由包围条目的名称限定，或者是对包围条目私有的 (在函数的情况下) 。
-语法指定了子条目声明可能出现的确切位置。
+某些条目会形成隐式的作用域，从而包含子条目。
+也就是说，在函数或模块内，条目的声明 (在许多情况下) 可以与语句、控制块等混合，
+该条目的含义与在作用域外部声明相同 &mdash; 但条目仍然是静态的 &mdash; 有所不同的是，该条目在命名空间内的 *路径* 被所包围条目的名称限定，或者仅对于所包围条目是私有的 (在函数的情况下) 。
+相关条目的语法解释了子条目声明可能出现的确切位置。
 {==+==}
 
 

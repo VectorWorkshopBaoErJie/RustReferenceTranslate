@@ -107,18 +107,17 @@ Blocks are just another kind of expression, so blocks, statements, expressions, 
 
 > **Note**: We give names to the operands of expressions so that we may discuss them, but these names are not stable and may be changed.
 {==+==}
-表达式可能具有两个角色: 它总是产生一个值，并且它可能具有效果 (也称为 "副作用" )。
-表达式计算为一个值，在计算期间具有副作用。
-许多表达式包含子表达式，称为表达式的操作数。每种表达式的含义决定了几件事:
+表达式具有两个作用: 总是产生一个值，并可能产生其他效果 (也称为 "副作用" )。
+副作用在表达式计算为一个值的期间产生。
+许多表达式包含子表达式，也称为表达式的操作数。表达式的具体语义决定了以下行为:
 
-* 在计算表达式时是否评估操作数
-* 评估操作数的顺序
-* 如何将操作数的值组合以获取表达式的值
+* 在计算表达式时是否进一步计算操作数
+* 计算操作数的顺序
+* 如何将操作数的值组合以获得表达式的值
 
-通过这种方式，表达式的结构决定了执行的结构。
-块只是另一种表达式，因此块、语句、表达式和块可以递归地嵌套到任意深度。
+块仍是表达式的一种，因此块、语句、表达式和块可以递归嵌套。
 
-> **注意**: 我们给表达式的操作数命名以便于讨论，但这些名称未稳定，可能会更改。
+> **注意**: 给表达式的操作数命名可以便于讨论，但目前这些名称未稳定，可能会更改。
 {==+==}
 
 
@@ -131,7 +130,7 @@ Binary Operators at the same precedence level are grouped in the order given by 
 ## 表达式优先级
 
 Rust 运算符和表达式的优先级按照以下顺序进行排列，从强到弱。
-在相同优先级的二元运算符中，根据它们的结合性给出了它们的分组顺序。
+在相同优先级的二元运算符中，根据其结合性得出分组顺序。
 {==+==}
 
 
@@ -190,8 +189,8 @@ Other expressions either don't take operands or evaluate them conditionally as d
 {==+==}
 ## 操作数的求值顺序
 
-以下表达式列表的所有表达式都以相同的方式对其操作数进行评估，如在列表后面所述。
-其他表达式要么不需要操作数，要么根据其各自的页面上描述的条件进行有条件的评估。
+以下表达式列表的所有表达式都以相同的方式对其操作数进行计算。
+其他表达式要么不需要操作数，要么根据其各自的语法进行有条件的计算。
 {==+==}
 
 
@@ -245,10 +244,10 @@ Expressions taking multiple operands are evaluated left to right as written in t
 > **Note**: Which subexpressions are the operands of an expression is
 > determined by expression precedence as per the previous section.
 {==+==}
-这些表达式的操作数在应用表达式的效果之前进行求值。
+这些表达式的操作数在产生表达式副作用之前进行求值。
 取多个操作数的表达式按照源代码中从左到右的顺序进行求值。
 
-> **注意**: 哪些子表达式是一个表达式的操作数由前面的 "表达式优先级" 部分决定。
+> **注意**: 其子表达式是否为一个表达式的操作数由前面的 "表达式优先级" 决定。
 {==+==}
 
 
@@ -272,7 +271,7 @@ assert_eq!(
 ```
 {==+==}
 ```rust
-# // 在这个例子中使用 `Vec` 而不是数组是为了避免引用，因为在编写此示例时没有稳定的拥有数组迭代器。
+# // 在这个例子中使用 `Vec` 而不是数组，是为了避免引用，因为在编写此示例时，数组的迭代器特性还没有稳定。
 let mut one_two = vec![1, 2].into_iter();
 assert_eq!(
     (1, 2),
@@ -285,7 +284,7 @@ assert_eq!(
 {==+==}
 > **Note**: Since this is applied recursively, these expressions are also evaluated from innermost to outermost, ignoring siblings until there are no inner subexpressions.
 {==+==}
-> **注意**: 由于这个规则是递归应用的，所以这些表达式也是从内到外依次求值的，直到没有更深层次的子表达式。在这个过程中会忽略同级的表达式。
+> **注意**: 由于这个规则是递归的，所以这些表达式从内到外依次求值，直到没有更深层次的子表达式。在这个过程中会暂时忽略同级的表达式。
 {==+==}
 
 
@@ -305,14 +304,12 @@ A *value expression* is an expression that represents an actual value.
 {==+==}
 ## 占位表达式和值表达式
 
-表达式分为两个主要类别: 占位表达式和值表达式；
-还有第三个次要的表达式类别称为可赋值表达式。
-在每个表达式中，操作数也可以出现在占位上下文或值上下文中。
-表达式的评估取决于它自己的类别和它所在的上下文。
+表达式从求值的特性上可区分为: 占位表达式和值表达式，以及次要的可赋值表达式。
+在表达式中，操作数可以出现在占位上下文中或值上下文中。
 
-*占位表达式* 是表示内存占位的表达式。这些表达式是 [路径][paths] ，它们引用局部变量、 [静态变量][static variables] 、 [解引用][deref] 、 [数组索引][array indexing] 表达式 ( `expr[expr]` ) 、 [字段][field] 引用 (`expr.f`) 和带括号的占位表达式。所有其他表达式都是值表达式。
+*占位表达式* 是表示内存地址的表达式。这些表达式以 [路径][paths] 引用局部变量、 [静态变量][static variables] 、 [解引用][deref] 、 [数组索引][array indexing] 表达式 ( `expr[expr]` ) 、 [字段][field] 引用 (`expr.f`) 和带括号的占位表达式。其他表达式都是值表达式。
 
-*值表达式* 是表示实际值的表达式。
+*值表达式* 是表示真实值的表达式。
 {==+==}
 
 
@@ -342,6 +339,8 @@ The following contexts are *place expression* contexts:
 * [`if let`] 、 [`match`][match] 或 [`while let`] 表达式的 [被匹配项][scrutinee] 。
 * [结构体函数式更新][functional update] 表达式的基础。
 
+译注： 基础这个概念在多处被使用，类似于基类，但 rust 中没传统继承这概念，使用基类将可能引起读者混淆。
+
 > 注意: 从历史上看，占位表达式称为左值，值表达式称为右值。
 {==+==}
 
@@ -362,7 +361,7 @@ Explicitly, the assignee expressions are:
 Arbitrary parenthesisation is permitted inside assignee expressions.
 {==+==}
 *可赋值表达式* 是指出现在 [赋值][assign] 表达式的左操作数的表达式。
-明确地说，可赋值表达式表达式包括：
+确切来说，可赋值表达式可以是：
 
 - 占位表达式
 - [_下划线表达式_][_UnderscoreExpression_]。
@@ -372,7 +371,7 @@ Arbitrary parenthesisation is permitted inside assignee expressions.
 - 包含可赋值表达式的 [_结构体表达式_][_StructExpression_] (可包含命名字段) 。
 - [_单元结构体_][_StructExpression_]。
 
-在可赋值表达式中允许任意括号化。
+在可赋值表达式中允许使用任意括号。
 {==+==}
 
 
@@ -394,18 +393,18 @@ In all other cases, trying to use a place expression in a value expression conte
 {==+==}
 ### 移动和复制类型
 
-当在值表达式上下文中评估一个占位表达式，或者通过值在模式中绑定一个占位表达式时，它表示该内存占位中保存的值。
-如果该值的类型实现了 [`Copy`]，那么该值将被复制。
-在其余情况下，如果该类型是 [`Sized`]，那么可能可以移动该值。
-只有以下占位表达式可以移出：
+当在值表达式上下文中计算占位表达式，或者通过值在模式中绑定占位表达式时，它表示该内存位置所存储的值。
+如果该值的类型实现了 [`Copy`] ，那么该值将被复制。
+其它情况，如果该类型是 [`Sized`]，那么可能移动该值。
+只有以下占位表达式可以 '移出' ：
 
-* [变量][Variables]，它们当前未被借用。
+* [变量][Variables]，当前未被借用。
 * [临时值](#temporaries)。
-* 一个占位表达式的 [字段][field] 可以被移出，并且不实现 [`Drop`] 。
-* 具有类型 [`Box<T>`] 的表达式的 [解引用][deref] 结果也可以移出。
+* 未实现 [`Drop`] 的占位表达式的 [字段][field] 可以移出。
+* 具有类型 [`Box<T>`] 的表达式的 [解引用][deref] 结果可以移出。
 
-从评估为本地变量的占位表达式中移动出后，该占位将被取消初始化，不能再读取该占位直到重新初始化它。
-在所有其他情况下，尝试在值表达式上下文中使用一个占位表达式都是错误的。
+在计算时从局部变量的占位表达式中移动出后，该占位将被取消初始化，不能再次读取，直到重新初始化。
+在其他情况，尝试在值表达式上下文中使用占位表达式将产生错误。
 {==+==}
 
 
@@ -420,10 +419,10 @@ The following expressions can be mutable place expression contexts:
 {==+==}
 ### Mutability
 
-要将一个占位表达式赋值、进行可变借用、进行隐式可变借用或绑定到包含 `ref mut` 的模式中，它必须是可变的。
-我们称这些为可变占位表达式。相反，其他占位表达式被称为不可变占位表达式。
+要将一个占位表达式赋值、进行可变借用、进行隐式可变借用或绑定到包含 `ref mut` 的模式中时，则必须是可变的。
+这被称为可变占位表达式，其他称为不可变占位表达式。
 
-下面的表达式可以是可变占位表达式上下文：
+下面的表达式可以是可变占位表达式上下文:
 {==+==}
 
 
@@ -443,11 +442,11 @@ The following expressions can be mutable place expression contexts:
 * 当前没有被借用的可变 [变量][variables] 。
 * [可变 `static` 条目][Mutable `static` items] 。
 * [临时值][Temporary values] 。
-* [字段][field]: 这将在可变占位表达式上下文中求出子表达式。
+* [字段][field]: 这将在可变占位表达式上下文中计算子表达式。
 * `*mut T` 指针的 [解引用][deref] 。
 * 类型为 `&mut T` 的变量或变量字段的解引用。注意：这是对下一条规则的例外情况。
 * 实现 `DerefMut` 的类型的解引用: 这要求被解引用的值在可变占位表达式上下文中求值。
-* 实现 `IndexMut` 的类型的 [数组索引][Array indexing]: 这将在可变占位表达式上下文中求出被索引的值，但不包括索引。
+* 实现 `IndexMut` 的类型的 [数组索引][Array indexing]: 这将在可变占位表达式上下文中计算被索引的值，但不包括索引。
 {==+==}
 
 
@@ -461,7 +460,7 @@ The [drop scope] of the temporary is usually the end of the enclosing statement.
 ### 临时值
 
 在大多数占位表达式上下文中使用值表达式时，会创建一个临时的无名内存位置，并将其初始化为该值。
-表达式评估为该位置，除非它被 [提升][promoted] 为 `static` 静态的。
+表达式计算为该位置，除非它被 [提升][promoted] 为 `static` 静态的。
 临时值的 [丢弃作用域][drop scope] 通常是封闭语句的末尾。
 {==+==}
 
@@ -474,8 +473,8 @@ For example, it is possible to compare two unsized [slices][slice] for equality 
 {==+==}
 ### 隐式借用
 
-某些表达式将会通过隐式借用将一个表达式视为一个占位表达式。
-例如，可以直接比较两个非固定大小的 [切片][slice] 是否相等，因为 `==` 运算符会隐式地借用它的操作数:
+某些表达式将会通过隐式借用将一个表达式作为占位表达式。
+比如，可以直接比较两个非固定大小的 [切片][slice] 是否相等，因为 `==` 运算符会隐式地借用它的操作数:
 {==+==}
 
 
@@ -525,7 +524,7 @@ Implicit borrows may be taken in the following expressions:
 * [字段][field] 表达式中的左操作数。
 * [函数调用][call expressions] 表达式中的左操作数。
 * [数组索引][array indexing] 表达式中的左操作数。
-* [解引用操作符][deref] (`*`)的操作数。
+* [解引用操作符][deref] (`*`) 的操作数。
 * [比较][comparison] 的操作数。
 * [复合赋值][compound assignment] 的左操作数。
 {==+==}
@@ -539,7 +538,8 @@ These traits also exist in `core::ops` and `core::cmp` with the same names.
 {==+==}
 ## trait 重载
 
-许多以下的运算符和表达式可以使用 `std::ops` 或 `std::cmp` 中的 trait 重载为其他类型所用。这些 trait 在 `core::ops` 和 `core::cmp` 中也有相同的名称。
+许多以下的运算符和表达式可以使用 `std::ops` 或 `std::cmp` 中的 trait 重载为其他类型可用。
+这些 trait 在 `core::ops` 和 `core::cmp` 中也有相同的名称。
 {==+==}
 
 

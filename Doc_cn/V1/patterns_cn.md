@@ -141,9 +141,9 @@ When destructuring a data structure with named (but not numbered) fields, it is 
 ## 解构
 
 模式可以用于解构 [structs] 、 [enums] 和 [tuples] 。解构是将一个值分解成其组成部分。
-使用的语法与创建这些值时几乎相同。在一个模式中，其 [被匹配项][scrutinee] 表达式具有 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 代表 *单个* 数据字段，而通配符 `..` 代表 *特定变体的所有* 其余字段。
-当解构具有命名字段 (但未编号) 的数据结构时，允许将 `fieldname` 写成 `fieldname: fieldname` 的简写形式。
-在 Rust 中，解构是一种方便的工具，可用于从结构化数据类型中提取所需数据。
+使用的语法与创建这些值时几乎相同。在一个模式中，其 [被匹配项][scrutinee] 表达式可为 `struct`、`enum` 或 `tuple` 类型，占位符 (`_`) 表示 *单个* 数据字段，而通配符 `..` 表示 *特定变体的所有* 其余字段。
+当解构具有命名字段 (但未编号) 的数据结构时，允许将 `fieldname: fieldname` 的简写为 `fieldname` 。
+从结构化数据类型中提取所需数据时，解构语法很方便。
 {==+==}
 
 
@@ -182,7 +182,7 @@ Examples:
 
 当模式可能无法匹配其所匹配的值时，该模式被称为 *可拒绝的* 。相反， *不可拒绝* 模式总是与其所匹配的值匹配。
 
-译注: 是否可拒绝性只针对 "匹配" 而言。同时需要注意 "可拒绝的" 依然可以匹配，"不可拒绝" 则总是匹配。
+译注: 可拒绝性主要区分了 "匹配" 的彻底性。需注意 "可拒绝的" 依然可以匹配，"不可拒绝" 则总是匹配。
 
 例如:
 {==+==}
@@ -204,7 +204,7 @@ let (x, y) = (1, 2);               // "(x, y)" 是一个不可拒绝的模式
 
 if let (a, 3) = (1, 2) {           // "(a, 3)" 是可拒绝的，将不匹配
     panic!("不应该到达这里");
-} else if let (a, 4) = (3, 4) {    // "(a, 4)" 是可拒绝的，并将匹配
+} else if let (a, 4) = (3, 4) {    // "(a, 4)" 是可拒绝的，并将匹配，且作了值绑定
     println!("匹配到 ({}, 4)", a);
 }
 ```
@@ -269,12 +269,12 @@ Floating-point literals are currently accepted, but due to the complexity of com
 
 </div>
 {==+==}
-_字面值模式_ 正好匹配与字面值创建的值相同的值。
-由于负数不是字面值，字面值模式也接受字面值前面的可选负号，其作用类似于否定运算符。
+_字面值模式_ 匹配与所创建字面值相同的值。
+虽然负数不是字面值，但字面值模式接受字面值前面的可选负号。
 
 <div class="warning">
 
-目前接受浮点型字面值，但由于比较复杂，未来的 Rust 版本中将禁止在字面值模式中使用它们 (参见[问题 #41620](https://github.com/rust-lang/rust/issues/41620))。
+目前接受浮点字面值，但由于行为比较复杂，未来的 Rust 版本中将禁止在字面值模式中使用它们 (参见[问题 #41620](https://github.com/rust-lang/rust/issues/41620))。
 
 </div>
 {==+==}
@@ -342,8 +342,8 @@ This is the most commonly used pattern in variable declarations and parameters f
 {==+==}
 标识符模式将其匹配的值绑定到变量上。
 标识符在模式中必须是唯一的。
-该变量将隐藏作用域中具有相同名称的任何变量。
-新绑定的作用域取决于模式用于何处的上下文 (例如 `let` 绑定或 `match` 分支) 。
+该变量将隐藏作用域中的同名变量。
+新绑定变量的作用域取决于模式所处的上下文 (例如 `let` 绑定或 `match` 分支) 。
 
 仅由标识符组成的模式 (可能带有 `mut` ) 会匹配任何值并将其绑定到该标识符上。这是变量声明和函数及闭包参数中最常用的模式。
 {==+==}
@@ -365,7 +365,10 @@ fn sum(x: i32, y: i32) -> i32 {
 To bind the matched value of a pattern to a variable, use the syntax `variable @ subpattern`.
 For example, the following binds the value 2 to `e` (not the entire range: the range here is a range subpattern).
 {==+==}
-要将模式的匹配值绑定到变量上，请使用语法 `variable @ subpattern` 。
+要将模式的匹配值绑定到指定变量，请使用语法 `variable @ subpattern` 。
+
+译注：这里请区分 '匹配值' 和 '被匹配值' ，被匹配值可以是模式，模式被匹配后可选的会产生绑定行为。
+
 例如，以下代码将值 2 绑定到 `e` (而不是整个区间：这里的区间是一个区间子模式) 。
 {==+==}
 
@@ -388,7 +391,7 @@ match x {
 By default, identifier patterns bind a variable to a copy of or move from the matched value depending on whether the matched value implements [`Copy`].
 This can be changed to bind to a reference by using the `ref` keyword, or to a mutable reference using `ref mut`. For example:
 {==+==}
-默认情况下，标识符模式将根据匹配的值是否实现了 [`Copy`] ，从而确定绑定一个变量到匹配值是复制或移动。
+默认情况下，标识符模式将根据匹配的值是否实现了 [`Copy`] ，从而确定绑定变量到匹配值是复制或移动。
 可以使用 `ref` 关键字将其更改为绑定到一个引用，或使用 `ref mut` 更改为可变引用。例如:
 {==+==}
 
@@ -418,7 +421,7 @@ This syntax is needed because in destructuring subpatterns the `&` operator can'
 For example, the following is not valid:
 {==+==}
 在第一个 match 表达式中，该值被复制 (或移动) 。在第二个 match 中，对同一内存位置的引用被绑定到变量值。
-这种语法是必要的，因为在解构子模式中， `&` 操作符不能应用于 value 的字段。
+这种语法是必要的，因为在解构子模式中， `&` 操作符不能应用于值的字段。
 例如，以下是无效的:
 {==+==}
 
@@ -430,6 +433,7 @@ For example, the following is not valid:
 #    age: u8,
 # }
 # let value = Person { name: String::from("John"), age: 23 };
+ // & 所表达的试图以获得地址的方式进行值绑定被拒绝
 if let Person { name: &person_name, age: 18..=150 } = value { }
 ```
 {==+==}
@@ -471,12 +475,11 @@ It is an error if `ref` or `ref mut` is specified and the identifier shadows a c
 
 Identifier patterns are irrefutable if the `@` subpattern is irrefutable or the subpattern is not specified.
 {==+==}
-因此， `ref` 不是被匹配的内容。
-它的目的仅仅是将匹配的绑定作为引用，而不是复制或移动匹配的内容。
+也就是说 `ref` 所表示的不是被匹配值的类型，而仅是明确绑定以引用的形式，而不是复制或移动值。
 
-[路径模式](#path-patterns) 优先于标识符模式。如果指定了 `ref` 或 `ref mut` ，并且标识符隐藏了一个常量，则会出现错误。
+[路径模式](#path-patterns) 优先于标识符模式。如果指定为 `ref` 或 `ref mut` ，并且标识符隐藏了一个常量，则会出现错误。
 
-如果子模式是不可拒绝的或未指定子模式，则标识符模式是不可拒绝的。
+如果子模式是不可拒绝的或非特定子模式，则标识符模式是不可拒绝的。
 {==+==}
 
 
@@ -489,8 +492,8 @@ Example:
 {==+==}
 ### 绑定形式
 
-为了提供更好的人机交互，模式运行在不同的 *绑定形式* 中，以便更容易地将引用绑定到值。
-当引用值被非引用模式匹配时，它会自动被视为 `ref` 或 `ref mut` 绑定。
+为了使绑定更加友好，会尝试不同的 *绑定形式* ，旨在更容易地将引用绑定到值。
+当引用值被非引用模式匹配时，会自动被视为 `ref` 或 `ref mut` 绑定。
 例如：
 {==+==}
 
@@ -532,9 +535,9 @@ Trying to use `person` as a whole or `person.name` would result in an error beca
 {==+==}
 *非引用模式* 包括除绑定、 [通配符模式](#wildcard-pattern) (`_`)、引用类型的 [`const` 模式](#path-patterns) 和 [引用模式](#reference-patterns) 之外的所有模式。
 
-如果一个绑定形式没有明确指定 `ref` 、 `ref mut` 或 `mut` ，则会使用 *默认绑定形式* 来确定变量如何被绑定。
-默认绑定形式开始于 "移动" 形式，使用移动语义。
-匹配模式时，编译器从外向内开始。
+如果一个绑定的形式没有明确指定 `ref` 、 `ref mut` 或 `mut` ，则会使用 *默认绑定形式* 来确定变量如何被绑定。
+默认绑定形式首先为 "移动" 形式，使用移动语义。
+匹配模式时，编译器从外向内进行。
 每次使用非引用模式匹配引用时，它将自动解引用该值并更新默认绑定形式。
 引用将默认绑定形式设置为 `ref` 。
 可变引用将形式设置为 `ref mut` ，除非形式已经是 `ref` ，否则它将保持为 `ref` 。
@@ -599,8 +602,8 @@ It is used to ignore values when they don't matter.
 Inside other patterns it matches a single data field (as opposed to the `..` which matches the remaining fields).
 Unlike identifier patterns, it does not copy, move or borrow the value it matches.
 {==+==}
-_通配符模式_ (下划线符号) 匹配任何值。它用于在不重要时忽略值。
-在其他模式内部，它匹配单个数据字段 (与 `..` 匹配剩余字段不同)。
+_通配符模式_ (下划线符号) 匹配任何值。其作用是忽略不重要的值。
+在其他模式内部，它匹配单个数据字段 (与 `..` 匹配多个剩余字段不同)。
 与标识符模式不同，它不会复制、移动或借用它所匹配的值。
 {==+==}
 
@@ -866,11 +869,11 @@ For example, a pattern `'m'..='p'` will match only the values `'m'`, `'n'`, `'o'
 区间模式可以是闭合或半开的。
 
 如果区间模式有下界和上界，那么它是 *闭合的* 区间模式。
-唯一的闭合区间模式是包含区间模式。
+唯一完整的闭合区间模式是包含区间模式。
 
 *包含区间模式* 匹配在它的边界之间和包括边界两侧的所有值。
-它由其下界、跟着 `..=` 符号、以及它的上界组成。
-它的类型是它的上界和下界的类型统一。
+由下界、 `..=` 符号、以及上界组成。
+其类型与上界和下界的类型一致。
 
 例如，模式 `'m'..='p'` 将只匹配值 `'m'`、`'n'`、`'o'` 和 `'p'`。
 {==+==}
@@ -896,20 +899,20 @@ For example, `..=10` will match 10, 1, 0, and for signed integer types, all nega
 Half-open range patterns cannot be used as the top-level pattern for subpatterns in [slice patterns](#slice-patterns).
 {==+==}
 下边界不能大于上边界，即在 `a..=b` 中，必须满足 a &le; b 。
-例如，有一个区间模式 `10..=0` 是错误的。
+例如，区间模式 `10..=0` 是错误的。
 
-当区间模式仅具有上限或下限时，它们是 *半开放的* 。
-它们的类型与其上限或下限相同。
+当区间模式仅具有上界或下界时，是 *半开的* 。
+其类型与其上界或下界一致。
 
-仅具有下限的半开放区间写为其下限后跟 `..` 。
-这些区间模式将匹配大于或等于下限的任何值。
-例如， `1..` 将匹配 1 、 9 或 9001 ，或 9007199254740991 (如果它是适当大小的) ，但不匹配 0，对于有符号整数不匹配负数。
+仅具有下界的半开区间，形式为其下界后跟 `..` 。
+这些区间模式将匹配大于或等于下界的任何值。
+例如， `1..` 将匹配 1 、 9 或 9001 ，或 9007199254740991 (如果它是合适大小值) ，但不匹配 0 ，对于有符号整数不匹配负数。
 
-边界可以是字面值或指向常量值的路径。仅具有上限的半开放区间写为 `..=` 后跟其上限。
-这些区间模式将匹配小于或等于上限的任何值。
-例如，`..=10` 将匹配 10、1、0，对于有符号整数类型还会匹配所有负值。
+边界可以是字面值或指向常量值的路径。仅具有上界的半开区间写为 `..=` 后跟其上界。
+这些区间模式将匹配小于或等于上界的任何值。
+例如，`..=10` 将匹配 10、1、0，对于有符号整数类型还会匹配所有负数。
 
-半开放的区间模式不能用作 [切片模式](#slice-patterns) 中子模式的顶层模式。
+半开区间模式不能用作 [切片模式](#slice-patterns) 中子模式的顶层模式。
 {==+==}
 
 
@@ -933,11 +936,11 @@ If is a literal preceded by a `-`, it has the same type as the corresponding [li
 * `-` 后跟一个整数或浮点数字面值。
 * [路径][path]。
 
-如果边界值是作为路径写的，在宏展开后，该路径必须解析为类型为 `char` 、整数类型或浮点类型的常量条目。
+如果边界值为路径，在宏展开后，该路径必须解析为类型为 `char` 、整数类型或浮点类型的常量条目。
 
-边界的类型和值取决于它的写法。如果边界是一个路径，则模式具有路径解析为的常量的类型和值。
-如果是字面值，则它具有相应的字面表达式的类型和值。
-如果是一个以 `-` 开头的字面值，则它具有与相应字面值表达式相同的类型，以及相应字面值表达式的值的 [取反][negating] 的值。
+边界的类型和值取决于其书写方式。如果边界是一个路径，则模式具有路径解析后的常量的类型和值。
+如果是字面值，则具有相应的字面值表达式的类型和值。
+如果是以 `-` 开头的字面值，则具有与相应字面值表达式相同的类型，以及相应字面值表达式的值的 [取反][negating] 后的值。
 {==+==}
 
 
@@ -1035,7 +1038,7 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 > **Note**: Although range patterns use the same syntax as [range expressions], there are no exclusive range patterns.
 > That is, neither `x .. y` nor `.. x` are valid range patterns.
 {==+==}
-固定宽度整数类型和 `char` 类型的区间模式在它们跨越类型的所有可能值时是不可拒绝的。
+固定宽度整数类型和 `char` 类型的区间模式，在其跨度为类型的所有可能值时，是不可拒绝的。
 例如，`0u8..=255u8` 是不可拒绝的。
 整数类型的值区间是从最小值到最大值的闭合区间。
 `char` 类型的值区间恰好包含所有 Unicode 标量值的区间：`'\U{0000}'..='\U{D7FF}'` 和 `'\U{E000}'..='\U{10FFFF}'`。
@@ -1044,7 +1047,7 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 
 > **版次差异**: 在 2021 版本之前，闭合区间模式也可以使用 `...` 作为 `..=` 的替代，具有相同的含义。
 
-> **注意**：虽然区间模式使用与 [区间表达式](https://doc.rust-lang.org/reference/expressions/range-expr.html) 相同的语法，但不存在独占区间模式。也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
+> **注意**：虽然区间模式使用与 [区间表达式](https://doc.rust-lang.org/reference/expressions/range-expr.html) 相同的语法，但不存在专属的区间模式。也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
 {==+==}
 
 
@@ -1071,7 +1074,7 @@ Reference patterns dereference the pointers that are being matched and, thus, bo
 
 For example, these two matches on `x: &i32` are equivalent:
 {==+==}
-引用模式会对正在匹配的指针进行解引用，因此会将它们借用。
+引用模式会对匹配值的指针进行解引用，并借用。
 
 例如，以下两个对 `x: &i32` 的匹配是等效的:
 {==+==}
@@ -1098,7 +1101,7 @@ Adding the `mut` keyword dereferences a mutable reference. The mutability must m
 
 Reference patterns are always irrefutable.
 {==+==}
-引用模式的语法产生式必须匹配标记 `&&` 来匹配引用到引用，因为它本身是一个标记，不是两个 `&` 标记。
+引用模式的语法产生式决定了必须以标记 `&&` 来匹配引用到引用，该标记本身是单个标记，不是两个 `&` 标记。
 
 添加 `mut` 关键字会对可变引用进行解引用。
 可变性必须与引用的可变性相匹配。
@@ -1182,7 +1185,7 @@ They are also used to [destructure](#destructuring) a struct.
 On a struct pattern, the fields are referenced by name, index (in the case of tuple structs) or ignored by use of `..`:
 {==+==}
 结构体模式匹配满足其子模式定义的所有条件的结构体值。
-它们还用于 [解构](#destructuring) 结构体。
+可用于 [解构](#destructuring) 结构体。
 
 在结构体模式中，可以通过名称、索引 (对于元组结构体) 引用字段，或通过使用 `..` 忽略字段：
 {==+==}
@@ -1310,7 +1313,8 @@ They are also used to [destructure](#destructuring) a tuple struct or enum value
 
 A tuple struct pattern is refutable when one of its subpatterns is refutable.
 {==+==}
-元组结构体模式匹配元组结构体和枚举值，匹配所有符合其子模式定义的条件。它们还可用于 [解构](#destructuring) 元组结构体或枚举值。
+元组结构体模式匹配元组结构体和枚举值，匹配所有符合其子模式定义的条件。
+可用于 [解构](#destructuring) 元组结构体或枚举值。
 
 当子模式中有不可拒绝模式时，元组结构体模式就是可拒绝的。
 {==+==}
@@ -1354,8 +1358,8 @@ The tuple pattern is refutable when one of its subpatterns is refutable.
 
 An example of using tuple patterns:
 {==+==}
-元组模式匹配满足其子模式定义的所有条件的元组值。它们也用于 [解构](#destructuring) 元组。
-形式为 `(..)` 且具有单个 [_剩余模式_][_RestPattern_] 的是一种特殊形式，它不需要逗号，可以匹配任意大小的元组。
+元组模式匹配满足其子模式定义的所有条件的元组值。可用于 [解构](#destructuring) 元组。
+形式为 `(..)` 且具有单个 [_剩余模式_][_RestPattern_] 是一种特殊形式，不需要添加逗号，可以匹配任意大小的元组。
 
 当其子模式中有一个可拒绝时，元组模式是可拒绝的。
 
@@ -1398,8 +1402,8 @@ assert_eq!(b, "ten");
 Enclosing a pattern in parentheses can be used to explicitly control the precedence of compound patterns.
 For example, a reference pattern next to a range pattern such as `&0..=5` is ambiguous and is not allowed, but can be expressed with parentheses.
 {==+==}
-将一个模式括在括号中可以用于显式地控制复合模式的优先级。
-例如，一个引用模式紧贴着一个区间模式，如 `&0..=5` 是有歧义的并且不被允许，但可以用括号来表示。
+将一个模式括在括号中时，可以显式地控制复合模式的优先级。
+例如，一个引用模式紧跟一个区间模式，如 `&0..=5` 将有歧义且不被允许，但可以用括号来表示。
 {==+==}
 
 
@@ -1493,7 +1497,7 @@ Within a slice, a half-open range pattern like `a..` must be enclosed in parenth
 切片模式在匹配数组时是不可拒绝的，只要每个元素都是不可拒绝的即可。
 在匹配切片时，只有在使用单个 `..` [剩余模式](#rest-patterns) 或使用 `..` 剩余模式作为子模式的 [标识符模式](#identifier-patterns) 时才是不可拒绝的。
 
-在一个切片内，半开区间模式如 `a..` 必须用括号括起来，例如 `(a..)`，以明确其意图是匹配单个值。
+在一个切片内，半开区间模式如 `a..` 必须用括号括起来，例如 `(a..)`，以明确是匹配单个值。
 {==+==}
 
 
@@ -1543,8 +1547,9 @@ _路径模式_ 是指引用常量值或没有字段的结构体或枚举变体�
 * 常量
 * 关联常量
   
-修饰的路径模式只能引用关联常量。常量不能是联合类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` (不仅仅实现) 。
-当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可拒绝类型的常量时，路径模式是不可拒绝的。当路径模式引用可拒绝的常量或具有多个变体的枚举变体时，它们是可拒绝的。
+修饰的路径模式只能引用关联常量。常量不能是联合体类型。结构体和枚举常量必须有 `#[derive(PartialEq, Eq)]` 。
+当路径模式引用结构体或枚举变体并且枚举只有一个变体或类型为不可拒绝类型的常量时，路径模式是不可拒绝的。
+当路径模式引用可拒绝的常量或具有多个变体的枚举变体时，是可拒绝的。
 {==+==}
 
 
@@ -1557,7 +1562,7 @@ Syntactically, or-patterns are allowed in any of the places where other patterns
 {==+==}
 ## 或模式
 
-_或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。它们可以任意嵌套。
+_或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B | C` )。可以任意嵌套。
 从语法上讲，或模式可以在任何其他模式允许的地方使用 (由 _模式_ 产生式表示)，但有一些例外情况，例如 `let` 绑定和函数和闭包参数 (由 _模式非顶层项_ 产生式表示) 。
 {==+==}
 
@@ -1590,17 +1595,17 @@ _或模式_ 是指可以匹配两个或更多子模式的模式 (例如 `A | B |
 
 1. 对于任意的模式 `p | q` ，其中 `p` 和 `q` 是任意模式，如果:
 
-   + 推断出的 `p` 的类型不能与推断出的 `q` 的类型统一，或者
+   + 推断出的 `p` 的类型不能与推断出的 `q` 的类型一致，或者
    + 在 `p` 和 `q` 中没有引入相同的绑定，或者
-   + 在 `p` 和 `q` 中具有相同名称的绑定的类型或绑定模式不能相互统一，那么此模式将被视为非法。
+   + 在 `p` 和 `q` 中具有相同名称的绑定的类型或绑定模式不能相互一致，那么此模式将被视为非法。
    
-   在上述所有情况中，类型统一都是确切的，且不应用隐式 [类型强制转换][type coercions] 。
+   在上述所有情况中，类型一致都是确切的，且不应用隐式 [类型强制转换][type coercions] 。
 
-2. 在类型检查表达式 `match e_s { a_1 => e_1, ... a_n => e_n }` 时，对于每个包含形式为 `p_i | q_i` 的模式的匹配分支 `a_i` ，如果在其所处的深度 `d` 处，`e_s` 中的片段类型不能与 `p_i | q_i` 统一，则模式 `p_i | q_i` 被视为非法。
+2. 在类型检查表达式 `match e_s { a_1 => e_1, ... a_n => e_n }` 时，对于每个包含形式为 `p_i | q_i` 的模式的匹配分支 `a_i` ，如果在其所处的深度 `d` 处，`e_s` 中的片段类型不能与 `p_i | q_i` 一致，则模式 `p_i | q_i` 被视为非法。
 
 3. 在考虑穷尽性时，将模式 `p | q` 视为同时匹配 `p` 和 `q` 。对于某个构造函数 `c(x, ..)`，分配律适用于 `c(p | q, ..rest)` 和 `c(p, ..rest) | c(q, ..rest)` 。递归应用此规则，直到不存在除顶层外的形式为 `p | q` 的嵌套模式为止。
 
-   请注意，*"构造函数"* 并不是指元组结构模式，而是指任何产品类型的模式。这包括枚举变体、元组结构、具有命名字段的结构体、数组、元组和切片。
+   请注意，*"构造函数"* 并不是指元组结构模式，而是指任何所产生类型的模式。这包括枚举变体、元组结构、具有命名字段的结构体、数组、元组和切片。
 {==+==}
 
 
@@ -1630,7 +1635,7 @@ For example, `x @ A(..) | B(..)` will result in an error that `x` is not bound i
 ### 与其他未限定模式的优先级
 
 正如本章的其他地方所示，有几种语法上未限定的模式，包括标识符模式、引用模式和或模式。或模式始终具有最低的优先级。
-这使我们可以为未来可能的类型注释功能保留语法空间，并减少歧义。
+这使我们可以为未来可能的类型注解功能保留语法空间，并减少歧义。
 例如，`x @ A(..) | B(..)` 将导致错误，即 `x` 在所有模式中都未绑定。`&A(x) | B(x)` 将导致在不同的子模式中 `x` 类型不匹配的错误。
 {==+==}
 

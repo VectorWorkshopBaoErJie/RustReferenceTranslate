@@ -43,8 +43,8 @@ An _attribute_ is a general, free-form metadatum that is interpreted according
 to name, convention, language, and compiler version. Attributes are modeled
 on Attributes in [ECMA-335], with the syntax coming from [ECMA-334] \(C#).
 {==+==}
- _属性_ 是通用的、自由形式的元数据，根据名称、约定、语言和编译器版本来解释。
-属性以 [ECMA-335] 中的属性为模型，其语法来自 [ECMA-334] \(C#) 。
+ _属性_ 语法形式更加通用和自由，具体的所表达的语义，根据名称、约定及编译器版本解释。
+rust 属性以 [ECMA-335] 中的属性为模型，其语法来自 [ECMA-334] \(C#) 。
 {==+==}
 
 
@@ -53,8 +53,8 @@ _Inner attributes_, written with a bang (`!`) after the hash (`#`), apply to the
 item that the attribute is declared within. _Outer attributes_, written without
 the bang after the hash, apply to the thing that follows the attribute.
 {==+==}
- _内部属性_ ，在井号 (`#`) 后跟一个叹号 (`!`)，使声明应用于内部。
- _外围属性_ ，在哈希值后不加叹号，该属性应用于随后的条目。
+ _内部属性_ ，以井号 (`#`) 后跟一个叹号 (`!`) 形式声明，应用到包含它的条目内部。
+ _外围属性_ ，在井号后不加叹号，应用于随后的条目。
 {==+==}
 
 
@@ -65,15 +65,16 @@ Attributes other than macro attributes also allow the input to be an equals
 sign (`=`) followed by an expression. See the [meta item
 syntax](#meta-item-attribute-syntax) below for more details.
 {==+==}
-属性由一个路径和一个可选的被定界的令牌树组成，该令牌树的解释由属性定义。
-除宏属性之外的属性还允许输入是一个等号 (`=`) 后跟一个表达式。更多细节请参见下面的 [元条目语法](#meta-item-attribute-syntax) 。
+属性由一个路径和一个可选的定界符号 token 树组成，该 token 树的具体含义由属性解释。
+除属性宏之外的属性还允许输入是一个等号 (`=`) 后跟一个表达式。
+参阅下面的 [元项语法](#meta-item-attribute-syntax) 。
 {==+==}
 
 
 {==+==}
 Attributes can be classified into the following kinds:
 {==+==}
-属性可分为以下几种。
+属性有 4 种:
 {==+==}
 
 
@@ -118,7 +119,7 @@ Attributes may be applied to many things in the language:
   the outer expression of an [expression statement] or the final expression of
   another block expression.
 {==+==}
-* [块表达式][Block expressions] 可以接受外围和内部属性，但是只有当它们是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时才能接受。
+* [块表达式][Block expressions] 可以接受外围和内部属性，但是只有是 [表达式语句][expression statement] 的外部表达式或另一个块表达式的最终表达式时。
 {==+==}
 
 
@@ -127,7 +128,7 @@ Attributes may be applied to many things in the language:
 * [Match expression arms][match expressions] accept outer attributes.
 * [Generic lifetime or type parameter][generics] accept outer attributes.
 {==+==}
-* [Enum] 变体和 [struct] 和 [union] 字段接受外围属性。
+* [枚举][Enum] 变体和 [结构体][struct] 和 [联合体][union] 字段接受外围属性。
 * [匹配表达式分支][match expressions] 接受外围属性。
 * [泛型生命周期或类型参数][generics] 接受外围属性。
 {==+==}
@@ -189,7 +190,7 @@ fn some_unused_variables() {
 ```
 {==+==}
 ```rust
-// 应用于封闭模块或 crate 的通用元数据 。
+// 应用于顶层模块或 crate  。
 #![crate_type = "lib"]
 
 // 标记为单元测试的函数
@@ -204,11 +205,11 @@ mod bar {
     /* ... */
 }
 
-// 用于屏蔽警告/错误的代码分析属性
+// 用于屏蔽警告/错误的代码分析
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
-// 将内部属性应用于整个函数。
+// 整个函数的内部属性
 fn some_unused_variables() {
   #![allow(unused_variables)]
 
@@ -223,7 +224,7 @@ fn some_unused_variables() {
 {==+==}
 ## Meta Item Attribute Syntax
 {==+==}
-## 元条目属性语法
+## 元项属性语法
 {==+==}
 
 
@@ -231,7 +232,7 @@ fn some_unused_variables() {
 A "meta item" is the syntax used for the _Attr_ rule by most [built-in
 attributes]. It has the following grammar:
 {==+==}
- "元条目" 是大多数 [内置属性][built-in attributes] 中用于 _属性_ 规则的语法，具体语法如下：
+ "元项" 是大多数 [内置属性][built-in attributes] 规则的语法，具体如下：
 {==+==}
 
 
@@ -250,16 +251,16 @@ attributes]. It has the following grammar:
 > &nbsp;&nbsp; | [_Expression_]
 {==+==}
 > **<sup>语法</sup>**\
-> _元条目_ :\
+> _元项_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_简单路径_][_SimplePath_]\
 > &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `=` [_表达式_][_Expression_]\
 > &nbsp;&nbsp; | [_简单路径_][_SimplePath_] `(` _元_<sup>?</sup> `)`
 >
 > _元_ :\
-> &nbsp;&nbsp; _元条目内部_ ( `,` 元条目内部 )<sup>\*</sup> `,`<sup>?</sup>
+> &nbsp;&nbsp; _元项内部_ ( `,` 元项内部 )<sup>\*</sup> `,`<sup>?</sup>
 >
-> _元条目内部_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _元条目_\
+> _元项内部_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _元项_\
 > &nbsp;&nbsp; | [_表达式_][_Expression_]
 {==+==}
 
@@ -269,8 +270,8 @@ Expressions in meta items must macro-expand to literal expressions, which must n
 include integer or float type suffixes. Expressions which are not literal expressions
 will be syntactically accepted (and can be passed to proc-macros), but will be rejected after parsing.
 {==+==}
-元条目中的表达式必须宏展开为字面表达式，不得包含整数或浮点类型后缀。
-不是字面值表达式的表达式将在语法分析后被拒绝，但可以传递给过程宏。
+元项中的表达式必须能够被宏展开字面值表达式，不得包含整数或浮点类型后缀。
+非字面值表达式将在语法分析后被拒绝，但过程宏没有这一限制。
 {==+==}
 
 
@@ -280,8 +281,8 @@ after that outer macro. For example, the following code will expand the
 `Serialize` proc-macro first, which must preserve the `include_str!` call in
 order for it to be expanded:
 {==+==}
-请注意，如果属性出现在另一个宏中，它将在该外部宏之后扩展。
-例如，以下代码将首先扩展 `Serialize` 过程宏，该宏必须保留 `include_str!` 调用，以便它能够被扩展:
+请注意，另一个宏中的属性，在该外部宏展开之后再展开。
+例如，以下代码将首先扩展 `Serialize` 过程宏，展开后如果保留了 `include_str!` ，那么其随后展开:
 {==+==}
 
 
@@ -301,7 +302,7 @@ struct Foo {
 {==+==}
 Additionally, macros in attributes will be expanded only after all other attributes applied to the item:
 {==+==}
-此外，在应用于条目的所有其他属性之后，属性中的宏才会被展开:
+此外，条目的所有属性展开之后，属性所包含的宏才会展开:
 {==+==}
 
 
@@ -316,7 +317,7 @@ fn foo() {}
 {==+==}
 ```rust ignore
 #[macro_attr1] // 首先展开
-#[doc = mac!()] // `mac!` 第4展开
+#[doc = mac!()] // `mac!` 第4展开 。这里的 doc 属性不会主动展开
 #[macro_attr2] // 第二展开
 #[derive(MacroDerive1, MacroDerive2)] // 第三展开
 fn foo() {}
@@ -329,7 +330,8 @@ Various built-in attributes use different subsets of the meta item syntax to
 specify their inputs. The following grammar rules show some commonly used
 forms:
 {==+==}
-各种内置属性使用不同的元条目语法子集来指定其输入。以下语法规则展示了一些常用形式:
+各种内置属性所使用的元项语法会有所不同。
+以下是一些常用形式:
 {==+==}
 
 
@@ -371,7 +373,7 @@ forms:
 {==+==}
 Some examples of meta items are:
 {==+==}
-元条目的一些例子:
+一些例子:
 {==+==}
 
 
@@ -406,7 +408,7 @@ An attribute is either active or inert. During attribute processing, *active
 attributes* remove themselves from the thing they are on while *inert attributes*
 stay on.
 {==+==}
-一个属性可以是活动的或惰性的。在属性处理过程中， *活动属性* 会从它们所在的元素中移除，而 *惰性属性* 则会保留。
+属性会是活动的或惰性的。对属性进行解释后 *活动属性* 会被移除，而 *惰性属性* 会被保留。
 {==+==}
 
 
@@ -415,7 +417,8 @@ The [`cfg`] and [`cfg_attr`] attributes are active. The [`test`] attribute is
 inert when compiling for tests and active otherwise. [Attribute macros] are
 active. All other attributes are inert.
 {==+==}
- [`cfg`] 和 [`cfg_attr`] 属性是活动属性。 [`test`] 属性在测试编译时是惰性的，而在其他情况下是活动的。 [属性宏][Attribute macros] 是活动属性。所有其他属性都是惰性的。
+ [`cfg`] 和 [`cfg_attr`] 属性是活动属性。 [`test`] 属性在测试编译时是惰性的，而在其他情况下是活动的。
+ [属性宏][Attribute macros] 是活动属性。所有其他属性都是惰性的。
 {==+==}
 
 
@@ -432,8 +435,8 @@ in its own namespace in the [tool prelude]. The first segment of the attribute
 path is the name of the tool, with one or more additional segments whose
 interpretation is up to the tool.
 {==+==}
-编译器可以允许外部工具的属性，其中每个工具在自己的命名空间中。
-属性路径的第一个部分是工具的名称，后面可能有一个或多个其他部分，其解释取决于工具本身。
+编译器也接收外部工具的属性，在 [tool prelude] 命名空间中。
+属性路径的第一个部分是工具的名称，后面可能有一个或多个其他部分，其含义由工具解释。
 {==+==}
 
 
@@ -442,7 +445,7 @@ When a tool is not in use, the tool's attributes are accepted without a
 warning. When the tool is in use, the tool is responsible for processing and
 interpretation of its attributes.
 {==+==}
-当一个工具没有被使用时，该工具的属性会被接受而不会产生警告。
+当一个工具没有被使用时，允许工具属性且不会产生警告。
 当该工具正在使用时，该工具需要负责处理和解释其属性。
 {==+==}
 
@@ -451,7 +454,7 @@ interpretation of its attributes.
 Tool attributes are not available if the [`no_implicit_prelude`] attribute is
 used.
 {==+==}
-工具属性在使用 [`no_implicit_prelude`] 属性时不可用。
+工具属性在启用 [`no_implicit_prelude`] 属性后不可用。
 {==+==}
 
 
@@ -483,7 +486,7 @@ pub fn f() {}
 {==+==}
 > Note: `rustc` currently recognizes the tools "clippy" and "rustfmt".
 {==+==}
-> 注意: `rustc` 目前可以识别工具 "clippy" 和 "rustfmt" 。
+> 注意: `rustc` 目前可以识别 "clippy" 和 "rustfmt" 两个工具。
 {==+==}
 
 
@@ -507,8 +510,8 @@ The following is an index of all built-in attributes.
   - [`cfg_attr`] — Conditionally includes attributes.
 {==+==}
 - 条件编译
-  - [`cfg`] — 控制条件编译
-  - [`cfg_attr`] — 条件包含属性
+  - [`cfg`] — 条件编译
+  - [`cfg_attr`] — 条件展开属性
 {==+==}
 
 
@@ -548,7 +551,7 @@ The following is an index of all built-in attributes.
 {==+==}
 - 宏
   - [`macro_export`] — 导出一个 `macro_rules` 宏，用于跨 crate 使用。
-  - [`macro_use`] — 展开宏的可见性，或从其他 crate 导入宏。
+  - [`macro_use`] — 扩展宏的可见性，或从其他 crate 导入宏。
   - [`proc_macro`] — 定义函数式宏。
   - [`proc_macro_derive`] — 定义衍生宏。
   - [`proc_macro_attribute`] — 定义属性宏。
@@ -595,7 +598,7 @@ The following is an index of all built-in attributes.
   - [`no_link`] — 防止链接外部 crate 。
   - [`repr`] — 控制类型布局方式。
   - [`crate_type`] — 指定 crate 的类型 (库、可执行文件等) 。
-  - [`no_main`] — 禁止发送 `main` 符号。
+  - [`no_main`] — 禁止产生 `main` 符号。
   - [`export_name`] — 指定函数或静态的导出符号名称。
   - [`link_section`] — 指定一个对象文件的节，以用于函数或静态。
   - [`no_mangle`] — 禁用符号名称编码。
@@ -684,7 +687,7 @@ The following is an index of all built-in attributes.
     [The Unstable Book] for features implemented in `rustc`.
 {==+==}
 - 特性
-  - `feature` — 用于启用不稳定或实验性的编译器特性。有关 `rustc` 实现的特性，请参见 [未稳定性文档][The Unstable Book] 。
+  - `feature` — 用于启用未稳定或实验性的编译器特性。有关 `rustc` 实现的特性，请参见 [未稳定性文档][The Unstable Book] 。
 {==+==}
 
 
