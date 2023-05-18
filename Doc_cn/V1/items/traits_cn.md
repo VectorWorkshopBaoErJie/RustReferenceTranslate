@@ -183,8 +183,8 @@ Object safe traits can be the base trait of a [trait object]. A trait is
     * Explicitly non-dispatchable functions require:
         * Have a `where Self: Sized` bound (receiver type of `Self` (i.e. `self`) implies this).
 {==+==}
-* 所有的 [supertraits] 也必须是对象安全的。
-* `Sized` 不能是 [supertraits] 。换句话说，必须不要求 `Self: Sized` 。
+* 所有的 [父级traits][supertraits] 也必须是对象安全的。
+* `Sized` 不能是 [父级traits][supertraits] 。换句话说，必须不要求 `Self: Sized` 。
 * 不能有任何关联常量。
 * 不能有任何泛型关联类型。
 * 所有关联函数必须是可从 trait 对象中可派发的，或者是明确不可派发的。
@@ -386,7 +386,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 {==+==}
 ## Supertraits
 {==+==}
-
+## 父级Trait
 {==+==}
 
 
@@ -395,7 +395,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: 不能使用 `Self` 类型�
 implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object]
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
-**Supertraits** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
+**父级trait** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
 此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到一个 trait 限定时，它可以访问其 supertrait 的关联条目。
 {==+==}
 
@@ -405,14 +405,14 @@ Supertraits are declared by trait bounds on the `Self` type of a trait and
 transitively the supertraits of the traits declared in those trait bounds. It is
 an error for a trait to be its own supertrait.
 {==+==}
-supertrait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而 supertrait 的 trait 约束将在其内部声明的 trait 的 supertrait 中传递。trait 不能是自己的 supertrait ，这是一个错误。
+父级 Trait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而父级 Trait 的约束将在其内部声明的 trait 的 父级 Trait 中传递。trait 不能是自己的父级 Trait ，这是一个错误。
 {==+==}
 
 
 {==+==}
 The trait with a supertrait is called a **subtrait** of its supertrait.
 {==+==}
-具有 supertrait 的 trait 被称为其 supertrait 的 **子trait** 。
+具有父级 Trait 的 trait 被称为其父级 Trait 的 **子trait** 。
 {==+==}
 
 

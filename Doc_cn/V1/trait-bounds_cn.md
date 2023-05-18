@@ -74,11 +74,12 @@ trait is implemented for a type. For example, given `Ty: Trait`
 * Generic functions and types with a `T: Trait` bounds can be used with `Ty`
   being used for `T`.
 {==+==}
-[Trait] 和生命周期约束提供了一种方式，让 [泛型条目][generic] 可以限制使用哪些类型和生命周期作为它们的参数。
-可以在 [where 子句][where clause] 中对任何类型提供约束。对于某些常见情况，也有更短的形式：
+[Trait] 和生命周期约束提供了一种方式，以限制 [泛型条目][generic] 可以使用哪些类型和生命周期作为参数。
+可以在 [where 子句][where clause] 提供对类型的约束。
+对于一些常见情况，也有更简短的形式：
 
-* 在声明 [泛型参数][generic] 之后写入约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。
-* 在 trait 声明中作为 [supertraits] : `trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}` 。
+* 在声明 [泛型参数][generic] 之后进行约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。
+* 在 trait 声明中作为 [父级trait][supertraits] : `trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}` 。
 * 在 trait 声明中作为 [关联类型][associated types] 的约束: `trait A { type B: Copy; }` 等同于 `trait A where Self::B: Copy { type B; }` 。
 
 在使用条目时必须满足条目上的约束。在对泛型条目进行类型检查和借用检查时，可以使用约束来确定类型是否实现了 trait 。例如，给定 `Ty: Trait` 
@@ -158,7 +159,8 @@ It is an error for such a bound to be false.
 It is an error to have `Copy` or `Clone` as a bound on a mutable reference, [trait object], or [slice].
 It is an error to have `Sized` as a bound on a trait object or slice.
 {==+==}
-当定义条目时，不使用条目参数或更 [高阶生命周期][higher-ranked lifetimes] 的约束将被检查。这样的约束如果为 false ，则会报错。
+当定义条目时，不使用条目参数或 [高阶生命周期][higher-ranked lifetimes] 的约束将被检查。
+这样的约束如果为 false ，则会报错。
 
 对于某些泛型类型，在使用该条目时还会检查 [`Copy`] 、 [`Clone`] 和 [`Sized`] 约束，即使使用时没有提供具体类型。
 在可变引用、 [trait 对象][trait object] 或 [切片][slice] 上将 `Copy` 或 `Clone` 作为约束是错误的。
@@ -314,7 +316,7 @@ difference is the scope of the lifetime parameter, which extends only to the
 end of the following trait instead of the whole bound. This function is
 equivalent to the last one.
 {==+==}
-更高阶的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。这个函数与上一个函数是等价的。
+高阶的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。这个函数与上一个函数是等价的。
 {==+==}
 
 

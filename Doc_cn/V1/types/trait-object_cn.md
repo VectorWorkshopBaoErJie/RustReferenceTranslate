@@ -40,7 +40,7 @@ For example, given a trait `Trait`, the following are all trait objects:
 {==+==}
 一个 *trait 对象* 是另一个类型的不透明值，该类型实现了一组 trait 。trait 集由一个 [对象安全][object safe] 的 *base trait* 和任意数量的 [auto trait] 组成。
 
-Trait 对象实现了 base trait ，它的 auto traits 以及 base trait 的任何 [supertraits] 。
+Trait 对象实现了 base trait ，它的 auto traits 以及 base trait 的任何 [父级trait][supertraits] 。
 
  Trait 对象写作关键字 `dyn` 后跟一组 trait 约束 ，但对 trait 约束有以下限制。
 除了第一个 trait 之外的所有 trait 都必须是 auto trait ，不能有多个生命周期，并且不允许可选附加约束 (例如 `?Sized` )。
@@ -114,7 +114,7 @@ behind some type of pointer; for example `&dyn SomeTrait` or
 指向 trait 对象的指针实例包括：
 
 - 指向实现 `SomeTrait` 的类型 `T` 的实例的指针
-- 虚方法表 (通常简称为 _vtable_ ) ，它包含对于 `T` 实现的每个方法及其 [supertraits] ，指向 `T` 的实现 (即函数指针) 的指针。
+- 虚方法表 (通常简称为 _vtable_ ) ，它包含对于 `T` 实现的每个方法及其 [父级trait][supertraits] ，指向 `T` 的实现 (即函数指针) 的指针。
 {==+==}
 
 
