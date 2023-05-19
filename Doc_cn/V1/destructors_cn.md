@@ -26,23 +26,23 @@ pointer, [`std::ptr::drop_in_place`] can be used.
 {==+==}
 # 析构函数
 
-当一个 [初始化的][initialized] [变量][variable] 或 [临时值][temporary] 超出 [作用域](#drop-scopes) 时，它的 *析构函数* 会被运行，或者它会被 *销毁* 。
-[赋值][Assignment] 也会运行其左操作数的析构函数，如果它已经被初始化。
-如果一个变量只被部分初始化，那么只有它的已初始化字段会被销毁。
+当一个 [已初始化过][initialized] 的 [变量][variable] 或 [临时值][temporary] 超出 [作用域](#drop-scopes) 时，会执行其 *析构函数* 会，或者说会被 *销毁* 。
+[赋值][Assignment] 时会运行其已初始化的左操作数的析构函数。
+如果变量只有部分已初始化，那么只销毁已初始化字段。
 
 类型 T 的析构函数包括:
 
-1. 如果 `T: Drop` ，则调用 [`<T as std::ops::Drop>::drop`] 
+1. 如果 `T: Drop` ，则调用 [`<T as std::ops::Drop>::drop`] 。
 2. 递归运行其所有字段的析构函数。
      * [结构体][struct] 的字段按声明顺序被销毁。
-     * [枚举类型][enum variant] 的活动变体字段按声明顺序被销毁。
+     * [枚举类型][enum variant] 的激活变体字段按声明顺序被销毁。
      * [元组][tuple] 的字段按顺序被销毁。
      * [数组][array] 或拥有的 [切片][slice] 的元素从第一个元素到最后一个元素被销毁。
-     * [闭包][closure] 通过移动捕获的变量按未指定的顺序被销毁。
+     * [闭包][closure] 通过移动捕获的变量按一个未指定的顺序被销毁。
      * [Trait 对象][Trait objects] 运行底层类型的析构函数。
      * 其他类型不会导致进一步的销毁。
 
-如果必须手动运行析构函数，例如在实现自己的智能指针时，可以使用 [`std::ptr::drop_in_place`] 。
+如果必须手动运行析构函数，比如在实现自己的智能指针时，可以使用 [`std::ptr::drop_in_place`] 。
 {==+==}
 
 
@@ -90,10 +90,12 @@ impl Drop for PrintOnDrop {
     }
 }
 
-let mut overwritten = PrintOnDrop("drops when overwritten"); // 当被覆盖时会被销毁
-overwritten = PrintOnDrop("drops when scope ends"); // 当作用域结束时会被销毁
-
-let tuple = (PrintOnDrop("Tuple first"), PrintOnDrop("Tuple second")); // Tuple 的第一个元素和第二个元素，分别在创建时被销毁
+// 当左操作数被覆盖时会销毁
+let mut overwritten = PrintOnDrop("drops when overwritten"); 
+// 当作用域结束时会销毁
+overwritten = PrintOnDrop("drops when scope ends"); 
+// Tuple 的元素按顺序销毁
+let tuple = (PrintOnDrop("Tuple first"), PrintOnDrop("Tuple second")); 
 
 let moved;
 // 在赋值时不会运行析构函数
@@ -144,14 +146,14 @@ from the inside outwards.
 每个变量或临时变量都与一个 *析构作用域* 相关联。
 当控制流离开析构作用域时，与该作用域相关联的所有变量按照声明 (对于变量) 或创建 (对于临时变量) 的相反顺序进行销毁。
 在使用 [`match`] 表达式替换 [`for`] 、 [`if let`] 和 [`while let`] 表达式之后，确定析构作用域。
-重载的操作符与内置的操作符没有区别，绑定模式也不被考虑在内。
+重载的操作符与内置的操作符没有区别，不考虑绑定模式。
 对于函数或闭包，有以下析构作用域:
 
 * 整个函数
 * 每个 [语句][statement]
 * 每个 [表达式][expression]
 * 每个块，包括函数体  
-    * 对于 [块表达式][block expression] ，块和表达式的作用域是同一作用域。
+    * 对于 [块表达式][block expression] 块和表达式的作用域是同一作用域。
 * `match` 表达式的每个分支
 
 析构作用域按如下嵌套。当一次离开多个作用域时，例如从函数返回时，变量从内向外进行销毁。
@@ -197,8 +199,8 @@ dropped after any bindings introduced in that parameter's pattern.
 {==+==}
 ### 函数参数的作用域
 
-所有函数参数都在整个函数体的作用域内，因此在评估函数时它们是最后被丢弃。
-每个实际的函数参数在该参数模式中引入的任何绑定之后被丢弃。
+所有函数参数都在整个函数体的作用域内，参数被最后丢弃。
+函数的实参在该参数模式中引入后，其绑定之后被丢弃。
 {==+==}
 
 
@@ -255,7 +257,8 @@ are declared in.
 {==+==}
 ### 局部变量的作用域
 
-在 `let` 语句中声明的局部变量与包含 `let` 语句的块的作用域相关联。在 `match` 表达式中声明的局部变量与它们声明在的 `match` 分支的作用域相关联。
+在 `let` 语句中声明的局部变量与包含 `let` 语句的块的作用域相关联。
+在 `match` 表达式中声明的局部变量与它们声明在的 `match` 分支的作用域相关联。
 {==+==}
 
 
@@ -300,12 +303,12 @@ smallest scope that contains the expression and is one of the following:
 * The expression for a match arm.
 * The second operand of a [lazy boolean expression].
 {==+==}
-如果在 `match` 表达式的同一个 `arm` 中使用了多个模式，则将使用未指定的模式来确定释放顺序。
+如果在 `match` 表达式的同一个 `arm` 中使用了多个模式，则将使用未特定顺序的模式来确定释放。
 
 ### 临时作用域
 
-表达式的 *临时作用域* 是在 [位置上下文][place context] 中使用该表达式的结果时用于保存临时变量的作用域，
-除非它被 [提升][promoted] 。除了生命周期扩展之外，表达式的临时作用域是包含该表达式的最小作用域，并且是以下范围之一：
+表达式的 *临时作用域* 是在 [占位上下文][place context] 中使用该表达式的结果时用于保存临时变量的作用域，
+除非它被 [提升][promoted] 。除了生命周期扩展之外，表达式的临时作用域是包含该表达式的最小作用域，并且是以下之一：
 
 * 整个函数体。
 * 一个语句。
@@ -333,7 +336,7 @@ smallest scope that contains the expression and is one of the following:
 > 
 > 在函数体的最终表达式中创建的临时变量将在函数体绑定的任何命名变量之后释放，因为没有更小的封闭临时作用域。
 > 
-> `match` 表达式的 [被匹配项][scrutinee] 不是临时作用域，因此可以在 `match` 表达式之后丢弃被匹配对象中的临时变量。
+> `match` 表达式的 [被匹配项][scrutinee] 不是临时作用域，因此可以在 `match` 表达式之后丢弃被匹配项中的临时变量。
 > 例如，在 `match 1 { ref mut z => z };` 中的 `1` 的临时变量将一直存在到语句的结尾。
 {==+==}
 
@@ -425,8 +428,9 @@ operands to an expression breaks out of the expression, returns, or panics.
 {==+==}
 ### 操作数
 
-在表达式中，为了保存操作数的结果，也会创建临时变量，而其他操作数被评估。这些临时变量与该操作数的表达式作用域相关联。
-由于临时变量在表达式被评估后被移动，除非表达式的操作数之一中断表达式、返回或抛出异常，否则将其丢弃不会产生副作用。
+在表达式中，为了保存操作数的结果，也会创建临时变量，而计算其他操作数。
+这些临时变量与该操作数的表达式作用域相关联。
+由于临时变量在计算表达式后被移动，除非表达式的操作数之一中断表达式、返回或抛出异常，否则将其丢弃不会产生副作用。
 {==+==}
 
 
@@ -461,7 +465,7 @@ loop {
 #     }
 # }
 loop {
-    // 元组表达式没有完成评估，因此操作数按相反的顺序删除
+    // 元组表达式没有完成评估，因此操作数按相反的顺序丢弃
     (
         PrintOnDrop("外部元组第一个"),
         PrintOnDrop("外部元组第二个"),
@@ -491,9 +495,9 @@ always has the type `&'static Option<_>`, as it contains nothing disallowed).
 {==+==}
 ### 常量晋升
 
-将值表达式晋升为一个 `'static` 槽发生在表达式可以写成常量并借用时，那个借用可以在不改变运行时行为的情况下在表达式原始写法的位置进行解引用。
-也就是说，晋升的表达式可以在编译时计算，所得到的值不包含 [内部可变性][interior mutability] 或 [析构函数][destructors] (这些属性在可能的情况下基于值来确定，
-例如， `&None` 始终具有类型 `&'static Option<_>` ，因为它不包含任何被禁止的内容)。
+将值表达式晋升为 `'static` 发生在表达式写成常量并借用时，其借用可以在不改变运行时行为的情况下，在表达式原始写法的位置进行解引用。
+也就是说，晋升的表达式可以在编译时计算，所得到的值不包含 [内部可变性][interior mutability] 或 [析构函数][destructors] 
+(这些属性在可能的情况下基于值来确定，例如， `&None` 始终具有类型 `&'static Option<_>` ，因为它不包含任何被禁止的内容)。
 {==+==}
 
 
@@ -694,7 +698,7 @@ variable or field from being dropped automatically.
 [`std::mem::forget`] 可以用来防止变量的析构函数被执行，而 [`std::mem::ManuallyDrop`] 提供了一个包装器来防止变量或字段被自动释放。
 
 > 注意：通过 [`std::mem::forget`] 或其他方式防止析构函数被执行即使具有不是 `'static` 类型的类型也是安全的。
-> 除了在本文档中定义的保证运行析构函数的地方之外，类型不能安全地依赖析构函数被运行来确保安全性。
+> 除了在本文档中定义的保证运行析构函数的地方之外，类型不能依赖析构函数被运行来确保安全性。
 {==+==}
 
 

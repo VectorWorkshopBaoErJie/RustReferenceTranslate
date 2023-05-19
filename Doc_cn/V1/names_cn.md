@@ -79,9 +79,9 @@ Entities that explicitly introduce a name in the source code are:
 Additionally, [macro invocations] and [attributes] can introduce names by
 expanding to one of the above items.
 {==+==}
-## 明确声明的实体
+## 显式声明的实体
 
-在源代码中明确引入名称的实体包括：
+在源代码中显式引入名称的实体包括：
 
 * [条目][Items]：
     * [模块声明][Module declarations]
