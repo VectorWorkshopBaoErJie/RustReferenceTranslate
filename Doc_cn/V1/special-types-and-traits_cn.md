@@ -52,15 +52,15 @@ mutability aren't placed in memory marked as read only.
 {==+==}
 ## `Rc<T>`
 
-[`Rc<Self>`] 作为接收器也可以用于 [方法][Methods] 。
+[`Rc<Self>`] 作为接收者也可以用于 [方法][Methods] 。
 
 ## `Arc<T>`
 
-[`Arc<Self>`] 作为接收器也可以用于 [方法][Methods] 。
+[`Arc<Self>`] 作为接收者也可以用于 [方法][Methods] 。
 
 ## `Pin<P>`
 
-[`Pin<P>`] 作为接收器也可以用于 [方法][Methods] 。
+[`Pin<P>`] 作为接收者也可以用于 [方法][Methods] 。
 
 ## `UnsafeCell<T>`
 
