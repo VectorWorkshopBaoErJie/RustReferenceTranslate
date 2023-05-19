@@ -191,16 +191,16 @@ Object safe traits can be the base trait of a [trait object]. A trait is
     * 可派发函数要求:
         * 没有任何类型参数 (允许生命周期参数),
         * 是除接收者类型，不使用 `Self` 的 [方法][method] 。
-        * 有具有以下类型的接收器:
+        * 有具有以下类型的接收者:
             * `&Self` (即 `&self`)
             * `&mut Self` (即 `&mut self`)
             * [`Box<Self>`]
             * [`Rc<Self>`]
             * [`Arc<Self>`]
             * [`Pin<P>`] 其中 `P` 是上述类型之一
-        * 没有 `where Self: Sized` 绑定 (接收器类型 `Self` (即 `self`) 暗指 this) 。
+        * 没有 `where Self: Sized` 绑定 (接收者类型 `Self` (即 `self`) 暗指 this) 。
     * 显示不可派发函数要求:
-        * 有 `where Self: Sized` 绑定 (接收器类型 `Self` (即 `self`) 暗指 this) 。
+        * 有 `where Self: Sized` 绑定 (接收者类型 `Self` (即 `self`) 暗指 this) 。
 {==+==}
 
 
@@ -325,7 +325,7 @@ trait NotObjectSafe {
     fn foo() {}  // ERROR: 关联函数没有 Sized
     fn returns(&self) -> Self; // ERROR: Self 在返回类型
     fn typed<T>(&self, x: T) {} // ERROR: 有泛型类型参数
-    fn nested(self: Rc<Box<Self>>) {} // ERROR: 尚不支持嵌套的接收器
+    fn nested(self: Rc<Box<Self>>) {} // ERROR: 尚不支持嵌套的接收者
 }
 
 struct S;

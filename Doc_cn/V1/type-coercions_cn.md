@@ -84,7 +84,7 @@ sites are:
 
   For example, `&mut 42` is coerced to have type `&i8` in the following:
 {==+==}
-  在方法调用中，接收器 (`self` 参数) 只能利用 [非定长强转](#unsized-coercions) 。
+  在方法调用中，接收者 (`self` 参数) 只能利用 [非定长强转](#unsized-coercions) 。
 
 * 结构体、联合体或枚举变体字段的实例化
 
