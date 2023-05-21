@@ -24,18 +24,20 @@ be ignored in favor of only building the artifacts specified by command line.
 {==+==}
 # 链接
 
-> 注意: 这一部分更多地从编译器而非语言的角度进行描述。
+> 注意: 这部分所描述的内容，主要是从编译器角度进行，而非语言。
 
-编译器支持静态和动态地链接不同的 crate 。
-本节将探讨链接 crate 的各种方法，有关本地库的更多信息可以在 [《Rust 程序设计语言》中的 FFI 章节][ffi] 中找到。
+编译器支持静态和动态地将不同的 crate 链接起来。
+本节将探讨链接 crate 的各种方法，有关本地库的更多信息可以参阅《Rust 程序设计语言》中 [FFI 章节][ffi] 。
 
 [ffi]: ../book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 
 在一次编译会话中，编译器可以通过使用命令行标志或 `crate_type` 属性生成多个制品。
-如果指定了一个或多个命令行标志，则忽略所有 `crate_type` 属性，仅构建由命令行指定制品。
+如果指定了一个或多个命令行标志，则忽略所有 `crate_type` 属性，仅构建由命令行所指定的制品。
 
-* `--crate-type=bin` ， `#![crate_type = "bin"]` - 将生成可运行的可执行文件。在 crate 中需要有一个 `main` 函数，程序开始执行时首先运行。
-这将链接所有的 Rust 和本地依赖项，生成一个可分发的单个二进制文件。是默认的 crate 类型。
+* `--crate-type=bin` ， `#![crate_type = "bin"]` - 将生成可运行的可执行文件。
+  在 crate 中需要有一个 `main` 函数，程序开始执行时，首先运行该函数。
+  并将链接所有的语言以及本地的依赖项，生成可分发的单个二进制文件。
+  这是 crate 的默认类型。
 {==+==}
 
 
@@ -72,13 +74,23 @@ be ignored in favor of only building the artifacts specified by command line.
   create `*.so` files on Linux, `*.dylib` files on macOS, and `*.dll` files on
   Windows.
 {==+==}
-* `--crate-type=lib`，`#![crate_type = "lib"]` - 将生成一个 Rust 库。这是一个广义概念，因为库可以以多种形式呈现。这个通用的 `lib` 选项的目的是生成 "编译器推荐" 的库风格。输出的库始终可由 rustc 使用，但实际的库类型可能会随时间而变化。其余的输出类型都是不同的库类型，而 `lib` 类型可以看作是其中一个的别名 (但实际的类型是由编译器定义的) 。
+* `--crate-type=lib` ， `#![crate_type = "lib"]` - 将生成 "Rust 库" 。这是一个泛指的选项，因为库有多种形式。
+  其表示生成 "编译器推荐" 的库格式。目前生成的库，意味着对于 rustc 始终是可用的，但实际所生成库的类型可能会随时间而变化。
+  其余的输出类型都表示了单独的且不同的库类型，而 `lib` 类型可以看作是其中一个的别名 (但实际的类型由编译器定义) 。
 
-* `--crate-type=dylib`，`#![crate_type = "dylib"]` - 将生成一个动态 Rust 库。这与 `lib` 输出类型不同，因为它强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖项。此输出类型将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
+* `--crate-type=dylib` ， `#![crate_type = "dylib"]` - 将生成动态 Rust 库。这与 `lib` 输出类型不同，此选项强制生成动态库。
+  所生成的动态库可以用作其他库和/或可执行文件的依赖项。
+  此输出类型将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
 
-* `--crate-type=staticlib`，`#![crate_type = "staticlib"]` - 将生成一个静态系统库。这与其他库输出不同，因为编译器永远不会尝试链接到 `staticlib` 输出。此输出类型的目的是创建一个包含所有本地 crate 代码以及所有上游依赖项的静态库。此输出类型将在 Linux、macOS 和 Windows (MinGW) 上创建 `*.a` 文件，在 Windows (MSVC) 上创建 `*.lib` 文件。此格式推荐在将 Rust 代码链接到现有的非 Rust 应用程序时使用，因为它不会对其他 Rust 代码产生动态依赖关系。
+* `--crate-type=staticlib` ， `#![crate_type = "staticlib"]` - 将生成静态系统库。
+  这与其他库输出不同，因为 Rust 编译器决不会尝试链接 `staticlib` 格式的库。
+  此输出类型的可以创建一个包含所有本地 crate 代码以及所有上游依赖项的静态库，
+  将在 Linux、macOS 和 Windows (MinGW) 上创建 `*.a` 文件，在 Windows (MSVC) 上创建 `*.lib` 文件。
+  此格式推荐在将 Rust 代码链接到现有的非 Rust 应用程序时使用，因为这一格式的库不会对其他 Rust 代码产生动态依赖。
 
-* `--crate-type=cdylib`，`#![crate_type = "cdylib"]` - 将生成一个动态系统库。这用于编译从另一种语言加载的动态库。此输出类型将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
+* `--crate-type=cdylib` ， `#![crate_type = "cdylib"]` - 将生成一个动态系统库。
+  这用于编译可从另一种语言中加载的动态库。
+  此输出类型将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
 {==+==}
 
 
@@ -109,11 +121,19 @@ same method. If only `crate_type` attributes are specified, then they will all
 be built, but if one or more `--crate-type` command line flags are specified,
 then only those outputs will be built.
 {==+==}
-* `--crate-type=rlib`，`#![crate_type = "rlib"]` - 会生成一个 "Rust库" 文件。这是一个中间产物，可以看作是一个 "静态的Rust库" 。与 `staticlib` 文件不同，这些 `rlib` 文件将在未来的链接中由编译器进行解释。这基本上意味着， `rustc` 将像在动态库中查找元数据一样在 `rlib` 文件中查找元数据。这种输出形式用于生成静态链接的可执行文件以及 `staticlib` 输出。
+* `--crate-type=rlib`，`#![crate_type = "rlib"]` - 会生成一个 "Rust 库" 文件。这是一个中间产物，可以看作是一个 "静态的 Rust 库" 。
+  与 `staticlib` 文件不同，这些 `rlib` 文件将可由编译器进行解释而链接。
+  这表砂， `rustc` 将像在动态库中查找元数据一样在 `rlib` 文件中查找元数据。
+  这种输出形式可用于生成静态链接的可执行文件以及 `staticlib` 格式。
 
-* `--crate-type=proc-macro` ， `#![crate_type = "proc-macro"]` - 产生的输出未指定，但如果给它提供一个 `-L` 路径，编译器将识别制品为一个宏，并且它可以被程序加载。使用这种 crate 类型编译的 crate 必须只导出 [过程宏][procedural macros] 。编译器将自动设置 `proc_macro` [配置选项][configuration option] 。这些 crate 始终使用编译器本身构建时的相同目标进行编译。例如，如果你在 Linux 上使用 `x86_64` CPU 执行编译器，则目标将为 `x86_64-unknown-linux-gnu` ，即使该 crate 是另一个 crate 正在为不同目标而构建的依赖项。
+* `--crate-type=proc-macro` ， `#![crate_type = "proc-macro"]` - 产生的输出未指定，但如果给它提供一个 `-L` 路径，编译器将识别制品为一个宏，并且可被程序加载。
+  使用这种类型编译的 crate 必须只导出 [过程宏][procedural macros] 。
+  编译器将自动设置 `proc_macro` [配置选项][configuration option] 。
+  这些 crate 始终使用编译器本身构建时的相同目标进行编译。
+  例如，如果你在 Linux 上使用 `x86_64` CPU 执行编译器，则目标将为 `x86_64-unknown-linux-gnu` ，即使该 crate 是另一个构建为不同目标的依赖项。
 
-请注意，这些输出是可重叠的，即可指定多个，则编译器将同时生成每种形式的输出，而无需重新编译。但是，这仅适用于由同一方法指定的输出。如果仅指定 `crate_type` 属性，则所有属性都将被构建，但如果指定一个或多个 `--crate-type` 命令行标志，则仅构建那些输出。
+请注意，这些输出是可重叠的，即可指定多个，则编译器将同时生成每种形式的输出，而无需重新编译。但是，这仅适用于由同一方法指定的输出。
+如果仅指定 `crate_type` 属性，则所有属性都将被构建，但如果指定一个或多个 `--crate-type` 命令行标志，则仅构建所指定的输出。
 {==+==}
 
 
@@ -142,9 +162,11 @@ dependencies will be used:
    dependencies. It wouldn't be very efficient for all `rlib` files to contain a
    copy of `libstd.rlib`!
 {==+==}
-有了所有这些不同类型的输出，如果 crate A 依赖于 crate B ，那么编译器可以在系统中以各种不同的形式找到 B 。然而，编译器查找的唯一格式是 `rlib` 格式和动态库格式。有了这两个选项，编译器必须在这两种格式之间做出选择。考虑到这一点，编译器在确定将使用哪种依赖关系格式时遵循以下规则：
+有了这些不同类型的输出，如果 crate A 依赖于 crate B ，那么编译器可以在系统中以各种不同的形式找到 B 。
+然而，编译器查找的唯一格式是 `rlib` 格式和动态库格式。有了这两个选项，编译器必须在这两种格式之间做出选择。
+考虑到这一点，编译器在确定将使用哪种依赖关系格式时遵循以下规则：
 
-1. 如果正在生成静态库，则所有上游依赖项都必须以 `rlib` 格式可用。这个要求源于动态库无法转换为静态格式的原因。
+1. 如果正在生成静态库，则所有上游依赖项都必须以 `rlib` 格式可用。这个要求因为动态库无法转换为静态格式。
 
    请注意，无法将本机动态依赖项链接到静态库中，在这种情况下，将打印所有未链接的本机动态依赖项的警告。
 
@@ -183,11 +205,13 @@ In general, `--crate-type=bin` or `--crate-type=lib` should be sufficient for
 all compilation needs, and the other options are just available if more
 fine-grained control is desired over the output format of a crate.
 {==+==}
-3. 如果正在生成可执行文件且未指定 `-C prefer-dynamic` 标志，则首先尝试在 `rlib` 格式中查找依赖项。如果某些依赖项在 `rlib` 格式中不可用，则尝试动态链接 (见下文) 。
+3. 如果正在生成可执行文件且未指定 `-C prefer-dynamic` 标志，则首先尝试在 `rlib` 格式中查找依赖项。
+   如果某些依赖项在 `rlib` 格式中不可用，则尝试动态链接 (见下文) 。
 
 4. 如果正在生成动态库或正在以动态链接方式链接的可执行文件，则编译器将尝试在 rlib 或 dylib 格式中协调可用的依赖项以创建最终产品。
 
-   编译器的主要目标是确保库在任何构件中都不会出现多次。例如，如果动态库 B 和 C 分别静态链接到库 A，那么一个 crate 就无法将 B 和 C 链接在一起，因为会有两个 A 的副本。编译器允许混合使用 rlib 和 dylib 格式，但必须满足此限制。
+   编译器的主要目标是确保库在任何构件中都不会出现多次。例如，如果动态库 B 和 C 分别静态链接到库 A，那么一个 crate 就无法将 B 和 C 链接在一起，因为会有两个 A 的副本。
+   编译器允许混合使用 rlib 和 dylib 格式，但必须满足此限制。
 
    目前，编译器没有实现提示链接库应使用哪种格式的方法。在动态链接时，编译器将尝试最大化动态依赖性，同时仍允许某些依赖性通过 rlib 进行链接。
 
@@ -231,7 +255,9 @@ rustc -C target-feature=-crt-static foo.rs
 {==+==}
 ## 静态和动态C运行时
 
-通常，标准库会尽可能地支持适当目标的静态链接和动态链接 C 运行时。例如， `x86_64-pc-windows-msvc` 和 `x86_64-unknown-linux-musl` 目标通常都带有两种运行时，用户可以选择其中一个。编译器中的所有目标都有链接到 C 运行时的默认模式。通常，默认情况下目标是动态链接的，但也有一些例外，默认情况下是静态链接的，例如：
+通常，标准库会尽可能地支持适合目标的静态链接和动态链接 C 运行时。
+例如， `x86_64-pc-windows-msvc` 和 `x86_64-unknown-linux-musl` 目标通常都带有两种运行时，用户可以选择其中一个。
+编译器中的所有目标都有链接到 C 运行时的默认模式。通常，默认情况下目标是动态链接的，但也有一些例外，默认情况下是静态链接的，例如：
 
 * `arm-unknown-linux-musleabi`
 * `arm-unknown-linux-musleabihf`
@@ -265,7 +291,8 @@ on the runtime being linked. This is exported currently through the
 {==+==}
 不支持在 C 运行时链接方式之间切换的目标将忽略此标志。建议在编译器成功后检查生成的二进制文件，确保它被链接为你所期望的方式。
 
-Crates 也可以了解 C 运行时的链接方式。例如，在 MSVC 上编写的代码需要根据链接的运行时以不同的方式编译 (例如使用 `/MT` 或 `/MD` ) 。这是通过 [`cfg` 属性 `target_feature` 选项][`cfg` attribute `target_feature` option] 导出的：
+对于 Crate 也可以了解 C 运行时的链接方式。例如，在 MSVC 上编写的代码需要根据链接的运行时以不同的方式编译 (例如使用 `/MT` 或 `/MD` ) 。
+这是通过 [`cfg` 属性 `target_feature` 选项][`cfg` attribute `target_feature` option] 导出的：
 {==+==}
 
 
@@ -291,7 +318,7 @@ Also note that Cargo build scripts can learn about this feature through
 [environment variables][cargo]. In a build script you can detect the linkage
 via:
 {==+==}
-还请注意，Cargo 构建脚本可以通过 [环境变量][cargo] 了解这个特性。在构建脚本中，你可以通过以下方式检测链接方式：
+还请注意，Cargo 构建脚本可以通过 [环境变量][cargo] 获得这个特性。在构建脚本中，你可以通过以下方式检测链接方式：
 {==+==}
 
 
@@ -326,7 +353,8 @@ To use this feature locally, you typically will use the `RUSTFLAGS` environment
 variable to specify flags to the compiler through Cargo. For example to compile
 a statically linked binary on MSVC you would execute:
 {==+==}
-要在本地使用此功能，通常会使用 `RUSTFLAGS` 环境变量通过 Cargo 指定编译器的标志。例如，在 MSVC 上编译静态链接的二进制文件，你可以执行：
+要在本地使用此功能，通常会使用 `RUSTFLAGS` 环境变量通过 Cargo 指定编译器的标志。
+例如，在 MSVC 上编译静态链接的二进制文件，你可以执行：
 {==+==}
 
 
