@@ -665,7 +665,7 @@ returns a future. This future is just an ordinary future and thus an
 `unsafe` context is not required to "await" it:
 {==+==}
 在 Rust 中，声明既是 `async` 又是 `unsafe` 的函数是合法的。
-这样产生的函数是不安全的，不能安全地调用，但它 (像任何异步函数一样) 返回一个 future。
+这样产生的函数是非安全的，不能安全地调用，但它 (像任何异步函数一样) 返回一个 future。
 这个 future 是普通的 future，因此在 "await" 它的时候不需要使用 `unsafe` 上下文。
 {==+==}
 
@@ -734,7 +734,7 @@ valid until the future is finished executing, and it is the caller's
 responsibility to ensure that.
 {==+==}
 `unsafe` 关键字在异步函数中的使用方式与其在其他函数中的使用方式相同：它表示该函数对其调用者有一些额外的义务，以确保其安全性。
-与任何其他不安全函数一样，这些条件可能会超出初始调用本身的范围。
+与任何其他非安全函数一样，这些条件可能会超出初始调用本身的范围。
 例如，在上面的代码段中， `unsafe_example` 函数接受一个指针 `x` 作为参数，然后 (当等待时) 对该指针进行解引用。
 这意味着 `x` 必须在 future 执行完成之前保持有效，并且调用者有责任确保这一点。
 {==+==}

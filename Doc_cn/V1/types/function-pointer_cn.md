@@ -70,7 +70,7 @@ An example where `Binop` is defined as a function pointer type:
 函数指针类型，用 `fn` 关键字表示，用来引用一个函数，该函数的身份不一定在编译时已知。
 它们可以通过从 [函数条目][function items] 和无捕获的 [闭包][closures] 进行强制转换来创建。
 
-`unsafe` 修饰符表示该类型的值是一个 [不安全的函数][unsafe function] ，而 `extern` 修饰符表示它是一个 [外部函数][extern function] 。
+`unsafe` 修饰符表示该类型的值是一个 [非安全的函数][unsafe function] ，而 `extern` 修饰符表示它是一个 [外部函数][extern function] 。
 
 可变参数只能在使用了 `"C"` 或 `"cdecl"` 调用约定的 [`extern`] 函数类型中指定。
 

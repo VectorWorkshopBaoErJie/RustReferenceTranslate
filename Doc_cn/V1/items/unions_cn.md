@@ -175,7 +175,7 @@ unsafe {
 Commonly, code using unions will provide safe wrappers around unsafe union
 field accesses.
 {==+==}
-通常，使用联合体的代码会在不安全的联合体字段访问外围提供安全的包装。
+通常，使用联合体的代码会在非安全的联合体字段访问外围提供安全的包装。
 {==+==}
 
 

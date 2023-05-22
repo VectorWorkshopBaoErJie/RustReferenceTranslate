@@ -251,7 +251,7 @@ These conventions are documented here.
 {==+==}
 * Warnings that show unsound behavior in the language or possibly confusing interactions of language features are in a special warning box.
 {==+==}
-* 警告将显示为特殊的警告框的形式，用于标注语言中的不安全行为或可能引起混淆的语言特性。
+* 警告将显示为特殊的警告框的形式，用于标注语言中的非安全行为或可能引起混淆的语言特性。
 {==+==}
 
 

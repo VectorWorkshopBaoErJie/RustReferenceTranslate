@@ -550,8 +550,8 @@ Traits items that begin with the `unsafe` keyword indicate that *implementing* t
 trait may be [unsafe]. It is safe to use a correctly implemented unsafe trait.
 The [trait implementation] must also begin with the `unsafe` keyword.
 {==+==}
-Trait 中以 `unsafe` 关键字开头的条目表示实现该 trait 可能是不安全的。
-使用正确实现的不安全 trait 是安全的。相应的 [trait 实现][trait implementation] 也必须以 `unsafe` 关键字开头。
+Trait 中以 `unsafe` 关键字开头的条目表示实现该 trait 可能是非安全的。
+使用正确实现的非安全 trait 是安全的。相应的 [trait 实现][trait implementation] 也必须以 `unsafe` 关键字开头。
 {==+==}
 
 

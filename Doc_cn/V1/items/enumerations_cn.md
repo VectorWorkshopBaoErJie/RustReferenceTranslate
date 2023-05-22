@@ -470,7 +470,7 @@ assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
 If the enumeration specifies a [primitive representation], then the
 discriminant may be reliably accessed via unsafe pointer casting:
 {==+==}
-如果枚举指定了 [原始表示][primitive representation] ，那么可以通过不安全的指针转换来可靠地访问判别值:
+如果枚举指定了 [原始表示][primitive representation] ，那么可以通过非安全的指针转换来可靠地访问判别值:
 {==+==}
 
 
