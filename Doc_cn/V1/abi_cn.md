@@ -20,15 +20,19 @@ output object file.
 {==+==}
 # 应用程序二进制接口 (ABI)
 
-本节记录了影响创建的编译结果的 ABI 的功能。
+本节记录的特性，影响 crate 编译输出的 ABI 。
 
-有关指定导出函数的 ABI 的信息，请参见 *[外部函数][extern functions]* 。 有关指定链接外部库的 ABI 的信息，请参见 *[外部块][external blocks]* 。
+有关指定导出函数的 ABI 的信息，请参阅 *[外部函数][extern functions]* 。
+有关指定链接外部库的 ABI 的信息，请参阅 *[外部块][external blocks]* 。
 
 ## `used`属性
 
-*`used` 属性* 仅适用于 [`static` 条目][`static` items] 。此 [属性][attribute] 强制编译器将变量保留在输出对象文件 (.o .rlib 等，不包括最终二进制文件) 中，即使该变量没有被 crate 中的任何其他条目使用或引用。但是，链接器仍然可以删除这样的条目。
+*`used` 属性* 仅适用于 [`static` 条目][`static` items] 。
+此 [属性][attribute] 强制编译器将变量保留在输出对象文件 (.o .rlib 等，不包括最终二进制文件) 中，
+即使该变量没有被 crate 中的其他条目使用或引用。
+但是，链接器仍然可以删除这样的条目。
 
-下面是一个示例，展示了编译器在什么条件下保留一个 `static` 条目在输出对象文件中。
+下面的例子，展示了编译器在什么条件下保留一个 `static` 条目到输出对象文件中。
 {==+==}
 
 
@@ -128,13 +132,14 @@ The *`link_section` attribute* specifies the section of the object file that a
 {==+==}
 ## `no_mangle` 属性
 
-*`no_mangle` 属性* 可以用于任何 [条目][item] ，以禁用标准符号名混淆。该条目的符号将是该条目名称的标识符。
+*`no_mangle` 属性* 可以用于任何 [条目][item] ，以禁用标准符号名称编码。该条目的符号将是该条目名称的标识符。
 
 此外，该条目将从生成的库或对象文件中公开导出，类似于 [`used` 属性](#the-used-attribute) 。
 
 ## `link_section` 属性
 
-*`link_section` 属性* 指定将 [函数][function] 或 [静态][static] 内容放置到的对象文件部分。它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定部分名称。
+*`link_section` 属性* 指定将 [函数][function] 或 [静态][static] 内容放置到对象文件节。
+使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定节名称。
 {==+==}
 
 
@@ -164,7 +169,8 @@ pub fn name_in_rust() { }
 {==+==}
 ## `export_name` 属性
 
-*`export_name` 属性* 指定将在 [函数][function] 或 [静态变量][static] 上导出的符号名称。它使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定符号名称。
+*`export_name` 属性* 指定将在 [函数][function] 或 [静态][static] 上导出的符号名称。
+使用 [_元名称值字符串_][_MetaNameValueStr_] 语法来指定符号名称。
 
 ```rust
 #[export_name = "exported_symbol_name"]
