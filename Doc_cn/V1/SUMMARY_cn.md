@@ -283,7 +283,7 @@
 - [Rust 运行时](runtime.md)
 
 - [附录](appendices.md)
-    - [宏 Follow-Set 歧义正式规范](macro-ambiguity.md)
+    - [宏的参照集歧义性形式化规范](macro-ambiguity.md)
     - [影响](influences.md)
     - [术语表](glossary.md)
 {==+==}

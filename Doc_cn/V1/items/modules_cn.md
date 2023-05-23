@@ -36,7 +36,7 @@ A _module item_ is a module, surrounded in braces, named, and prefixed with the
 keyword `mod`. A module item introduces a new, named module into the tree of
 modules making up a crate. Modules can nest arbitrarily.
 {==+==}
-一个 _模块条目_ 是一个用花括号括起来的、以 `mod` 关键字为前缀的、命名的模块。
+ _模块条目_ 是用一对花括号括起来的、以 `mod` 关键字为前缀的、命名的模块。
 模块条目将一个新的命名模块引入到组成 crate 的模块树中。模块可以任意嵌套。
 {==+==}
 
