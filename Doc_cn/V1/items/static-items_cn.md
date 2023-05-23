@@ -85,7 +85,7 @@ implementation) will result in exactly one static item being defined, as if
 the static definition was pulled out of the current scope into the module.
 There will *not* be one item per monomorphization.
 {==+==}
-在泛型作用域中定义的静态条目 (例如在一个泛型实现的默认实现中) 将恰好定义一个静态条目，就好像静态定义从当前作用域被提取到模块中一样。
+在泛型作用域中定义的静态条目 (例如在覆盖或默认实现中) 将恰好定义一个静态条目，就好像静态定义从当前作用域被提取到模块中一样。
 不会为每个单态化生成一个静态条目。
 {==+==}
 

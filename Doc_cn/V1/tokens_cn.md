@@ -1436,7 +1436,7 @@ usages and meanings are defined in the linked pages.
 | `>=`   | 大于等于号    | [大于等于][comparison]，[泛型][Generics]
 | `<=`   | 小于等于号    | [小于等于][comparison]
 | `@`    | At          | [子模式绑定][Subpattern binding]
-| `_`    | 下划线      | [通配符模式][Wildcard patterns]，[推断类型][Inferred types]，[常量][constants]、[extern crates]、[use 声明][use declarations]和[解构赋值][destructuring assignment]中的未命名条目
+| `_`    | 下划线      | [通配符模式][Wildcard patterns]，[推断类型][Inferred types]，[常量][constants]、[extern crates]、[use 声明][use declarations]和[解构赋值][destructuring assignment]中的匿名条目
 | `.`    | 点号         | [字段访问][field]，[元组索引][Tuple index]
 | `..`   | 双点号      | [区间][range]，[结构体表达式][Struct expressions]，[模式][Patterns]，[区间模式][Range Patterns][rangepat]
 | `...`  | 三点号   | [可变参数函数][extern]，[区间模式][Range patterns]

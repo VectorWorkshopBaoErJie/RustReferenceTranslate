@@ -458,7 +458,7 @@ Labels follow the hygiene and shadowing rules of local variables. For example, t
 如果存在标签，则嵌套在此循环中的带有标签的 `break` 和 `continue` 表达式可以退出该循环或将控制返回到其头部。
 请参见 [break 表达式](#break-expressions) 和 [continue 表达式](#continue-expressions) 。
 
-标签遵循本地变量的卫生和隐藏规则。例如，以下代码将打印 "outer loop" :
+标签遵循局部变量的卫生和隐藏规则。例如，以下代码将打印 "outer loop" :
 {==+==}
 
 

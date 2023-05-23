@@ -229,11 +229,11 @@ An example of a *recursive* type and its use:
 {==+==}
 ## 递归类型
 
-用户定义类型 - [结构体][structs] 、 [枚举][enumerations] 和 [联合体][unions] - 可以是递归的。
+具名类型 - [结构体][structs] 、 [枚举][enumerations] 和 [联合体][unions] - 可以是递归的。
 也就是说，每个 `enum` 变量或 `struct` 或 `union` 字段可以直接或间接地引用封闭的 `enum` 或 `struct` 类型本身。
 这种递归有所限制:
 
-* 递归类型必须包含在递归中的命名类型表达式中 (不是仅仅是 [类型别名][type aliases] ，其他结构类型，例如 [数组][arrays] 或 [元组][tuples] 也是) 。因此， `type Rec = &'static [Rec]` 是不允许的。
+* 递归类型必须包含在递归中的具名类型表达式中 (不是仅仅是 [类型别名][type aliases] ，其他结构类型，例如 [数组][arrays] 或 [元组][tuples] 也是) 。因此， `type Rec = &'static [Rec]` 是不允许的。
 
 * 递归类型的大小必须是有限的；换言之，类型的递归字段必须是 [指针][pointer types] 。
 

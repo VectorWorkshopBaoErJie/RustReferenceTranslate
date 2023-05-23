@@ -63,7 +63,7 @@ An *enumeration*, also referred to as an *enum*, is a simultaneous definition of
 nominal [enumerated type] as well as a set of *constructors*, that can be used
 to create or pattern-match values of the corresponding enumerated type.
 {==+==}
-一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组 *构造器* 的命名类型。
+一个 [枚举类型][enumerated type] ， 简称枚举 *enum* ，是一种同时定义了枚举类型和一组 *构造器* 的具名类型。
 这些构造器可以用来创建或者匹配相应枚举类型的值。
 {==+==}
 

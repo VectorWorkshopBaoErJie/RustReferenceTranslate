@@ -85,7 +85,7 @@ An inherent implementation is defined as the sequence of the `impl` keyword,
 generic type declarations, a path to a nominal type, a where clause, and a
 bracketed set of associable items.
 {==+==}
-内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向命名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
+内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向具名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
 {==+==}
 
 
@@ -93,7 +93,7 @@ bracketed set of associable items.
 The nominal type is called the _implementing type_ and the associable items are
 the _associated items_ to the implementing type.
 {==+==}
-该命名类型被称为 _实现类型_ ，所包含的条目是该实现类型的 _关联条目_ 。
+该具名类型被称为 _实现类型_ ，所包含的条目是该实现类型的 _关联条目_ 。
 {==+==}
 
 
@@ -195,7 +195,7 @@ A _trait implementation_ is defined like an inherent implementation except that
 the optional generic type declarations are followed by a [trait], followed
 by the keyword `for`, followed by a path to a nominal type.
 {==+==}
- _trait实现_ 和内部实现类似，只是可选的泛型类型声明后面是 [trait] ，再跟着 `for` 关键字，最后是指向命名类型的路径。
+ _trait实现_ 和内部实现类似，只是可选的泛型类型声明后面是 [trait] ，再跟着 `for` 关键字，最后是指向具名类型的路径。
 {==+==}
 
 

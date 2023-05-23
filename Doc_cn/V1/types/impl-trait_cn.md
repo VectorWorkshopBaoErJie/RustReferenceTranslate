@@ -23,7 +23,7 @@
 implement a specific trait.
 It can appear in two sorts of places: argument position (where it can act as an anonymous type parameter to functions), and return position (where it can act as an abstract return type).
 {==+==}
-`impl Trait` 提供了一种方式来指定未命名但具体实现了特定 trait 的类型。
+`impl Trait` 提供了一种方式来指定匿名但具体实现了特定 trait 的类型。
 它可以出现在两种位置: 参数位置 (在这里它可以作为函数的匿名类型参数) ，以及返回位置 (在这里它可以作为抽象的返回类型) 。
 {==+==}
 

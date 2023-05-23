@@ -815,7 +815,7 @@ why particular matchers are legal and others are not.
 {==+==}
  * `( $($a:tt $b:tt)* ; )` : 合法, 因为 FIRST(`$b:tt`) = { `$b:tt` } is ⊆ FOLLOW(`tt`) = ANYTOKEN, as is FIRST(`;`) = { `;` }.
 
- * `( $($t:tt),* , $(t:tt),* )` : 合法,  (尽管任何尝试实际使用此宏都将在扩展期间发出本地歧义错误的信号。).
+ * `( $($t:tt),* , $(t:tt),* )` : 合法,  (尽管任何尝试实际使用此宏都将在扩展期间发出局部歧义错误的信号。).
 {==+==}
 
 

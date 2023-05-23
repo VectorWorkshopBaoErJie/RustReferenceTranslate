@@ -367,7 +367,7 @@ There are no other guarantees of data layout made by this representation.
 {==+==}
 ### 默认表示形式
 
-没有 `repr` 属性的命名类型采用默认表示形式。
+没有 `repr` 属性的具名类型采用默认表示形式。
 该表示形式也被称为 `rust` 表示形式，但这个概念并不正式。
 此表示形式做了数据布局的基本保证，以期望保持数据的正确性。
 意味着:

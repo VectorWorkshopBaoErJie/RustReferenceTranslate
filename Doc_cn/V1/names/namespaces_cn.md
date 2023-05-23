@@ -90,7 +90,7 @@ The following is a list of namespaces, with their corresponding entities:
     * [泛型常量参数][Generic const parameters]
     * [关联常量声明][Associated const declarations]
     * [关联函数声明][Associated function declarations]
-    * 本地绑定 —  [`let`][`let`] 、 [`if let`] 、 [`while let`] 、 [`for`] 、 [`match`] 条件、 [函数参数][function parameters] 、 [闭包参数][closure parameters] 
+    * 局部绑定 —  [`let`][`let`] 、 [`if let`] 、 [`while let`] 、 [`for`] 、 [`match`] 条件、 [函数参数][function parameters] 、 [闭包参数][closure parameters] 
     * 被 [闭包][closure] 捕获的变量
 * 宏命名空间
     * [`macro_rules` 声明][`macro_rules` declarations]

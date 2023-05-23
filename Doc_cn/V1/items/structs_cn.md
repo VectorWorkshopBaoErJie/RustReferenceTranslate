@@ -83,7 +83,7 @@
 {==+==}
 A _struct_ is a nominal [struct type] defined with the keyword `struct`.
 {==+==}
-_结构体_ 是使用关键字 `struct` 定义命名的 [结构体类型][struct type] 。
+_结构体_ 是使用关键字 `struct` 定义具名的 [结构体类型][struct type] 。
 {==+==}
 
 
@@ -109,7 +109,7 @@ let px: i32 = p.x;
 A _tuple struct_ is a nominal [tuple type], also defined with the keyword
 `struct`. For example:
 {==+==}
-_元组结构体_ 是一种命名的 [元组类型] ，同样使用关键字 `struct` 定义。例如:
+_元组结构体_ 是一种具名的 [元组类型] ，同样使用关键字 `struct` 定义。例如:
 {==+==}
 
 

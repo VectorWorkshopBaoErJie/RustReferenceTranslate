@@ -32,7 +32,7 @@ some other [path]. Usually a `use` declaration is used to shorten the path
 required to refer to a module item. These declarations may appear in [modules]
 and [blocks], usually at the top.
 {==+==}
-_use 声明_ 会创建一个或多个本地的名称绑定，和某个其他路径同义。
+_use 声明_ 会创建一个或多个局部的名称绑定，和某个其他路径同义。
 通常，`use` 声明用于缩短引用模块条目所需的路径。
 这些声明通常出现在 [模块][modules] 和 [块][blocks] 中，通常在顶部。
 {==+==}
@@ -69,7 +69,7 @@ Use 声明支持许多方便的快捷方式:
 {==+==}
 * 使用类似通配符的花括号语法同时绑定具有相同前缀的路径列表，例如 `use a::b::{c, d, e::f, g::h::i};` 。
 * 使用 `self` 关键字同时绑定具有相同前缀和共同父模块的路径列表，例如 `use a::b::{self, c, d::e};` 。
-* 重新将目标名称绑定为新的本地名称，使用语法 `use p::q::r as x;` 。这也可以与前两个功能一起使用: `use a::b::{self as ab, c as abc}` 。
+* 重新将目标名称绑定为新局部名称，使用语法 `use p::q::r as x;` 。这也可以与前两个功能一起使用: `use a::b::{self as ab, c as abc}` 。
 * 使用星号通配符语法绑定与给定前缀匹配的所有路径，例如 `use a::b::*;` 。
 * 多次嵌套前面的功能组合，例如 `use a::b::{self as ab, c, d::{*, e::f}};` 。
 {==+==}
@@ -371,7 +371,7 @@ Asterisk glob imports will import items imported with `_` in their unnameable
 form.
 {==+==}
 在Rust语言中，使用通配符 (`*`) 导入的内容将会包括使用下划线 (`_`) 导入但未被命名的内容。
-这些未命名的内容可以被视为一个占位符，它们存在于模块的作用域中，但没有一个明确的名称来引用它们。
+这些匿名的内容可以被视为一个占位符，它们存在于模块的作用域中，但没有一个明确的名称来引用它们。
 如果你在导入模块时使用了下划线来导入某些条目，这些条目将被视为 "无法命名的" 条目，只有使用通配符才能导入它们。
 {==+==}
 

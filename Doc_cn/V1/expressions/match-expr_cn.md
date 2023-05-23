@@ -73,7 +73,7 @@ The first arm with a matching pattern is chosen as the branch target of the `mat
 {==+==}
 `match` 的行为取决于被匹配表达式是一个 [占位表达式还是值表达式][place expression]。
 如果被匹配表达式是一个 [值表达式][value expression] ，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
-第一个具有匹配模式的分支被选择作为 `match` 的目标分支，任何由模式绑定的变量都分配到分支的块中的本地变量中，并且控制进入块中。
+第一个具有匹配模式的分支被选择作为 `match` 的目标分支，任何由模式绑定的变量都分配到分支的块中的局部变量中，并且控制进入块中。
 {==+==}
 
 

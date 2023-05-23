@@ -137,7 +137,7 @@ fn create_and_drop_zero_with_destructor() {
 {==+==}
 ## Unnamed constant
 {==+==}
-## 未命名常量
+## 匿名常量
 {==+==}
 
 
@@ -145,7 +145,7 @@ fn create_and_drop_zero_with_destructor() {
 Unlike an [associated constant], a [free] constant may be unnamed by using
 an underscore instead of the name. For example:
 {==+==}
-与 [关联常量][associated constant] 不同，可以使用下划线代替名称来表示 [自由][free] 未命名常量。例如:
+与 [关联常量][associated constant] 不同，可以使用下划线代替名称来表示 [自由][free] 匿名常量。例如:
 {==+==}
 
 
@@ -170,7 +170,7 @@ const _: () =  { struct _SameNameTwice; };
 As with [underscore imports], macros may safely emit the same unnamed constant in
 the same scope more than once. For example, the following should not produce an error:
 {==+==}
-与 [下划线导入][underscore imports] 类似，宏可以安全地在同一作用域内多次发送相同的未命名常量。例如，以下示例不应产生错误:
+与 [下划线导入][underscore imports] 类似，宏可以安全地在同一作用域内多次发送相同的匿名常量。例如，以下示例不应产生错误:
 {==+==}
 
 
