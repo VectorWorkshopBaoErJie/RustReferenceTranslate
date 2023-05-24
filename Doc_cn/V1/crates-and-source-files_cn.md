@@ -241,7 +241,7 @@ A crate that contains a `main` [function] can be compiled to an executable. If a
 type must implement the [`Termination`] trait.
 {==+==}
 如果要把 crate 编译成可执行文件，需要包含一个 `main` [函数][function] 。
-此 `main` 函数，不接受任何参数，不能声明任何 [trait 或生命周期约束][trait or lifetime bounds]，也不能有任何 `where` 子句，且返回类型必须实现 [`Termination`] trait。
+此 `main` 函数，不接受任何参数，不能声明任何 [trait 或生命周期约束][trait or lifetime bounds]，也不能有任何 `where` 从句，且返回类型必须实现 [`Termination`] trait。
 {==+==}
 
 

@@ -21,7 +21,7 @@
 > &nbsp;&nbsp; `unsafe`<sup>?</sup> `trait` [标识符][IDENTIFIER]&nbsp;
 >              [_泛型参数组_][_GenericParams_]<sup>?</sup>
 >              ( `:` [_类型参数约束组_][_TypeParamBounds_]<sup>?</sup> )<sup>?</sup>
->              [_Where子句_][_WhereClause_]<sup>?</sup> `{`\
+>              [_Where从句_][_WhereClause_]<sup>?</sup> `{`\
 > &nbsp;&nbsp;&nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp;&nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
@@ -436,7 +436,7 @@ trait Circle : Shape { fn radius(&self) -> f64; }
 {==+==}
 And the following is the same example, except using [where clauses].
 {==+==}
-以下是相同的示例， 但使用 [where 子句][where clauses] 。
+以下是相同的示例， 但使用 [where 从句][where clauses] 。
 {==+==}
 
 

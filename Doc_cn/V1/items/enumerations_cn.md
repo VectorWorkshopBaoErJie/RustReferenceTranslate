@@ -36,7 +36,7 @@
 > &nbsp;&nbsp; `enum`
 >    [标识符][IDENTIFIER]&nbsp;
 >    [_泛型参数组_][_GenericParams_]<sup>?</sup>
->    [_Where子句_][_WhereClause_]<sup>?</sup>
+>    [_Where从句_][_WhereClause_]<sup>?</sup>
 >    `{` _枚举条目组_<sup>?</sup> `}`
 >
 > _枚举条目组_ :\

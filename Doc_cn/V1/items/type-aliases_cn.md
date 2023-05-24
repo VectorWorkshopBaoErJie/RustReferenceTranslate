@@ -16,7 +16,7 @@
 > _类型别名组_ :\
 > &nbsp;&nbsp; `type` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup>
 >              ( `:` [_类型参数约束组_][_TypeParamBounds_] )<sup>?</sup>
->              [_Where子句_][_WhereClause_]<sup>?</sup> ( `=` [_类型_][_Type_] [_Where子句_][_WhereClause_]<sup>?</sup>)<sup>?</sup> `;`
+>              [_Where从句_][_WhereClause_]<sup>?</sup> ( `=` [_类型_][_Type_] [_Where从句_][_WhereClause_]<sup>?</sup>)<sup>?</sup> `;`
 {==+==}
 
 
@@ -27,7 +27,7 @@ may implement several different traits, or be compatible with several different
 type constraints.
 {==+==}
 _类型别名_ 为现有 [类型][type] 定义了一个新的名称。类型别名使用关键字 `type` 进行声明。
-每个值都有一个特定的类型，但可以实现多个不同的 trait，或与多个不同的类型约束兼容。
+每个值都有一个特定的类型，但可以实现多个不同的 trait，或兼容多个不同类型的约束。
 {==+==}
 
 
@@ -35,7 +35,7 @@ _类型别名_ 为现有 [类型][type] 定义了一个新的名称。类型别�
 For example, the following defines the type `Point` as a synonym for the type
 `(u8, u8)`, the type of pairs of unsigned 8 bit integers:
 {==+==}
-例如，以下代码将类型 `Point` 定义为类型 `(u8, u8)` 的同义词，即由两个无符号 8 位整数组成的对应类型：
+例如，以下代码将类型 `Point` 定义为类型 `(u8, u8)` 的同义词，即由两个无符号 8 位整数组成的类型：
 {==+==}
 
 
@@ -52,7 +52,7 @@ let p: Point = (41, 68);
 {==+==}
 A type alias to a tuple-struct or unit-struct cannot be used to qualify that type's constructor:
 {==+==}
-类型别名无法用于限定元组结构体或单元结构体的构造函数。
+类型别名无法获得元组结构体或单元结构体的构造函数。
 {==+==}
 
 
@@ -100,8 +100,8 @@ Where clauses before the equals sign on a type alias in a [trait impl] (like
 `type TypeAlias<T> where T: Foo = Bar<T>`) are deprecated. Where clauses after
 the equals sign (like `type TypeAlias<T> = Bar<T> where T: Foo`) are preferred.
 {==+==}
-在 [trait impl] 中，位于类型别名等号之前的 where 从句 (例如 `type TypeAlias<T> where T: Foo = Bar<T>` ) 已经被弃用。
-位于等号之后的 where 从句 (例如 `type TypeAlias<T> = Bar<T> where T: Foo` ) 是首选的。
+在 [trait impl] 中，位于类型别名等号之前的 where 从句已被弃用 (例如 `type TypeAlias<T> where T: Foo = Bar<T>` ) 。
+首选的是 where 从句位于等号之后 (例如 `type TypeAlias<T> = Bar<T> where T: Foo` ) 。
 {==+==}
 
 

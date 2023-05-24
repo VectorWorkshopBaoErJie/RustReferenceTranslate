@@ -48,7 +48,7 @@
 > _函数_ :\
 > &nbsp;&nbsp; _函数修饰符组_ `fn` [标识符][IDENTIFIER]&nbsp;[_泛型参数组_][_GenericParams_]<sup>?</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` _函数参数组_<sup>?</sup> `)`\
-> &nbsp;&nbsp; &nbsp;&nbsp; _函数返回类型_<sup>?</sup> [_Where子句_][_WhereClause_]<sup>?</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; _函数返回类型_<sup>?</sup> [_Where从句_][_WhereClause_]<sup>?</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; ( [_块表达式_][_BlockExpression_] | `;` )
 >
 > _函数修饰符组_ :\

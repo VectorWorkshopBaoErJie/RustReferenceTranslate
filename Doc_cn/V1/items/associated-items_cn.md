@@ -100,7 +100,7 @@ return type, and where clause of the associated function must be the same as the
 associated function declarations's.
 {==+==}
 函数名称是标识符。
-关联函数的泛型、参数列表、返回类型和 where 子句必须与其声明相同。
+关联函数的泛型、参数列表、返回类型和 where 从句必须与其声明相同。
 {==+==}
 
 
@@ -580,7 +580,7 @@ fn main() {
 {==+==}
 An example of associated types with generics and where clauses:
 {==+==}
-带有泛型和 where 子句的关联类型的示例:
+带有泛型和 where 从句的关联类型的示例:
 {==+==}
 
 
@@ -748,7 +748,7 @@ where clauses, dependent on functions in the trait and how the GAT is used. Thes
 rules may be loosened in the future; updates can be found [on the generic
 associated types initiative repository](https://rust-lang.github.io/generic-associated-types-initiative/explainer/required_bounds.html).
 {==+==}
-trait 上的泛型关联类型声明当前可能需要一系列 where 子句 ，这取决于 trait 中的函数以及如何使用 GAT 。
+trait 上的泛型关联类型声明当前可能需要一系列 where 从句 ，这取决于 trait 中的函数以及如何使用 GAT 。
 未来这些规则可能会放宽;
 更新内容可以在 [泛型关联类型提案库](https://rust-lang.github.io/generic-associated-types-initiative/explainer/required_bounds.html) 中找到。
 {==+==}
@@ -760,8 +760,8 @@ definitions of the associated type in impls. To do this, any clauses that *can b
 proven to hold* on functions (using the parameters of the function or trait)
 where a GAT appears as an input or output must also be written on the GAT itself.
 {==+==}
-简而言之，这些 `where` 子句是必需的，以便最大限度允许在 impls 中定义关联类型的范围。
-为了做到这一点，在任何出现 GAT 作为输入或输出的函数 (使用函数或 trait 的参数) 上，任何 *可以证明持有* 子句也必须写在 GAT 本身上。
+简而言之，这些 `where` 从句是必需的，以便最大限度允许在 impls 中定义关联类型的范围。
+为了做到这一点，在任何出现 GAT 作为输入或输出的函数 (使用函数或 trait 的参数) 上，任何 *可以证明持有* 从句也必须写在 GAT 本身上。
 {==+==}
 
 
@@ -823,7 +823,7 @@ on `Checker`.
 {==+==}
 The bounds on associated types also propagate required where clauses.
 {==+==}
-关联类型上的约束也会传播所需的 where 子句。
+关联类型上的约束也会传播所需的 where 从句。
 {==+==}
 
 
@@ -845,7 +845,7 @@ Here, `where Self: 'a` is required on `Item` because of `iter`. However, `Item`
 is used in the bounds of `Iterator`, the `where Self: 'a` clause is also required
 there.
 {==+==}
-在这里，由于 `iter` ， `Item` 上需要 `where Self: 'a` 。但是，由于 `Iterator` 的约束中使用了 `Item` ，因此也需要在那里写出 `where Self: 'a` 子句。
+在这里，由于 `iter` ， `Item` 上需要 `where Self: 'a` 。但是，由于 `Iterator` 的约束中使用了 `Item` ，因此也需要在那里写出 `where Self: 'a` 从句。
 {==+==}
 
 

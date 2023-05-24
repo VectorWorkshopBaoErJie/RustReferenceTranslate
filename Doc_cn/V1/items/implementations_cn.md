@@ -30,7 +30,7 @@
 > &nbsp;&nbsp; _内部实现_ | _Trait实现_
 >
 > _内部实现_ :\
-> &nbsp;&nbsp; `impl` [_泛型参数组_][_GenericParams_]<sup>?</sup>&nbsp;[_类型_][_Type_]&nbsp;[_Where子句_][_WhereClause_]<sup>?</sup> `{`\
+> &nbsp;&nbsp; `impl` [_泛型参数组_][_GenericParams_]<sup>?</sup>&nbsp;[_类型_][_Type_]&nbsp;[_Where从句_][_WhereClause_]<sup>?</sup> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
@@ -38,7 +38,7 @@
 > _Trait实现_ :\
 > &nbsp;&nbsp; `unsafe`<sup>?</sup> `impl` [_泛型参数组_][_GenericParams_]<sup>?</sup> `!`<sup>?</sup>
 >              [_类型路径_][_TypePath_] `for` [_类型_][_Type_]\
-> &nbsp;&nbsp; [_Where子句_][_WhereClause_]<sup>?</sup>\
+> &nbsp;&nbsp; [_Where从句_][_WhereClause_]<sup>?</sup>\
 > &nbsp;&nbsp; `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_内部属性_][_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_关联条目_][_AssociatedItem_]<sup>\*</sup>\
@@ -85,7 +85,7 @@ An inherent implementation is defined as the sequence of the `impl` keyword,
 generic type declarations, a path to a nominal type, a where clause, and a
 bracketed set of associable items.
 {==+==}
-内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向具名类型的路径、 where 子句，以及一组用括号包围的可关联条目。
+内部实现被定义为以下几个部分的集合: `impl` 关键字、泛型类型声明、指向具名类型的路径、 where 从句，以及一组用括号包围的可关联条目。
 {==+==}
 
 

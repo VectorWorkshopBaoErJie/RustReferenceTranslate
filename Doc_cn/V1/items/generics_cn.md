@@ -450,7 +450,7 @@ fn generic<const B: bool>() {
 {==+==}
 ## Where clauses
 {==+==}
-## Where 子句
+## Where 从句
 {==+==}
 
 
@@ -470,17 +470,17 @@ fn generic<const B: bool>() {
 > &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
 {==+==}
 > **<sup>语法</sup>**\
-> _Where子句_ :\
-> &nbsp;&nbsp; `where` ( _Where子句条目_ `,` )<sup>\*</sup> _Where子句条目_ <sup>?</sup>
+> _Where从句_ :\
+> &nbsp;&nbsp; `where` ( _Where从句条目_ `,` )<sup>\*</sup> _Where从句条目_ <sup>?</sup>
 >
-> _Where子句条目_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _生命周期Where子句条目_\
-> &nbsp;&nbsp; | _类型约束Where子句条目_
+> _Where从句条目_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _生命周期Where从句条目_\
+> &nbsp;&nbsp; | _类型约束Where从句条目_
 >
-> _生命周期Where子句条目_ :\
+> _生命周期Where从句条目_ :\
 > &nbsp;&nbsp; [_生命周期_][_Lifetime_] `:` [_生命周期约束组_][_LifetimeBounds_]
 >
-> _类型约束Where子句条目_ :\
+> _类型约束Where从句条目_ :\
 > &nbsp;&nbsp; [_对于生命周期组_]<sup>?</sup> [_类型_][_Type_] `:` [_类型参数约束组_][_TypeParamBounds_]<sup>?</sup>
 {==+==}
 
@@ -490,7 +490,7 @@ fn generic<const B: bool>() {
 parameters as well as a way to specify bounds on types that aren't type
 parameters.
 {==+==}
-*where 子句* 提供了另一种方法来指定类型和生命周期参数的约束，以及指定非类型参数的类型约束的方法。
+*where 从句* 提供了另一种方法来指定类型和生命周期参数的约束，以及指定非类型参数的类型约束的方法。
 {==+==}
 
 

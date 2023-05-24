@@ -75,7 +75,7 @@ trait is implemented for a type. For example, given `Ty: Trait`
   being used for `T`.
 {==+==}
 [Trait] 和生命周期约束提供了一种方式，以限制 [泛型条目][generic] 可以使用哪些类型和生命周期作为参数。
-可以在 [where 子句][where clause] 提供对类型的约束。
+可以在 [where 从句][where clause] 提供对类型的约束。
 对于一些常见情况，也有更简短的形式：
 
 * 在声明 [泛型参数][generic] 之后进行约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。

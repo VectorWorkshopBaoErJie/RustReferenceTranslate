@@ -51,7 +51,7 @@
 > &nbsp;&nbsp; `struct`
 >   [标识符][IDENTIFIER]&nbsp;
 >   [_泛型参数组_][_GenericParams_]<sup>?</sup>
->   [_Where子句_][_WhereClause_]<sup>?</sup>
+>   [_Where从句_][_WhereClause_]<sup>?</sup>
 >   ( `{` _结构体字段组_<sup>?</sup> `}` | `;` )
 >
 > _元组结构体_ :\
@@ -59,7 +59,7 @@
 >   [标识符][IDENTIFIER]&nbsp;
 >   [_泛型参数组_][_GenericParams_]<sup>?</sup>
 >   `(` _元组字段组_<sup>?</sup> `)`
->   [_Where子句_][_WhereClause_]<sup>?</sup>
+>   [_Where从句_][_WhereClause_]<sup>?</sup>
 >   `;`
 >
 > _结构体字段组_ :\
@@ -83,14 +83,14 @@
 {==+==}
 A _struct_ is a nominal [struct type] defined with the keyword `struct`.
 {==+==}
-_结构体_ 是使用关键字 `struct` 定义具名的 [结构体类型][struct type] 。
+_结构体_ 是使用关键字 `struct` 定义的具名的 [结构体类型][struct type] 。
 {==+==}
 
 
 {==+==}
 An example of a `struct` item and its use:
 {==+==}
-以下是 `struct` 类型的一个示例及其使用:
+以下是 `struct` 类型的一个例子:
 {==+==}
 
 
