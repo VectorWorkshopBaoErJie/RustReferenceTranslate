@@ -36,9 +36,9 @@ crate` appears in the crate root, then the crate name is also added to the
 [extern prelude], making it automatically in scope in all modules. The `as`
 clause can be used to bind the imported crate to a different name.
 {==+==}
-一个 _`extern crate` 声明_ 指定了一个对外部 crate 的依赖。
-外部 crate 然后被绑定到 `extern crate` 声明中提供的标识符中。
-此外，如果 `extern crate` 出现在 crate 根中，则 crate 名称也会被添加到 [extern 预定义][extern prelude] 中，在所有模块中自动处于作用域内。
+一个 _`extern crate` 声明_ 指定了对一个外部 crate 的依赖。
+外部 crate 绑定到 `extern crate` 声明中提供的标识符。
+此外，如果 `extern crate` 出现在 crate 根，则 crate 名称也会被添加到 [extern 预定义][extern prelude] 中，刚自动处于所有模块的作用域内。
 可以使用 `as` 子句将导入的 crate 绑定到不同的名称。
 {==+==}
 
@@ -62,7 +62,7 @@ equal to the [identifier] given in the `extern crate` declaration.
 The `self` crate may be imported which creates a binding to the current crate.
 In this case the `as` clause must be used to specify the name to bind it to.
 {==+==}
-`self` 可以被导入作为当前 crate 的绑定，此时必须使用 `as` 子句来指定绑定的名称。
+可以导入 `self` 作为当前 crate 的绑定，此时必须使用 `as` 子句来指定绑定名称。
 {==+==}
 
 
@@ -122,7 +122,7 @@ extern crate hello_world; // hyphen replaced with an underscore
 {==+==}
 <!-- ignore: requires external crates -->
 ```rust,ignore
-// 导入Cargo 包 hello-world
+// 导入 Cargo hello-world 包 
 extern crate hello_world; // 连字符替换为下划线
 ```
 {==+==}
@@ -131,7 +131,7 @@ extern crate hello_world; // 连字符替换为下划线
 {==+==}
 ## Extern Prelude
 {==+==}
-## 外部 Prelude
+## 外部预定义
 {==+==}
 
 
@@ -157,8 +157,8 @@ by using an underscore with the form `extern crate foo as _`. This may be
 useful for crates that only need to be linked, but are never referenced, and
 will avoid being reported as unused.
 {==+==}
-使用 `extern crate foo as _` 的形式可以声明外部 crate 依赖，但不将其名称绑定到作用域中。
-这对于只需要链接而从未被引用的 crate 可能很有用，避免它们被报告为未使用。
+可以使用 `extern crate foo as _` 的形式声明外部 crate 依赖，不将其名称绑定到作用域中。
+这只链接，而不引用 crate 中的条目，避免报告未使用。
 {==+==}
 
 
@@ -182,8 +182,8 @@ The *`no_link` attribute* may be specified on an `extern crate` item to
 prevent linking the crate into the output. This is commonly used to load a
 crate to access only its macros.
 {==+==}
-*`no_link` 属性* 可在 `extern crate` 条目上指定，以防止将 crate 链接到输出中。
-这通常用于加载一个 crate 仅用于访问其宏。
+可在 `extern crate` 条目上指定 *`no_link` 属性* ，以阻止将 crate 链接到输出中。
+这通常仅用于加载和访问 crate 中的宏。
 {==+==}
 
 

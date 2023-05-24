@@ -32,7 +32,7 @@ some other [path]. Usually a `use` declaration is used to shorten the path
 required to refer to a module item. These declarations may appear in [modules]
 and [blocks], usually at the top.
 {==+==}
-_use 声明_ 会创建一个或多个局部的名称绑定，和某个其他路径同义。
+_use 声明_ 会创建一个或多个局部的名称绑定，和某个其他路径有相同的含义。
 通常，`use` 声明用于缩短引用模块条目所需的路径。
 这些声明通常出现在 [模块][modules] 和 [块][blocks] 中，通常在顶部。
 {==+==}
@@ -142,11 +142,11 @@ different target definition: even a definition with a private canonical path,
 inside a different module. If a sequence of such redirections form a cycle or
 cannot be resolved unambiguously, they represent a compile-time error.
 {==+==}
-和条目一样，默认情况下， `use` 声明只在其所在的模块中可见。
-同样地，如果在 `use` 声明前加上 `pub` 关键字，那么 `use` 声明就是公开的。
+和其他条目一样，默认情况下， `use` 声明只在其所在的模块中可见。
+如果在 `use` 声明前加上 `pub` 关键字，那么 `use` 声明就是公开的。
 这样的 `use` 声明就可以用来 _重新导出_ 一个名称。
-因此，公开的 `use` 声明可以将某个公开名称重定向到一个不同的目标定义：甚至是定义在不同模块中的私有规范路径。
-如果这样的重定向序列形成了一个循环或无法消除歧义，那么就会导致编译时错误。
+公开的 `use` 声明可以将某个公开名称重定向到一个不同的目标：甚至是定义在不同模块中私有的规范路径。
+如果重定向形成循环或无法消除歧义，会导致编译时错误。
 {==+==}
 
 
@@ -275,7 +275,8 @@ fn main() {}
 > `use` paths work in 2015 but not 2018:
 >
 {==+==}
-> **版次差异**: 在2015版本中， `use` 路径还允许访问 crate 根中的条目。使用上面的例子，以下 `use` 路径在 2015 版中可以使用但在 2018 版中无法使用:
+> **版次差异**: 在 2015 版本中， `use` 路径还允许访问 crate 根中的条目。
+> 使用上面的例子，以下 `use` 路径在 2015 版中可以使用但在 2018 版中无法使用:
 >
 {==+==}
 
@@ -361,8 +362,8 @@ if the trait's symbol may conflict with another symbol. Another example is to
 link an external crate without importing its name.
 {==+==}
 条目可以通过在路径前加一个下划线的形式 `use path as _` 导入，而不必绑定到一个名字。
-这种方法特别适用于导入 trait ，以便可以使用它的方法而不必导入该 trait 的符号，例如，如果该 trait 的符号可能与另一个符号发生冲突。
-另一个例子是链接一个外部 crate ，而不必导入它的名字。
+这种方法特别适用于导入 trait ，以便可以使用 trait 方法而不必导入该 trait 的符号，例如，如果该 trait 的符号可能与另一个符号发生冲突。
+另一个例子是链接外部 crate ，也不导入其名称。
 {==+==}
 
 
@@ -370,9 +371,7 @@ link an external crate without importing its name.
 Asterisk glob imports will import items imported with `_` in their unnameable
 form.
 {==+==}
-在Rust语言中，使用通配符 (`*`) 导入的内容将会包括使用下划线 (`_`) 导入但未被命名的内容。
-这些匿名的内容可以被视为一个占位符，它们存在于模块的作用域中，但没有一个明确的名称来引用它们。
-如果你在导入模块时使用了下划线来导入某些条目，这些条目将被视为 "无法命名的" 条目，只有使用通配符才能导入它们。
+星号通配符将导入以不可命名的形式 `_` 导入的条目。
 {==+==}
 
 
@@ -420,7 +419,7 @@ The unique, unnameable symbols are created after macro expansion so that
 macros may safely emit multiple references to `_` imports. For example, the
 following should not produce an error:
 {==+==}
-独特的、无法命名的符号是在宏展开后创建的，这样宏就可以安全地发出对 `_` 导入的多个引用。例如，下面的代码不应该出错:
+独特的、无法命名的符号是在宏展开后创建的，因而宏可以安全地创建 `_` 导入的多个引用。例如，下面的代码将不会出错:
 {==+==}
 
 

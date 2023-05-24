@@ -59,7 +59,7 @@
 >
 > _函数参数组_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _Self参数_ `,`<sup>?</sup>\
-> &nbsp;&nbsp; | (_Self参数_ `,`)<sup>?</sup> _函数数参数_ (`,` _函数数参数_)<sup>\*</sup> `,`<sup>?</sup>
+> &nbsp;&nbsp; | (_Self参数_ `,`)<sup>?</sup> _函数参数_ (`,` _函数参数_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _Self参数_ :\
 > &nbsp;&nbsp; [_外围属性_][_OuterAttribute_]<sup>\*</sup> ( _简写Self_ | _类型化Self_ )
@@ -90,7 +90,7 @@
 > [^fn-param-2015]: Function parameters with only a type are only allowed
 >   in an associated function of a [trait item] in the 2015 edition.
 {==+==}
-> [^async-edition]: 在 2015 版中不允许使用 `async` 限定词。
+> [^async-edition]: 在 2015 版中不允许使用 `async` 限定。
 >
 > [^fn-param-2015]: 在 2015 版中，只有在一个 [trait 条目][trait item] 的关联函数中才允许使用仅带有类型的函数参数。
 {==+==}
@@ -103,7 +103,7 @@ Functions are declared with the keyword `fn`.
 Functions may declare a set of *input* [*variables*][variables] as parameters, through which the caller passes arguments into the function, and the *output* [*type*][type] of the value the function will return to its caller on completion.
 If the output type is not explicitly stated, it is the [unit type].
 {==+==}
-一个函数包括一个 [块][block] ，以及一个名称、一组参数和一个输出类型。
+函数包括一个 [块][block] ，以及一个名称、一组参数和一个输出类型。
 除名称外，其他是可选的。函数是用关键字 `fn` 声明。
 函数可以声明一组 *输入* [变量][variables] 作为参数，通过这些变量，调用者将参数传递给函数，并且函数的 *输出* 类型为函数完成时将返回给其调用者的 [类型][type] 。
 如果未显式指定输出类型，则为 [单元类型][unit type] 。
@@ -193,7 +193,7 @@ returned to the caller. As usual, an explicit return expression within
 the body of the function will short-cut that implicit return, if reached.
 {==+==}
 函数的代码块在概念上被包装在一个块中，该块绑定了参数模式，然后 `return` 函数块的值。
-这意味着，如果块的尾表达式被评估，则将返回到调用者。
+这意味着，如果块的尾表达式被评估，并返回到调用者。
 如常规一样，如果在函数体内有显式的返回表达式，则会立即返回，如果到达该隐式返回，则会被短路。
 {==+==}
 
@@ -316,7 +316,7 @@ foo(&[1, 2]);
 {==+==}
 will instantiate type parameter `T` with `i32`.
 {==+==}
-将类型参数 `T` 用实例化为 `i32` 。
+将类型参数 `T` 实例化为 `i32` 。
 {==+==}
 
 
@@ -361,7 +361,7 @@ These are often used in combination with [external block] items which provide
 function _declarations_ that can be used to call functions without providing
 their _definition_:
 {==+==}
-这些通常与 [外部块][external block] 条目结合使用，后者可以提供用来调用函数的声明，而不必提供其函数 _定义_ :
+这些通常与 [外部块][external block] 条目结合使用，可以提供用来调用函数的声明，而不必提供其函数 _定义_ :
 {==+==}
 
 
@@ -503,7 +503,8 @@ Functions qualified with the `const` keyword are [const functions], as are
 [tuple struct] and [tuple variant] constructors. _Const functions_  can be
 called from within [const contexts].
 {==+==}
-被 `const` 修饰的函数是 [常量函数][const functions] ，同样的构造函数 [元组结构体][tuple struct] 和 [元组变体][tuple variant] 也是。 _常量函数_ 可以在 [常量上下文][const contexts] 中被调用。
+被 `const` 修饰的函数是 [常量函数][const functions] ，同样的构造函数 [元组结构体][tuple struct] 和 [元组变体][tuple variant] 也是。
+ _常量函数_ 可以在 [常量上下文][const contexts] 中被调用。
 {==+==}
 
 
