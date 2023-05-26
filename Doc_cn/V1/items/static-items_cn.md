@@ -169,7 +169,7 @@ or writing a mutable static variable. Care should be taken to ensure that
 modifications to a mutable static are safe with respect to other threads
 running in the same process.
 {==+==}
-如果静态条目用 `mut` 关键字声明，那么就程序允许修改它。
+如果静态条目用 `mut` 关键字声明，那么允许程序修改它。
 Rust 的一个目标是难以出现并发错误，这显然是导致竞态条件或其他错误的一个很大源头。
 因此，在读取或写入可变静态变量时，需要使用 `unsafe` 块。
 应该注意确保对可变静态变量的修改，对与运行在同一进程中的其他线程方面是安全的。

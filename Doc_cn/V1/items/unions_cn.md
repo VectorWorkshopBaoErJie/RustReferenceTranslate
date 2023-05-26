@@ -70,7 +70,7 @@ dropped. Like for structs and enums, it is possible to `impl Drop` for a union
 to manually define what happens when it gets dropped.
 {==+==}
 这个限制确保了联合体字段不需要被丢弃。
-与结构体和枚举类似，也可以为联合体实现 `Drop` trait 来手动定义在释放时发生的行为。
+与结构体和枚举类似，可以为联合体实现 `Drop` trait 来手动定义在释放时发生的行为。
 {==+==}
 
 
@@ -144,9 +144,9 @@ reading.
 {==+==}
 联合体没有 "活动字段" 的概念。每次访问联合体时，只会解释用于访问的字段类型的存储。
 读取联合体字段按位读取字段类型。
-字段可能具有非零偏移量 (除非使用 [C表示法][the C representation]) ；在这种情况下，从字段偏移处开始读取位。程序员有责任确保数据在字段类型上是有效的。
+字段可能具有非零偏移量 (除非使用 [C 表示形式][the C representation]) ；在这种情况下，从字段偏移处开始读取位。程序员有责任确保数据在字段类型上是有效的。
 未能这样做会导致 [未定义行为][undefined behavior] 。例如，通过 [布尔类型][boolean type] 字段读取值 `3` 是未定义行为。
-实际上，使用 [C表示法][the C representation] 写入并然后读取联合体类似于从用于写入的类型到用于读取的类型的 [`transmute`]  "质变"。
+实际上，使用 [C 表示形式][the C representation] 写入并然后读取联合体类似于从用于写入的类型到用于读取的类型的 [`transmute`]  "质变"。
 {==+==}
 
 
@@ -335,7 +335,7 @@ generics, trait implementations, inherent implementations, coherence, pattern
 checking, etc etc etc).
 {==+==}
 你所看到的是，在很多方面 (除了布局、安全性和所有权) 上，联合体和结构体表现得非常相似，这是由于从结构体继承了语法形式。
-这在 Rust 语言的许多未提及方面也同样适用 (例如私有性、名称解析、类型推断、泛型、trait实现、内部实现、一致性、模式检查等等) 。
+这在语言中的许多未提及方面也同样适用 (例如私有性、名称解析、类型推断、泛型、trait实现、内部实现、一致性、模式检查等等) 。
 {==+==}
 
 

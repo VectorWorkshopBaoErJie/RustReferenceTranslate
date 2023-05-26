@@ -25,7 +25,7 @@ non-[`Copy`] types. References to the same constant are not necessarily
 guaranteed to refer to the same memory address.
 {==+==}
 *常量条目* 是一个可选名称的、不与程序中特定内存位置关联的 _[常量值][constant value]_ 。
-常量在使用时本质上是内联的，这意味着当它们在相关上下文中使用时，它们会被直接复制。
+常量在使用时本质上是内联的，这意味着当它们在相关上下文中使用时，会被直接拷贝。
 这包括使用来自外部 crate 的常量，以及 非-[`Copy`] 类型。对同一常量的引用不能保证引用同一内存地址。
 {==+==}
 

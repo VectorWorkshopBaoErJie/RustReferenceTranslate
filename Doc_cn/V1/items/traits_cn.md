@@ -32,7 +32,7 @@
 A _trait_ describes an abstract interface that types can implement. This
 interface consists of [associated items], which come in three varieties:
 {==+==}
-一个 _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目][associated items] 组成，包括以下三种类型：
+ _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目][associated items] 组成，包括以下三种类型：
 {==+==}
 
 
