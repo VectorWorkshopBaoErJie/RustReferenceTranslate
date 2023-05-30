@@ -53,7 +53,7 @@ that belong to an instance of the type that is being implemented or to the
 type statically.
 {==+==}
  _实现_ 条目将 _实现类型_ 与其中条目相关联。
-实现使用关键字 `impl` 定义，其包含被实现类型实例或静态类型的函数。
+实现使用关键字 `impl` 定义，其包含被实现类型实例或类型的静态函数。
 {==+==}
 
 
@@ -103,7 +103,7 @@ implementing type.  Inherent implementations can contain [associated
 functions] (including [methods]) and [associated constants]. They cannot
 contain associated type aliases.
 {==+==}
-内部实现将包含的条目与实现类型关联。内部实现可以包含关联函数 (包括 [方法][methods] ) 和 [关联常量][associated constants] 。它们不能包含关联类型别名。
+内部实现将包含的条目与实现类型相关联。内部实现可以包含关联函数 (包括 [方法][methods] ) 和 [关联常量][associated constants] 。它们不能包含关联类型别名。
 {==+==}
 
 
@@ -120,7 +120,7 @@ component.
 A type can also have multiple inherent implementations. An implementing type
 must be defined within the same crate as the original type definition.
 {==+==}
-一个类型也可以有多个内部实现。实现类型必须与原始类型定义在相同的 crate 中。
+一个类型可以有多个内部实现。实现类型必须与原始类型定义在相同的 crate 中。
 {==+==}
 
 
@@ -175,7 +175,7 @@ fn main() {
     // 也可以将路径重新导出到实现类型。
     Color::red();
 
-    // 不起作用，因为在 `values` 中没有使用 pub 。
+    // 无效，因为在 `values` 中没有使用 pub 。
     // values::Color::red();
 }
 ```
@@ -210,7 +210,7 @@ by the keyword `for`, followed by a path to a nominal type.
 The trait is known as the _implemented trait_. The implementing type
 implements the implemented trait.
 {==+==}
-该 trait 被称为 _实现 trait_ 。实现类型实现其实现 trait 。
+该 trait 被称为 _实现 trait_ ，由实现类型实现。
 {==+==}
 
 
@@ -340,7 +340,7 @@ special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>`
 is considered local.
 {==+==}
 仅出现 *未覆盖* 类型参数是受限制的。需要注意的是，在一致性的目的下， [基本类型][fundamental types] 是特殊的。
- `Box<T>` 中的 `T` 不被视为被覆盖，而 `Box<LocalType>` 则被视为是局部类型。
+ `Box<T>` 中的 `T` 不视为被覆盖，而 `Box<LocalType>` 则视为是局部类型。
 {==+==}
 
 

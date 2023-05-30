@@ -510,10 +510,6 @@ type can be named like `<Thing as Trait>::Item<'x>`, where `'x` is some lifetime
 in scope. In this case, `'x` will be used wherever `'a` appears in the associated
 type definitions on impls.
 {==+==}
-关联类型可以包含 [泛型参数][generic parameters] 和 [where 约束][where clauses] ；这些通常被称为 *泛型关联类型* 或 *GATs* 。
-如果类型 `Thing` 从 `Trait` 中具有泛型 `<'a>` 的关联类型 `Item`，则该类型可以命名为 `<Thing as Trait>::Item<'x>` ，其中 `'x` 是作用域内的某个生命周期。
-此时，无论何时出现在 impl 上的关联类型定义中的 `'a` 都将使用 `'x` 。
-
 关联类型可能包含 [泛型参数][generic parameters] 和 [where 约束][where clauses] ；这些通常被称为 *泛型关联类型* 或 GAT。
 如果类型 `Thing` 有一个来自 `Trait` 的关联类型 `Item` ，具有泛型 `<'a>` ，则可以像 `<Thing as Trait> ::Item<'x>` 这样命名该类型，其中 `'x` 是某个有效作用域内的生命周期。
 此时，`'x` 将在实现中的关联类型定义中的 `'a` 处使用。

@@ -50,7 +50,9 @@ usually immediately after the name of the item and before its definition. For
 implementations, which don't have a name, they come directly after `impl`.
 The order of generic parameters is restricted to lifetime parameters and then type and const parameters intermixed.
 {==+==}
-[函数][Functions]、 [类型别名][type aliases] 、 [结构体][structs] 、 [枚举][enumerations] 、 [联合体][unions] 、 [traits]和 [实现][implementations] 可以通过类型、常量和生命周期参数 *泛型化* 。这些参数在尖括号 <span class="parenthetical"> (`<...>`) </span> 中列出，通常紧跟在条目名称之后，在其定义之前。对于没有名称的实现，它们直接在 `impl` 之后。泛型参数的顺序仅限于首先为生命周期参数，然后交替出现类型和常量参数。
+[函数][Functions]、 [类型别名][type aliases] 、 [结构体][structs] 、 [枚举][enumerations] 、 [联合体][unions] 、 [traits] 和 [实现][implementations] 可以通过类型、常量和生命周期参数 *泛型化* 。
+这些参数在尖括号 <span class="parenthetical"> (`<...>`) </span> 中列出，通常紧跟在条目名称之后，在其定义之前。
+对于没有名称的实现，直接在 `impl` 之后。泛型参数的顺序仅限于首先为生命周期参数，然后交替出现类型和常量参数。
 {==+==}
 
 
@@ -79,7 +81,7 @@ Generic parameters are in scope within the item definition where they are
 declared. They are not in scope for items declared within the body of a
 function as described in [item declarations].
 {==+==}
-泛型参数在它们声明的条目定义中是有效的。根据 [条目声明][item declarations] 所述，它们不在函数体中声明的条目作用域内。
+泛型参数在其声明的条目定义中是有效的。根据 [条目声明][item declarations] 所述，不在函数体中声明的条目作用域内。
 {==+==}
 
 
@@ -104,8 +106,8 @@ referred to with path syntax.
 const identifier introduces a name for the constant parameter, and all
 instances of the item must be instantiated with a value of the given type.
 {==+==}
-*常量泛型参数* 允许条目对常量值进行泛型。
-const 标识符引入了常量参数的名称，并且必须使用给定类型的值来实例化所有条目实例。
+*常量泛型参数* 指条目泛型为常量值。
+const 标识符引入了常量参数的名称，并且必须使用给定类型的值来实例化条目实例。
 {==+==}
 
 
@@ -121,7 +123,7 @@ const 标识符引入了常量参数的名称，并且必须使用给定类型�
 The only allowed types of const parameters are `u8`, `u16`, `u32`, `u64`, `u128`, `usize`,
 `i8`, `i16`, `i32`, `i64`, `i128`, `isize`, `char` and `bool`.
 {==+==}
-仅允许的常量参数类型是 `u8` 、 `u16` 、 `u32` 、 `u64` 、 `u128` 、 `usize` 、`i8` 、 `i16` 、 `i32` 、 `i64` 、 `i128` 、 `isize` 、 `char` 、 `bool`.
+仅允许的常量参数类型有 `u8` 、 `u16` 、 `u32` 、 `u64` 、 `u128` 、 `usize` 、`i8` 、 `i16` 、 `i32` 、 `i64` 、 `i128` 、 `isize` 、 `char` 、 `bool`.
 {==+==}
 
 
@@ -131,7 +133,7 @@ exception that when used in a [type] or [array repeat expression], it must be
 standalone (as described below). That is, they are allowed in the following
 places:
 {==+==}
-常量参数可以在任何 [常量条目][const item] 可用的地方使用，但是当它们用于 [类型][type] 或 [数组重复表达式][array repeat expression] 时，必须是独立的 (如下所述) 。也就是说，它们允许出现在以下位置:
+常量参数可以在任何 [常量条目][const item] 可用的地方使用，但是当常量参数用于 [类型][type] 或 [数组重复表达式][array repeat expression] 时，必须是独立的 (如下所述) 。也就是说，允许出现在以下位置:
 {==+==}
 
 
@@ -145,7 +147,7 @@ places:
 4. As a parameter to any type used in the body of any functions in the item.
 5. As a part of the type of any fields in the item.
 {==+==}
-1. 作为有关条目签名的一部分的任何类型应用 const 。
+1. 作为相关条目签名一部分的类型应用 const 。
 2. 作为定义 [关联常量][associated const] 或作为 [关联类型][associated type] 参数的常量表达式的一部分。
 3. 作为条目中任何函数体中运行时表达式中的值。
 4. 作为条目中任何函数体中使用的任何类型的参数。
@@ -344,7 +346,7 @@ When there is ambiguity if a generic argument could be resolved as either a
 type or const argument, it is always resolved as a type. Placing the argument
 in a block expression can force it to be interpreted as a const argument.
 {==+==}
-当一个泛型参数可以同时被解析为类型或常量参数时，它将总是被解析为类型参数。
+当一个泛型参数可以同时被解析为类型或常量参数时，将总是被解析为类型参数。
 将该参数放在块表达式中可以强制将其解释为常量参数。
 {==+==}
 
@@ -402,7 +404,17 @@ struct Unconstrained;
 impl<const N: usize> Unconstrained {}
 ```
 {==+==}
+```rust,compile_fail
+// 成功
+struct Foo<const N: usize>;
+enum Bar<const M: usize> { A, B }
 
+// 错误: 未使用的参数
+struct Baz<T>;
+struct Biz<'a>;
+struct Unconstrained;
+impl<const N: usize> Unconstrained {}
+```
 {==+==}
 
 
@@ -498,7 +510,7 @@ parameters.
 The `for` keyword can be used to introduce [higher-ranked lifetimes]. It only
 allows [_LifetimeParam_] parameters.
 {==+==}
- `for` 关键字可用于引入 [更高阶生命周期][higher-ranked lifetimes] 。它仅允许 [_生命周期参数_][_LifetimeParam_] 。
+ `for` 关键字可用于引入 [更高阶生命周期][higher-ranked lifetimes] ，仅允许 [_生命周期参数_][_LifetimeParam_] 。
 {==+==}
 
 
@@ -541,7 +553,7 @@ Generic lifetime and type parameters allow [attributes] on them. There are no
 built-in attributes that do anything in this position, although custom derive
 attributes may give meaning to it.
 {==+==}
-泛型生命周期和类型参数允许在它们上面使用 [属性][attributes] 。在这个位置上没有内置属性起作用，尽管自定义派生属性可能会赋予其意义。
+泛型生命周期和类型参数允许 [属性][attributes] 。在这个位置上没有内置属性起作用，尽管自定义派生属性可能会赋予其意义。
 {==+==}
 
 

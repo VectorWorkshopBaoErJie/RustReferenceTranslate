@@ -32,7 +32,7 @@
 A _trait_ describes an abstract interface that types can implement. This
 interface consists of [associated items], which come in three varieties:
 {==+==}
- _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目][associated items] 组成，包括以下三种类型：
+ _trait_ 描述了类型可以实现的抽象接口。这个接口由 [关联条目][associated items] 组成，包括以下三种：
 {==+==}
 
 
@@ -53,15 +53,15 @@ that is implementing this interface". Traits may also contain additional type
 parameters. These type parameters, including `Self`, may be constrained by
 other traits and so forth [as usual][generics].
 {==+==}
-所有 trait 都定义了一个隐式类型参数 `Self` ，它指代 "正在实现此接口的类型" 。
-Trait 还可以包含其他类型参数。这些类型参数，包括 `Self` ， 像通常 [泛型][generics] 一样可以受到其他 trait 的约束。
+所有 trait 都定义了一个隐式类型参数 `Self` ，该参数指代 "正在实现此接口的类型" 。
+Trait 还可以包含其他类型参数。这些类型参数以及 `Self`  像 [泛型][generics] 可以接受其他 trait 约束。
 {==+==}
 
 
 {==+==}
 Traits are implemented for specific types through separate [implementations].
 {==+==}
-Trait 通过单独的 [实现][implementations] 与具体的类型关联。
+Trait 通过不同的 [实现][implementations] 与特定的类型关联。
 {==+==}
 
 
@@ -75,8 +75,8 @@ the constant value. Associated types must never define the type, the type may
 only be specified in an implementation.
 {==+==}
 Trait 函数可以省略函数体，用分号代替。这表示实现必须定义该函数。
-如果 trait 函数定义了函数体，则该定义作为任何未覆盖它的实现的默认值。
-类似地，关联常量可以省略等号和表达式，以表示实现必须定义常量值。
+如果 trait 函数定义了函数体，则作为未覆盖此函数实现时的默认值。
+同样地，关联常量可以省略等号和表达式，以表示实现必须定义常量值。
 关联类型绝不能定义类型，类型只能在实现中指定。
 {==+==}
 
@@ -94,7 +94,7 @@ trait Example {
 ```
 {==+==}
 ```rust
-// 有定义和无定义的关联 trait 条目的示例。
+// 有定义和无定义的 trait 关联条目的示例。
 trait Example {
     const CONST_NO_DEFAULT: i32;
     const CONST_WITH_DEFAULT: i32 = 99;
@@ -132,8 +132,8 @@ after the trait name, using the same syntax used in [generic functions].
 {==+==}
 ## 泛型 Trait
 
-为了使 Trait 可以泛化，可以在 Trait 名称后指定类型参数。
-这些参数使用与 [泛型函数][generic functions] 相同的语法表示。
+可以在 Trait 名称后指定类型参数 ，使 Trait 泛化。
+参数语法与 [泛型函数][generic functions] 的相同。
 {==+==}
 
 
@@ -158,8 +158,8 @@ Object safe traits can be the base trait of a [trait object]. A trait is
 {==+==}
 ## 对象安全
 
-对象安全的 trait 可以是一个 [trait 对象][trait object] 的基础 trait 。
-一个 trait 是 *对象安全* 的，如果它具有以下 trait (在[RFC 255]中定义):
+对象安全的 trait 可以作为 [trait 对象][trait object] 的基础 trait 。
+如果具有以下特性 (在[RFC 255]中定义) ，则 trait 是 *对象安全* 的:
 {==+==}
 
 
@@ -199,7 +199,7 @@ Object safe traits can be the base trait of a [trait object]. A trait is
             * [`Arc<Self>`]
             * [`Pin<P>`] 其中 `P` 是上述类型之一
         * 没有 `where Self: Sized` 绑定 (接收者类型 `Self` (即 `self`) 暗指 this) 。
-    * 显示不可派发函数要求:
+    * 显式不可派发函数要求:
         * 有 `where Self: Sized` 绑定 (接收者类型 `Self` (即 `self`) 暗指 this) 。
 {==+==}
 
@@ -396,7 +396,7 @@ implement a specific trait. Furthermore, anywhere a [generic][generics] or [trai
 is bounded by a trait, it has access to the associated items of its supertraits.
 {==+==}
 **父级trait** 是指在一个类型实现某个特定 trait 之前必须实现的一些 trait。
-此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到一个 trait 限定时，它可以访问其 supertrait 的关联条目。
+此外，在 [泛型][generics] 或 [trait 对象][trait object] 受到 trait 约束时，它可以访问其父级trait的关联条目。
 {==+==}
 
 
@@ -405,7 +405,7 @@ Supertraits are declared by trait bounds on the `Self` type of a trait and
 transitively the supertraits of the traits declared in those trait bounds. It is
 an error for a trait to be its own supertrait.
 {==+==}
-父级 Trait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而父级 Trait 的约束将在其内部声明的 trait 的 父级 Trait 中传递。trait 不能是自己的父级 Trait ，这是一个错误。
+父级 Trait 可以通过在 trait 的 `Self` 类型上使用 trait 约束声明，而父级 Trait 的约束将在其内部声明的 trait 的父级 Trait 中传递。trait 不能是自己的父级 Trait ，否则是错误。
 {==+==}
 
 
@@ -419,7 +419,7 @@ The trait with a supertrait is called a **subtrait** of its supertrait.
 {==+==}
 The following is an example of declaring `Shape` to be a supertrait of `Circle`.
 {==+==}
-以下是将 `Shape` 声明为 `Circle` 的 supertrait 的示例。
+以下是将 `Shape` 声明为 `Circle` 的父级trait的示例。
 {==+==}
 
 
@@ -488,7 +488,7 @@ trait Circle where Self: Shape {
 {==+==}
 This next example calls a supertrait method on a generic parameter.
 {==+==}
-这个例子展示了在一个泛型参数上调用 supertrait 方法。
+这个例子展示了在一个泛型参数上调用父级trait 方法。
 {==+==}
 
 
@@ -518,7 +518,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 {==+==}
 Similarly, here is an example of calling supertrait methods on trait objects.
 {==+==}
-类似地，以下是在 trait 对象上调用 supertrait 方法的示例。
+类似地，以下是在 trait 对象上调用父级trait 方法的示例。
 {==+==}
 
 
@@ -650,7 +650,7 @@ trait T {
 ```rust
 trait T {
     fn f1((a, b): (i32, i32)) {}
-    fn f2(_: (i32, i32));  // 不能使用没有主体的元组模式。
+    fn f2(_: (i32, i32));  // 没有主体不能使用元组模式。
 }
 ```
 {==+==}

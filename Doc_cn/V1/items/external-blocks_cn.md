@@ -39,7 +39,7 @@ External blocks provide _declarations_ of items that are not _defined_ in the
 current crate and are the basis of Rust's foreign function interface. These are
 akin to unchecked imports.
 {==+==}
-外部块提供了在当前 crate 中未定义的条目的 _声明_ ，并且是 Rust 实现外部函数接口 (FFI) 的基础。这类似于未经检查的导入。
+外部块提供了在当前 crate 中未定义的条目的 _声明_ ，是 Rust 实现外部函数接口 (FFI) 的基础。这类似于未经检查的导入。
 {==+==}
 
 
@@ -48,8 +48,8 @@ Two kinds of item _declarations_ are allowed in external blocks: [functions] and
 [statics]. Calling functions or accessing statics that are declared in external
 blocks is only allowed in an `unsafe` context.
 {==+==}
-在外部块中允许两种条目声明： [函数][functions] 和 [静态变量][statics] 。
-仅在 `unsafe` 上下文中才允许调用外部块中声明的函数或访问静态变量。
+在外部块中允许两种条目声明: [函数][functions] 和 [静态][statics] 。
+仅在 `unsafe` 上下文中才允许调用外部块中声明的函数或访问静态。
 {==+==}
 
 
@@ -78,7 +78,7 @@ terminated by a semicolon. Patterns are not allowed in parameters, only
 [IDENTIFIER] or `_` may be used. Function qualifiers (`const`, `async`,
 `unsafe`, and `extern`) are not allowed.
 {==+==}
-在外部块中声明的函数与其他 Rust 函数的声明方式相同，但是它们不能有函数体，而是以分号结束。
+在外部块中声明的函数与其他 Rust 函数的声明方式相同，但是声明不能有函数体，仅以分号结束。
 参数中不允许使用模式，只能使用 [标识符][IDENTIFIER] 或 `_` 。不允许使用函数修饰符 (如 `const` 、 `async` 、 `unsafe` 和 `extern` )。
 {==+==}
 
@@ -102,7 +102,7 @@ parameters and `R` is the declared return type.
 {==+==}
 在外部块中声明的函数隐式地被认为是 `unsafe` 的。
 当将其强转为函数指针时，外部块中声明的函数类型为 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，
-其中 `'l1` , ... `'lm` 为它的生命周期参数， `A1` , ... , `An` 为它参数的声明类型，而 `R` 为它返回值的声明类型。
+其中 `'l1` , ... `'lm` 为其生命周期参数， `A1` , ... , `An` 为参数的声明类型，而 `R` 为返回值的声明类型。
 {==+==}
 
 
@@ -121,7 +121,7 @@ not it's mutable, because there is nothing guaranteeing that the bit pattern at 
 memory is valid for the type it is declared with, since some arbitrary (e.g. C) code is in charge
 of initializing the static.
 {==+==}
-在外部块中声明的静态变量的方式与 [静态变量][statics] 在外部块之外声明的方式相同，但没有初始化表达式。
+在外部块中声明的静态的方式与 [静态][statics] 在外部块之外声明的方式相同，但没有初始化表达式。
 访问在外部块中声明的静态条目是非安全的，无论它是否可变，因为无法保证静态内存中的位模式是否有效，因为负责初始化该静态的代码是不确定的 (例如 C 语言) 。
 {==+==}
 
@@ -131,7 +131,7 @@ Extern statics can be either immutable or mutable just like [statics] outside of
 An immutable static *must* be initialized before any Rust code is executed. It is not enough for
 the static to be initialized before Rust code reads from it.
 {==+==}
-就像 [静态变量][statics] 在外部块之外声明一样，外部静态变量可以是不可变的也可以是可变的。
+就像 [静态][statics] 在外部块之外声明一样，外部静态可以是不可变的也可以是可变的。
 在执行任何 Rust 代码之前， *必须* 先初始化不可变的静态。仅在 Rust 代码读取它之前，才将其初始化是不够的。
 {==+==}
 
