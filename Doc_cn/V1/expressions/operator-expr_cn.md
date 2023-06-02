@@ -58,14 +58,16 @@ The following things are considered to be overflow:
 {==+==}
 ## 溢出
 
-在调试模式下编译的整数运算符会在溢出时触发 panic。
-可以使用 `-C debug-assertions` 和 `-C overflow-checks` 编译器标志来更直接地控制这个行为。下列情况被视为溢出：
+调试模式下编译时，整数运算溢出会触发 panic。
+编译器可以使用 `-C debug-assertions` 和 `-C overflow-checks` 标志控制溢出行为。
 
-* 当 `+`、`*` 或二元 `-` 创建的值大于可以存储的最大值或小于最小值。
+下列情况时将触发溢出：
+
+* 当 `+`、`*` 或二元 `-` 创建的值大于可存储的最大值或小于最小值。
 * 对任何有符号整数类型的最小值应用一元 `-` ，除非操作数是 [字面值表达式][literal expression]
   (或在一个或多个 [分组表达式][grouped expression] 中单独使用的字面值表达式) 。
-* 在左操作数是有符号整数类型的最小整数且右操作数是 `-1` 时，使用 `/` 或 `%` 。 出于兼容性原因，即使禁用了 `-C overflow-checks` ，这些检查也会发生。
-* 在右操作数大于或等于左操作数类型的位数或为负时，使用 `<<` 或 `>>` 。
+* `/` 或 `%` 其左操作数是有符号整数类型的最小整数且右操作数是 `-1` 时。 出于兼容性原因，即使禁用了 `-C overflow-checks` ，此检查也会发生。
+*  `<<` 或 `>>` 其右操作数大于或等于左操作数类型的位数或为负时。
 {==+==}
 
 
@@ -160,7 +162,7 @@ let mut array = [-2, 3, 9];
 {==+==}
 Even though `&&` is a single token ([the lazy 'and' operator](#lazy-boolean-operators)), when used in the context of borrow expressions it works as two borrows:
 {==+==}
-即使 `&&` 是单个标记 ([惰性 'and' 运算符](#lazy-boolean-operators)) ，但在借用表达式的上下文中使用时，它的作用相当于两个借用:
+即使 `&&` 是单个标记 ([惰性 'and' 运算符](#lazy-boolean-operators)) ，但在借用表达式的上下文中使，其的作用相当于两个借用:
 {==+==}
 
 
@@ -203,14 +205,14 @@ The following is an example of creating a raw pointer to an unaligned place thro
 {==+==}
 ### 原始地址运算符
 
-与借用运算符相关的是 *原始地址运算符* ，它们没有一级语法，但通过宏 [`ptr::addr_of!(expr)`][addr_of] 和 [`ptr::addr_of_mut!(expr)`][addr_of_mut] 暴露出来。
+与借用运算符相关的是 *原始地址运算符* ，它们没有一级语法，是以宏 [`ptr::addr_of!(expr)`][addr_of] 和 [`ptr::addr_of_mut!(expr)`][addr_of_mut] 的方式公开。
 表达式 `expr` 在占位表达式上下文中进行评估。
-`ptr::addr_of!(expr)` 然后创建一个类型为 `*const T` 的常量原始指针指向给定的位置，而 `ptr::addr_of_mut!(expr)` 则创建一个类型为 `*mut T` 的可变原始指针。
+`ptr::addr_of!(expr)` 而后创建类型为 `*const T` 的常量原始指针指向给定的地址，而 `ptr::addr_of_mut!(expr)` 则创建类型为 `*mut T` 的可变原始指针。
 
-必须使用原始地址运算符而不是借用运算符，每当占位表达式可以评估为未正确对齐或不存储有效值 (根据其类型确定) ，或者每当创建引用会引入不正确的别名假设时。
-在这些情况下，使用借用运算符将通过创建无效引用导致 [未定义行为][undefined behavior] ，但仍可以使用地址运算符构造原始指针。
+每当占位表达式可以评估为未正确对齐或不存储有效值 (根据其类型确定) ，或者每当创建引用会引入不正确的别名假设时，必须使用原始地址运算而不是借用运算符。
+在这些情况下，使用借用运算符将创建无效引用导致 [未定义行为][undefined behavior] ，但仍可以使用地址运算符构造原始指针。
 
-以下是通过 `packed` 结构创建指向未对齐位置的原始指针的示例：
+以下是通过 `packed` 结构体创建指向未对齐地址的原始指针的示例：
 {==+==}
 
 
@@ -242,7 +244,7 @@ struct Packed {
 
 // 创建一个 packed 实例
 let packed = Packed { f1: 1, f2: 2 };
-// `&packed.f2` 会创建一个不对齐的引用，因此是未定义行为！
+// `&packed.f2` 会创建一个未对齐的引用，因此是未定义行为！
 // 使用 `ptr::addr_of!` 创建一个指向 `packed.f2` 的不可变原始指针
 let raw_f2 = ptr::addr_of!(packed.f2);
 // 读取 `raw_f2` 指向的值，并断言其值等于2
@@ -254,7 +256,7 @@ assert_eq!(unsafe { raw_f2.read_unaligned() }, 2);
 {==+==}
 The following is an example of creating a raw pointer to a place that does not contain a valid value:
 {==+==}
-以下是创建指向不包含有效值的位置的原始指针的示例:
+以下是创建指向不包含有效值的地址的原始指针的示例:
 {==+==}
 
 
@@ -318,7 +320,7 @@ Dereferencing a raw pointer requires `unsafe`.
 
 On non-pointer types `*x` is equivalent to `*std::ops::Deref::deref(&x)` in an [immutable place expression context](../expressions.md#mutability) and `*std::ops::DerefMut::deref_mut(&mut x)` in a mutable place expression context.
 {==+==}
-解引用运算符 `*` 也是一个一元前缀运算符。
+解引用运算符 `*` 也是一元前缀运算符。
 当应用于 [指针](../types/pointer.md) 时，表示指向的地址。
 如果表达式的类型为 `&mut T` 或 `*mut T`，并且是一个局部变量、局部变量的 (嵌套) 字段或可变的 [占位表达式][place expression] ，则可以将结果的内存位置分配给其它变量。
 对一个裸指针进行解引用需要使用 `unsafe` 。
@@ -367,10 +369,10 @@ If the value is `Err(e)`, then it will return `Err(From::from(e))` from the encl
 If applied to `Ok(x)`, then it will unwrap the value to evaluate to `x`.
 {==+==}
 问号运算符 (`?`) 可以展开有效的值或返回错误值，并将它们传播到调用函数中。
-它是一个一元后缀运算符，只能应用于 `Result<T, E>` 和 `Option<T>` 类型。
+它是一元后缀运算符，只能应用于 `Result<T, E>` 和 `Option<T>` 类型。
 
-当应用于 `Result<T, E>` 类型的值时，它会传播错误。
-如果该值是 `Err(e)` ，则它将从包含的函数或闭包返回 `Err(From::from(e))` 。如果应用于 `Ok(x)` ，则它将展开该值以求值为 `x` 。
+当应用于 `Result<T, E>` 类型的值时，能够传播错误。
+如果该值是 `Err(e)` ，从包含的函数或闭包返回 `Err(From::from(e))` 。应用于 `Ok(x)` 时，将展开该值求值为 `x` 。
 {==+==}
 
 
@@ -408,7 +410,7 @@ When applied to values of the `Option<T>` type, it propagates `None`s.
 If the value is `None`, then it will return `None`.
 If applied to `Some(x)`, then it will unwrap the value to evaluate to `x`.
 {==+==}
-当应用于类型为 `Option<T>` 的值时，它会传播 `None` 。如果值为 `None` ，则它将返回 `None` 。如果应用于 `Some(x)` ，则它将展开该值以求值为 `x` 。
+当应用于类型为 `Option<T>` 的值时，会传播 `None` 。如果值为 `None` ，则返回 `None` 。如果应用于 `Some(x)` ，将展开该值以求值为 `x` 。
 {==+==}
 
 
@@ -465,8 +467,8 @@ Remember that signed integers are always represented using two's complement.
 The operands of all of these operators are evaluated in [value expression context][value expression] so are moved or copied.
 {==+==}
 这是最后两个一元操作符。
-这张表总结了它们在原始类型上的行为以及用于重载其他类型的这些操作符的 trait 。
-请记住，有符号整数总是使用二进制补码表示。所有这些操作符的操作数都在 [值表达式上下文][value expression] 中评估，因此它们会被移动或复制。
+这张表概括了它们在原始类型上的行为，以及用于重载其他类型的这些操作符的 trait 。
+请记住，有符号整数总是使用二进制补码表示。所有这些操作符的操作数都在 [值表达式上下文][value expression] 中计算，因此它们会被移动或复制。
 {==+==}
 
 
@@ -548,7 +550,7 @@ This table summarizes the behavior of arithmetic and logical binary operators on
 Remember that signed integers are always represented using two's complement.
 The operands of all of these operators are evaluated in [value expression context][value expression] so are moved or copied.
 {==+==}
-二元运算符表达式均以中缀表示。此表总结了原始类型上算术和逻辑二元运算符的行为，以及用于重载其他类型的这些运算符的特性。
+二元运算符表达式均以中缀表示。此表总结了原始类型上算术和逻辑二元运算符的行为，以及用于重载其他类型的这些运算符的 trait 。
 请记住，有符号整数始终使用二进制补码表示。所有这些运算符的操作数都在 [值表达式上下文][value expression] 中计算，因此会被移动或复制。
 {==+==}
 
@@ -593,7 +595,7 @@ unsigned integer types.
 Here are examples of these operators being used.
 {==+==}
 \* 整数除法向零取整。
-\*\* Rust使用的余数采用 [截断除法](https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition) 定义。
+\*\* Rust 使用的余数采用 [截断除法](https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition) 定义。
   给定 `remainder = dividend % divisor` ，余数将与被除数具有相同的符号。
 \*\*\* 在有符号整数类型上进行算术右移，无符号整数类型上进行逻辑右移。
 
@@ -655,12 +657,12 @@ Unlike arithmetic and logical operators, the traits for overloading these operat
 Many functions and macros in the standard library can then use that assumption (although not to ensure safety).
 Unlike the arithmetic and logical operators above, these operators implicitly take shared borrows of their operands, evaluating them in [place expression context][place expression]:
 {==+==}
-比较运算符也被定义在基本类型和标准库的许多类型上。当链接比较运算符时，需要使用括号。
+在基本类型和标准库的许多类型上都定义了比较运算符。当比较运算符链接时，需要使用括号。
 例如，表达式 `a == b == c` 是无效的，可以写成 `(a == b) == c` 。
 
-与算术和逻辑运算符不同，用于重载这些运算符的 trait 通常更普遍地用于表明类型如何进行比较，并且可能会被假定为函数定义实际比较的条件。
+与算术和逻辑运算符不同，用于重载这些运算符的 trait 通常表明类型如何进行比较，并且可能假设使用这些 trait 作为约束的函数定义实际的比较。
 标准库中的许多函数和宏可以利用这个假设 (虽然不能确保安全性) 。
-与上面的算术和逻辑运算符不同，这些运算符隐式地获取其操作数的共享借用，以 [占位表达式上下文][place expression] 中的方式进行评估：
+与上面的算术和逻辑运算符不同，这些运算符隐式地获取其操作数的共享借用，以 [占位表达式上下文][place expression] 中的方式进行计算：
 {==+==}
 
 
@@ -886,7 +888,9 @@ reference types and `mut` or `const` in pointer types.
 \*\*\* only for closures that do not capture (close over) any local variables
 {==+==}
 \* 当 `T` 和 `V` 都是不定大小类型但类型相同时，例如都是切片类型，它们之间是兼容的。
+
 \*\* 当且仅当 `m₁` 为 `mut` 或 `m₂` 为 `const` 时。允许将 `mut` 引用转换为 `const` 指针。
+
 \*\*\* 仅适用于没有捕获 (关闭) 任何局部变量的闭包。
 {==+==}
 
@@ -978,8 +982,8 @@ Casting is limited to the following kinds of enumerations:
 
 将枚举转换为其判别值，然后根据需要使用数值转换。转换仅限于以下种类的枚举:
 
-* [仅单元元素的枚举][Unit-only enums]
-* [没有字段的枚举][Field-less enums] 且没有 [显式判别值][explicit discriminants] ，或者只有单元元素有显式判别值
+* [仅单元枚举][Unit-only enums]
+* [无字段枚举][Field-less enums] 且没有 [显式判别值][explicit discriminants] ，或者只有单元元素有显式判别值
 {==+==}
 
 
@@ -1015,7 +1019,7 @@ If the integer type is smaller than the pointer type, the address may be truncat
 {==+==}
 #### 指针到地址转换
 
-将一个裸指针转换为整数类型会产生指向内存的机器地址。
+将裸指针转换为整数类型会产生指向内存的机器地址。
 如果整数类型比指针类型小，地址可能会被截断；使用 `usize` 可以避免这种情况。
 {==+==}
 
@@ -1039,8 +1043,8 @@ Dereferencing such a pointer may be [undefined behavior] if aliasing rules are n
 {==+==}
 警告:
 这会与 Rust 内存模型产生交互，而该模型仍在开发中。
-即使一个通过此类型转换获得的指针在比特位上等同于一个有效指针，它也可能受到额外的限制
-。如果未遵循别名规则，则解引用此类指针可能会导致 [未定义行为][undefined behavior] 。
+即使一个通过此类型转换获得的指针在比特位上等同于一个有效指针，它也可能受到额外的限制。
+如果未遵循别名规则，则解引用此类指针可能会导致 [未定义行为][undefined behavior] 。
 {==+==}
 
 

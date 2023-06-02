@@ -179,7 +179,7 @@ A `while let` loop is semantically similar to a `while` loop but in place of a c
 If the value of the scrutinee matches the pattern, the loop body block executes then control returns to the pattern matching statement.
 Otherwise, the while expression completes.
 {==+==}
- `while let` 循环在语义上类似于 `while` 循环，但是在条件表达式的位置，它需要关键字 `let` ，后面跟着模式、等号、 [被匹配项][scrutinee] 和块表达式。
+ `while let` 循环在语义上类似于 `while` 循环，但是在条件表达式的位置上需要关键字 `let` ，后面跟着模式、等号、 [被匹配项][scrutinee] 和块表达式。
 如果被匹配的表达式的值与模式匹配，那么循环体代码块就会被执行，然后控制流会返回到匹配模式的语句处。
 否则， `while` 表达式会结束。
 {==+==}
@@ -213,7 +213,7 @@ A `while let` loop is equivalent to a `loop` expression containing a [`match` ex
 }
 ```
 {==+==}
-一个 `while let` 循环等同于一个包含 [`match` 表达式][`match` expression] 的 `loop` 表达式，如下所示。
+ `while let` 循环等同于包含 [`match` 表达式][`match` expression] 的 `loop` 表达式，如下所示。
 
 <!-- ignore: expansion example -->
 ```rust,ignore
@@ -454,7 +454,7 @@ See [break expressions](#break-expressions) and [continue expressions](#continue
 Labels follow the hygiene and shadowing rules of local variables. For example, this code will print "outer loop":
 {==+==}
 循环表达式可以选择性地使用标签。
-标签在循环表达式之前写入一个生命周期，例如 `'foo: loop { break 'foo; }` 、 `'bar: while false {}` 、 `'humbug: for _ in 0..0 {}` 。
+标签在循环表达式之前写上一个生命周期，例如 `'foo: loop { break 'foo; }` 、 `'bar: while false {}` 、 `'humbug: for _ in 0..0 {}` 。
 如果存在标签，则嵌套在此循环中的带有标签的 `break` 和 `continue` 表达式可以退出该循环或将控制返回到其头部。
 请参见 [break 表达式](#break-expressions) 和 [continue 表达式](#continue-expressions) 。
 
@@ -660,7 +660,7 @@ assert_eq!(result, 13);
 In the case a `loop` has an associated `break`, it is not considered diverging, and the `loop` must have a type compatible with each `break` expression.
 `break` without an expression is considered identical to `break` with expression `()`.
 {==+==}
-在 `loop` 语句中，如果有关联的 `break` 语句，它就不被视为发散，而且 `loop` 语句必须与每个 `break` 表达式兼容的类型。
+在 `loop` 语句中，如果有关联的 `break` 语句，则不被视为发散，而且 `loop` 语句必须与每个 `break` 表达式兼容的类型。
 未表明表达式的 `break` 语句的表达式被视为 `()` 。
 {==+==}
 
