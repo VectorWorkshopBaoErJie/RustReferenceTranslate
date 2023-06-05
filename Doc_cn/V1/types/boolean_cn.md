@@ -30,15 +30,15 @@ any other bit pattern.
 
 The boolean type is the type of many operands in various [expressions]:
 {==+==}
-*布尔类型* 或 *bool* 是一种原始数据类型，可以取两个值之一，为 *true* 和 *false* 。
+*布尔类型* 或 *bool* 是一种原始数据类型，可以取 *true* 和 *false* 两个值之一。
 
 可以使用关键字 `true` 和 `false` 创建此类型的值，通过 [字面值表达式][literal expression] 生成。
 
-此类型是 [语言预定义][language prelude] 的一部分，其 [name] 为 `bool` 。
+此类型是 [语言预定义][language prelude] 的一部分，[名称][name] 为 `bool` 。
 
 具有布尔类型的对象每个都具有 [大小和对齐方式][size and alignment] 1 。
-值 false 的位模式为 `0x00` ，值 true 的位模式为 `0x01` 。
-具有布尔类型的对象具有任何其他位模式是 [未定义行为][undefined behavior] 。
+值 false 的位表示为 `0x00` ，值 true 的位表示为 `0x01` 。
+布尔类型对象的其他任何位表示是 [未定义行为][undefined behavior] 。
 
 布尔类型是各种 [表达式][expressions] 中许多操作数的类型：
 {==+==}
@@ -61,7 +61,7 @@ Like all primitives, the boolean type [implements][p-impl] the
 * [if 表达式][if expressions] 和 [while 表达式][while expressions] 中的条件操作数
 * [惰性布尔运算符表达式][lazy] 中的操作数
 
-> **注意**: 布尔类型类似于但不是 [可枚举类型][enumerated type] 。实际上，这主要意味着构造函数未与类型关联 (例如， `bool::true` ) 。
+> **注意**: 布尔类型类似于但不是 [可枚举类型][enumerated type] 。主要区别是构造函数未与类型关联 (比如 `bool::true` ) 。
 
 与所有原始类型一样，布尔类型 [p-impl] 实现了 [traits][p-traits] [`Clone`][p-clone] ， [`Copy`][p-copy] ， [`Sized`][p-sized] ， [`Send`][p-send] 和 [`Sync`][p-sync] 。
 
