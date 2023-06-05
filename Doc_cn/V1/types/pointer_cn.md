@@ -61,7 +61,8 @@ A mutable reference (that hasn't been borrowed) is the only way to access the va
 {==+==}
 ### 可变引用 (`&mut`)
 
-可变引用指向由某个其他值拥有的内存。可变引用类型写作 `&mut type` 或 `&'a mut type` 。可变引用 (未被借用的) 是访问它所指向的值的唯一方式，因此不是 `Copy` 。
+可变引用指向由某个其他值拥有的内存。可变引用类型写作 `&mut type` 或 `&'a mut type` 。
+可变引用 (未被借用的) 是访问它所指向的值的唯一方式，因此不是 `Copy` 。
 {==+==}
 
 
@@ -93,10 +94,10 @@ This can also be used to convert a raw pointer to a reference by reborrowing it 
 Raw pointers are generally discouraged;
 they exist to support interoperability with foreign code, and writing performance-critical or low-level functions.
 {==+==}
-原始指针是没有安全性或生存性保证的指针。原始指针写作 `*const T` 或 `*mut T` 。
+原始指针是非安全性或生存期保证的指针。原始指针写作 `*const T` 或 `*mut T` 。
 例如， `*const i32` 意味着一个指向 32 位整数的原始指针。复制或丢弃原始指针不会对任何其他值的生命周期产生影响。
 解引用原始指针是一个 [`unsafe` 操作][`unsafe` operation] 。这也可以用于通过重新借用它 (`&*` 或 `&mut *`) 将原始指针转换为引用。
-通常不建议使用原始指针；其存在是为了支持与外部代码的互操作性，以及编写关键性能或低级别的函数。
+通常不建议使用原始指针；其存在是为了支持与外部代码的互操作性，以及编写关键性能或低层的函数。
 {==+==}
 
 
@@ -106,7 +107,8 @@ When comparing raw pointers to [dynamically sized types] they also have their ad
 
 Raw pointers can be created directly using [`core::ptr::addr_of!`] for `*const` pointers and [`core::ptr::addr_of_mut!`] for `*mut` pointers.
 {==+==}
-当比较原始指针时，是通过它们的地址进行比较，而不是通过它们所指向的内容进行比较。当将原始指针与 [动态大小类型][dynamically sized types] 进行比较时，它们还会比较它们的附加数据。
+当比较原始指针时，是通过它们的地址进行比较，而不是通过它们所指向的内容进行比较。
+当将原始指针与 [动态大小类型][dynamically sized types] 进行比较时，它们还会比较所附加的数据。
 
 可以使用 [`core::ptr::addr_of!`] 创建 `*const` 指针和 [`core::ptr::addr_of_mut!`] 创建 `*mut` 指针来直接创建原始指针。
 {==+==}

@@ -19,7 +19,7 @@ generics - are distinct, and mixing them will create a type error:
 {==+==}
 # 函数条目类型
 
-引用函数条目或类似元组结构或枚举变量的构造函数时，它会生成其 _函数条目类型_ 的大小为零的值。
+引用函数条目或类似元组结构或枚举变量的构造函数时，会生成其 _函数条目类型_ 的大小为零的值。
 该类型明确标识函数 - 其名称、类型参数和其提前绑定的生命周期参数 (但不包括其延迟绑定的生命周期参数，这些参数仅在调用函数时分配) - 因此该值不需要包含实际的函数指针，并且调用函数时不需要进行间接寻址。
 
 没有直接引用函数条目类型的语法，但编译器在错误消息中将显示类型为类似于 `fn(u32) -> i32 {fn_name}` 的类型。
@@ -50,7 +50,7 @@ when a function pointer is directly expected, but also when different function
 item types with the same signature meet in different arms of the same `if` or
 `match`:
 {==+==}
-然而，从具有相同签名的函数条目到 [函数指针][function pointers] 存在 [强制转换][coercion] ，当期望直接使用函数指针时，它会被触发。
+然而，从具有相同签名的函数条目到 [函数指针][function pointers] 存在 [强制转换][coercion] ，当期望直接使用函数指针时，会被触发。
 当在同一 `if` 或 `match` 的不同分支中遇到具有相同签名的不同函数条目类型时，也会触发这种转换:
 {==+==}
 
