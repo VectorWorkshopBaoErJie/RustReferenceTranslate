@@ -318,7 +318,7 @@ The expression's type is the primitive [boolean type], and its value is:
 {==+==}
 ## 布尔字面值表达式
 
-一个布尔字面值表达式由 `true` 或 `false` 中的一个关键字组成。
+布尔字面值表达式由 `true` 或 `false` 中的一个关键字组成。
 
 该表达式的类型为原始的 [布尔类型][boolean type] ，其值是:
  * 如果关键字是 `true`，则为真

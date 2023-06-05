@@ -44,7 +44,7 @@ An `if` expression must have the same type in all situations.
 如果条件操作数计算结果为 `false` ，则跳过结果块，评估任何后续的 `else if` 条件。
 如果所有 `if` 和 `else if` 条件都计算结果为 `false` ，则执行其 `else` 块。
 `if` 表达式的计算结果与执行的块相同，如果没有执行块，则为 `()` 。
-`if` 表达式在所有情况必须具有相同的类型。
+`if` 表达式所有分支情况必须具有相同的类型。
 {==+==}
 
 
@@ -105,9 +105,9 @@ If the value of the scrutinee matches the pattern, the corresponding block will 
 Otherwise, flow proceeds to the following `else` block if it exists.
 Like `if` expressions, `if let` expressions have a value determined by the block that is evaluated.
 {==+==}
-`if let` 表达式在语义上类似于 `if` 表达式，但是在条件操作数的位置上，它期望关键字 `let` 后跟一个模式、一个等号和一个[被匹配项][scrutinee] 。如果被检查的操作数的值匹配模式，则执行相应的代码块。
-否则，如果存在 `else` 块，则流程将继续执行该块。
-与 `if` 表达式类似， `if let` 表达式具有由执行的代码块确定的值。
+`if let` 表达式在语义上类似于 `if` 表达式，但是在条件操作数的位置上，它期望关键字 `let` 后跟模式、等号和[被匹配项][scrutinee] 。如果被匹配项与模式匹配，则执行相应的代码块。
+如果不匹配，存在 `else` 块时，则执行该块。
+与 `if` 表达式类似， `if let` 表达式由执行的代码块的值确定。
 {==+==}
 
 
@@ -136,21 +136,21 @@ if let _ = 5 {
 ```rust
 let dish = ("Ham", "Eggs"); // 定义一个元组 dish ，包含两个字符串 "Ham" 和 "Eggs" 
 
-// 由于模式不匹配，这个代码块将被跳过
-if let ("Bacon", b) = dish { // 在 dish上应用模式匹配，如果 dish 与("Bacon", b)相同，则执行代码块
+// 由于模式不匹配，将跳过以下块
+if let ("Bacon", b) = dish { 
     println!("Bacon is served with {}", b);
 } else { 
-    // 否则执行这个代码块
-    println!("No bacon will be served"); // 打印 "No bacon will be served"
+    // 执行此块
+    println!("No bacon will be served"); 
 }
 
 // 由于模式匹配，这个代码块将被执行
-if let ("Ham", b) = dish { // 在 dish 上应用模式匹配，如果 dish 与 ("Ham", b) 相同，则执行代码块
-    println!("Ham is served with {}", b); // 打印 "Ham is served with Eggs"
+if let ("Ham", b) = dish { 
+    println!("Ham is served with {}", b); 
 }
 
-if let _ = 5 { // 对5应用不可拒绝的模式，始终为真，执行代码块
-    println!("Irrefutable patterns are always true"); // 打印"Irrefutable patterns are always true"
+if let _ = 5 { // _ 为不可拒绝的模式，始终为真，执行代码块
+    println!("Irrefutable patterns are always true"); 
 }
 ```
 {==+==}
@@ -185,7 +185,7 @@ assert_eq!(a, 3);
 {==+==}
 An `if let` expression is equivalent to a [`match` expression] as follows:
 {==+==}
-一个 `if let` 表达式等价于如下所示的 [`match` 表达式][`match` expression] :
+ `if let` 表达式等价于如下所示的 [`match` 表达式][`match` expression] :
 {==+==}
 
 
@@ -252,7 +252,7 @@ The expression cannot be a [lazy boolean operator expression][_LazyBooleanOperat
 Use of a lazy boolean operator is ambiguous with a planned feature change of the language (the implementation of if-let chains - see [eRFC 2947][_eRFCIfLetChain_]).
 When lazy boolean operator expression is desired, this can be achieved by using parenthesis as below:
 {==+==}
-该表达式不能是一个 [_惰性布尔运算符表达式_][_LazyBooleanOperatorExpression_]。
+该表达式不能是 [_惰性布尔运算符表达式_][_LazyBooleanOperatorExpression_]。
 使用惰性布尔运算符会与语言计划更改的特性产生歧义 (即 if-let 链的实现 - 请参见 [eRFC 2947][_eRFCIfLetChain_] )。
 当需要惰性布尔运算符表达式时，可以通过如下方式使用括号来实现：
 {==+==}

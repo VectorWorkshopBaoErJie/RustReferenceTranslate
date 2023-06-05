@@ -53,14 +53,14 @@ The type of a block is the type of the final operand, or `()` if the final opera
 {==+==}
 *块表达式* 或 *块* 是控制流表达式和用于条目和变量声明的匿名命名空间作用域。
 对于控制流表达式，块按顺序执行其组成的非条目声明语句，然后执行其最后的可选表达式。
-对于匿名命名空间作用域，在块内部的条目声明在块本身中可用，而由 `let` 语句声明的变量从下一条语句开始在块结束之前处于作用域中。
+在块匿名命名空间作用域内部的条目声明，对于块本身可用，而由 `let` 语句声明的变量从下一条语句开始到块结束之前可用。
 
 块的语法是 `{` ，然后是 [内部属性][inner attributes] ，以及任意数量的 [语句][statements] ，随后是一个可选的表达式，称为最终操作数，和 `}` 。
 
 语句通常需要在分号后面，有两个例外：
 
 1. 条目声明语句不需要在分号后面。
-2. 表达式语句通常需要一个后续分号，除非其外部表达式是控制流表达式。
+2. 表达式语句通常需要分号，除非其外围表达式是控制流表达式。
 
 此外，语句之间允许有额外的分号，但不影响语义。
 
@@ -102,7 +102,7 @@ Blocks are always [value expressions] and evaluate the last operand in value exp
 
 块始终是值表达式，并在值表达式上下文中计算最终操作数。
 
-> **注意**: 如果确实需要，这可以用于强制移动值。例如，以下示例在调用 `consume_self` 时失败，因为结构体已在块表达式中移出了 `s` 。
+> **注意**: 如果确实需要，这一特性可用于强制移动值。例如，以下示例在调用 `consume_self` 时失败，因为结构体已在块表达式中移动了 `s` 。
 {==+==}
 
 
@@ -172,12 +172,13 @@ The actual data format for this type is unspecified.
 > _Async块表达式_ :\
 > &nbsp;&nbsp; `async` `move`<sup>?</sup> _块表达式_
 
-异步块是块表达式的一种变体，它计算为一个 future。
+异步块是块表达式的一种变体，值求解为一个 future 。
 块的最终表达式 (如果存在) 确定 future 的结果值。
 
-执行异步块类似于执行闭包表达式: 它的立即效果是生成并返回一个匿名类型。
-然而，闭包返回实现一个或多个 [`std::ops::Fn`] trait 的类型，异步块返回的类型实现了 [`std::future::Future`] trait。
-这种类型的实际数据格式未指定。
+执行异步块类似于执行闭包表达式: 
+它的即时效果是生成并返回一个匿名类型。
+返回实现一个或多个 [`std::ops::Fn`] trait 的类型，异步块返回的类型实现了 [`std::future::Future`] trait。
+这种类型的实际数据格式是未指明的。
 
 > **注意:** rustc 生成的 future 类型大致相当于具有每个 `await` 点一个变体的枚举类型，其中每个变体存储从其相应点恢复所需的数据。
 > **版本差异**: 异步块仅在 Rust 2018 及以后版本中可用。
@@ -193,8 +194,8 @@ Like closures, when written `async { .. }` the capture mode for each variable wi
 {==+==}
 ### 捕获模式
 
-异步块使用与闭包相同的 [捕获模式][capture modes] 从它们的环境中捕获变量。
-与闭包一样，当写成 `async { .. }` 时，每个变量的捕获模式将从块的内容中推断出来。
+异步块使用与闭包相同的 [捕获模式][capture modes] 从环境中捕获变量。
+与闭包一样，当写成 `async { .. }` 时，每个变量的捕获模式将从块的内容推断。
 然而， `async move { .. }` 块将移动所有被引用的变量到生成的 future 中。
 {==+==}
 
@@ -208,7 +209,7 @@ Async contexts are established by async blocks as well as the bodies of async fu
 ### 异步上下文
 
 由于异步块构造了一个 future ，其定义了一个 **异步上下文** ，这个上下文可以包含 [`await` 表达式][`await` expressions] 。
-异步上下文由异步块以及异步函数的函数体建立，后者的语义是以异步块为基础定义的。
+异步上下文由异步块以及异步函数的函数体构建，异步函数的语义是以异步块为基础进行定义的。
 {==+==}
 
 
@@ -233,13 +234,13 @@ loop {
 {==+==}
 ### 控制流运算符
 
-异步块类似于函数约束，就像闭包一样。
+异步块有类似于函数的约束，就像闭包一样。
 因此， `?` 运算符和 `return` 表达式都会影响 future 的输出，而不是封闭函数或其他上下文。
 也就是说，从异步块中的 `return <expr>` 将返回 `<expr>` 的结果作为 future 的输出。
 同样，如果 `<expr>?` 传播错误，则该错误将作为 future 的结果传播。
 
 最后， `break` 和 `continue` 关键字不能用于从异步块中分支跳出。
-因此以下代码是非法的:
+以下代码是非法的:
 
 ```rust,compile_fail
 loop {
@@ -269,7 +270,7 @@ Examples:
 > _Unsafe块表达式_ :\
 > &nbsp;&nbsp; `unsafe` _块表达式_
 
-在需要进行 [unsafe 操作][unsafe operations] 时，可以在一段代码块前加上 `unsafe` 关键字。详见 [`unsafe` 块](../unsafe-blocks.md) 。
+在需要进行 [unsafe 操作][unsafe operations] 时，可在块之前添加 `unsafe` 关键字。详见 [`unsafe` 块](../unsafe-blocks.md) 。
 示例:
 {==+==}
 
@@ -296,9 +297,9 @@ let a = unsafe { an_unsafe_fn() };
 
 Labelled block expressions are documented in the [Loops and other breakable expressions] section.
 {==+==}
-## 标记的块表达式
+## 块表达式标签
 
-标记的块表达式在 [循环和其他可中断表达式][Loops and other breakable expressions] 部分进行了说明。
+在 [循环和其他可中断表达式][Loops and other breakable expressions] 部分进行了说明。
 {==+==}
 
 
@@ -330,9 +331,9 @@ For example, this function returns `true` on unix platforms and `false` on other
 * 另一个块表达式的尾表达式是块表达式。
 <!-- Keep list in sync with expressions.md -->
 
-具有在块表达式上的含义的属性包括 [`cfg`] 和 [代码分析检查属性][the lint check attributes] 。
+在块表达式上具有含义的外围属性包括 [`cfg`] 和 [代码分析检查属性][the lint check attributes] 。
 
-例如，这个函数在 Unix 平台上返回 `true` ，在其他平台上返回 `false` 。
+例如，以下函数在 Unix 平台上返回 `true` ，在其他平台上返回 `false` 。
 {==+==}
 
 

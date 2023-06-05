@@ -60,8 +60,8 @@ The exact form of matching that occurs depends on the [pattern].
 A `match` expression has a *[scrutinee] expression*, which is the value to compare to the patterns.
 The scrutinee expression and the patterns must have the same type.
 {==+==}
- *`match` 表达式* 根据模式而分支。匹配所发生的确切形式取决于 [模式][pattern] 。
- `match` 表达式有一个 *[被匹配项][scrutinee] 表达式*，它是要与模式进行比较的值。
+ *`match` 表达式* 根据模式而进行分支。匹配所发生的确切形式取决于 [模式][pattern] 。
+ `match` 表达式有一个 *[被匹配项][scrutinee] 表达式*，与模式进行比较。
 被匹配表达式和模式必须类型相同。
 {==+==}
 
@@ -73,7 +73,7 @@ The first arm with a matching pattern is chosen as the branch target of the `mat
 {==+==}
 `match` 的行为取决于被匹配表达式是一个 [占位表达式还是值表达式][place expression]。
 如果被匹配表达式是一个 [值表达式][value expression] ，它首先被求值到一个临时位置，然后将结果值按顺序与每个分支中的模式进行比较，直到找到匹配的模式。
-第一个具有匹配模式的分支被选择作为 `match` 的目标分支，任何由模式绑定的变量都分配到分支的块中的局部变量中，并且控制进入块中。
+第一个模式匹配的分支作为 `match` 的目标分支，任何由模式绑定的变量被分配为分支块局部变量，进入块中。
 {==+==}
 
 
@@ -84,7 +84,7 @@ When possible, it is preferable to match on place expressions, as the lifetime o
 
 An example of a `match` expression:
 {==+==}
-当被匹配表达式是一个 [占位表达式][place expression] 时，`match` 不会分配临时位置；但是，按值绑定时可能会从内存位置复制或移动。
+当被匹配表达式是一个 [占位表达式][place expression] 时，`match` 不会分配临时地址；但是，按值绑定时可能会从内存位置复制或移动。
 如果可能的话，最好匹配占位表达式，因为这些匹配项的生命周期继承了占位表达式的生命周期，而不是被限制在 `match` 内部。
 
 下面是一个 `match` 表达式的示例：
@@ -250,7 +250,7 @@ Moreover, by holding a shared reference while evaluating the guard, mutation ins
 在评估模式守卫之前，会对匹配变量的部分获取共享引用。
 在评估模式守卫时，这个共享引用被用于访问该变量。
 只有当模式守卫计算结果为 true 时，才会将值从待匹配项移动或复制到该变量中。
-这允许在守卫中使用共享借用，如果守卫不匹配，则不会移出待匹配项。
+这允许在守卫中使用共享借用，如果守卫不匹配，则不会移动待匹配项。
 此外，通过在评估守卫时保持共享引用，还可以防止在守卫内进行修改。
 {==+==}
 
@@ -266,7 +266,7 @@ The only attributes that have meaning on match arms are [`cfg`] and the [lint ch
 ## 匹配分支上的属性
 
 可以在匹配分支上使用外围属性。
-在匹配分支上具有意义的属性只有 [`cfg`] 和 [代码分析检查属性][lint check attributes] 。
+在匹配分支上具有意义的外围属性只有 [`cfg`] 和 [代码分析检查属性][lint check attributes] 。
 [内部属性][Inner attributes] 可以直接放置在匹配表达式的左括号后面，在与 [块表达式上的属性][attributes on block expressions] 相同的表达式上下文中。
 {==+==}
 
