@@ -148,7 +148,7 @@ Previously, the only way to return a closure from a function was to use a [trait
 
 函数可以使用 `impl Trait` 返回一个抽象返回类型。这些类型可以代表另一个具体类型，其中调用者只能使用指定 `Trait` 声明的方法。
 函数的每个可能的返回值必须解析为相同的具体类型。返回位置的 `impl Trait` 允许函数返回未装箱的抽象类型。
-这在处理 [闭包][closures] 和 迭代器时特别有用。
+这在处理 [闭包][closures] 和迭代器时特别有用。
 
 例如，闭包具有独特的、无法重写的类型。以前，从函数返回闭包的唯一方法是使用 [trait 对象][trait object] ：
 {==+==}
@@ -171,7 +171,7 @@ It wasn't possible to fully specify the type of the closure, only to use the `Fn
 That means that the trait object is necessary.
 However, with `impl Trait`, it is possible to write this more simply:
 {==+==}
-这可能会导致堆分配和动态分派的性能损失。
+这可能会导致堆分配和动态派发的性能损失。
 无法完全指定闭包的类型，只能使用 `Fn` trait。
 这意味着 trait 对象是必需的。
 但是，使用 `impl Trait` 可以更简单地编写此代码:
@@ -198,7 +198,7 @@ Returning `impl Iterator` means that a function only exposes the `Iterator` trai
 这也避免了使用装箱 trait 对象的缺点。
 
 同样，迭代器的具体类型可能变得非常复杂，包含了链中所有先前迭代器的类型。
-返回 `impl Iterator` 意味着函数只公开 `Iterator` trait 作为其返回类型的限制，而不是明确指定涉及的所有其他迭代器类型。
+返回 `impl Iterator` 意味着函数只公开 `Iterator` trait 作为其返回类型的约束，而不是明确指定涉及的所有其他迭代器类型。
 {==+==}
 
 

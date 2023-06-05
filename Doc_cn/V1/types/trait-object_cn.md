@@ -38,7 +38,7 @@ paths to traits may be parenthesized.
 
 For example, given a trait `Trait`, the following are all trait objects:
 {==+==}
-一个 *trait 对象* 是另一个类型的不透明值，该类型实现了一组 trait 。trait 集由一个 [对象安全][object safe] 的 *base trait* 和任意数量的 [auto trait] 组成。
+ *trait 对象* 是另一个类型的不透明值，该类型实现了一组 trait 。trait 集由一个 [对象安全][object safe] 的 *base trait* 和任意数量的 [auto trait] 组成。
 
 Trait 对象实现了 base trait ，它的 auto traits 以及 base trait 的任何 [父级trait][supertraits] 。
 
@@ -87,7 +87,7 @@ Trait 对象实现了 base trait ，它的 auto traits 以及 base trait 的任�
 > **版本差异**: 在 2015 版中，如果 trait 对象的第一个限定是以 `::` 开头的路径，那么 `dyn` 将被视为路径的一部分。你可以将第一个路径放在括号中来解决这个问题。
 > 因此，如果你想要一个带有 trait `::your_module::Trait` 的 trait 对象，你应该将其写为 `dyn (::your_module::Trait)` 。
 >
-> 从 2018 版开始， `dyn` 是一个真正的关键字，不允许在路径中使用，因此不需要括号。
+> 从 2018 版开始， `dyn` 是正式的关键字，不允许在路径中使用，因此不需要括号。
 {==+==}
 
 

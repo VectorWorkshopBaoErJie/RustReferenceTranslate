@@ -20,8 +20,8 @@
 A _method call_ consists of an expression (the *receiver*) followed by a single dot, an expression path segment, and a parenthesized expression-list.
 Method calls are resolved to associated [methods] on specific traits, either statically dispatching to a method if the exact `self`-type of the left-hand-side is known, or dynamically dispatching if the left-hand-side expression is an indirect [trait object](../types/trait-object.md).
 {==+==}
- _方法调用_ 由一个表达式 (即 *接收者* ) 加上一个点 ( `.` ) 、一个表达式路径段和一个带括号的表达式列表组成。
-方法调用会解析到特定 trait 上关联的方法，如果左侧表达式的确切 `self` 类型已知，则静态调用方法，如果左侧表达式是一个间接的 trait 对象，则动态调用。
+ _方法调用_ 由一个表达式 (即 *接收者* ) 加上一个点 ( `.` ) 、一个表达式路径段、和括号括起来的表达式列表组成。
+方法调用会解析到特定 trait 上关联的方法，如果左侧表达式是确切的 `self` 类型，则静态调用方法，如果左侧表达式是一个间接的 trait 对象，则动态调用。
 {==+==}
 
 
@@ -54,10 +54,10 @@ Then, for each candidate type `T`, search for a [visible] method with a receiver
    If `T` is a type parameter, methods provided by trait bounds on `T` are looked up first.
    Then all remaining methods in scope are looked up.
 {==+==}
-在查找方法调用时，为了调用方法，接收者可能会自动解引用或借用。与其他函数相比，这需要更复杂的查找过程，因为可能有许多可以调用的方法。
+在查找方法调用时，为了调用方法，接收者可能会自动解引用或借用。与其他函数相比，这需要更复杂的查找过程，因为可能有更多可以调用的方法。
 因而将使用以下过程:
 
-第一步是构建候选接收者类型列表。通过重复 [解引用][dereference] 接收者表达式的类型，将遇到的每种类型添加到列表中，然后尝试 [不确定大小的强制转换][unsized coercion] ，如果成功，则添加转换结果类型。然后，对于每个候选项 `T` ，在 `T` 之前紧接着添加 `&T` 和 `&mut T` 。
+第一步是构建候选接收者类型列表。通过重复 [解引用][dereference] 接收者表达式的类型，将遇到的每种类型添加到该列表，然后尝试 [不确定大小的强制转换][unsized coercion] ，如果成功，则转换结果类型也添加到列表。然后，对于每个候选项 `T` 之前添加 `&T` 和 `&mut T` 。
 
 例如，如果接收者的类型为 `Box<[i32;2]>` ，则候选类型将是 `Box<[i32;2]>` 、 `&Box<[i32;2]>` 、 `&mut Box<[i32;2]>` 、 `[i32;2]` (通过解引用) 、 `&[i32;2]` 、`&mut [i32;2]` 、 `[i32]` (通过不可缩放强制转换) 、 `&[i32]` 和 `&mut [i32]` 。
 
@@ -73,7 +73,7 @@ Then, for each candidate type `T`, search for a [visible] method with a receiver
 > The below code will print "In trait impl!", because `&self` methods are looked up first, the trait method is found before the struct's `&mut self` method is found.
 {==+==}
 > 注意: 查找是按顺序对每种类型进行的，这可能偶尔会导致令人惊讶的结果。
-> 下面的代码将打印 "In trait impl!" ，因为 `&self` 方法首先被查找，因此在找到结构体的 `&mut self` 方法之前就找到了 trait 方法。
+> 下面的代码将打印 "In trait impl!" ，因为 `&self` 方法首先被查找，在找到结构体的 `&mut self` 方法之前就找到了 trait 方法。
 {==+==}
 
 
@@ -122,15 +122,16 @@ These cases require a [disambiguating function call syntax] for method and funct
 >
 > This special case may be removed in the future.
 {==+==}
-如果这个过程导致有多个可能的候选方法，那么就会出现一个错误，接收者必须被转换为适当的接收者类型才能调用该方法。
+如果这个过程导致有多个可能的候选方法，那么就会出现错误，接收者必须被转换为适当的接收者类型才能调用该方法。
 
-这个过程不考虑接收者的可变性或生命周期，也不考虑方法是否是 `unsafe` 。一旦找到一个方法，如果出于其中一个或多个原因无法调用，结果就是编译器错误。
+这个过程不考虑接收者的可变性或生命周期，也不考虑方法是否是 `unsafe` 。一旦找到一个方法，如果出于其中一个或多个原因无法调用，则调用结果就是编译器错误。
 
-如果达到了一个步骤，其中有多个可能的方法，比如在考虑通用方法或 trait 时，那么这就是编译器错误。这些情况需要使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用方法和函数。
+如果在某个步骤，其中有多个可能的方法，比如在需要考虑调用泛型方法还是 trait 时，就是编译器错误。
+这些情况需要使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用方法和函数。
 
 > **版本差异**: 在 2021 版本之前，寻找可见方法时，如果候选接收者类型是 [数组类型][array type] ，则忽略标准库 [`IntoIterator`] trait 提供的方法。
 > 
-> 用于此目的的版本由表示方法名称的 token 确定。
+> 此语法的版次由表示方法名称的 token 确定。
 > 
 > 这种特殊情况可能会在将来被删除。
 {==+==}
@@ -143,7 +144,7 @@ There is no way to call the inherent method.
 Just don't define inherent methods on trait objects with the same name as a trait method and you'll be fine.
 {==+==}
 ***警告:*** 对于 [trait 对象][trait objects] ，如果存在与 trait 方法同名的内部方法，在方法调用表达式中尝试调用该方法会导致编译器错误。
-相反，可以使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用该方法，这样会调用 trait 方法而不是内部方法。
+可以使用 [消除歧义的函数调用语法][disambiguating function call syntax] 来调用该方法，这样会调用 trait 方法而不是内部方法。
 没有可以调用内部方法的形式。
 不在具有与 trait 方法同名的内部方法的 trait 对象上定义内部方法，就不会出现问题。
 {==+==}

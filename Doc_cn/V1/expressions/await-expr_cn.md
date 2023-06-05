@@ -25,8 +25,8 @@ Await expressions are legal only within an [async context], like an [`async fn`]
 
 More specifically, an await expression has the following effect.
 {==+==}
-`await` 表达式是语法结构，用于暂停由实现了 `std::future::IntoFuture` 的计算，直到给定的 future 准备好产生一个值。
-`await` 表达式的语法是一个实现了 [`IntoFuture`] trait 的表达式，称为 *future 操作数* ，后跟一个 `.` 和 `await` 关键字。
+`await` 表达式是语法结构，用于暂停由实现了 `std::future::IntoFuture` 的计算，直到给定的 future 准备好产生值。
+`await` 表达式的语法是一个实现了 [`IntoFuture`] trait 的表达式，称为 *future 操作数* ，后跟 `.` 和 `await` 关键字。
 `await` 表达式只能在 [async 上下文][async context] 中使用，比如 [`async fn`] 或 [`async` 块][`async` block] 。更具体来说，`await` 表达式具有以下效果。
 {==+==}
 
@@ -41,8 +41,8 @@ More specifically, an await expression has the following effect.
 
 > **Edition differences**: Await expressions are only available beginning with Rust 2018.
 {==+==}
-1. 通过在 future 操作数上调用 [`IntoFuture::into_future`] 创建一个 future。
-2. 将 future 评估为一个 [future] `tmp` ；
+1. 通过在 future 操作数上调用 [`IntoFuture::into_future`] 创建 future。
+2. 将 future 求解为 [future] `tmp` ；
 3. 使用 [`Pin::new_unchecked`] 固定 `tmp` ；
 4. 然后通过调用 [`Future::poll`] 方法并传递当前的 [任务上下文](#task-context) 来对这个固定的 future 进行轮询；
 5. 如果对 `poll` 的调用返回 [`Poll::Pending`] ，那么 future 返回 `Poll::Pending` ，暂停它的状态，以便当包围的 async 上下文重新被轮询时，执行返回到步骤 3 ；

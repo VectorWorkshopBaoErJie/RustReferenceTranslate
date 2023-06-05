@@ -173,8 +173,8 @@ However, struct expressions can be in used in these situations if they are withi
 The field names can be decimal integer values to specify indices for constructing tuple structs.
 This can be used with base structs to fill out the remaining indices not specified:
 {==+==}
-结构体表达式使用花括号括起来的字段，可以在 [loop] 或 [if] 表达式的头部， [if let] 或 [match] 表达式的 [被匹配项][scrutinee] 中不能直接使用。
-但是，如果它们位于另一个表达式中，例如括号中，那么就可以在这些情况下使用结构体表达式。
+结构体表达式使用花括号括起来的字段，可以在 [loop] 或 [if] 表达式的头部，不能直接在 [if let] 或 [match] 表达式的 [被匹配项][scrutinee] 中使用。
+但是，在位于另一个表达式中时，例如在括号中，就可以使用结构体表达式。
 
 字段名可以是十进制整数值，用于构造元组结构体的索引。这可以与基础结构体一起使用，以填充未指定的其余索引:
 {==+==}
@@ -251,8 +251,8 @@ let pos = c(8, 6, 7);  // Creates a `Position` value.
 ```rust
 struct Position(i32, i32, i32);
 Position(0, 0, 0);  // 典型的创建元组结构体的方式
-let c = Position;  // `c` 是一个接受 3 个参数的函数
-let pos = c(8, 6, 7);  // 创建一个 `Position` 值
+let c = Position;  // `c` 是接受 3 个参数的函数
+let pos = c(8, 6, 7);  // 创建 `Position` 值
 ```
 {==+==}
 

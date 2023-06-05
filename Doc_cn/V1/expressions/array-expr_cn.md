@@ -65,7 +65,7 @@ For expressions that are not a constant item, it is evaluated exactly once, and 
 
 当重复操作数是常量条目时，它会被计算长度操作数的值的次数。
 如果该值为 0 ，则不会对常量条目进行计算。
-对于不是常量条目的表达式，它会被计算一次，然后结果会被复制长度操作数值的次数。
+对于不是常量条目的表达式，则进行一次计算，然后将结果以长度操作数的次数复制。
 {==+==}
 
 
@@ -124,11 +124,11 @@ Otherwise a check will be performed at run-time that will put the thread in a _p
 [数组][Array] 和 [切片][slice] 类型的值可以通过在它们后面写一个类型为 `usize` 的方括号括起来的表达式进行索引。
 当数组是可变的，其结果的 [内存位置][memory location] 可以被赋值。
 
-对于其他类型，索引表达式 `a[b]` 等价于 `*std::ops::Index::index(&a, b)` ，或者在可变占位表达式的上下文中等价于 `*std::ops::IndexMut::index_mut(&mut a, b)` 。就像方法一样， Rust 也会在 `a` 上插入解引用操作以找到实现。
+对于其他类型，索引表达式 `a[b]` 等价于 `*std::ops::Index::index(&a, b)` ，或者，在可变占位表达式的上下文中等价于 `*std::ops::IndexMut::index_mut(&mut a, b)` 。就像方法一样，会对 `a` 解引用以找到实现。
 
-数组和切片的索引是从零开始的。
+数组和切片的索引是从零开始。
 数组访问是一个 [常量表达式][constant expression] ，因此如果索引值是常量，编译时可以进行边界检查。
-否则，运行时会进行检查，如果检查失败，会将线程置于 _恐慌状态_。
+否则，运行时会进行检查，如果检查失败，则线程将置于 _恐慌状态_。
 {==+==}
 
 

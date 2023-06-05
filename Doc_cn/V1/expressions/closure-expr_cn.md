@@ -38,8 +38,8 @@ The syntax for a closure expression is an optional `move` keyword, then a pipe-s
 The optional type after each pattern is a type annotation for the pattern.
 If there is a return type, the closure body must be a [block].
 {==+==}
-*闭包表达式* ，也称为 lambda 表达式或 lambda ，定义一个 [闭包类型][closure type] 并求值为该类型的值。
-闭包表达式的语法是一个可选的 `move` 关键字，然后是由管道符号分隔 (`|`) 的逗号分隔的 [模式][patterns] 列表，称为*闭包参数*，每个参数后面可选地跟随一个 `:` 和一个类型，然后是一个可选的 `->` 和类型，称为 *返回类型* ，然后是一个表达式，称为 *闭包体操作数* 。每个模式后面的可选类型是该模式的类型注解。如果存在返回类型，则闭包体必须是一个 [块][block] 。
+*闭包表达式* ，也称为 lambda 表达式或 lambda ，定义出 [闭包类型][closure type] 并求值为该类型的值。
+闭包表达式的语法 `move` 关键字可选，随后是管道符号 (`|`) 包裹的逗号分隔的 [模式][patterns] 列表，称为*闭包参数*，每个参数后面可选地跟随 `:` 和类型，然后是可选的 `->` 和类型，称为 *返回类型* ，随后的表达式，称为 *闭包体操作数* 。每个模式后面的可选类型是该模式的类型注解。如果存在返回类型，则闭包体必须是 [块][block] 。
 {==+==}
 
 
@@ -48,9 +48,9 @@ A closure expression denotes a function that maps a list of parameters onto the 
 Just like a [`let` binding], the closure parameters are irrefutable [patterns], whose type annotation is optional and will be inferred from context if not given.
 Each closure expression has a unique, anonymous type.
 {==+==}
-闭包表达式表示一个函数，该函数将一系列参数映射到跟随参数的表达式。
-就像 [`let` 绑定][`let` binding] 一样，闭包参数是无法拒绝的 [模式][patterns] ，其类型注解是可选的，如果未给出，将从上下文中推断。
-每个闭包表达式都具有一个唯一的、匿名的类型。
+闭包表达式即表示函数，该函数将一系列参数映射到跟随参数的表达式。
+和 [`let` 绑定][`let` binding] 相同，闭包参数是无法拒绝的 [模式][patterns] ，其类型注解可选，如果未给出类型，将从上下文中推断。
+每个闭包表达式的类型是唯一的、匿名的。
 {==+==}
 
 
@@ -91,7 +91,7 @@ In this example, we define a function `ten_times` that takes a higher-order func
 {==+==}
 ## 示例
 
-在这个例子中，我们定义了一个函数 `ten_times` ，它接受一个高阶函数参数，然后我们调用它并传入一个闭包表达式作为参数，接着传入一个从环境中移动值的闭包表达式。
+在这个例子中，我们定义了一个函数 `ten_times` ，它接受一个高阶函数参数，然后调用该函数，并传入一个闭包表达式作为参数，接着传入一个从环境中移动值的闭包表达式。
 {==+==}
 
 
