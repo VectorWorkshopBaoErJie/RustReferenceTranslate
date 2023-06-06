@@ -104,7 +104,7 @@ Functions may declare a set of *input* [*variables*][variables] as parameters, t
 If the output type is not explicitly stated, it is the [unit type].
 {==+==}
 函数包括一个 [块][block] ，以及一个名称、一组参数和一个输出类型。
-除名称外，其他是可选的。函数是用关键字 `fn` 声明。
+除名称外，其他是可选的。函数用关键字 `fn` 声明。
 函数可以声明一组 *输入* [变量][variables] 作为参数，通过这些变量，调用者将参数传递给函数，并且函数的 *输出* 类型为函数完成时将返回给其调用者的 [类型][type] 。
 如果未显式指定输出类型，则为 [单元类型][unit type] 。
 {==+==}
@@ -113,7 +113,7 @@ If the output type is not explicitly stated, it is the [unit type].
 {==+==}
 When referred to, a _function_ yields a first-class *value* of the corresponding zero-sized [*function item type*], which when called evaluates to a direct call to the function.
 {==+==}
-当引用一个函数时，它会产生一个相应的零大小的 [*函数条目类型*][*function item type*] 的第一类 *值* ，当调用它时会直接调用该函数。
+当引用一个函数时，会产生一个大小为零的 [*函数条目类型*][*function item type*] 第一类 *值* ，当通过引用调用时会直接调用该函数。
 {==+==}
 
 
@@ -125,7 +125,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 }
 ```
 {==+==}
-例如，这是一个简单的函数:
+例如，以下是一个简单的函数:
 ```rust
 fn answer_to_life_the_universe_and_everything() -> i32 {
     return 42;
@@ -145,7 +145,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 Function parameters are irrefutable [patterns], so any pattern that is valid in
 an else-less `let` binding is also valid as a parameter:
 {==+==}
-函数参数是不可拒绝的 [模式][patterns] ，因此任何在没有其他附加的 `let` 绑定中有效的模式在参数中也是有效的:
+函数参数是不可拒绝的 [模式][patterns] ，对于在无其他附加的 `let` 绑定中有效的模式在参数中也是有效的:
 {==+==}
 
 
@@ -193,8 +193,8 @@ returned to the caller. As usual, an explicit return expression within
 the body of the function will short-cut that implicit return, if reached.
 {==+==}
 函数的代码块在概念上被包装在一个块中，该块绑定了参数模式，然后 `return` 函数块的值。
-这意味着，如果块的尾表达式被评估，并返回到调用者。
-如常规一样，如果在函数体内有显式的返回表达式，则会立即返回，如果到达该隐式返回，则会被短路。
+这意味着，如果块的最终表达式被求解，将返回给调用者。
+和常规一样，如果在函数体内有显式的返回表达式，则会立即返回，如果到达该隐式返回，则会被短路。
 {==+==}
 
 
@@ -275,7 +275,8 @@ parameters to allow methods with that trait to be called on values of that
 type. This is specified using the `where` syntax:
 {==+==}
 在函数签名和函数体内部，类型参数的名称可以用作类型名。
-可以为类型参数指定 [Trait] 约束，以允许在该类型的值上调用该 Trait 的方法。可以使用 `where` 语法指定这个约束:
+可以为类型参数指定 [Trait] 约束，以允许在该类型的值上调用该 Trait 的方法。
+可以使用 `where` 语法指定这个约束:
 {==+==}
 
 
@@ -294,7 +295,8 @@ fn foo<T>(x: T) where T: Debug {
 When a generic function is referenced, its type is instantiated based on the
 context of the reference. For example, calling the `foo` function here:
 {==+==}
-当泛型函数被引用时，它的类型根据引用的上下文进行实例化。例如，在这里调用 `foo` 函数:
+当泛型函数被引用时，函数的具体类型根据引用上下文进行实例化。
+例如，在这里调用 `foo` 函数:
 {==+==}
 
 
@@ -553,7 +555,7 @@ Async functions do no work when called: instead, they
 capture their arguments into a future. When polled, that future will
 execute the function's body.
 {==+==}
-异步函数在调用时，不会立即执行，而是将其参数捕获为一个 "future" 。当该 future 被轮询时，它会执行函数的主体。
+异步函数在调用时，不会立即执行，而是将其参数捕获为一个 "future" 。当该 future 被轮询时，会执行函数体。
 {==+==}
 
 
