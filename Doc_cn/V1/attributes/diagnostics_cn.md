@@ -92,7 +92,7 @@ This example shows how one can use `allow` and `warn` to toggle a particular
 check on and off:
 {==+==}
 代码分析属性可以覆盖先前属性中指定的级别，只要级别不会试图更改禁止的代码分析。
-先前的属性来自语法树中更高级别的属性，或者是源代码中左到右的先前属性。
+先前的属性来自语法树中更高级别的属性，或者是源代码中从左到右的先前属性。
 
 以下示例展示了如何使用 `allow` 和 `warn` 来打开和关闭特定检查:
 {==+==}
@@ -386,7 +386,7 @@ Tuple struct fields are ignored.
 {==+==}
 Here is an example:
 {==+==}
-以下一个例子:
+以下是一个例子:
 {==+==}
 
 

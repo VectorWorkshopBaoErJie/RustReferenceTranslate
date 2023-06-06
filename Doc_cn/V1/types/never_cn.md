@@ -19,8 +19,8 @@ The never type `!` is a type with no values, representing the result of
 computations that never complete. Expressions of type `!` can be coerced into
 any other type.
 {==+==}
-永不类型 `!` 是一种没有值的类型，代表永远不会完成计算的结果。
-类型为 `!` 的表达式可以强制转换为任何其他类型。
+永不类型 `!` 是一种没有值的类型，表示永远不会计算出确切结果。
+类型为 `!` 的表达式可以强制转换为其他任何类型。
 {==+==}
 
 

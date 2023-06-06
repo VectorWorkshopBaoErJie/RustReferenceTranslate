@@ -8,7 +8,7 @@
 {==+==}
 The following [attributes] are used for controlling code generation.
 {==+==}
-下面的 [属性][attributes] 用于控制代码生成。
+以下 [属性][attributes] 用于控制代码生成。
 {==+==}
 
 
@@ -30,7 +30,7 @@ have no effect on a trait function without a body.
 但仅是提示，可能会被编译器忽略。
 
 这两个属性可应用于 [函数][functions] 。
-当应用于 [trait] 中的函数时，仅适用于作为 trait 实现默认函数，而不是所有 trait 实现。
+当应用于 [trait] 中的函数时，仅适用于作为 trait 实现的默认函数，而不是所有 trait 实现。
 这些属性对于没有函数体的 trait 函数没有效果。
 {==+==}
 
@@ -72,7 +72,7 @@ There are three ways to use the inline attribute:
 * `#[inline(always)]` *建议* 总是进行内联展开。
 * `#[inline(never)]` *建议* 永远不进行内联展开。
 
-> ***注意***: 无论形式如何， `#[inline]` 都是一个提示，对于是否将带有该属性的函数副本放置在调用者中，并不作 *强制* 。
+> ***注意***: 无论形式如何， `#[inline]` 都仅是提示，对于是否将带有该属性的函数副本放置在调用者中，并不作 *强制* 。
 {==+==}
 
 
@@ -97,7 +97,8 @@ assumed to exist.
 {==+==}
 ## `no_builtins` 属性
 
- *`no_builtins` [属性][attribute]* 可以用于禁用优化特定的代码模式以调用预期存在的库函数。该属性可以在 crate 级别应用。
+ *`no_builtins` [属性][attribute]* 可以用于禁用优化特定的代码模式以调用预期存在的库函数。
+ 该属性可以在 crate 级别应用。
 {==+==}
 
 
@@ -141,7 +142,7 @@ does not support the given features. The `#[inline(always)]` attribute may not
 be used with a `target_feature` attribute.
 {==+==}
 每个 [目标架构][target architecture] 都有一组可启用的特性。
-对于进行编译的 crate，如果指定了不受支持的目标架构特性，则会出现错误。
+对于进行编译的 crate，如果指定了不受支持的目标架构特性，会出现错误。
 
 对于使用不受当前平台支持的特性进行编译的函数，进行调用是 [未定义行为][undefined behavior] ，除非平台明确说明这是安全的。
 
@@ -513,7 +514,7 @@ fn f() {
 > Note: because the resulting `Location` is a hint, an implementation may halt its walk up the stack
 > early. See [Limitations](#limitations) for important caveats.
 {==+==}
-> 注意: `core` 提供 [`core::panic::Location::caller`] 用于获取调用位置。它包装了 `rustc` 实现的 [`core::intrinsics::caller_location`] 内置函数。
+> 注意: `core` 提供 [`core::panic::Location::caller`] 用于获取调用地址。它包装了 `rustc` 实现的 [`core::intrinsics::caller_location`] 内置函数。
 
 > 注意: 由于产生的 `Location` 只是一个提示，实现可能会在遍历堆栈时提前停止。请参阅 [限制](#limitations) 以获取重要的注意事项。
 {==+==}
@@ -526,7 +527,7 @@ When `f` is called directly by `calls_f`, code in `f` observes its callsite with
 {==+==}
 #### 示例
 
-当 `f` 直接被 `calls_f` 调用时，`f` 中的代码会观察到它在 `calls_f` 中被调用的地方:
+当 `f` 直接被 `calls_f` 调用时，`f` 中的代码会观察到它在 `calls_f` 中被调用位置:
 {==+==}
 
 

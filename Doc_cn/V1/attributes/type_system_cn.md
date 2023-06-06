@@ -21,7 +21,7 @@ Within the defining crate, `non_exhaustive` has no effect.
 ## `non_exhaustive` 属性
 
 *`non_exhaustive` 属性* 表示类型或变体将来可能会添加更多的字段或变体。
-它可以应用于 [`struct`] 、 [`enum`] 和 `enum` 变体。
+可以应用于 [`struct`] 、 [`enum`] 和 `enum` 变体。
 
 `non_exhaustive` 属性使用 [_元字_][_MetaWord_] 语法，因此不需要输入任何内容。
 

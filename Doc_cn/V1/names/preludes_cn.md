@@ -116,7 +116,7 @@ alloc/test limitation.
 >
 > 从 2018 年版开始， [use 声明][use declarations] 可以引用外部预定义中的 crate ，因此使用 `extern crate` 被认为不符合惯例。
 
-> **注意**: 随 `rustc` 一起提供的其他 crate ，例如 [`alloc`] 和 [`test`] ，在使用 Cargo 时不会自动包含在 `--extern` 标志中。它们必须通过 `extern crate` 声明引入作用域，即使在 2018 年版中也是如此。
+> **注意**: 随 `rustc` 一起提供的其他 crate ，例如 [`alloc`] 和 [`test`] ，在使用 Cargo 时不会自动包含在 `--extern` 标志中。它们必须通过 `extern crate` 声明引入作用域，即使在 2018 版中也是如此。
 >
 > ```rust
 > extern crate alloc;
@@ -158,7 +158,7 @@ The *`no_std` [attribute]* may be applied at the crate level to prevent the
 
 默认情况下，标准库会自动包含在 crate 的根模块中。[`std`] crate 与一个隐式的 [`macro_use` 属性][`macro_use` attribute] 一同添加到根模块，将 `std` 导出的所有宏都添加到 [`macro_use` 预定义模块][`macro_use` prelude] 中。同时，[`core`] 和 [`std`] 也会添加到 [extern 预定义][extern prelude] 中。
 
-可以在 crate 级别应用 *`no_std` [属性][attribute]* 来阻止自动将 [`std`] crate 添加到作用域中。它会做三件事情：
+可以在 crate 级别应用 *`no_std` [属性][attribute]* 来阻止自动将 [`std`] crate 添加到作用域中。会做三件事情：
 
 * 防止 `std` 添加到 [extern 预定义][extern prelude] 中。
 * 影响用于构建 [标准库预定义][standard library prelude] 的模块 (如上所述) 。
@@ -194,13 +194,13 @@ to the language. The language prelude is always in scope. It includes the follow
 {==+==}
 <div class="warning">
 
-警告: 使用 `no_std` 不会防止标准库被链接。在 crate 中放置 `extern crate std;` 是有效的，依赖项也可以链接它。
+警告: 使用 `no_std` 不会防止标准库被链接。在 crate 中放置 `extern crate std;` 是有效的，依赖项依然可以链接它。
 
 </div>
 
 ## 语言预定义
 
-语言预定义包括内置于语言中的类型和属性名称。语言预定义始终在作用域内。它包括以下内容：
+语言预定义包括内置于语言中的类型和属性名称。语言预定义始终在作用域内。包括以下内容：
 
 * [类型命名空间][Type namespace]
     * [布尔类型][Boolean type] — `bool`
@@ -252,7 +252,7 @@ This attribute does not affect the [language prelude].
 
 该属性不影响 [语言预定义][language prelude] 。
 
-> **版本差异**：在 2015 版中，`no_implicit_prelude` 属性不影响 [`macro_use` 预定义][`macro_use` prelude] ，并且标准库导出的所有宏仍包含在 `macro_use` 预定义中。从 2018 版开始，将删除 `macro_use` 预定义。
+> **版本差异**：在 2015 版中，`no_implicit_prelude` 属性不影响 [`macro_use` 预定义][`macro_use` prelude] ，并且标准库导出的所有宏仍包含在 `macro_use` 预定义中。从 2018 版开始，将移除 `macro_use` 预定义。
 {==+==}
 
 
