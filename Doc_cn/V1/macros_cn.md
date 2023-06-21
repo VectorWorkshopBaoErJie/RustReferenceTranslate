@@ -10,8 +10,8 @@ The functionality and syntax of Rust can be extended with custom definitions
 called macros. They are given names, and invoked through a consistent
 syntax: `some_extension!(...)`.
 {==+==}
-Rust 的功能和语法可以通过自定义宏来扩展。
-这些宏被赋予名称，并通过一致的语法调用：`some_extension!(...)`。
+Rust 可以通过自定义宏来扩展功能和语法。
+宏被赋予名称，可通过一致的语法调用: `some_extension!(...)`。
 {==+==}
 
 
@@ -27,8 +27,8 @@ There are two ways to define new macros:
 * [Procedural Macros] define function-like macros, custom derives, and custom
   attributes using functions that operate on input tokens.
 {==+==}
-* [实例宏][Macros by Example] 以高阶的声明方式定义新的语法。
-* [过程宏][Procedural Macros] 以定义操作输入 Token 的函数，实现自定义函数式宏、衍生和属性。
+* [实例宏][Macros by Example] 以高阶声明的方式定义新的语法。
+* [过程宏][Procedural Macros] 以定义操作输入 Token 的函数，实现自定义函数式宏，以及衍生和属性。
 {==+==}
 
 
@@ -82,7 +82,7 @@ invocation with the result of the macro. Macros may be invoked in the
 following situations:
 {==+==}
 宏调用是在编译期发生，将展开宏，用宏的结果替换调用。
-可以在以下语法调用宏：
+可在以下语法中调用宏：
 {==+==}
 
 

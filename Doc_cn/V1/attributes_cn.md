@@ -317,7 +317,7 @@ fn foo() {}
 {==+==}
 ```rust ignore
 #[macro_attr1] // 首先展开
-#[doc = mac!()] // `mac!` 第4展开 。这里的 doc 属性不会主动展开
+#[doc = mac!()] // `mac!` 第四展开 
 #[macro_attr2] // 第二展开
 #[derive(MacroDerive1, MacroDerive2)] // 第三展开
 fn foo() {}
@@ -662,7 +662,7 @@ The following is an index of all built-in attributes.
     compile-time operations.
   - [`type_length_limit`] — Sets the maximum size of a polymorphic type.
 {==+==}
-- 范围
+- 限制
   - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
   - [`type_length_limit`] — 设置多态类型的最大规模。
 {==+==}

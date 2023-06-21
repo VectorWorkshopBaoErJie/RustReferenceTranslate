@@ -30,7 +30,7 @@ Procedural macros allow you to run code at compile time that operates over Rust
 syntax, both consuming and producing Rust syntax. You can sort of think of
 procedural macros as functions from an AST to another AST.
 {==+==}
-过程宏是在编译时运行代码，对 Rust 语法进行操作，输入语法，而产生新的语法。
+过程宏代码是在编译时运行，对 Rust 语法进行操作，输入语法，输出新的语法。
 你可以把过程宏想象成，把一段代码片段转换为另一段代码片段的函数。
 {==+==}
 
@@ -196,8 +196,8 @@ These macros are defined by a [public]&#32;[function] with the `proc_macro`
 [`TokenStream`] is what is inside the delimiters of the macro invocation and the
 output [`TokenStream`] replaces the entire macro invocation.
 {==+==}
-这些宏是由一个具有 `proc_macro` [属性][attribute] 和 `(TokenStream) -> TokenStream` 函数签名的 [pub][public]&#32;[函数][function] 定义的。
-函数输入 [`TokenStream`] 是宏调用定界符号内的内容，函数输出 [`TokenStream`] 是整个宏调用的内容。
+这类宏由具有 `proc_macro` [属性][attribute] 和 `(TokenStream) -> TokenStream` 函数签名的 [pub][public]&#32;[函数][function] 定义。
+函数输入 [`TokenStream`] 是宏调用定界符号内的内容，函数输出 [`TokenStream`] 是整个宏调用内容。
 {==+==}
 
 
@@ -205,7 +205,7 @@ output [`TokenStream`] replaces the entire macro invocation.
 For example, the following macro definition ignores its input and outputs a
 function `answer` into its scope.
 {==+==}
-例如，下面的定义的过程宏，忽略了输入内容，然后将一个 `answer` 函数输出到了所处作用域。
+例如，下面定义的过程宏，忽略输入内容，然后将一个 `answer` 函数输出到了所处作用域。
 {==+==}
 
 
@@ -273,7 +273,7 @@ and trait [implementations], and [trait definitions].
 can create new [items] given the token stream of a [struct], [enum], or [union].
 They can also define [derive macro helper attributes].
 {==+==}
-*衍生宏* 为 [`derive` 属性][`derive` attribute] 定义了新的输入项。
+定义 *衍生宏* 为 [`derive` 属性][`derive` attribute] 增加了新的可选输入项。
 可以为 [结构体][struct] 、 [枚举][enum] 或 [联合体][union] 创建新的 [条目][items] 。
 也可以定义 [衍生宏辅助属性][derive macro helper attributes] 。
 {==+==}
@@ -337,7 +337,7 @@ extern crate proc_macro_examples;
 use proc_macro_examples::AnswerFn;
 
 #[derive(AnswerFn)]
-struct Struct;
+struct Struct; // 该条目实际上被 answer 函数所替代。
 
 fn main() {
     assert_eq!(42, answer());
@@ -414,7 +414,7 @@ And then usage on the derive macro on a struct:
 ```rust,ignore
 #[derive(HelperAttr)]
 struct Struct {
-    #[helper] field: ()
+    #[helper] field: () // 这里仅展示了结构体内部可以看到该属性，实际宏调用结果是该 Struct 会被替换为空。
 }
 ```
 {==+==}
@@ -434,7 +434,7 @@ struct Struct {
 attached to [items], including items in [`extern` blocks], inherent and trait
 [implementations], and [trait definitions].
 {==+==}
-*属性宏* 定义了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
+定义 *属性宏* 增加了新的 [外围属性][attributes] ，可以附加到 [条目][items] 上，
 包括 [`extern` 块][`extern` blocks] 中的条目，内部及trait 的 [实现][implementations] ，以及 [trait 定义][trait definitions] 。
 {==+==}
 
@@ -453,7 +453,7 @@ replaces the [item] with an arbitrary number of [items].
 第一个 [`TokenStream`] 是属性名称后定界符号中的 token 树，不包括外部定界符号。
 如果属性仅为名称，则该 [`TokenStream`] 为空。
 第二个 [`TokenStream`] 是 [条目][item] 的其他部分，包括 [条目][item] 上的其他 [属性][attributes] 。
-返回的 [`TokenStream`] 用任意数量的 [条目][item] 替换原 [条目][item] 。
+返回的 [`TokenStream`] 将用任意数量的 [条目][item] 替换原 [条目][item] 。
 {==+==}
 
 
@@ -461,7 +461,7 @@ replaces the [item] with an arbitrary number of [items].
 For example, this attribute macro takes the input stream and returns it as is,
 effectively being the no-op of attributes.
 {==+==}
-例如，下面的属性宏接收输入流后按原样返回，实际上是一个空操作的属性。
+例如，下面的属性宏接收输入流后按原样返回，实际为 '空操作' 的属性。
 {==+==}
 
 

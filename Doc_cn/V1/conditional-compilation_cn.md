@@ -139,7 +139,7 @@ configuration option from within the source code of the crate being compiled.
 {==+==}
 哪些配置选项被设置是在编译期确定。
 某些配置选项是由编译器的状态来确定，称为编译器设置。
-其他选项由用户设置，非源码中，而由外部输入给编译器。
+其他选项由用户设置，并非源码中，而由外部输入给编译器。
 正在编译的 crate 无法通过源码设置配置选项。
 {==+==}
 
@@ -564,7 +564,7 @@ production.  For example, it controls the behavior of the standard library's
 Set when the crate being compiled is being compiled with the `proc_macro`
 [crate type].
 {==+==}
-当编译的 crate 时，使用 `proc_macro` [crate 类型][crate type] 而设置。
+当编译 crate 时，使用 `proc_macro` [crate 类型][crate type] 而设置。
 {==+==}
 
 

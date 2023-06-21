@@ -90,8 +90,7 @@
 `macro_rules` allows users to define syntax extension in a declarative way.  We
 call such extensions "macros by example" or simply "macros".
 {==+==}
-允许用户以 `macro_rules` 声明的方式定义语法扩展。
-这种语法扩展称为 "实例宏" ，或者简单的称为 "宏" 。
+允许用户以 `macro_rules` 声明定义语法扩展，称为 "实例宏" ，或者简称为 "宏" 。
 {==+==}
 
 
@@ -103,8 +102,8 @@ the matcher and the transcriber must be surrounded by delimiters. Macros can
 expand to expressions, statements, items (including traits, impls, and foreign
 items), types, or patterns.
 {==+==}
-每个实例宏的定义都要有一个名称和一个以上 _规则_ 。
-每个规则都有两个部分：一个 _匹配器_ 部分，用于描述匹配语法，另一个 _转录器_ 部分，用于描述成功匹配并调用后将替换的语法。
+每个定义的实例宏都要有一个名称和一个以上 _规则_ 。
+每个规则都要有两个部分：一个 _匹配器_ 部分，用于描述匹配语法，另一个 _转录器_ 部分，用于描述成功匹配并调用后将替换的语法。
 匹配器和转录器都必须被包裹在定界符号中。
 宏可以展开为表达式、语句、条目 (包括 trait 、实现和外部条目) 、类型或模式。
 {==+==}
@@ -127,7 +126,7 @@ following example, the compiler does not look ahead past the identifier to see
 if the following token is a `)`, even though that would allow it to parse the
 invocation unambiguously:
 {==+==}
-当宏被调用时，宏展开器通过名称查找宏调用，并依次尝试匹配包含的宏规则。
+当调用宏时，宏展开器通过名称查找调用宏，依次尝试匹配其包含的宏规则。
 在首个成功匹配处转录，如果导致错误，则不会尝试后续的规则。
 在进行匹配时，不会对 Token 进行前瞻，如果编译器无法逐个明确如何解析，则会出错。
 在下面的示例中，编译器不会前瞻标识符 $j ，不会前瞻是否已至 `)` 定界位置，虽然这能够更明确地解析:
@@ -162,7 +161,7 @@ delimiters for the matcher will match any pair of delimiters. Thus, for
 instance, the matcher `(())` will match `{()}` but not `{{}}`. The character
 `$` cannot be matched or transcribed literally.
 {==+==}
-在匹配器和转录器中， `$` 符号用于宏引擎实现调用的特定行为 (具体在 [元变量][Metavariables] 和 [重复][Repetitions] 中描述)。
+在匹配器和转录器中， `$` 符号用于宏引擎实现特定行为 (具体在 [元变量][Metavariables] 和 [重复][Repetitions] 中描述)。
 非该符号标记的 Token 会按字面进行匹配和转录，特例是匹配器的外部定界符将匹配任意一对定界符，
 例如，匹配器 `(())` 将匹配 `{()}` ，但是不匹配 `{{}}` 。字符 `$` 不能按字面匹配或转录。
 {==+==}
@@ -306,8 +305,8 @@ fragment specifiers are:
   * `tt`: [_Token树_][_TokenTree_]&nbsp; (简单 [token] 或匹配在定界符号 `()` 、 `[]` 、 `{}` 中 token)
   * `meta`: 一个 [_Attr_], 属性的内容
   * `lifetime`:  [生命周期TOKEN][LIFETIME_TOKEN]
-  * `vis`: 一个可空的 [_可见性_][_Visibility_] 限定词
-  * `literal`: 匹配的 `-`<sup>?</sup>[_字面值表达式_][_LiteralExpression_]
+  * `vis`: 可空的 [_可见性_][_Visibility_] 限定词
+  * `literal`: 匹配 `-`<sup>?</sup>[_字面值表达式_][_LiteralExpression_]
 {==+==}
 
 
@@ -318,7 +317,7 @@ the syntax element that matched them. The keyword metavariable `$crate` can be
 used to refer to the current crate; see [Hygiene] below. Metavariables can be
 transcribed more than once or not at all.
 {==+==}
-元变量的片段类型在匹配器中已被指定，在转录器中可以用 `$`_名称_ 来引用。关键字元变量 `$crate` 用于引用当前的 crate。
+元变量的片段类型在匹配器中定义，在转录器中可以用 `$`_名称_ 来引用。关键字元变量 `$crate` 用于引用当前的 crate。
 转录器中元变量将替换为匹配到的语法片段。
 可以将元变量多次转录，或者并不进行转录。
 参阅下面的 [卫生性][Hygiene] 。
@@ -342,9 +341,9 @@ specifier when it appears as a subexpression.
 >
 > The relevant edition is the one in effect for the `macro_rules!` definition.
 {==+==}
-> **版次差异**: 从 2021 版本开始，`pat` 规格片段可以匹配顶层或模式 (即它们接受 [_模式_][_Pattern_]) 。
+> **版次差异**: 从 2021 版次开始，`pat` 规格片段可以匹配顶层或模式 (即可接受 [_模式_][_Pattern_]) 。
 >
-> 在 2021 版本之前，则完全匹配与 `pat_param` 相同的片段 (即它们接受 [_模式非顶层项_][_PatternNoTopAlt_] ) 。
+> 在 2021 版次之前，则完全匹配与 `pat_param` 相同的片段 (即可接受 [_模式非顶层项_][_PatternNoTopAlt_] ) 。
 >
 > 这与 `macro_rules!` 定义生效的版次相关联。
 {==+==}
@@ -926,7 +925,7 @@ referred to must still be visible from the invocation site. In the following
 example, any attempt to invoke `call_foo!()` from outside its crate will fail
 because `foo()` is not public.
 {==+==}
-此外，尽管 `$crate` 允许宏在展开时引用其所在 crate 内的条目，但并不会影响被引用项的可见性。
+此外，尽管 `$crate` 允许宏在展开时引用其所在 crate 内的条目，但并不会影响被引用条目的可见性。
 被引用的条目或宏必须从调用位置可见。
 在下面的示例中，从 crate 外部尝试调用 `call_foo!()` 将失败，因为 `foo()` 不是公开的。
 {==+==}
@@ -956,8 +955,8 @@ fn foo() {}
 > imports.
 {==+==}
 > 在 Rust 1.30 之前，不支持 `$crate` 和 `local_inner_macros` (下面会描述) 。
-> 这两个语法与基于路径导入宏的语法一起添加，是为保证一些辅助宏不需要用户手动导入。
-> 使用辅助宏的早期 Rust 版本编写的 crate 需要进行修改后，以使用 `$crate` 或 `local_inner_macros` 。
+> 这两个语法与基于路径导入宏的语法一起添加，是为保证一些工具宏不需要用户手动导入。
+> 使用工具宏的早期 Rust 版本编写的 crate 需要进行修改后，以使用 `$crate` 或 `local_inner_macros` 。
 {==+==}
 
 
@@ -1062,7 +1061,7 @@ Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
 {==+==}
 > **Edition Differences**: Before the 2021 edition, `pat` may also be followed by `|`.
 {==+==}
-> **版次差异**: 在 2021 版之前， `pat` 后面还可以跟着 `|`。
+> **版次差异**: 在 2021 版次之前， `pat` 后面还可以跟着 `|`。
 {==+==}
 
 
