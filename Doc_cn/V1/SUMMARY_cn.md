@@ -25,7 +25,7 @@
 
 [介绍](introduction.md)
 
-- [符号约定](notation.md)
+- [表示法](notation.md)
 
 - [词法结构](lexical-structure.md)
     - [输入格式](input-format.md)

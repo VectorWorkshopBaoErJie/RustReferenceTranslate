@@ -50,24 +50,24 @@
 > &nbsp;&nbsp; | `/***/`
 >
 > 内部行文档 :\
-> &nbsp;&nbsp; `//!` ~\[`\n` _孤立CR_]<sup>\*</sup>
+> &nbsp;&nbsp; `//!` ~\[`\n` _孤立回车_]<sup>\*</sup>
 >
 > 内部块文档 :\
-> &nbsp;&nbsp; `/*!` ( _块注释或文档_ | ~\[`*/` _孤立CR_] )<sup>\*</sup> `*/`
+> &nbsp;&nbsp; `/*!` ( _块注释或文档_ | ~\[`*/` _孤立回车_] )<sup>\*</sup> `*/`
 >
 > 外部行文档 :\
-> &nbsp;&nbsp; `///` (~`/` ~\[`\n` _孤立CR_]<sup>\*</sup>)<sup>?</sup>
+> &nbsp;&nbsp; `///` (~`/` ~\[`\n` _孤立回车_]<sup>\*</sup>)<sup>?</sup>
 >
 > 外部块文档 :\
 > &nbsp;&nbsp; `/**` (~`*` | _块注释或文档_ )
->              (_块注释或文档_ | ~\[`*/` _孤立CR_])<sup>\*</sup> `*/`
+>              (_块注释或文档_ | ~\[`*/` _孤立回车_])<sup>\*</sup> `*/`
 >
 > _块注释或文档_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; 块注释\
 > &nbsp;&nbsp; | 外部块文档\
 > &nbsp;&nbsp; | 内部块文档
 >
-> _孤立CR_ :\
+> _孤立回车_ :\
 > &nbsp;&nbsp; _`\r` 不紧随 `\n`_
 {==+==}
 
@@ -129,7 +129,7 @@ modules that occupy a source file.
 Isolated CRs (`\r`), i.e. not followed by LF (`\n`), are not allowed in doc
 comments.
 {==+==}
-在文档注释中不允许孤立的 CR (`\r`) ，即后面没有 LF (`\n`) 。
+在文档注释中不允许孤立回车 (`\r`) ，即后面没有 LF (`\n`) 。
 {==+==}
 
 

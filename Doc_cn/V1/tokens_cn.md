@@ -10,7 +10,7 @@ Tokens are primitive productions in the grammar defined by regular
 (non-recursive) languages.  Rust source input can be broken down
 into the following kinds of tokens:
 {==+==}
-Token 是非递归的常规编程语言描述语法的原始制品。 Rust 源码解析时 Token 有以下几种 :
+Token 是非递归的常规编程语言描述语法的原始制品。 Rust 解析时源码 Token 有以下几种 :
 {==+==}
 
 
@@ -227,7 +227,7 @@ Literals are tokens used in [literal expressions].
 {==+==}
 `*` All number literals allow `_` as a visual separator: `1_234.0E+18f64`
 {==+==}
-`*` 所有的数字字面值允许 `_` 作为可视化分隔符: `1_234.0E+18f64`
+`*` 所有数字字面值允许 `_` 作为可视化分隔符: `1_234.0E+18f64`
 {==+==}
 
 
@@ -292,9 +292,9 @@ However, suffixes on literal tokens which are interpreted as literal expressions
 Any suffixes are rejected on non-numeric literal tokens,
 and numeric literal tokens are accepted only with suffixes from the list below.
 {==+==}
-然而，在被解释为字面值表达式或模式时，其字面值 Token 的后缀是受限的。
+但是，在解释为字面值表达式或模式时，字面值 Token 后缀受到限制。
 拒绝非数字字面值 Token 上的任意后缀。
-而数字字面值 Token 只接受以下列表中的后缀。
+数字字面值 Token 只接受以下列表中的后缀。
 {==+==}
 
 
@@ -388,7 +388,7 @@ _字符字面值_ 是指被两个 `U+0027` (单引号) 字符包围的单个 Uni
 > **<sup>词法</sup>**\
 > 字符串字面值 :\
 > &nbsp;&nbsp; `"` (\
-> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _孤立CR_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _孤立回车_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | 引用转义\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ASCII转义\
 > &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE转义\
@@ -449,8 +449,8 @@ assert_eq!(b, c);
 > recommended to avoid relying on this, i.e. skipping multiple newlines with line continuations.
 > See [this issue](https://github.com/rust-lang/reference/pull/1042) for more information.
 {==+==}
-> 注意: 因为允许额外的换行 (比如在例子 `c` 中) ，这有可能会让人感到意外。 
-> 在未来可能会调整这种行为。在做出决定之前，建议避免使用，也就是说，目前，会跳过多个连续的换行。
+> 注意: 因为允许额外的换行 (比如在例子 `c` 中) ，会跳过多个连续的换行，这有可能会让人感到意外。 
+> 在未来可能会调整这种行为，在做出决定之前，建议避免使用。
 > 更多内容见这个 [Issue](https://github.com/rust-lang/reference/pull/1042) 。
 {==+==}
 
@@ -529,7 +529,7 @@ following forms:
 > &nbsp;&nbsp; `r` 原始字符串上下文 后缀<sup>?</sup>
 >
 > 原始字符串上下文 :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _孤立CR_ )<sup>* (非贪婪)</sup> `"`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _孤立回车_ )<sup>* (非贪婪)</sup> `"`\
 > &nbsp;&nbsp; | `#` 原始字符串上下文 `#`
 {==+==}
 
@@ -554,7 +554,7 @@ the characters `U+0022` (double-quote) (except when followed by at least as
 many `U+0023` (`#`) characters as were used to start the raw string literal) or
 `U+005C` (`\`) do not have any special meaning.
 {==+==}
-原始字符串主体中包含的所有 Unicode 字符都表示自己。
+原始字符串主体中包含的所有 Unicode 字符都表示自身。
 字符 `U+0022` (双引号)  或 `U+005C` (`\`) 不具有任何特殊含义 (除非后面有至少相同数量的 `U+0023` (`#`) 字符用于表达原始字符串字面值)。
 {==+==}
 
@@ -654,7 +654,7 @@ _字节字面值_ 表示是一个 ASCII 字符 (在 `U+0000` 到 `U+007F` 范围
 > &nbsp;&nbsp; `b"` ( ASCII字符串 | 字节转义 | 字符串延续 )<sup>\*</sup> `"` 后缀<sup>?</sup>
 >
 > ASCII字符串 :\
-> &nbsp;&nbsp; _任意ASCII (如 0x00 至 0x7F), 不包括_ `"`, `\` _和 孤立CR_
+> &nbsp;&nbsp; _任意ASCII (如 0x00 至 0x7F), 不包括_ `"`, `\` _和 孤立回车_
 {==+==}
 
 
@@ -750,7 +750,7 @@ only by another `U+0022` (double-quote) character, followed by the same number o
 character. A raw byte string literal can not contain any non-ASCII byte.
 {==+==}
 原始字节字符串字面值不处理任何转义。
-它们以字符 `U+0062` (`b`) 开始，然后是 `U+0072` (`r`) ，后面是少于 256 的字符 `U+0023` (`#`)，以及一个 `U+0022` (双引号) 字符。
+是以字符 `U+0062` (`b`) 开始，然后是 `U+0072` (`r`) ，后面是少于 256 的字符 `U+0023` (`#`)，以及一个 `U+0022` (双引号) 字符。
 _原始字符串主体_ 可以包含任何 ASCII 字符序列，并且只能由另一个 `U+0022` (双引号) 字符终止，后面是 `U+0022` (双引号) 字符与开头数量相同 `U+0023` (`#`) 字符。
 原始的字节字符串字面值不能包含任何非 ASCII 字节。
 {==+==}
@@ -1033,7 +1033,7 @@ decimal value. Thus, only decimal values will match, and the value must not
 have any extra `0` prefix characters.
 {==+==}
 元组索引直接与字面值 Token 进行比对。元组索引从 `0` 开始，每一个连续的索引其值增加 `1` ，为十进制值。
-因此，只有十进制的值才能匹配，其值不能有任何额外的 `0` 前缀字符。
+因此，只有十进制的值才能匹配，不能有任何额外的 `0` 前缀字符。
 {==+==}
 
 
@@ -1126,7 +1126,7 @@ See [literal expressions] for the effect of these suffixes.
 {==+==}
 和整数字面值一样，浮点字面值后面可以有后缀，只要前缀部分不以 `U+002E` (`.`) 结尾。
 如果字面值内容不包含指数，后缀不能以 `e` 或 `E` 开头。
-关于这些后缀的实现，请参见 [字面值表达式][literal expressions]。
+关于这些后缀的实现，请参阅 [字面值表达式][literal expressions]。
 {==+==}
 
 
@@ -1155,15 +1155,15 @@ This last example is different because it is not possible to use the suffix
 syntax with a floating point literal ending in a period. `2.f64` would attempt
 to call a method named `f64` on `2`.
 {==+==}
-最后一个例子是不同的，因为不能对以句点结尾的浮点字面值使用后缀语法。
- `2.f64` 将试图在 `2` 上调用一个名为 `f64` 的方法。
+最后一个例子有所不同，不能对以句点结尾的浮点字面值使用后缀语法。
+比如 `2.f64` 将试图在 `2` 上调用一个名为 `f64` 的方法。
 {==+==}
 
 
 {==+==}
 Note that `-1.0`, for example, is analyzed as two tokens: `-` followed by `1.0`.
 {==+==}
-注意，比如 `-1.0` 将被解析为两个符号: `-` 和 `1.0` 。
+注意， `-1.0` 将被解析为两个符号: `-` 和 `1.0` 。
 {==+==}
 
 
@@ -1228,7 +1228,7 @@ The following lexical forms similar to number literals are _reserved forms_.
 Due to the possible ambiguity these raise, they are rejected by the tokenizer instead of being interpreted as separate tokens.
 {==+==}
 以下类似于数字字面值的词法是 _保留形式_ 。
-由于这些形式可能引起歧义，编译器会拒绝它们，而不会解释为独立的 Token 。
+由于这些形式可能引起歧义，编译器会拒绝，不会解释为独立的 Token 。
 {==+==}
 
 
@@ -1334,7 +1334,7 @@ Lifetime parameters and [loop labels] use LIFETIME_OR_LABEL tokens. Any
 LIFETIME_TOKEN will be accepted by the lexer, and for example, can be used in
 macros.
 {==+==}
-生命周期参数和 [循环标签][loop labels] 使用 '生命周期或标签' token 。词法分析器接收任何 '生命周期TOKEN' ，比如，能够在宏中使用。
+生命周期参数和 [循环标签][loop labels] 使用 '生命周期或标签' token 。词法分析器接收任何 '生命周期TOKEN' ，例如，能够在宏中使用。
 {==+==}
 
 
@@ -1349,7 +1349,7 @@ macros.
 Punctuation symbol tokens are listed here for completeness. Their individual
 usages and meanings are defined in the linked pages.
 {==+==}
-为了完整，这里列出了标点符号 Token 。它们各自的用途和含义定义在对应的链接页面中。
+为了章节内容完整，这里列出了标点符号 Token 。各自的用途和语义定义在对应的链接页面中。
 {==+==}
 
 
@@ -1466,7 +1466,7 @@ Bracket punctuation is used in various parts of the grammar. An open bracket
 must always be paired with a close bracket. Brackets and the tokens within
 them are referred to as "token trees" in [macros].  The three types of brackets are:
 {==+==}
-括号符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [宏][macros] 中被称为 "token 树" 。三种类型的括号是：
+括号符号用在语法的各部分。一个左括号必须总是与一个右括号相配对。括号和其中的 Token 在 [宏][macros] 中称为 "token 树" 。三种类型的括号是：
 {==+==}
 
 
@@ -1540,9 +1540,9 @@ Similarly the `r`, `b`, and `br` prefixes used in raw string literals, byte lite
 >
 > Examples accepted in all editions:
 {==+==}
-> **版次差异**: 从 2021 版开始，保留前缀会被词法分析器报告为错误 (尤其不能传递给宏)。
+> **版次差异**: 从 2021 版次开始，保留前缀会被词法分析器报告为错误 (尤其不能传递给宏)。
 >
-> 在 2021 版本之前，保留前缀被词法分析器接受，并被解释为多个 Token (比如，Token 为标识符或关键词，后面是 `#` token)。
+> 在 2021 版次之前，保留前缀被词法分析器接受，并被解释为多个 Token (比如，Token 为标识符或关键词，后面是 `#` token)。
 >
 > 所有版次允许的示例:
 {==+==}
@@ -1573,7 +1573,7 @@ Similarly the `r`, `b`, and `br` prefixes used in raw string literals, byte lite
 > lexes!{r#let#foo}         // 三个 token: r#let # foo
 > ```
 >
-> 示例在 2021 版本之前是允许的，之后不允许:
+> 示例在 2021 版次之前是允许的，之后不允许:
 > ```rust,edition2018
 > macro_rules! lexes {($($_:tt)*) => {}}
 > lexes!{a#foo}

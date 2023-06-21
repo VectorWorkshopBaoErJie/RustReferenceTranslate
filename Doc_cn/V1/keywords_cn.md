@@ -13,14 +13,14 @@ Rust 关键字分为三类:
 
 
 {==+==}
-* [strict](#strict-keywords)
-* [reserved](#reserved-keywords)
-* [weak](#weak-keywords)
-{==+==}
-* [严格字](#strict-keywords)
-* [保留字](#reserved-keywords)
-* [松散字](#weak-keywords)
-{==+==}
+- [Keywords](#keywords)
+- [关键字](#关键字)
+  - [Strict keywords](#strict-keywords)
+  - [严格字](#严格字)
+  - [Reserved keywords](#reserved-keywords)
+  - [保留字](#保留字)
+  - [Weak keywords](#weak-keywords)
+  - [松散字](#松散字)
 
 
 {==+==}
@@ -34,7 +34,7 @@ Rust 关键字分为三类:
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
 {==+==}
-这些关键字只能用在上下文的正确的位置。
+关键字具有明确定的语义，只能用在上下文的确切位置。
 不能用作以下内容的名称：
 {==+==}
 
@@ -140,7 +140,7 @@ be used as the names of:
 {==+==}
 The following keywords were added beginning in the 2018 edition.
 {==+==}
-以下关键字从 2018 版开始添加。
+以下关键字从 2018 版次开始添加。
 {==+==}
 
 
@@ -209,7 +209,7 @@ them to use these keywords.
 {==+==}
 The following keywords are reserved beginning in the 2018 edition.
 {==+==}
-以下关键字从 2018 版本开始保留。
+以下关键字从 2018 版次开始保留。
 {==+==}
 
 
@@ -233,8 +233,8 @@ The following keywords are reserved beginning in the 2018 edition.
 These keywords have special meaning only in certain contexts. For example, it
 is possible to declare a variable or method with the name `union`.
 {==+==}
-以下关键字只有在特定上下文中才具有关键字的含义。
-因而，比如可以使用名称 `union` 声明变量或方法。
+以下关键字只有在特定上下文中才具有关键字的语义。
+比如，可以使用名称 `union` 声明变量或方法。
 {==+==}
 
 
@@ -247,7 +247,7 @@ is possible to declare a variable or method with the name `union`.
 {==+==}
 * `macro_rules` 用于创建自定义 [宏][macros] 。
 * `union` 用于声明 [联合体][union] 。
-* `'static` 用于静态生命周期，不能作为 [泛型生命周期参数][generic lifetime parameter] 或 [循环标签][loop label] 使用。
+* `'static` 用于静态生命周期，不能用作 [泛型生命周期参数][generic lifetime parameter] 或 [循环标签][loop label] 。
 {==+==}
 
 
@@ -265,14 +265,14 @@ is possible to declare a variable or method with the name `union`.
 * In the 2015 edition, [`dyn`] is a keyword when used in a type position
   followed by a path that does not start with `::`.
 {==+==}
-* 在 2015 版中，[`dyn`] 为松散字，当用在类型位置且随后的路径不以 `::` 开头时，才解析为关键字。
+* 在 2015 版次中，[`dyn`] 为松散字，当用在类型位置且随后的路径不以 `::` 开头时，才解析为关键字。
 {==+==}
 
 
 {==+==}
   Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
 {==+==}
-  从 2018 版开始， `dyn` 已提升为严格字。
+  从 2018 版次开始， `dyn` 已提升为严格字。
 {==+==}
 
 
