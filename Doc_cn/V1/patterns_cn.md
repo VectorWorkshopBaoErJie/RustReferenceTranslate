@@ -604,7 +604,7 @@ Unlike identifier patterns, it does not copy, move or borrow the value it matche
 {==+==}
 _通配符模式_ (下划线符号) 匹配任何值。其作用是忽略不重要的值。
 在其他模式内部，它匹配单个数据字段 (与 `..` 匹配多个剩余字段不同)。
-与标识符模式不同，它不会复制、移动或借用它所匹配的值。
+与标识符模式不同，不会复制、移动或借用它所匹配的值。
 {==+==}
 
 
@@ -1045,7 +1045,7 @@ See [issue #41620](https://github.com/rust-lang/rust/issues/41620) for more info
 
 浮点数区间模式已被弃用，并可能在未来的 Rust 版本中被移除。有关更多信息，请参见 [问题 #41620](https://github.com/rust-lang/rust/issues/41620)。
 
-> **版次差异**: 在 2021 版本之前，闭合区间模式也可以使用 `...` 作为 `..=` 的替代，具有相同的含义。
+> **版次差异**: 在 2021 版次之前，闭合区间模式也可以使用 `...` 作为 `..=` 的替代，具有相同的含义。
 
 > **注意**：虽然区间模式使用与 [区间表达式](https://doc.rust-lang.org/reference/expressions/range-expr.html) 相同的语法，但不存在专属的区间模式。也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
 {==+==}

@@ -18,8 +18,8 @@ limited capabilities.
 
 The list of types is:
 {==+==}
-在 Rust 程序中，每个变量、条目和值都有一个类型。
-一个 *值* 的 _类型_ 定义了其存储在内存中的解释方式，以及该值可执行的相关操作。
+在 Rust 程序中，每个变量、条目和值都具有类型。
+ *值* 的 _类型_ 定义了其存储在内存中的解释方式，以及该值可执行的相关操作。
 
 内置类型与语言编译器紧密集成，实现方式与用户定义类型有所不同。
 用户定义类型受到语法规则的限制，因而具有有限的功能。
@@ -150,7 +150,7 @@ for referring to a type. It may refer to:
 * The [never] type.
 * [Macros] which expand to a type expression.
 {==+==}
-在上面的 _类型_ 语法规则中所定义的 _类型表达式_ 描述的类型语法，可对应包含以下类型：
+在上面的 _类型_ 语法规则中所定义的 _类型表达式_ 描述的类型语法，对应可包含以下类型：
 
 * 序列类型 ( [元组][tuple] [数组][array] [切片][slice] ) 。
 * [类型路径][Type paths] 可以引用：
@@ -233,7 +233,7 @@ An example of a *recursive* type and its use:
 也就是说，每个 `enum` 变量或 `struct` 或 `union` 字段可以直接或间接地引用封闭的 `enum` 或 `struct` 类型本身。
 这种递归有所限制:
 
-* 递归类型必须包含在递归中的具名类型表达式中 (不是仅仅是 [类型别名][type aliases] ，其他结构类型，例如 [数组][arrays] 或 [元组][tuples] 也是) 。因此， `type Rec = &'static [Rec]` 是不允许的。
+* 递归类型必须包含在递归中的具名类型表达式中 (不仅是 [类型别名][type aliases] ，其他结构类型，例如 [数组][arrays] 或 [元组][tuples] 也是) 。因此，不允许 `type Rec = &'static [Rec]` 。
 
 * 递归类型的大小必须是有限的；换言之，类型的递归字段必须是 [指针][pointer types] 。
 

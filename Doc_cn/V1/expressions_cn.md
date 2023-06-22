@@ -417,7 +417,7 @@ In contrast, other place expressions are called *immutable place expressions*.
 
 The following expressions can be mutable place expression contexts:
 {==+==}
-### Mutability
+### 可变性
 
 要将一个占位表达式赋值、进行可变借用、进行隐式可变借用或绑定到包含 `ref mut` 的模式中时，则必须是可变的。
 这被称为可变占位表达式，其他称为不可变占位表达式。
@@ -566,7 +566,7 @@ They are never allowed before:
 * [块表达式][block expressions] 的尾部表达式。
 <!-- Keep list in sync with block-expr.md -->
 
-它们不允许在以下情况下使用:
+不允许在以下情况下使用:
 * [区间][_RangeExpression_] 表达式。
 * 二元运算符表达式 ([_算术或逻辑表达式_][_ArithmeticOrLogicalExpression_]，[_比较表达式_][_ComparisonExpression_]，[_懒惰布尔表达式_][_LazyBooleanExpression_]，[_类型转换表达式_][_TypeCastExpression_]，[_赋值表达式_][_AssignmentExpression_]，[_复合赋值表达式_][_CompoundAssignmentExpression_]) 。
 {==+==}

@@ -26,7 +26,7 @@ A *statement* is a component of a [block], which is in turn a component of an ou
 
 Rust has two kinds of statement: [declaration statements](#declaration-statements) and [expression statements](#expression-statements).
 {==+==}
-*语句* 是 [块][block] 的组成部分，而块又是 [表达式][expression] 或 [函数][function] 的组成部分。这同样形成了 '树' 的组织结构。
+*语句* 是 [块][block] 的组成部分，而块又是 [表达式][expression] 或 [函数][function] 的组成部分。这形成了 '树' 的组织结构。
 
 Rust 有两种语句：[声明语句](#declaration-statements) 和 [表达式语句](#expression-statements) 。
 {==+==}
@@ -43,7 +43,7 @@ The two kinds of declaration statements are item declarations and `let` statemen
 ## 声明语句
 
 *声明语句* 引入一个或多个 *名称* 到闭合语句块中。
-声明的名称可能表示新变量或新 [条目][item] 。
+声明的名称可以新变量或新 [条目][item] 。
 
 声明语句有两种类型: `let` 语句和条目声明。
 {==+==}
@@ -135,10 +135,10 @@ If an `else` block is present, the pattern may be refutable.
 If the pattern does not match (this requires it to be refutable), the `else` block is executed.
 The `else` block must always diverge (evaluate to the [never type]).
 {==+==}
-`let` 语句引入了一组由 [模式][pattern] 给定的新 [变量][variables] 。
+`let` 语句引入了一组由 [模式][pattern] 设定的新 [变量][variables] 。
 模式可选地后跟一个类型注释，然后以初始化表达式结束，或者跟随可选的 `else` 块。
 当没有给出类型注释时，编译器将推断类型，如果没有足够的类型信息进行明确推断，则会发出错误信号。
-任何由变量声明引入的变量在声明处到包含块范围的结尾处之间可见，除非该变量被另一个同名变量声明隐藏。
+任何由变量声明引入的变量，从声明处到包含块范围结尾处之间可见，除非该变量被另一个同名变量声明隐藏。
 
 如果不存在 `else` 块，则模式必须是不可拒绝的。
 如果存在 `else` 块，则模式可以是可拒绝的。
@@ -146,7 +146,7 @@ The `else` block must always diverge (evaluate to the [never type]).
 `else` 块必须始终发散 (求值为 [永不类型][never type] )。
 
 译注：'拒绝' 和 '不可拒绝' 表示模式是否能够在任何情况下都成功匹配。
-'发散' 指的是一个表达式是否无法正常终止并返回值。
+'发散' 指的是一个表达式是否正常终止并返回值。
 {==+==}
 
 
@@ -163,11 +163,11 @@ let [u, v] = [v[0], v[1]] else { // This pattern is irrefutable, so the compiler
 ```
 {==+==}
 ```rust
-let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是可变或常量
+let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是可变的或常量
 let Some(t) = v.pop() else { // 可拒绝的模式需要一个 else 块
     panic!(); // else 块必须发散
 };
-let [u, v] = [v[0], v[1]] else { // 这个模式是不可拒绝的，所以编译器会认为 else 块是冗余的进行代码分析检查
+let [u, v] = [v[0], v[1]] else { // 这个模式是不可拒绝的，所以编译器进行代码分析检查，会认为 else 块是冗余的
     panic!();
 };
 ```
@@ -201,7 +201,7 @@ The type of [_ExpressionWithBlock_][expression] expressions when used as stateme
 通常，此表达式语句的是为了触发其表达式的副作用。
 
 如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中，则可以省略分号。
-这会有可能在解析时，是作为独立语句，还是作为另一个表达式的一部分，而产生歧义。这时，会被解析为语句。
+这有可能在解析时，是作为独立语句，还是作为另一个表达式的一部分，而产生歧义。这时，会被解析为语句。
 当 [_块表达式_][expression] 作为语句时，其类型必须是单元类型。
 {==+==}
 
