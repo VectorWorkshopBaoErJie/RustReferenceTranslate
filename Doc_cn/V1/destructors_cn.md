@@ -26,7 +26,7 @@ pointer, [`std::ptr::drop_in_place`] can be used.
 {==+==}
 # 析构函数
 
-当一个 [已初始化过][initialized] 的 [变量][variable] 或 [临时值][temporary] 超出 [作用域](#drop-scopes) 时，会执行其 *析构函数* 会，或者说会被 *销毁* 。
+当一个 [已初始化过][initialized] 的 [变量][variable] 或 [临时值][temporary] 超出 [作用域](#drop-scopes) 时，会执行其 *析构函数* ，或者说会被 *销毁* 。
 [赋值][Assignment] 时会运行其已初始化的左操作数的析构函数。
 如果变量只有部分已初始化，那么只销毁已初始化字段。
 
@@ -42,7 +42,7 @@ pointer, [`std::ptr::drop_in_place`] can be used.
      * [Trait 对象][Trait objects] 运行底层类型的析构函数。
      * 其他类型不会导致进一步的销毁。
 
-如果必须手动运行析构函数，比如在实现自己的智能指针时，可以使用 [`std::ptr::drop_in_place`] 。
+如果必须手动运行析构函数，比如在实现自定义的智能指针时，可以使用 [`std::ptr::drop_in_place`] 。
 {==+==}
 
 
@@ -143,7 +143,7 @@ from the inside outwards.
 {==+==}
 ## 析构作用域
 
-每个变量或临时变量都与一个 *析构作用域* 相关联。
+每个变量或临时变量都与 *析构作用域* 相关联。
 当控制流离开析构作用域时，与该作用域相关联的所有变量按照声明 (对于变量) 或创建 (对于临时变量) 的相反顺序进行销毁。
 在使用 [`match`] 表达式替换 [`for`] 、 [`if let`] 和 [`while let`] 表达式之后，确定析构作用域。
 重载的操作符与内置的操作符没有区别，不考虑绑定模式。
@@ -303,7 +303,7 @@ smallest scope that contains the expression and is one of the following:
 * The expression for a match arm.
 * The second operand of a [lazy boolean expression].
 {==+==}
-如果在 `match` 表达式的同一个 `arm` 中使用了多个模式，则将使用未特定顺序的模式来确定释放。
+如果在 `match` 表达式的同一个 `arm` 中使用了多个模式，则将使用非特定顺序的模式来确定释放。
 
 ### 临时作用域
 
@@ -332,7 +332,7 @@ smallest scope that contains the expression and is one of the following:
 > example, the temporary for `1` in `match 1 { ref mut z => z };` lives until
 > the end of the statement.
 {==+==}
-> **注**:
+> **注意**:
 > 
 > 在函数体的最终表达式中创建的临时变量将在函数体绑定的任何命名变量之后释放，因为没有更小的封闭临时作用域。
 > 
@@ -465,7 +465,7 @@ loop {
 #     }
 # }
 loop {
-    // 元组表达式没有完成评估，因此操作数按相反的顺序丢弃
+    // 元组表达式没有完成计算，因此操作数按相反的顺序丢弃
     (
         PrintOnDrop("外部元组第一个"),
         PrintOnDrop("外部元组第二个"),

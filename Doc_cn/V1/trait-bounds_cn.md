@@ -76,17 +76,18 @@ trait is implemented for a type. For example, given `Ty: Trait`
 {==+==}
 [Trait] 和生命周期约束提供了一种方式，以限制 [泛型条目][generic] 可以使用哪些类型和生命周期作为参数。
 可以在 [where 从句][where clause] 提供对类型的约束。
-对于一些常见情况，也有更简短的形式：
+一些常见或是从句的形式：
 
 * 在声明 [泛型参数][generic] 之后进行约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。
 * 在 trait 声明中作为 [父级trait][supertraits] : `trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}` 。
 * 在 trait 声明中作为 [关联类型][associated types] 的约束: `trait A { type B: Copy; }` 等同于 `trait A where Self::B: Copy { type B; }` 。
 
-在使用条目时必须满足条目上的约束。在对泛型条目进行类型检查和借用检查时，可以使用约束来确定类型是否实现了 trait 。例如，给定 `Ty: Trait` 
+在使用条目时必须满足条目的约束。在对泛型条目进行类型检查和借用检查时，通过约束来确定类型是否具体实现了相应的 trait 。
+例如，给定 `Ty: Trait` 
 
-* 在泛型函数体中，可以在 `Ty` 值上调用 `Trait` 的方法。同样，可以使用 `Trait` 上的关联常量。
+* 在泛型函数体中，可以在 `Ty` 值上调用 `Trait` 的方法，也可以使用其关联常量。
 * 可以使用 `Trait` 的关联类型。
-* 可以将具有 `T: Trait` 约束的泛型函数和类型用于 `T` 使用 `Ty` 。
+* 可以将 `Ty` 应用于带有 `T: Trait` 约束的泛型函数和类型 `T`。
 {==+==}
 
 
@@ -133,14 +134,14 @@ fn draw_twice<T: Shape>(surface: Surface, sh: T) {
 }
 
 fn copy_and_draw_twice<T: Copy>(surface: Surface, sh: T) where T: Shape {
-    let shape_copy = sh;        // 不移动 sh ，因为T: Copy
-    draw_twice(surface, sh);    // 可以使用泛型函数，因为T: Shape
+    let shape_copy = sh;        // 不移动 sh ，因为 T: Copy
+    draw_twice(surface, sh);    // 可以使用泛型函数，因为 T: Shape
 }
 
 struct Figure<S: Shape>(S, S);
 
 fn name_figure<U: Shape>(
-    figure: Figure<U>,          // 类型 Figure<U> 是 well-formed ，因为U: Shape
+    figure: Figure<U>,          // 类型 Figure<U> 符合语法规则，因为 U: Shape
 ) {
     println!(
         "Figure of two {}",
@@ -159,8 +160,8 @@ It is an error for such a bound to be false.
 It is an error to have `Copy` or `Clone` as a bound on a mutable reference, [trait object], or [slice].
 It is an error to have `Sized` as a bound on a trait object or slice.
 {==+==}
-当定义条目时，不使用条目参数或 [高阶生命周期][higher-ranked lifetimes] 的约束将被检查。
-这样的约束如果为 false ，则会报错。
+当定义条目时，将检查约束未使用条目参数或 [高阶生命周期][higher-ranked lifetimes] 。
+约束如果失败 ，则会报错。
 
 对于某些泛型类型，在使用该条目时还会检查 [`Copy`] 、 [`Clone`] 和 [`Sized`] 约束，即使使用时没有提供具体类型。
 在可变引用、 [trait 对象][trait object] 或 [切片][slice] 上将 `Copy` 或 `Clone` 作为约束是错误的。
@@ -185,7 +186,7 @@ struct UsesA<'a, T>(A<'a, T>);
 ```rust,compile_fail
 struct A<'a, T>
 where
-    i32: Default,           // 允许，但不实用
+    i32: Default,           // 允许，但没有用处
     i32: Iterator,          // 错误： `i32` 不是迭代器
     &'a mut T: Copy,        // (在使用时) 错误：无法满足 trait 约束
     [T]: Sized,             // (在使用时) 错误：大小无法在编译时确定
@@ -200,7 +201,7 @@ struct UsesA<'a, T>(A<'a, T>);
 {==+==}
 Trait and lifetime bounds are also used to name [trait objects].
 {==+==}
-Trait 和 生命周期约束还用于命名 [trait 对象][trait objects] 。
+Trait 和 生命周期约束也用于命名 [trait 对象][trait objects] 。
 {==+==}
 
 
@@ -269,8 +270,8 @@ PartialEq<i32>` would require an implementation like
 > _For生命周期_ :\
 > &nbsp;&nbsp; `for` [_泛型参数组_][_GenericParams_]
 
-Trait 约束可以对生命周期进行 *提阶* ，该约束指示 *对于所有* 生命周期都成立的约束。
-例如， `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个这样的实现:
+Trait 约束可以对生命周期进行 *提阶* ，该约束指定了 *对于所有* 生命周期都为真的约束。
+例如， `for<'a> &'a T: PartialEq<i32>` 这样的约束将要求实现:
 {==+==}
 
 
@@ -292,9 +293,11 @@ and could then be used to compare a `&'a T` with any lifetime to an `i32`.
 
 Only a higher-ranked bound can be used here, because the lifetime of the reference is shorter than any possible lifetime parameter on the function:
 {==+==}
-可以用它来将一个 `&'a T` 的生命周期与任意的 `i32` 进行比较。
+从而 `&'a T` 生命周期可以与任意的 `i32` 进行比较。
 
-仅一个更高阶的约束可以在此使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
+这时，仅有更高阶的约束可以使用，因为引用的生命周期比函数上可能存在的任何生命周期参数都要短：
+
+译注：这一篇博文解释了高阶生命周期的含义<https://xiaopengli89.github.io/posts/rust-hrtbs/>。
 {==+==}
 
 
@@ -316,7 +319,7 @@ difference is the scope of the lifetime parameter, which extends only to the
 end of the following trait instead of the whole bound. This function is
 equivalent to the last one.
 {==+==}
-高阶的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。这个函数与上一个函数是等价的。
+高阶的生命周期也可以在 trait 前面指定: 唯一的区别是生命周期参数的作用范围仅限于后面 trait 的末尾，而不是整个约束。下面这个函数与上一个函数是等价的。
 {==+==}
 
 
