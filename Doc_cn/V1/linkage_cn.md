@@ -24,7 +24,7 @@ be ignored in favor of only building the artifacts specified by command line.
 {==+==}
 # 链接
 
-> 注意: 这部分所描述的内容，主要是从编译器角度进行，而非语言。
+> 注意: 这部分所描述的内容，主要是从编译器的角度，而非语言的角度。
 
 编译器支持静态和动态地将不同的 crate 链接起来。
 本节将探讨链接 crate 的各种方法，有关本地库的更多信息可以参阅《Rust 程序设计语言》中 [FFI 章节][ffi] 。

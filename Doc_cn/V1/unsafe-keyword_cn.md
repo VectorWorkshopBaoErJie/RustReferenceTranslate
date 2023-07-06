@@ -27,15 +27,15 @@ Such a function must be prefixed with the keyword `unsafe` and can only be calle
 - 用于标记 *定义* 附加安全条件的代码 (`unsafe fn` ， `unsafe trait`) 。
 - 用于标记需要 *满足* 附加安全条件的代码 (`unsafe {}` ， `unsafe impl` ，没有 [`unsafe_op_in_unsafe_fn`] 的 `unsafe fn`) 。
 
-以下讨论这些情况的具体案例。
+以下讨论具体情况。
 参见 [关键字文档][keyword] 以获取一些相关信息。
 
 ## 非安全函数 (`unsafe fn`)
 
-非安全函数是在所有上下文和/或所有可能的输入上都非安全的函数。所表述的它们具有 *附加安全条件* ，是指编译器不会检查所有调用者必须满足的要求。
-例如， [`get_unchecked`] 具有附加的安全条件，即索引必须在边界内。非安全函数应该配有说明文档，以进行解释说明。
+非安全函数是在所有上下文和/或所有可能的输入都非安全的函数。 *附加安全条件* 是指编译器不会检查所有调用者必须满足的要求。
+例如， [`get_unchecked`] 具有附加安全条件，即索引必须在边界内。非安全函数应该配有说明文档，以进行解释说明。
 
-这样的函数必须以关键字 `unsafe` 为前缀，并且只能从 `unsafe` 块内部调用，或者在没有 [`unsafe_op_in_unsafe_fn`] 代码分析的情况下在 `unsafe fn` 中调用。
+这样的函数必须以关键字 `unsafe` 为前缀，并且只能在 `unsafe` 块内部调用，或者在没有 [`unsafe_op_in_unsafe_fn`] 代码分析的情况下在 `unsafe fn` 中调用。
 {==+==}
 
 
@@ -63,7 +63,7 @@ By using `unsafe` blocks to represent the reverse links as raw pointers, it can 
 {==+==}
 ## 非安全块 (`unsafe {}`)
 
-代码块可以加上 `unsafe` 关键字，以允许调用 `unsafe` 函数或对原始指针进行引用。
+代码块可以加上 `unsafe` 关键字，以允许调用 `unsafe` 函数或引用原始指针。
 默认情况下，非安全函数的函数体也被视为非安全块；这可以通过启用 [`unsafe_op_in_unsafe_fn`] 限制来改变。
 
 通过将语句放入非安全块中，程序员声明他们已经满足了该块内所有语句的附加安全条件。
@@ -98,7 +98,8 @@ Unsafe trait implementations are the logical dual to unsafe traits: where unsafe
 {==+==}
 ## 非安全 trait (`unsafe trait`)
 
-非安全 trait 是一种需要实现附加的安全条件的 trait，实现该 trait 必须遵守这些附加的安全条件。该非安全 trait 应该附带有说明这些附加安全条件的文档。
+非安全 trait 是一种需要实现附加安全条件的 trait，实现该 trait 必须遵守这些附加安全条件。
+该非安全 trait 应该附带这些附加安全条件的说明文档。
 
 这样的 trait 必须以关键字 `unsafe` 为前缀，并且只能由 `unsafe impl` 块实现。
 

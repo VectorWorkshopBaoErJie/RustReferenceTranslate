@@ -28,13 +28,15 @@ Access to certain names may be restricted based on their [*visibility*].
 {==+==}
 # 名称
 
-*实体* 是一种语言构造，可以通过某种方式在源程序中引用，通常是通过 [路径][path] 。
+*实体* 是语言结构，可以通过某种方式在源程序中引用，通常是通过 [路径][path] 。
 实体包括 [类型][types] 、 [条目][items] 、 [泛型参数][generic parameters] 、 [变量绑定][variable bindings] 、 [循环标签][loop labels] 、 [生命周期][lifetimes] 、 [字段][fields] 、 [属性][attributes] 和 [代码分析][lints] 。
 
-*声明* 是一种语法构造，可以引入 *名称* 来引用一个实体。实体名称在 [*作用域*][*scope*] 内是有效的 —— 源文本的一个区域，可以在其中引用该名称。
+*声明* 是语言结构，可以引入 *名称* 来引用一个实体。
+实体名称在 [*作用域*][*scope*] 内是有效的 —— 源文本的一个区域，可以在其中引用该名称。
 一些实体在源代码中 [显式声明](#explicitly-declared-entities)，一些实体则作为语言或编译器扩展的一部分 [隐式声明](#implicitly-declared-entities)。
 
-[*路径*][*Paths*] 用于引用实体，可能在另一个作用域中。生命周期和循环标签使用 [专用语法][lifetimes-and-loop-labels]，使用前导引号。
+[*路径*][*Paths*] 用于引用实体，可在另一个作用域中。
+生命周期和循环标签使用 [专用语法][lifetimes-and-loop-labels]，使用前导引号。
 
 名称被分为不同的 [*命名空间*][*namespaces*] ，允许不同命名空间中的实体共享相同的名称而不冲突。
 
@@ -102,7 +104,7 @@ expanding to one of the above items.
     * [`for`] 模式绑定
     * [`if let`] 模式绑定
     * [`match`] 模式绑定
-    * [Loop标签][Loop labels]
+    * [Loop 标签][Loop labels]
 * [泛型参数][Generic parameters]
 * [高阶 trait 约束][Higher ranked trait bounds]
 * [`let` 语句][`let` statement] 的模式绑定
@@ -156,7 +158,7 @@ to with certain [path qualifiers] or aliases.
 * [衍生助手属性][Derive helper attributes] 在条目内有效，无需显式导入
 * [`'static`] 生命周期
 
-此外，crate 根模块没有名称，但可以用某些 [路径限定符][path qualifiers] 或别名来引用。
+此外，crate 根模块没有名称，但可以用特定 [路径限定符][path qualifiers] 或别名来引用。
 {==+==}
 
 
