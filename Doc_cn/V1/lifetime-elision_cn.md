@@ -24,24 +24,24 @@ In method signatures there is another rule
 * If the receiver has type `&Self`  or `&mut Self`, then the lifetime of that
   reference to `Self` is assigned to all elided output lifetime parameters.
 {==+==}
-# 生命周期省略
+# 省略生命周期
 
-在编译器可以推断出一些合理的默认选择规则时，允许省略生命周期。
-也可以用同样的方式推断占位符生命周期 `'_`。
-对于路径上的生命周期，使用 `'_` 很好的选择。
-Trait 对象生命周期遵循的规则有所不同，将在下面讨论。
+当编译器能够按规则，推断出合理的默认生命周期时，允许省略。
+并且可以用同样逻辑推断占位符生命周期 `'_`。
+对于路径中的生命周期，使用 `'_` 将是很好的选择。
+Trait 对象的生命周期遵循规则有所不同，将在下面讨论。
 
-## 函数中的生命周期省略
+## 省略函数中的生命周期
 
-为了让常见的模式更加人性化，生命周期参数可以在函数、函数指针和闭包 Trait 签名中被 *省略* 。
-省略无法推断的生命周期参数将是错误。
+可以在函数、函数指针和闭包 Trait 签名中 *省略* 生命周期参数，以简化常见模式的签名。
+但省略无法推断的生命周期参数将是错误。
 
-* 在参数中每个被省略的生命周期都会成为单独的。
-* 如果在参数中只有一个生命周期 (不论是否被省略) ，那么该生命周期将分配到 *所有* 被省略的输出生命周期。
+* 每个被省略的生命周期参数将是单独的。
+* 如果形参中只有一个生命周期 (不论是否被省略) ，那么该生命周期将分配到 *所有* 被省略的输出生命周期。
 
 在方法签名中还有一个规则：
 
-* 如果接收者的类型是 `&Self` 或 `&mut Self`，那么指向 `Self` 的这个引用的生命周期会被分配到所有省略的输出生命周期参数。
+* 如果接收者的类型是 `&Self` 或 `&mut Self`，那么指向 `Self` 这个引用的生命周期会分配到所有省略的输出生命周期参数。
 {==+==}
 
 
@@ -177,18 +177,18 @@ If neither of those rules apply, then the bounds on the trait are used:
 * If the trait has no lifetime bounds, then the lifetime is inferred in
   expressions and is `'static` outside of expressions.
 {==+==}
-## 默认trait对象生命周期
+## 默认 trait 对象生命周期
 
-由 [trait 对象][trait object] 持有的引用的假定的生命周期称为其 _默认对象生命周期约束_ 。
+在 [trait 对象][trait object] 持有的引用的假定的生命周期称为其 _默认对象生命周期约束_ 。
 这些在 [RFC 599] 中定义并在 [RFC 1156] 中进行了修改。
 
-这些默认对象生命周期约束在完全省略生命周期约束时使用，而不是使用上述省略生命周期参数的规则。
+在完全省略生命周期约束时使用这些默认对象生命周期约束，而不是通过上述省略生命周期参数的规则展开。
 如果将 `'_` 用作生命周期约束，则该约束遵循通常的省略规则。
 
-如果 trait 对象用作泛型类型的类型参数，则首先使用包含类型来尝试推断约束。
+如果 trait 对象用作泛型类型的类型参数，则首先使用所包含类型的来尝试推断约束。
 
-* 如果包含类型存在唯一的约束，则使用该约束作为默认值。
-* 如果来自包含类型的约束超过一个，则必须指定显式约束。
+* 如果所包含类型存在唯一的约束，则使用该约束作为默认值。
+* 如果来自所包含类型的约束超过一个，则必须指定显式约束。
 
 如果上述规则都不适用，则使用 trait 的约束：
 
@@ -317,9 +317,9 @@ Both [constant] and [static] declarations of reference types have *implicit*
 constant declarations involving `'static` above may be written without the
 lifetimes.
 {==+==}
-## `'static` 生命周期省略
+## 省略 `'static` 生命周期
 
-除非显式指定生命周期，否则引用类型的常量和静态声明都有 *隐含的* `'static` 生命周期。
+除非显式指定生命周期，否则引用类型的常量和静态声明都 *隐含* `'static` 生命周期。
 因此，上述涉及 `'static` 的常量声明可以不带生命周期。
 {==+==}
 

@@ -20,7 +20,8 @@ defined types.
 # 特殊类型和 trait
 
 Rust 编译器已知某些 [标准库][the standard library] 中存在的类型和 trait 。
-本节介绍这些类型和 trait 的特殊特性。
+
+译注：可以认为这些类型是编译器内置的。
 
 ## `Box<T>`
 
