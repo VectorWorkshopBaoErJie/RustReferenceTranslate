@@ -79,7 +79,8 @@ module in scope, or vice versa. Items brought into scope with `use` also have
 this restriction.
 {==+==}
 模块和类型共享相同的命名空间。
-在作用域中使用与模块同名的类型是被禁止的：也就是说，类型定义、trait、struct、enum、union、类型参数或 crate 不能隐藏作用域中模块的名称，反之亦然。使用 `use` 引入作用域的条目也有此限制。
+禁止在作用域中使用与模块同名的类型：也就是说，类型定义、trait、struct、enum、union、类型参数或 crate 不能隐藏作用域中模块的名称，反之亦然。
+使用 `use` 引入作用域的条目也有此限制。
 {==+==}
 
 
@@ -173,7 +174,7 @@ For `path` attributes on modules not inside inline module blocks, the file
 path is relative to the directory the source file is located. For example, the
 following code snippet would use the paths shown based on where it is located:
 {==+==}
-对于不在内联模块块中的模块上的 `path` 属性，文件路径相对于源文件所在的目录。
+对于不在内联模块块，模块的 `path` 属性，文件路径相对于源文件所在的目录。
 例如，以下代码片段会使用根据其位置而显示的路径:
 {==+==}
 
