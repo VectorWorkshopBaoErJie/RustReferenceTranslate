@@ -1015,7 +1015,7 @@ matched by a metavariable must be followed by a token which has been decided can
 be safely used after that kind of match.
 {==+==}
 宏系统使用的解析器相当强大，但出于防止当前或未来版本的语言产生歧义的考虑，对于宏有一些限制。
-特别是，除了有关模糊展开的规则之外，由元变量匹配的非终端符号必须后跟一个 token ，此 token 已决定可以安全地在该类型的匹配之后使用。
+特别是，除了有关模糊展开的规则之外，由元变量匹配的非终结符号必须后跟一个 token ，此 token 决定可以安全地在该类型匹配之后使用。
 {==+==}
 
 

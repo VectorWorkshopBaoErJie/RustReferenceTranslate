@@ -433,11 +433,18 @@ For example, the following is not valid:
 #    age: u8,
 # }
 # let value = Person { name: String::from("John"), age: 23 };
- // & 所表达的试图以获得地址的方式进行值绑定被拒绝
 if let Person { name: &person_name, age: 18..=150 } = value { }
 ```
 {==+==}
-
+```rust,compile_fail
+# struct Person {
+#    name: String,
+#    age: u8,
+# }
+# let value = Person { name: String::from("John"), age: 23 };
+ // & 所表达的试图以获得地址的方式进行值绑定被拒绝
+if let Person { name: &person_name, age: 18..=150 } = value { }
+```
 {==+==}
 
 

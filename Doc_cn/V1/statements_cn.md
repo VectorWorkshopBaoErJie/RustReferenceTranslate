@@ -43,7 +43,7 @@ The two kinds of declaration statements are item declarations and `let` statemen
 ## 声明语句
 
 *声明语句* 引入一个或多个 *名称* 到闭合语句块中。
-声明的名称可以新变量或新 [条目][item] 。
+声明的名称可以是新变量或新 [条目][item] 。
 
 声明语句有两种类型: `let` 语句和条目声明。
 {==+==}
@@ -198,7 +198,7 @@ The type of [_ExpressionWithBlock_][expression] expressions when used as stateme
 > &nbsp;&nbsp; | [_块表达式_][expression] `;`<sup>?</sup>
 
  *表达式语句* 是指仅执行表达式并忽略其结果的语句。
-通常，此表达式语句的是为了触发其表达式的副作用。
+通常，此表达式语句是为了触发其表达式的副作用。
 
 如果一个表达式只包含一个块表达式或控制流表达式，并且在允许语句的上下文中，则可以省略分号。
 这有可能在解析时，是作为独立语句，还是作为另一个表达式的一部分，而产生歧义。这时，会被解析为语句。
