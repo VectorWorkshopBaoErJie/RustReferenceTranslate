@@ -155,9 +155,8 @@ the `r#` prefix is not included as part of the actual identifier.)
 Unlike a normal identifier, a raw identifier may be any strict or reserved
 keyword except the ones listed above for `RAW_IDENTIFIER`.
 {==+==}
-原始标识符类似于普通标识符，但带有 `r#` 前缀。
-(注意，实际的标识符不包括 `r#` 。)
-与普通标识符不同，原始标识符可以是严格字或保留字，除词法段中 `原始标识符` 排除的关键字。
+原始标识符类似于普通标识符，但带有 `r#` 前缀。(注意，实际标识符不包括 `r#` 。)
+与普通标识符不同，原始标识符可以是严格字或保留字，除词法段中 `原始标识符` 所排除的关键字。
 {==+==}
 
 

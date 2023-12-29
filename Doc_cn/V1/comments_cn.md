@@ -90,7 +90,7 @@ block (`/* ... */`) comment forms. Nested block comments are supported.
 {==+==}
 Non-doc comments are interpreted as a form of whitespace.
 {==+==}
-非文档注释被解释为空白的一种形式。
+非文档注释被解析为一种"空白"。
 {==+==}
 
 
@@ -108,8 +108,8 @@ special syntax for [`doc` attributes]. That is, they are equivalent to writing
 `#[doc="..."]` around the body of the comment, i.e., `/// Foo` turns into
 `#[doc="Foo"]` and `/** Bar */` turns into `#[doc="Bar"]`.
 {==+==}
-以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，被解释为 [`doc` 属性][`doc` attributes] 的特殊语法。
-相当于在注释主体的周围写上 `#[doc="..."]` ，即 `/// Foo` 和 `/** Bar */` 会转换成 `#[doc="Bar"]` 。
+以三个斜线开始的行文档注释 (`///`)，以及块文档注释 (`/** ... */`)，都是内部文档注释，是 [`doc` 属性][`doc` attributes] 的特殊语法。
+相当于在被注释主体的周围写上 `#[doc="..."]` ，就是说 `/// Foo` 和 `/** Bar */` 会转换成 `#[doc="Bar"]` 。
 {==+==}
 
 
@@ -145,7 +145,7 @@ comments.
 //! A doc comment that applies to the implicit anonymous module of this crate
 {==+==}
 ```rust
-//! 应用于这个 crate 隐式匿名模块的文档注释
+//! 应用于当前 crate 隐式匿名模块的文档注释
 {==+==}
 
 

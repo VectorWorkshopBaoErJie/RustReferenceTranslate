@@ -14,14 +14,15 @@ Rust 关键字分为三类:
 
 {==+==}
 - [Keywords](#keywords)
-- [关键字](#关键字)
   - [Strict keywords](#strict-keywords)
-  - [严格字](#严格字)
   - [Reserved keywords](#reserved-keywords)
-  - [保留字](#保留字)
   - [Weak keywords](#weak-keywords)
-  - [松散字](#松散字)
-
+{==+==}
+- [关键字](#keywords)
+  - [严格字](#strict-keywords)
+  - [保留字](#reserved-keywords)
+  - [松散字](#weak-keywords)
+{==+==}
 
 {==+==}
 ## Strict keywords
@@ -34,7 +35,7 @@ Rust 关键字分为三类:
 These keywords can only be used in their correct contexts. They cannot
 be used as the names of:
 {==+==}
-关键字具有明确定的语义，只能用在上下文的确切位置。
+关键字定义了明确的语义，只能用在确切的上下文。
 不能用作以下内容的名称：
 {==+==}
 
@@ -140,7 +141,7 @@ be used as the names of:
 {==+==}
 The following keywords were added beginning in the 2018 edition.
 {==+==}
-以下关键字从 2018 版次开始添加。
+从 2018 版次开始添加以下关键字。
 {==+==}
 
 
@@ -170,8 +171,8 @@ the same restrictions as strict keywords. The reasoning behind this is to make
 current programs forward compatible with future versions of Rust by forbidding
 them to use these keywords.
 {==+==}
-以下关键字目前还未使用，但保留以供将来使用，使用规则与严格字相同。
-这是为了使当前程序与未来版本向前兼容。
+目前，以下关键字还未使用，保留以供将来使用，使用规则与严格字相同。
+这是为了使当前程序能与未来版本向前兼容。
 {==+==}
 
 
@@ -209,7 +210,7 @@ them to use these keywords.
 {==+==}
 The following keywords are reserved beginning in the 2018 edition.
 {==+==}
-以下关键字从 2018 版次开始保留。
+从 2018 版次开始保留以下关键字。
 {==+==}
 
 
@@ -234,7 +235,7 @@ These keywords have special meaning only in certain contexts. For example, it
 is possible to declare a variable or method with the name `union`.
 {==+==}
 以下关键字只有在特定上下文中才具有关键字的语义。
-比如，可以使用名称 `union` 声明变量或方法。
+比如，变量或方法可以使用 `union` 声明名称。
 {==+==}
 
 

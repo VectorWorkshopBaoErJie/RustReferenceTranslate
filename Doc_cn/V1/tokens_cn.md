@@ -961,11 +961,11 @@ Examples of integer literals which are accepted as literal expressions:
 
 0usize;
 
-// 这对于其类型来说值太大，但允许在字面值表达式。
+// 这对于其类型来说值太大，但在字面值表达式中允许。
 128_i8;
 256_u8;
 
-// 这是整数字面值，允许在浮点字面值表达式。
+// 这是整数字面值，在浮点字面值表达式中允许。
 5f32;
 ```
 {==+==}
@@ -1033,7 +1033,7 @@ decimal value. Thus, only decimal values will match, and the value must not
 have any extra `0` prefix characters.
 {==+==}
 元组索引直接与字面值 Token 进行比对。元组索引从 `0` 开始，每一个连续的索引其值增加 `1` ，为十进制值。
-因此，只有十进制的值才能匹配，不能有任何额外的 `0` 前缀字符。
+因此，只有十进制的值才能匹配，不能有额外的 `0` 前缀字符。
 {==+==}
 
 
@@ -1090,7 +1090,7 @@ let horse = example.0b10;  // ERROR 字段名不能为 `0b10`
 > **<sup>词法</sup>**\
 > 浮点字面值 :\
 > &nbsp;&nbsp; &nbsp;&nbsp; 十进制数 `.`
->   _(不是紧跟着 `.` , `_` 或 XID_起始 字符)_\
+>   _(非紧随 `.` , `_` 或 XID_起始 字符)_\
 > &nbsp;&nbsp; | 十进制字面值 `.` 十进制字面值 后缀非E<sup>?</sup>\
 > &nbsp;&nbsp; | 十进制字面值 (`.` 十进制字面值)<sup>?</sup> 浮点指数 后缀<sup>?</sup>\
 >
@@ -1214,7 +1214,7 @@ Examples of floating-point literals which are not accepted as literal expression
 > &nbsp;&nbsp; &nbsp;&nbsp; 二进制字面值 \[`2`-`9`&零空白;]\
 > &nbsp;&nbsp; | 八进制字面值 \[`8`-`9`&零空白;]\
 > &nbsp;&nbsp; | ( 二进制字面值 | 八进制字面值 | 十六进制字面值 ) `.` \
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _(不是紧随着 `.`, `_` 或 XID_起始 字符)_\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _(非紧随 `.`, `_` 或 XID_起始 字符)_\
 > &nbsp;&nbsp; | ( 二进制字面值 | 八进制字面值 ) (`e`|`E`)\
 > &nbsp;&nbsp; | `0b` `_`<sup>\*</sup> _输入结束或非二进制数_\
 > &nbsp;&nbsp; | `0o` `_`<sup>\*</sup> _输入结束或非八进制数_\
@@ -1508,7 +1508,7 @@ them are referred to as "token trees" in [macros].  The three types of brackets 
 {==+==}
 Some lexical forms known as _reserved prefixes_ are reserved for future use.
 {==+==}
-一些被称为 _保留前缀_ 的词法形式被保留下来，供将来使用。
+一些称为 _保留前缀_ 的词法形式被保留下来，供将来使用。
 {==+==}
 
 
