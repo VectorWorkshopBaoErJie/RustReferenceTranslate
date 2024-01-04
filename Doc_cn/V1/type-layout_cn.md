@@ -244,16 +244,16 @@ to it. The following example shows a struct with a `C` representation.
 {==+==}
 ## 表示形式
 
-所有用户定义的复合类型 ( `struct` 、 `enum` 和 `union` ) 都有对应的 *表示形式* ，用于指定类型的布局。
-类型的可能表示形式包括:
+所有用户定义的复合类型 ( `struct` 、 `enum` 和 `union` ) 都有对应的 *表示形式* ，指定类型的布局。
+类型表示形式有:
 
 - [默认][Default]
 - [`C`]
 - [原始表示形式][primitive representations]
 - [`transparent`]
 
-可以通过在类型上应用 `repr` 属性来更改类型的表示形式。
-以下示例展示具有 `C` 表示形式的结构体。
+可在类型上应用 `repr` 属性来更改类型的表示形式。
+以下示例演示具有 `C` 表示形式的结构体。
 {==+==}
 
 
@@ -276,8 +276,8 @@ The alignment may be raised or lowered with the `align` and `packed` modifiers
 respectively. They alter the representation specified in the attribute.
 If no representation is specified, the default one is altered.
 {==+==}
-通过 `align` 和 `packed` 修饰符可以分别提升或降低对齐值。
-修饰符会修改属性所指定的表示形式，如果未指定表示形式属性，则修改默认的表示形式。
+通过 `align` 和 `packed` 修饰符可以提升或降低对齐值。
+可用表示形式属性修饰，如果未指定，则为默认表示形式。
 {==+==}
 
 
@@ -301,7 +301,7 @@ struct AlignedStruct {
 ```
 {==+==}
 ```rust
-// 默认的表示，对齐方式被降低到 2。
+// 默认表示，对齐值降低到 2。
 #[repr(packed(2))]
 struct PackedStruct {
     first: i16,
@@ -309,7 +309,7 @@ struct PackedStruct {
     third: i32
 }
 
-// C 表示，对齐方式被提高到 8。
+// C 表示，对齐值提高到 8。
 #[repr(C, align(8))]
 struct AlignedStruct {
     first: i16,
@@ -331,7 +331,7 @@ not change the layout of the fields themselves. For example, a struct with a
 `C` representation that contains a struct `Inner` with the default
 representation will not change the layout of `Inner`.
 {==+==}
-> 注意: 由于表示形式是条目的属性，代表了不依赖于泛型参数。
+> 注意: 由于表示形式是条目的属性，表示不依赖于泛型参数。
 > 任何两个具有相同名称的类型都具有相同的表示形式。例如， `Foo<Bar>` 和 `Foo<Baz>` 的相同。
 
 类型的表示形式可以改变字段之间的填充，但不会改变字段本身的布局。
@@ -527,7 +527,7 @@ the sake of clarity. To perform memory layout computations in actual code, use
 {==+==}
 <div class="warning">
 
-警告：此伪代码使用一种简单算法，为了清晰起见忽略了溢出问题。对于实际代码中执行内存布局计算，请使用 [`Layout`] 。
+提示：此伪代码使用一种简单算法，为了清晰起见忽略了溢出问题。对于实际代码中执行内存布局计算，请使用 [`Layout`] 。
 
 </div>
 {==+==}
@@ -641,7 +641,7 @@ using a field-less enum in FFI to model a C `enum` is often wrong.
 {==+==}
 <div class="warning">
 
-警告：C 语言中的 `enum` 和 Rust 的 [无字段的枚举][field-less enums] 在这种表示形式下存在关键差异。
+提示：C 语言中的 `enum` 和 Rust 的 [无字段的枚举][field-less enums] 在这种表示形式下存在关键差异。
 在 C 中，`enum` 主要是 `typedef` 与一些命名常量组合，其 `enum` 类型对象可以容纳任意整数值。
 比如，在 `C` 中，通常用于标志位。
 相比之下，Rust 的 [无字段的枚举][field-less enums] 只能合法地容纳判别值，其他状况都是 [未定义行为][undefined behavior] 。
@@ -672,7 +672,7 @@ two fields, also called a "tagged union" in C:
 使用 `#[repr(C)]` 声明的带有字段的枚举类型的表示形式是带有两个字段的 `repr(C)` 结构体，也称为 C 语言 "标签化联合体" ，即：
 
 - 去掉所有字段的 `repr(C)` 版本的枚举类型 ("标签")
--  `repr(C)` 联合体，其中包含每个有字段的变体的 `repr(C)` 结构体 ("有效载荷")
+- `repr(C)` 联合体，其中包含每个有字段的变体的 `repr(C)` 结构体 ("有效载荷")
 
 > 注意: 对于 `repr(C)` 结构体和联合体的表示形式，如果变体只有一个字段，在联合体中直接放置该字段或将其包装在结构体中就没有区别；
 > 因此，如果希望操作这种 `enum` 则其表示形式可以使用对其来说更方便或更一致的形式。
