@@ -396,7 +396,7 @@ expressions considered thus far have implicit coercions.)
 这被称为 "最小上界强转" (Least Upper Bound coercion，简称LUB 强转) 。LUB 强转仅在以下情况下使用：
 
 + 为 if 一系列分支查找共同类型。
-+ 为match 一系列分支查找共同类型。
++ 为 match 一系列分支查找共同类型。
 + 为数组元素查找共同类型。
 + 为带有多个返回语句的闭包查找返回类型。
 + 检查带有多个返回语句的函数的返回类型。
