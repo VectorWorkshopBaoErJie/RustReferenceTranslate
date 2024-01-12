@@ -74,9 +74,9 @@ trait is implemented for a type. For example, given `Ty: Trait`
 * Generic functions and types with a `T: Trait` bounds can be used with `Ty`
   being used for `T`.
 {==+==}
-[Trait] 和生命周期约束提供了一种方式，以限制 [泛型条目][generic] 可以使用哪些类型和生命周期作为参数。
-可以在 [where 从句][where clause] 提供对类型的约束。
-一些常见或是从句的形式：
+提供了一种方式约束 [Trait] 和生命周期，以限制 [泛型条目][generic] 可以使用哪些类型和生命周期作为参数。
+可以在 [where 从句][where clause] 中对类型约束。
+一些常见的从句形式：
 
 * 在声明 [泛型参数][generic] 之后进行约束: `fn f<A: Copy>() {}` 等同于 `fn f<A>() where A: Copy {}` 。
 * 在 trait 声明中作为 [父级trait][supertraits] : `trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}` 。

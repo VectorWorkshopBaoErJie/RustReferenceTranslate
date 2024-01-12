@@ -14,7 +14,7 @@
 > **<sup>语法</sup>**\
 > _ImplTrait类型_ : `impl` [_类型参数约束组_][_TypeParamBounds_]
 >
-> _ImplTrait类型1约束_ : `impl` [_Trait约束_][_TraitBound_]
+> _ImplTrait类型单约束_ : `impl` [_Trait约束_][_TraitBound_]
 {==+==}
 
 
@@ -24,7 +24,7 @@ implement a specific trait.
 It can appear in two sorts of places: argument position (where it can act as an anonymous type parameter to functions), and return position (where it can act as an abstract return type).
 {==+==}
 `impl Trait` 提供了一种方式来指定匿名但具体实现了特定 trait 的类型。
-它可以出现在两种位置: 参数位置 (在这里它可以作为函数的匿名类型参数) ，以及返回位置 (在这里它可以作为抽象的返回类型) 。
+它可以出现在两种位置: 一是参数位置 (作为函数的匿名类型参数) 二是返回位置 (作为抽象返回类型) 。
 {==+==}
 
 
@@ -116,12 +116,12 @@ This includes generic arguments for the return type or any const generics.
 >
 > Therefore, changing the function signature from either one to the other can constitute a breaking change for the callers of a function.
 {==+==}
-换句话说， `impl Trait` 作为函数参数是一种语法糖，用于泛型类型参数 `<T: Trait>` ，只不过该类型是匿名的并且不出现在 [_泛型参数组_][_GenericParams_] 列表中。
+换句话说， `impl Trait` 作为函数参数是泛型类型参数 `<T: Trait>` 的语法糖，只不过该类型是匿名的并且不出现在 [_泛型参数组_][_GenericParams_] 列表中。
 
 > **注意：**
 > 对于函数参数而言，泛型类型参数和 `impl Trait` 并不完全等效。
 > 对于泛型参数如 `<T: Trait>` ，调用方可以在调用时使用 [_泛型实参组_][_GenericArgs_] 显式指定 `T` 的泛型参数，例如 `foo::<usize>(1)` 。
-> 如果 `impl Trait` 是 *任何* 函数参数的类型，那么调用方在调用该函数时永远不能提供任何泛型参数。
+> 如果 `impl Trait` 是 *任意* 函数参数的类型，那么调用方在调用该函数时不能提供任何泛型参数。
 > 这包括返回类型或任何常量泛型参数。
 >
 > 因此，从其中一个函数签名更改到另一个函数签名可能会对函数的调用方构成破坏性更改。
@@ -171,10 +171,9 @@ It wasn't possible to fully specify the type of the closure, only to use the `Fn
 That means that the trait object is necessary.
 However, with `impl Trait`, it is possible to write this more simply:
 {==+==}
-这可能会导致堆分配和动态派发的性能损失。
-无法完全指定闭包的类型，只能使用 `Fn` trait。
-这意味着 trait 对象是必需的。
-但是，使用 `impl Trait` 可以更简单地编写此代码:
+这可能会带来堆分配和动态派发的性能损失。
+无法完全指定闭包的类型，只能使用 `Fn` trait，意味着必需用 trait 对象。
+但是，使用 `impl Trait` 可以更简单实现功能:
 {==+==}
 
 
@@ -259,11 +258,11 @@ Instead, the function chooses the return type, but only promises that it will im
 `impl Trait` can only appear as a parameter or return type of a free or inherent function.
 It cannot appear inside implementations of traits, nor can it be the type of a let binding or appear inside a type alias.
 {==+==}
-不允许调用者确定返回类型。相反，函数选择返回类型，但只承诺它将实现 `Trait` 。
+不允许调用者确定返回类型。而是函数选择返回类型，但只承诺将实现 `Trait` 。
 
 ## 限制
 
-`impl Trait` 只能出现在自由函数或内部函数的参数或返回类型中。它不能出现在 trait 的实现内部，也不能是 let 绑定的类型或出现在类型别名中。
+`impl Trait` 只能出现在自由函数或内部函数的参数或返回类型中。不能出现在 trait 的实现内部，也不能是 let 绑定的类型或出现在类型别名中。
 {==+==}
 
 

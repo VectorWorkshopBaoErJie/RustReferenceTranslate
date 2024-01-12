@@ -48,7 +48,7 @@ Its one value is also called *unit* or *the unit value*.
 例如，具有 2 个字段的元组是一个 2 元元组。元组的字段使用递增的数字名称进行命名，匹配它们在类型列表中的位置。
 第一个字段是 `0` ，第二个字段是 `1` ，以此类推。每个字段的类型是元组列表中相同位置的类型。
 
-出于方便和历史原因，没有字段的元组类型 `()` 通常被称为 *单元* 或 *单元类型* 。它的一个值也称为 *单元* 或 *单元值*。
+出于便捷和历史原因，没有字段的元组类型 `()` 通常被称为 *单元* 或 *单元类型* ，其值称为 *单元* 或 *单元值*。
 {==+==}
 
 
@@ -76,11 +76,11 @@ Tuple fields can be accessed by either a [tuple index expression] or [pattern ma
 * `(i32，String)` (与前一个示例的类型不同)
 * `(i32，f64，Vec<String>，Option<bool>)`
 
-可以使用 [元组表达式][tuple expression] 构造此类型的值。
-另外，在如果不能求解为其他有意义的值时，则各类表达式将产生单元值。
-元组字段可以通过 [元组索引表达式][tuple index expression] 或 [模式匹配][pattern matching] 来访问。
+可以使用 [元组表达式][tuple expression] 构造该类型的值。
+另外，则各类表达式在不能求解为有意义的值时，将产生单元值。
+可以通过 [元组索引表达式][tuple index expression] 或 [模式匹配][pattern matching] 访问元组字段。
 
-[^1]: 如果它们的内部类型等价，则构造类型始终是等价的。有关元组结构体的具名版本，请参见 [元组结构体][tuple structs] 。
+[^1]: 如果其内部类型等价，则构造类型始终是等价的。有关元组结构体的具名版本，请参见 [元组结构体][tuple structs] 。
 {==+==}
 
 

@@ -34,7 +34,7 @@ value that inhabits such a type.
 
 使用 [结构体表达式][struct expression] 可以构造 `struct` 的新实例。
 
-默认情况下， `struct` 的内存布局是未确定的，以允许编译器进行优化，例如字段重新排序，或者通过 [`repr`属性][`repr` attribute] 确定。
+默认情况下， `struct` 的内存布局是未确定的，以允许编译器进行优化，例如字段重新排序，可以通过 [`repr`属性][`repr` attribute] 确定。
 结构体 *表达式* 中的字段可以按任意顺序给出，所生成的 `struct` 值始终具有相同的内存布局。
 
  `struct` 的字段可以由 [可见性修饰符][visibility modifiers] 修饰，以允许在模块之外访问结构体中的数据。

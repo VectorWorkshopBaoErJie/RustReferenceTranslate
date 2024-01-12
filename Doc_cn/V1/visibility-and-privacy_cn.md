@@ -215,13 +215,15 @@ pub mod submodule {
 ```
 {==+==}
 ```rust
-// 这个模块是私有的，意味着没有外部 crate 可以访问这个模块。然而，因为它在当前 crate 的根目录下是私有的，所以任何在 crate 中的模块都可以访问这个模块中任何公开可见的条目。
+// 这个模块是私有的，意味着没有外部 crate 可以访问这个模块。
+// 然而，因为它在当前 crate 的根目录下是私有的，所以任何在 crate 中的模块都可以访问这个模块中任何公开可见的条目。
 mod crate_helper_module {
 
     // 这个函数可以被当前 crate 中的任何东西使用
     pub fn crate_helper() {}
 
-    // 这个函数 *不能* 被 crate 中的其他任何东西使用。它在 `crate_helper_module` 之外不可公开访问，因此只有这个当前模块及其子代可以访问它。
+    // 这个函数 *不能* 被 crate 中的其他任何东西使用。
+    // 它在 `crate_helper_module` 之外不可公开访问，因此只有这个当前模块及其子代可以访问它。
     fn implementation_detail() {}
 }
 

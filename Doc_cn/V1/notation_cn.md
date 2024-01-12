@@ -84,7 +84,7 @@ When such a string in `monospace` font occurs inside the grammar,
 it is an implicit reference to a single member of such a string table
 production. See [tokens] for more information.
 {==+==}
-当在语法中看到用 `monospace` 等宽字体显示的字符串时，则指代表中 `string` 产生式的成员。有关更多信息，请参阅 [令牌][tokens] 。
+当在语法中看到用 `monospace` 等宽字体显示的字符串时，则指代了表中 `string` 产生式的成员。有关更多信息，请参阅 [令牌][tokens] 。
 {==+==}
 
 

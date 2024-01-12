@@ -36,11 +36,11 @@ The boolean type is the type of many operands in various [expressions]:
 
 此类型是 [语言预定义][language prelude] 的一部分，[名称][name] 为 `bool` 。
 
-具有布尔类型的对象每个都具有 [大小和对齐方式][size and alignment] 1 。
+具有布尔类型的对象每个都具有为 1 的 [大小和对齐方式][size and alignment] 。
 值 false 的位表示为 `0x00` ，值 true 的位表示为 `0x01` 。
 布尔类型对象的其他任何位表示是 [未定义行为][undefined behavior] 。
 
-布尔类型是各种 [表达式][expressions] 中许多操作数的类型：
+布尔类型是各类 [表达式][expressions] 中许多操作数的类型：
 {==+==}
 
 

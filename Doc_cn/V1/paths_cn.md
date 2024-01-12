@@ -14,7 +14,7 @@ Two examples of simple paths consisting of only identifier segments:
 *路径* 是由一个或多个路径段从 _逻辑上_ 由命名空间 <span class="parenthetical">限定符(`::`)</span> 分隔的序列。
 如果路径只包含一个段，则引用局部作用域中的 [条目][item] 或 [变量][variable] 。如果路径有多个段，则总是引用一个条目。
 
-以下是由标识符段组成的简单路径的两个示例：
+以下是由标识符段组成的简单路径的两个示例:
 {==+==}
 
 
@@ -63,7 +63,7 @@ mod m {
 > _简单路径片段_ :\
 > &nbsp;&nbsp; [标识符][IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-简单路径在 [可见性][visibility] 标记， [属性][attributes] ， [宏][macros] 和 [`use`] 条目中使用。
+简单路径可在 [可见性][visibility] 标记， [属性][attributes] ， [宏][macros] 和 [`use`] 条目中使用。
 例如：
 
 ```rust
@@ -175,7 +175,7 @@ and these cannot be explicitly specified.
 
 常量参数必须用花括号括起来，除非是字面量或简单路径段。
 
-对于 `impl Trait` 类型对应的合成类型参数是隐式的，不能显式地指定。
+对于 `impl Trait` 类型对应的复合类型参数是隐式的，不能显式地指定。
 {==+==}
 
 
